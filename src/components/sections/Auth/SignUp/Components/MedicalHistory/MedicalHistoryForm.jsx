@@ -316,7 +316,7 @@ export default function MedicalHistoryForm() {
                     value={formData.cirugiasPrevias}
                     onChange={(e) => updateField('cirugiasPrevias', e.target.value)}
                     className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:ring-2 focus:ring-blue-500 md:py-3"
-                    placeholder="Enfermedades relevantes en la familia (opcional)"
+                    placeholder="Cualquier tipo de intervencion Quirurgica anterior"
                   ></textarea>
                 </div>
 

@@ -3,23 +3,30 @@ import mongoose from 'mongoose';
 const ClinicalRecordSchema = new mongoose.Schema(
   {
     patientId: { type: mongoose.Schema.Types.ObjectId, ref: 'Patient', required: true },
-    assignedMedic: { type: mongoose.Schema.Types.ObjectId, ref: 'Medic', required: true },
+    assignedMedic: { type: mongoose.Schema.Types.ObjectId, ref: 'Medic' },
 
-    age: Number,
-    gender: { type: String, enum: ['male', 'female', 'other'] },
-    height: Number,
-    initialWeight: Number,
-    initialBMI: Number,
-    goals: String,
-    medicalConditions: [String],
-    medications: [String],
-    allergies: [String],
-    surgeries: [String],
+    edad: { type: Number, required: true },
+    genero: { type: String, enum: ['masculino', 'femenino'], required: true },
+    altura: { type: Number, required: true },
+    pesoActual: { type: Number, required: true },
 
-    aestheticTreatments: [String],
-    notes: String,
-    lastVisit: Date,
-    nextAppointment: Date,
+    pesoObjetivo: { type: Number, required: true },
+    actividadFisica: {
+      type: String,
+      enum: ['sedentario', 'ligero', 'moderado', 'intenso'],
+      required: true,
+    },
+    horasSueno: { type: Number, required: true },
+    consumoAgua: { type: Number, required: true },
+    enfermedadesCronicas: { type: String },
+    medicamentosActuales: { type: String },
+    alergias: { type: String },
+    habitosAlimenticios: { type: String, required: true },
+    cirugiasPrevias: { type: String },
+    motivoConsulta: { type: String, required: true },
+
+    indiceMasaCorporal: { type: Number },
+    fechaRegistro: { type: Date, default: Date.now },
   },
   { timestamps: true }
 );
