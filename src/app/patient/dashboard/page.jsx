@@ -8,10 +8,10 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 const weightData = [
   { date: "Ene", peso: 85 },
   { date: "Feb", peso: 83 },
-  { date: "Mar", peso: 81 },
+  { date: "Mar", peso: 56 },
   { date: "Abr", peso: 79 },
   { date: "May", peso: 77 },
-  { date: "Jun", peso: 75 },
+  { date: "Jun", peso: 110 },
 ];
 
 export default function PatientDashboard() {
