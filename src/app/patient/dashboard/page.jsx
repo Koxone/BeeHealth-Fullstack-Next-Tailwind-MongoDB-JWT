@@ -77,6 +77,13 @@ const metrics = [
   },
 ];
 
+// color mapping
+const borderColors = {
+  blue: 'border-blue-500',
+  green: 'border-green-500',
+  purple: 'border-purple-500',
+};
+
 export default function PatientDashboard() {
   const router = useRouter();
   const [selectedMetric, setSelectedMetric] = useState('peso');
@@ -102,9 +109,7 @@ export default function PatientDashboard() {
               key={metric.id}
               onClick={() => setSelectedMetric(metric.id)}
               className={`rounded-xl border-2 bg-white p-3 text-left shadow-sm transition hover:shadow-md active:scale-95 md:p-6 ${
-                isSelected
-                  ? `border-${metric.color}-500 ring-2 ring-${metric.color}-200`
-                  : 'border-gray-200 hover:border-gray-300'
+                isSelected ? borderColors[metric.color] : 'border-gray-200 hover:border-gray-300'
               }`}
             >
               <div className="flex items-start justify-between">
