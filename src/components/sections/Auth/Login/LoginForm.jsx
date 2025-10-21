@@ -41,7 +41,7 @@ export default function LoginForm() {
       // Redirige según el rol del usuario
       const role = data.user.role;
       if (role === 'patient') router.push('/patient/dashboard');
-      else if (role === 'doctor') router.push('/doctor/dashboard');
+      else if (role === 'medic') router.push('/doctor/dashboard');
       else if (role === 'employee') router.push('/employee/dashboard');
       else router.push('/admin/dashboard');
       console.log(data);
