@@ -60,7 +60,7 @@ export default function ConsultationsTable({ rows, icons, totals, onEdit, onDele
               </td>
               <td className="px-6 py-4">
                 <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 text-sm font-bold text-white shadow-md">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-linear-to-br from-indigo-500 to-purple-600 text-sm font-bold text-white shadow-md">
                     {c.avatar}
                   </div>
                   <span className="text-sm font-semibold text-gray-900">{c.paciente}</span>

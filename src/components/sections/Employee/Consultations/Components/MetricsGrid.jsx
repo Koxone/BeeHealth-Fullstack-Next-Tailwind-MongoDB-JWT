@@ -14,7 +14,7 @@ export default function MetricsGrid({ icons, totals, porcentajeCobrado }) {
   return (
     <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
       {/* total ingresos */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-600 to-purple-700 p-5 text-white shadow-lg">
+      <div className="relative overflow-hidden rounded-2xl bg-linear-to-br from-indigo-600 to-purple-700 p-5 text-white shadow-lg">
         <div className="absolute top-0 right-0 -mt-12 -mr-12 h-24 w-24 rounded-full bg-white/10" />
         <div className="relative z-10">
           <div className="mb-3 flex items-center justify-between">

@@ -33,9 +33,9 @@ export default function DeleteModal({ item, onClose, onConfirm, icons }) {
               ¿Estás seguro de que deseas eliminar esta consulta del registro?
             </p>
 
-            <div className="rounded-xl border-2 border-gray-200 bg-gradient-to-br from-gray-50 to-red-50 p-5">
+            <div className="rounded-xl border-2 border-gray-200 bg-linear-to-br from-gray-50 to-red-50 p-5">
               <div className="mb-3 flex items-start gap-3">
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-red-500 to-rose-600 font-bold text-white shadow-lg">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-linear-to-br from-red-500 to-rose-600 font-bold text-white shadow-lg">
                   {(item.avatar || '').slice(0, 2)}
                 </div>
                 <div className="min-w-0 flex-1">

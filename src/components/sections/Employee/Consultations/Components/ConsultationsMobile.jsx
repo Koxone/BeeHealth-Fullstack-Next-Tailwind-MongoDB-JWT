@@ -9,11 +9,11 @@ export default function ConsultationsMobile({ rows, icons, onEdit, onDelete }) {
         <div
           key={c.id}
           style={{ animationDelay: `${i * 50}ms` }}
-          className="animate-fadeInUp rounded-xl border-2 border-gray-200 bg-gradient-to-br from-indigo-50 to-purple-50 p-4 transition hover:border-indigo-300 hover:shadow-lg"
+          className="animate-fadeInUp rounded-xl border-2 border-gray-200 bg-linear-to-br from-indigo-50 to-purple-50 p-4 transition hover:border-indigo-300 hover:shadow-lg"
         >
           <div className="mb-3 flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 font-bold text-white shadow-md">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-linear-to-br from-indigo-500 to-purple-600 font-bold text-white shadow-md">
                 {c.avatar}
               </div>
               <div>

@@ -4,10 +4,10 @@
 export default function HeaderBar({ icons }) {
   const { DollarSign } = icons;
   return (
-    <div className="-mx-4 -mt-4 mb-6 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 px-4 pt-6 pb-8 md:rounded-2xl">
+    <div className="-mx-4 -mt-4 mb-6 bg-linear-to-br from-indigo-50 via-purple-50 to-pink-50 px-4 pt-6 pb-8 md:rounded-2xl">
       <div className="mx-auto max-w-7xl">
         <div className="mb-6 flex items-start gap-4">
-          <div className="rounded-2xl bg-gradient-to-br from-indigo-600 to-purple-600 p-3 shadow-lg">
+          <div className="rounded-2xl bg-linear-to-br from-indigo-600 to-purple-600 p-3 shadow-lg">
             <DollarSign className="h-8 w-8 text-white" />
           </div>
           <div>

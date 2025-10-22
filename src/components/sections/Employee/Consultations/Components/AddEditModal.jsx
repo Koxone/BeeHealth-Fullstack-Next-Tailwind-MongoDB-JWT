@@ -127,7 +127,7 @@ export default function AddEditModal({ editingItem, form, setForm, onClose, onSu
               </div>
             </div>
 
-            <div className="rounded-xl border-2 border-indigo-200 bg-gradient-to-br from-blue-50 to-indigo-50 p-4">
+            <div className="rounded-xl border-2 border-indigo-200 bg-linear-to-br from-blue-50 to-indigo-50 p-4">
               <label className="flex cursor-pointer items-center gap-3">
                 <input
                   type="checkbox"
