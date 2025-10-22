@@ -40,7 +40,6 @@ export default function DoctorPatients() {
     );
   }, [searchTerm, patients]);
 
-  console.log(patients)
 
   const getProgresoColor = (progreso) => {
     switch (progreso) {

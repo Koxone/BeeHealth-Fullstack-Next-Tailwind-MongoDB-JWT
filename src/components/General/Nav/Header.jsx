@@ -42,7 +42,6 @@ export default function Header({ userName = 'Usuario', role = 'patient' }) {
   };
 
   const roleInfo = getRoleInfo();
-  console.log(currentUser);
 
   const mockNotifications = [
     { id: 1, title: 'Nueva cita programada', time: 'Hace 5 min', unread: true },
