@@ -4,7 +4,7 @@
 import { Package } from 'lucide-react'; /* icon */
 export default function HeaderBar() {
   return (
-    <div className="-mx-4 -mt-4 mb-6 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 px-4 pt-6 pb-8 md:rounded-2xl">
+    <div className="-mx-4 -mt-4 mb-6 bg-linear-to-r from-blue-50 via-indigo-50 to-purple-50 px-4 pt-6 pb-8 md:rounded-2xl">
       <div className="mx-auto max-w-7xl">
         <div className="mb-6 flex items-start gap-4">
           <div className="rounded-2xl bg-blue-600 p-3 shadow-lg">
