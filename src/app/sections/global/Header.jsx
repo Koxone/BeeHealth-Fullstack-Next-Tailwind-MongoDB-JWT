@@ -1,139 +1,338 @@
 'use client';
 
 import { useAuthStore } from '@/Zustand/useAuthStore';
-import { Bell, User, LogOut, Menu } from 'lucide-react';
+import { Bell, User, LogOut, Menu, Settings, HelpCircle, Shield, Sparkles, X } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 export default function Header({ userName = 'Usuario', role = 'patient' }) {
   const router = useRouter();
   const [showMenu, setShowMenu] = useState(false);
+  const [showNotifications, setShowNotifications] = useState(false);
 
   // Zustand
   const { currentUser, logout } = useAuthStore();
 
+  const notificationCount = 3;
+
+  const getRoleInfo = () => {
+    switch (role) {
+      case 'doctor':
+      case 'medic':
+        return {
+          title: `Dr. ${userName}`,
+          subtitle: 'Médico',
+          gradient: 'from-purple-500 to-pink-600',
+          bgGradient: 'from-purple-50 to-pink-50',
+        };
+      case 'employee':
+        return {
+          title: userName,
+          subtitle: 'Empleado',
+          gradient: 'from-emerald-500 to-green-600',
+          bgGradient: 'from-emerald-50 to-green-50',
+        };
+      default:
+        return {
+          title: userName,
+          subtitle: 'Paciente',
+          gradient: 'from-blue-500 to-indigo-600',
+          bgGradient: 'from-blue-50 to-indigo-50',
+        };
+    }
+  };
+
+  const roleInfo = getRoleInfo();
+
+  const mockNotifications = [
+    { id: 1, title: 'Nueva cita programada', time: 'Hace 5 min', unread: true },
+    { id: 2, title: 'Recordatorio de medicación', time: 'Hace 1 hora', unread: true },
+    { id: 3, title: 'Resultados disponibles', time: 'Hace 2 horas', unread: false },
+  ];
+
   return (
-    <header className="sticky top-0 z-40 border-b border-gray-200 bg-white">
+    <header className="sticky top-0 z-40 border-b-2 border-gray-200 bg-white/95 backdrop-blur-lg shadow-lg">
       {/* Mobile Header */}
       <div className="flex items-center justify-between px-4 py-3 md:hidden">
-        <div className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-500">
-            <User className="h-4 w-4 text-white" />
+        <div className="flex items-center gap-3">
+          <div className={`relative flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br ${roleInfo.gradient} shadow-lg`}>
+            <User className="h-5 w-5 text-white" />
+            <div className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full bg-green-500 border-2 border-white" />
           </div>
           <div>
-            <p className="text-sm font-semibold text-gray-900">
-              {role === 'medic' ? `Dr. ${userName}` : `${userName}`}
-            </p>
-            <p className="text-xs text-gray-500">{role === 'patient' ? 'Paciente' : 'Médico'}</p>
+            <p className="text-sm font-bold text-gray-900">{roleInfo.title}</p>
+            <div className="flex items-center gap-1.5">
+              <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
+              <p className="text-xs text-gray-500 font-medium">{roleInfo.subtitle}</p>
+            </div>
           </div>
         </div>
 
         <div className="flex items-center gap-2">
-          <button className="relative rounded-lg p-2 transition hover:bg-gray-100 active:scale-95">
-            <Bell className="h-5 w-5 text-gray-600" />
-            <span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-red-500"></span>
+          {/* Notifications button mobile */}
+          <button 
+            onClick={() => setShowNotifications(!showNotifications)}
+            className="relative rounded-xl p-2 transition-all duration-200 hover:bg-gray-100 active:scale-95 group"
+          >
+            <Bell className="h-5 w-5 text-gray-600 group-hover:text-blue-600 transition-colors duration-200" />
+            {notificationCount > 0 && (
+              <span className="absolute top-0.5 right-0.5 flex h-5 w-5 items-center justify-center rounded-full bg-gradient-to-r from-red-500 to-rose-600 text-[10px] font-bold text-white shadow-lg animate-pulse">
+                {notificationCount}
+              </span>
+            )}
           </button>
 
           <button
             onClick={() => setShowMenu(!showMenu)}
-            className="rounded-lg p-2 transition hover:bg-gray-100 active:scale-95"
+            className="rounded-xl p-2 transition-all duration-200 hover:bg-gray-100 active:scale-95"
           >
-            <Menu className="h-5 w-5 text-gray-600" />
+            {showMenu ? (
+              <X className="h-5 w-5 text-gray-600" />
+            ) : (
+              <Menu className="h-5 w-5 text-gray-600" />
+            )}
           </button>
         </div>
       </div>
 
       {/* Desktop Header */}
       <div className="hidden items-center justify-between px-6 py-4 md:flex">
-        <div>
-          <h2 className="text-2xl font-semibold text-gray-900">MedTrack</h2>
-          <p className="text-sm text-gray-500">
-            {role === 'patient' ? 'Panel de Paciente' : 'Panel Médico'}
-          </p>
+        <div className="flex items-center gap-4">
+          <div className={`p-3 bg-gradient-to-br ${roleInfo.gradient} rounded-2xl shadow-lg`}>
+            <Sparkles className="h-6 w-6 text-white" />
+          </div>
+          <div>
+            <h2 className="text-2xl font-bold text-gray-900 tracking-tight">MedTrack</h2>
+            <p className="text-sm text-gray-500 font-medium">
+              {role === 'patient' ? 'Panel de Paciente' : role === 'employee' ? 'Panel de Empleado' : 'Panel Médico'}
+            </p>
+          </div>
         </div>
 
-        <div className="flex items-center gap-4">
-          <button className="relative rounded-lg p-2 transition hover:bg-gray-100">
-            <Bell className="h-5 w-5 text-gray-600" />
-            <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-red-500"></span>
-          </button>
+        <div className="flex items-center gap-3">
+          {/* Notifications */}
+          <div className="relative">
+            <button 
+              onClick={() => setShowNotifications(!showNotifications)}
+              className="group relative rounded-xl p-3 transition-all duration-200 hover:bg-gradient-to-br hover:from-blue-50 hover:to-indigo-50 active:scale-95 border-2 border-transparent hover:border-blue-200"
+            >
+              <Bell className="h-5 w-5 text-gray-600 group-hover:text-blue-600 transition-colors duration-200" />
+              {notificationCount > 0 && (
+                <span className="absolute -top-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-r from-red-500 to-rose-600 text-xs font-bold text-white shadow-lg">
+                  {notificationCount}
+                </span>
+              )}
+            </button>
 
-          <div className="flex items-center gap-3 border-l border-gray-200 pl-4">
+            {/* Notifications Dropdown */}
+            {showNotifications && (
+              <>
+                <div 
+                  className="fixed inset-0 z-40" 
+                  onClick={() => setShowNotifications(false)}
+                />
+                <div className="absolute top-full right-0 z-50 mt-2 w-80 rounded-2xl border-2 border-gray-200 bg-white shadow-2xl animate-slideDown">
+                  <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-3 rounded-t-xl">
+                    <h3 className="text-sm font-bold text-white">Notificaciones</h3>
+                  </div>
+                  <div className="max-h-96 overflow-y-auto p-2">
+                    {mockNotifications.map((notif) => (
+                      <div
+                        key={notif.id}
+                        className={`group flex items-start gap-3 rounded-xl p-3 transition-all duration-200 hover:bg-blue-50 cursor-pointer ${
+                          notif.unread ? 'bg-blue-50/50' : ''
+                        }`}
+                      >
+                        <div className={`p-2 rounded-lg ${notif.unread ? 'bg-blue-500' : 'bg-gray-300'}`}>
+                          <Bell className="h-4 w-4 text-white" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-semibold text-gray-900">{notif.title}</p>
+                          <p className="text-xs text-gray-500">{notif.time}</p>
+                        </div>
+                        {notif.unread && (
+                          <div className="w-2 h-2 bg-blue-600 rounded-full flex-shrink-0 mt-1.5" />
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                  <div className="border-t-2 border-gray-200 p-3">
+                    <button className="w-full py-2 text-sm font-semibold text-blue-600 hover:bg-blue-50 rounded-lg transition-all duration-200">
+                      Ver todas las notificaciones
+                    </button>
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
+
+          {/* User Profile */}
+          <div className="flex items-center gap-3 border-l-2 border-gray-200 pl-4">
             <div className="text-right">
-              <p className="text-sm font-medium text-gray-900">
-                {role === 'medic' ? `Dr. ${userName}` : `${userName}`}
-              </p>
-              <p className="text-xs text-gray-500">{role === 'patient' ? 'Paciente' : 'Médico'}</p>
+              <p className="text-sm font-bold text-gray-900">{roleInfo.title}</p>
+              <div className="flex items-center justify-end gap-1.5">
+                <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
+                <p className="text-xs text-gray-500 font-medium">{roleInfo.subtitle}</p>
+              </div>
             </div>
-            <div
+            <button
               onClick={() => {
-                if (role === 'medic') router.push('/doctor/profile');
+                if (role === 'medic' || role === 'doctor') router.push('/doctor/profile');
                 else if (role === 'patient') router.push('/patient/profile');
                 else if (role === 'employee') router.push('/employee/profile');
               }}
-              className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-blue-500 transition hover:bg-blue-600 active:scale-95"
+              className={`group relative flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br ${roleInfo.gradient} shadow-lg transition-all duration-200 hover:shadow-xl hover:scale-110 active:scale-95`}
             >
-              <User className="h-5 w-5 text-white" />
-            </div>
+              <User className="h-6 w-6 text-white" />
+              <div className="absolute -bottom-0.5 -right-0.5 h-3.5 w-3.5 rounded-full bg-green-500 border-2 border-white" />
+            </button>
           </div>
 
+          {/* Logout */}
           <button
-            onClick={() => router.push('/')}
-            className="rounded-lg p-2 transition hover:bg-gray-100"
+            onClick={() => {
+              logout();
+              router.push('/');
+            }}
+            className="group rounded-xl p-3 transition-all duration-200 hover:bg-red-50 active:scale-95 border-2 border-transparent hover:border-red-200"
             title="Cerrar sesión"
           >
-            <LogOut className="h-5 w-5 text-gray-600" />
+            <LogOut className="h-5 w-5 text-gray-600 group-hover:text-red-600 transition-colors duration-200" />
           </button>
         </div>
       </div>
 
-      {/* Mobile Dropdown Menu */}
+      {/* Mobile Dropdown Menu mejorado */}
       {showMenu && (
         <>
           <div
-            className="fixed inset-0 z-40 bg-black/20 md:hidden"
+            className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm md:hidden animate-fadeIn"
             onClick={() => setShowMenu(false)}
           />
-          <div className="absolute top-full right-4 z-50 mt-2 w-48 rounded-lg border border-gray-200 bg-white shadow-lg md:hidden">
+          <div className="absolute top-full right-4 z-50 mt-2 w-64 rounded-2xl border-2 border-gray-200 bg-white shadow-2xl md:hidden animate-slideDown">
+            {/* Menu Header */}
+            <div className={`bg-gradient-to-r ${roleInfo.gradient} px-4 py-4 rounded-t-xl relative overflow-hidden`}>
+              <div className="absolute top-0 right-0 w-20 h-20 bg-white/10 rounded-full -mr-10 -mt-10" />
+              <div className="relative z-10 flex items-center gap-3">
+                <div className={`flex h-12 w-12 items-center justify-center rounded-xl bg-white/20 backdrop-blur-sm shadow-lg`}>
+                  <User className="h-6 w-6 text-white" />
+                </div>
+                <div>
+                  <p className="text-sm font-bold text-white">{roleInfo.title}</p>
+                  <p className="text-xs text-white/80">{roleInfo.subtitle}</p>
+                </div>
+              </div>
+            </div>
+
             <div className="p-2">
               <button
                 onClick={() => {
                   setShowMenu(false);
-                  router.push(role === 'patient' ? '/patient/profile' : '/doctor/profile');
+                  router.push(role === 'patient' ? '/patient/profile' : role === 'employee' ? '/employee/profile' : '/doctor/profile');
                 }}
-                className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-gray-700 transition hover:bg-gray-50"
+                className="group flex w-full items-center gap-3 rounded-xl px-4 py-3 text-gray-700 transition-all duration-200 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 active:scale-95"
               >
-                <User className="h-4 w-4" />
-                <span className="text-sm">Mi Perfil</span>
+                <div className="p-2 bg-blue-100 rounded-lg group-hover:bg-blue-500 transition-all duration-200">
+                  <User className="h-4 w-4 text-blue-600 group-hover:text-white transition-colors duration-200" />
+                </div>
+                <span className="text-sm font-semibold">Mi Perfil</span>
               </button>
+
               <button
                 onClick={() => {
                   setShowMenu(false);
-                  if (role === 'patient') {
-                    router.push('/patient/support');
-                  }
+                  setShowNotifications(true);
                 }}
-                className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-gray-700 transition hover:bg-gray-50"
+                className="group flex w-full items-center gap-3 rounded-xl px-4 py-3 text-gray-700 transition-all duration-200 hover:bg-gradient-to-r hover:from-amber-50 hover:to-orange-50 active:scale-95"
               >
-                <Bell className="h-4 w-4" />
-                <span className="text-sm">Notificaciones</span>
+                <div className="p-2 bg-amber-100 rounded-lg group-hover:bg-amber-500 transition-all duration-200 relative">
+                  <Bell className="h-4 w-4 text-amber-600 group-hover:text-white transition-colors duration-200" />
+                  {notificationCount > 0 && (
+                    <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[8px] font-bold text-white">
+                      {notificationCount}
+                    </span>
+                  )}
+                </div>
+                <span className="text-sm font-semibold">Notificaciones</span>
               </button>
-              <div className="my-2 border-t border-gray-200" />
+
+              {role === 'patient' && (
+                <button
+                  onClick={() => {
+                    setShowMenu(false);
+                    router.push('/patient/support');
+                  }}
+                  className="group flex w-full items-center gap-3 rounded-xl px-4 py-3 text-gray-700 transition-all duration-200 hover:bg-gradient-to-r hover:from-purple-50 hover:to-pink-50 active:scale-95"
+                >
+                  <div className="p-2 bg-purple-100 rounded-lg group-hover:bg-purple-500 transition-all duration-200">
+                    <HelpCircle className="h-4 w-4 text-purple-600 group-hover:text-white transition-colors duration-200" />
+                  </div>
+                  <span className="text-sm font-semibold">Soporte</span>
+                </button>
+              )}
+
+              <button
+                onClick={() => {
+                  setShowMenu(false);
+                  // Configuración
+                }}
+                className="group flex w-full items-center gap-3 rounded-xl px-4 py-3 text-gray-700 transition-all duration-200 hover:bg-gradient-to-r hover:from-gray-50 hover:to-slate-50 active:scale-95"
+              >
+                <div className="p-2 bg-gray-100 rounded-lg group-hover:bg-gray-500 transition-all duration-200">
+                  <Settings className="h-4 w-4 text-gray-600 group-hover:text-white transition-colors duration-200" />
+                </div>
+                <span className="text-sm font-semibold">Configuración</span>
+              </button>
+
+              <div className="my-2 border-t-2 border-gray-200" />
+
               <button
                 onClick={() => {
                   logout();
                   setShowMenu(false);
                   router.push('/');
                 }}
-                className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-red-600 transition hover:bg-red-50"
+                className="group flex w-full items-center gap-3 rounded-xl px-4 py-3 text-red-600 transition-all duration-200 hover:bg-gradient-to-r hover:from-red-50 hover:to-rose-50 active:scale-95"
               >
-                <LogOut className="h-4 w-4" />
-                <span className="text-sm">Cerrar Sesión</span>
+                <div className="p-2 bg-red-100 rounded-lg group-hover:bg-red-500 transition-all duration-200">
+                  <LogOut className="h-4 w-4 text-red-600 group-hover:text-white transition-colors duration-200" />
+                </div>
+                <span className="text-sm font-bold">Cerrar Sesión</span>
               </button>
             </div>
           </div>
         </>
       )}
+
+      <style jsx global>{`
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+
+        @keyframes slideDown {
+          from {
+            opacity: 0;
+            transform: translateY(-10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .animate-fadeIn {
+          animation: fadeIn 0.2s ease-out;
+        }
+
+        .animate-slideDown {
+          animation: slideDown 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+      `}</style>
     </header>
   );
 }

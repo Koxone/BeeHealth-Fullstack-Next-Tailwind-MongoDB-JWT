@@ -15,6 +15,8 @@ import {
   Package,
   Activity,
   Dumbbell,
+  Sparkles,
+  ChevronRight,
 } from 'lucide-react';
 
 export default function Sidebar({ role = 'patient' }) {
@@ -22,78 +24,91 @@ export default function Sidebar({ role = 'patient' }) {
   const pathname = usePathname();
 
   const patientMenu = [
-    { icon: LayoutDashboard, label: 'Inicio', path: '/patient/dashboard' },
-    { icon: Activity, label: 'Historial', path: '/patient/history' },
-    { icon: Calendar, label: 'Citas', path: '/patient/appointments' },
-    { icon: Apple, label: 'Dietas', path: '/patient/diets' },
-    { icon: Dumbbell, label: 'Ejercicios', path: '/patient/exercises' },
-    { icon: User, label: 'Perfil', path: '/patient/profile' },
-    { icon: HelpCircle, label: 'Soporte', path: '/patient/support' },
+    { icon: LayoutDashboard, label: 'Inicio', path: '/patient/dashboard', badge: null },
+    { icon: Activity, label: 'Historial', path: '/patient/history', badge: null },
+    { icon: Calendar, label: 'Citas', path: '/patient/appointments', badge: '3' },
+    { icon: Apple, label: 'Dietas', path: '/patient/diets', badge: null },
+    { icon: Dumbbell, label: 'Ejercicios', path: '/patient/exercises', badge: null },
+    { icon: User, label: 'Perfil', path: '/patient/profile', badge: null },
+    { icon: HelpCircle, label: 'Soporte', path: '/patient/support', badge: null },
   ];
 
   const doctorMenu = [
-    { icon: LayoutDashboard, label: 'Inicio', path: '/doctor/dashboard' },
-    { icon: Users, label: 'Pacientes', path: '/doctor/patients' },
-    { icon: Calendar, label: 'Calendario', path: '/doctor/calendar' },
-    { icon: Apple, label: 'Dietas', path: '/doctor/diets' },
-    { icon: Dumbbell, label: 'Ejercicios', path: '/doctor/exercises' },
-    { icon: DollarSign, label: 'Contabilidad', path: '/doctor/accounting' },
-    { icon: Package, label: 'Inventario', path: '/doctor/inventory' },
-    { icon: User, label: 'Perfil', path: '/doctor/profile' },
+    { icon: LayoutDashboard, label: 'Inicio', path: '/doctor/dashboard', badge: null },
+    { icon: Users, label: 'Pacientes', path: '/doctor/patients', badge: '24' },
+    { icon: Calendar, label: 'Calendario', path: '/doctor/calendar', badge: '8' },
+    { icon: Apple, label: 'Dietas', path: '/doctor/diets', badge: null },
+    { icon: Dumbbell, label: 'Ejercicios', path: '/doctor/exercises', badge: null },
+    { icon: DollarSign, label: 'Contabilidad', path: '/doctor/accounting', badge: null },
+    { icon: Package, label: 'Inventario', path: '/doctor/inventory', badge: '5' },
+    { icon: User, label: 'Perfil', path: '/doctor/profile', badge: null },
   ];
 
   const employeeMenu = [
-    { icon: LayoutDashboard, label: 'Inicio', path: '/employee/dashboard' },
-    { icon: Calendar, label: 'Citas', path: '/employee/appointments' },
-    { icon: FileText, label: 'Consultas', path: '/employee/consultations' },
-    { icon: Package, label: 'Inventario', path: '/employee/inventory' },
-    { icon: Users, label: 'Pacientes', path: '/employee/patients' },
-    { icon: User, label: 'Perfil', path: '/employee/profile' },
+    { icon: LayoutDashboard, label: 'Inicio', path: '/employee/dashboard', badge: null },
+    { icon: Calendar, label: 'Citas', path: '/employee/appointments', badge: '12' },
+    { icon: FileText, label: 'Consultas', path: '/employee/consultations', badge: null },
+    { icon: Package, label: 'Inventario', path: '/employee/inventory', badge: '3' },
+    { icon: Users, label: 'Pacientes', path: '/employee/patients', badge: null },
+    { icon: User, label: 'Perfil', path: '/employee/profile', badge: null },
   ];
 
   const menu = role === 'patient' ? patientMenu : role === 'employee' ? employeeMenu : doctorMenu;
 
+  const getRoleName = () => {
+    switch (role) {
+      case 'patient':
+        return 'Paciente';
+      case 'doctor':
+        return 'Doctor';
+      case 'employee':
+        return 'Empleado';
+      default:
+        return 'Usuario';
+    }
+  };
+
+  const getRoleGradient = () => {
+    switch (role) {
+      case 'patient':
+        return 'from-blue-500 to-indigo-600';
+      case 'doctor':
+        return 'from-purple-500 to-pink-600';
+      case 'employee':
+        return 'from-emerald-500 to-green-600';
+      default:
+        return 'from-blue-500 to-indigo-600';
+    }
+  };
+
   return (
     <>
       {/* Desktop Sidebar */}
-      <aside className="hidden min-h-screen w-64 flex-col border-r border-gray-200 bg-white md:flex">
-        <div className="border-b border-gray-200 p-6">
-          <div className="flex items-center gap-2">
-            <Heart className="h-8 w-8 text-blue-500" />
-            <span className="text-xl font-bold text-gray-900">MedTrack</span>
+      <aside className="hidden min-h-screen w-72 flex-col border-r-2 border-gray-200 bg-gradient-to-b from-white to-gray-50 md:flex shadow-xl">
+        {/* Header mejorado */}
+        <div className={`bg-gradient-to-r ${getRoleGradient()} p-6 relative overflow-hidden`}>
+          <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16" />
+          <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/10 rounded-full -ml-12 -mb-12" />
+          
+          <div className="relative z-10">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="p-2.5 bg-white/20 backdrop-blur-sm rounded-xl">
+                <Heart className="h-7 w-7 text-white" />
+              </div>
+              <div>
+                <span className="text-2xl font-bold text-white">MedTrack</span>
+                <div className="flex items-center gap-1.5 mt-0.5">
+                  <Sparkles className="h-3 w-3 text-white/80" />
+                  <span className="text-xs font-medium text-white/90">{getRoleName()}</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
-        <nav className="flex-1 p-4">
-          <ul className="space-y-2">
-            {menu.map((item) => {
-              const Icon = item.icon;
-              const isActive = pathname === item.path;
-
-              return (
-                <li key={item.path}>
-                  <button
-                    onClick={() => router.push(item.path)}
-                    className={`flex w-full items-center gap-3 rounded-lg px-4 py-3 transition ${
-                      isActive
-                        ? 'bg-blue-50 font-medium text-blue-600'
-                        : 'text-gray-700 hover:bg-gray-50'
-                    }`}
-                  >
-                    <Icon className="h-5 w-5" />
-                    <span>{item.label}</span>
-                  </button>
-                </li>
-              );
-            })}
-          </ul>
-        </nav>
-      </aside>
-
-      {/* Mobile Bottom Navigation */}
-      <nav className="safe-area-inset-bottom fixed right-0 bottom-0 left-0 z-50 border-t border-gray-200 bg-white md:hidden">
-        <div className="grid grid-cols-5 gap-1 px-2 py-2">
-          {menu.slice(0, 5).map((item) => {
+        {/* Navigation */}
+        <nav className="flex-1 p-4 space-y-1">
+          {menu.map((item, index) => {
             const Icon = item.icon;
             const isActive = pathname === item.path;
 
@@ -101,17 +116,164 @@ export default function Sidebar({ role = 'patient' }) {
               <button
                 key={item.path}
                 onClick={() => router.push(item.path)}
-                className={`flex flex-col items-center justify-center rounded-lg px-1 py-2 transition ${
-                  isActive ? 'text-blue-600' : 'text-gray-600'
+                style={{ animationDelay: `${index * 50}ms` }}
+                className={`group flex w-full items-center justify-between gap-3 rounded-xl px-4 py-3.5 transition-all duration-200 animate-fadeInLeft relative overflow-hidden ${
+                  isActive
+                    ? 'bg-gradient-to-r from-blue-50 to-indigo-50 font-semibold text-blue-600 shadow-md scale-105 border-2 border-blue-200'
+                    : 'text-gray-700 hover:bg-white hover:shadow-md hover:scale-105 active:scale-95 border-2 border-transparent'
                 }`}
               >
-                <Icon className={`mb-1 h-6 w-6 ${isActive ? 'stroke-[2.5]' : ''}`} />
-                <span className="text-[10px] font-medium">{item.label}</span>
+                {/* Elemento decorativo de fondo */}
+                {isActive && (
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-indigo-500/5 animate-pulse" />
+                )}
+                
+                <div className="relative z-10 flex items-center gap-3 flex-1">
+                  <div className={`p-2 rounded-lg transition-all duration-200 ${
+                    isActive 
+                      ? 'bg-blue-500 shadow-lg' 
+                      : 'bg-gray-100 group-hover:bg-blue-100 group-hover:scale-110'
+                  }`}>
+                    <Icon className={`h-5 w-5 ${isActive ? 'text-white' : 'text-gray-600 group-hover:text-blue-600'}`} />
+                  </div>
+                  <span className="text-sm">{item.label}</span>
+                </div>
+
+                {/* Badge */}
+                {item.badge && (
+                  <span className={`relative z-10 px-2 py-1 rounded-full text-xs font-bold ${
+                    isActive 
+                      ? 'bg-blue-500 text-white' 
+                      : 'bg-gray-200 text-gray-700 group-hover:bg-blue-500 group-hover:text-white'
+                  } transition-all duration-200`}>
+                    {item.badge}
+                  </span>
+                )}
+
+                {/* Arrow indicator */}
+                {isActive && (
+                  <ChevronRight className="relative z-10 h-4 w-4 text-blue-600 animate-pulse" />
+                )}
+
+                {/* Active indicator bar */}
+                {isActive && (
+                  <div className={`absolute left-0 top-0 bottom-0 w-1.5 bg-gradient-to-b ${getRoleGradient()} rounded-r-full`} />
+                )}
+              </button>
+            );
+          })}
+        </nav>
+
+        {/* Footer con información extra */}
+        <div className="p-4 border-t-2 border-gray-200">
+          <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-4 border-2 border-blue-200">
+            <div className="flex items-center gap-3 mb-2">
+              <div className="p-2 bg-blue-500 rounded-lg">
+                <HelpCircle className="h-4 w-4 text-white" />
+              </div>
+              <span className="text-sm font-semibold text-gray-900">¿Necesitas ayuda?</span>
+            </div>
+            <p className="text-xs text-gray-600 mb-3">
+              Estamos aquí para apoyarte en todo momento
+            </p>
+            <button className="w-full py-2 bg-blue-500 text-white rounded-lg text-xs font-semibold hover:bg-blue-600 transition-all duration-200 active:scale-95">
+              Contactar Soporte
+            </button>
+          </div>
+        </div>
+      </aside>
+
+      {/* Mobile Bottom Navigation mejorada */}
+      <nav className="safe-area-inset-bottom fixed right-0 bottom-0 left-0 z-50 border-t-2 border-gray-200 bg-white/95 backdrop-blur-lg shadow-2xl md:hidden">
+        <div className="grid grid-cols-5 gap-1 px-2 py-3">
+          {menu.slice(0, 5).map((item, index) => {
+            const Icon = item.icon;
+            const isActive = pathname === item.path;
+
+            return (
+              <button
+                key={item.path}
+                onClick={() => router.push(item.path)}
+                className={`relative flex flex-col items-center justify-center rounded-xl px-1 py-2.5 transition-all duration-200 ${
+                  isActive 
+                    ? 'text-blue-600 scale-110' 
+                    : 'text-gray-600 active:scale-95'
+                }`}
+              >
+                {/* Active background */}
+                {isActive && (
+                  <div className="absolute inset-0 bg-gradient-to-t from-blue-50 to-indigo-50 rounded-xl animate-fadeIn" />
+                )}
+
+                <div className="relative z-10">
+                  <div className={`relative ${isActive ? 'animate-bounce-slow' : ''}`}>
+                    <Icon className={`mb-1 h-6 w-6 ${isActive ? 'stroke-[2.5]' : ''}`} />
+                    
+                    {/* Badge para mobile */}
+                    {item.badge && (
+                      <div className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full flex items-center justify-center">
+                        <span className="text-[8px] font-bold text-white">{item.badge}</span>
+                      </div>
+                    )}
+                  </div>
+                  
+                  <span className={`text-[10px] font-semibold ${isActive ? 'text-blue-600' : 'text-gray-600'}`}>
+                    {item.label}
+                  </span>
+                </div>
+
+                {/* Active indicator */}
+                {isActive && (
+                  <div className={`absolute top-0 left-1/2 -translate-x-1/2 w-8 h-1 bg-gradient-to-r ${getRoleGradient()} rounded-b-full`} />
+                )}
               </button>
             );
           })}
         </div>
       </nav>
+
+      <style jsx global>{`
+        @keyframes fadeInLeft {
+          from {
+            opacity: 0;
+            transform: translateX(-20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+
+        @keyframes bounce-slow {
+          0%, 100% {
+            transform: translateY(0);
+          }
+          50% {
+            transform: translateY(-4px);
+          }
+        }
+
+        .animate-fadeInLeft {
+          animation: fadeInLeft 0.4s ease-out forwards;
+        }
+
+        .animate-fadeIn {
+          animation: fadeIn 0.3s ease-out forwards;
+        }
+
+        .animate-bounce-slow {
+          animation: bounce-slow 1s ease-in-out;
+        }
+      `}</style>
     </>
   );
 }
