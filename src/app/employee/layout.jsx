@@ -1,8 +1,8 @@
 'use client';
 
 import RoleGuard from '@/components/General/Auth/RoleGuard';
-import Header from '../sections/global/Header';
-import Sidebar from '../sections/global/Sidebar';
+import Header from '../../components/General/Nav/Header';
+import Sidebar from '../../components/General/Nav/Sidebar';
 
 export default function EmployeeLayout({ children }) {
   return (

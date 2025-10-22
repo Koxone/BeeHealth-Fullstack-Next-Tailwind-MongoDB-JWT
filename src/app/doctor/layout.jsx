@@ -1,7 +1,7 @@
 'use client';
 
-import Sidebar from '../sections/global/Sidebar';
-import Header from '../sections/global/Header';
+import Sidebar from '../../components/General/Nav/Sidebar';
+import Header from '../../components/General/Nav/Header';
 import { useAuthStore } from '@/Zustand/useAuthStore';
 import RoleGuard from '@/components/General/Auth/RoleGuard';
 
