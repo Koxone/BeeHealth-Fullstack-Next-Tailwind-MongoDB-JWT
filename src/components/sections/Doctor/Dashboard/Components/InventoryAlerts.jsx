@@ -224,7 +224,7 @@ export default function InventoryAlerts({ items, onVerMas }) {
 
                   {/* Barra lateral de color */}
                   <div
-                    className={`absolute top-0 bottom-0 left-0 w-1.5 bg-gradient-to-b ${config.gradient} transition-all duration-300 group-hover:w-2`}
+                    className={`absolute top-0 bottom-0 left-0 w-1.5 bg-linear-to-b ${config.gradient} transition-all duration-300 group-hover:w-2`}
                   />
                 </div>
               );

@@ -84,7 +84,7 @@ export default function Sidebar({ role = 'patient' }) {
   return (
     <>
       {/* Desktop Sidebar */}
-      <aside className="hidden min-h-screen w-72 flex-col border-r-2 border-gray-200 bg-gradient-to-b from-white to-gray-50 shadow-xl md:flex">
+      <aside className="hidden min-h-screen w-72 flex-col border-r-2 border-gray-200 bg-linear-to-b from-white to-gray-50 shadow-xl md:flex">
         {/* Header mejorado */}
         <div className={`bg-linear-to-r ${getRoleGradient()} relative overflow-hidden p-6`}>
           <div className="absolute top-0 right-0 -mt-16 -mr-16 h-32 w-32 rounded-full bg-white/10" />
@@ -164,7 +164,7 @@ export default function Sidebar({ role = 'patient' }) {
                 {/* Active indicator bar */}
                 {isActive && (
                   <div
-                    className={`absolute top-0 bottom-0 left-0 w-1.5 bg-gradient-to-b ${getRoleGradient()} rounded-r-full`}
+                    className={`absolute top-0 bottom-0 left-0 w-1.5 bg-linear-to-b ${getRoleGradient()} rounded-r-full`}
                   />
                 )}
               </button>

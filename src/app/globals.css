@@ -1,6 +1,14 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 button {
   cursor: pointer;
   transition: none;
+}
+
+@theme {
+  --color-asana-cream: #fff9ec;
+  --color-asana-green: #8b9c94;
+  --color-asana-beige: #efe1d5;
+  --color-asana-blue: #90acba;
+  --color-asana-white: #ffffff;
 }
