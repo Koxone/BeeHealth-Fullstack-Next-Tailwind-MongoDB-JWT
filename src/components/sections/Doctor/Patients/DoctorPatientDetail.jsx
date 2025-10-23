@@ -31,7 +31,7 @@ import BackButton from './Components/BackButton';
 import PatientHeader from './Components/PatientHeader';
 import QuickStats from './Components/QuickStats';
 import WeightChart from './Components/WeightChart';
-import ClinicalHistory from './Components/ClinicalHistory';
+import ClinicalHistory from './Components/ClinicalHistory/ClinicalHistory';
 import HistoryModal from './Components/HistoryModal';
 
 export default function DoctorPatientDetail() {
