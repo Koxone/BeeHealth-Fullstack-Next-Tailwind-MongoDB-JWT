@@ -27,12 +27,12 @@ import moment from 'moment';
 import 'moment/locale/es';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
-import BackButton from './Components/BackButton';
-import PatientHeader from './Components/PatientHeader';
-import QuickStats from './Components/QuickStats';
-import WeightChart from './Components/WeightChart';
-import ClinicalHistory from './Components/ClinicalHistory/ClinicalHistory';
-import HistoryModal from './Components/HistoryModal';
+import BackButton from '../[id]/Components/BackButton';
+import PatientHeader from '../[id]/Components/PatientHeader';
+import QuickStats from '../[id]/Components/QuickStats';
+import WeightChart from '../[id]/Components/WeightChart';
+import ClinicalHistory from '../[id]/Components/ClinicalHistory/ClinicalHistory';
+import HistoryModal from '../[id]/Components/HistoryModal';
 
 export default function DoctorPatientDetail() {
   // Local

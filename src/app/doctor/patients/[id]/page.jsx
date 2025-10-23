@@ -1,4 +1,4 @@
-import DoctorPatientDetail from '@/components/sections/Doctor/Patients/DoctorPatientDetail';
+import DoctorPatientDetail from '@/components/sections/Doctor/Patients/[id]/DoctorPatientDetail';
 import React from 'react';
 
 function DoctorPatientsPage() {
