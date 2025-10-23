@@ -1,9 +1,9 @@
-import DoctorPatientDetail from '@/components/sections/Doctor/Patients/DoctorPatientDetail';
+import DoctorPatientDetail from '@/components/sections/Doctor/Patients/[id]/DoctorPatientDetail';
 import React from 'react';
 
 function DoctorPatientsPage() {
   return (
-    <div>
+    <div className="h-screen overflow-hidden pb-40">
       <DoctorPatientDetail />
     </div>
   );
