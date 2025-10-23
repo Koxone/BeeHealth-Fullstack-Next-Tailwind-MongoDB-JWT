@@ -7,7 +7,7 @@ export default function Stats({ historyData = [] }) {
   const stats = calculateStats(historyData);
 
   return (
-    <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
+    <div className="grid grid-cols-1 gap-4 px-2 md:grid-cols-4">
       <div className="rounded-2xl border-2 border-gray-200 bg-white p-4 shadow-sm transition-all duration-300 hover:scale-105 hover:shadow-lg">
         <div className="mb-2 flex items-center justify-between">
           <p className="text-sm font-medium text-gray-600">Peso Inicial</p>
