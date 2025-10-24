@@ -1,6 +1,5 @@
 'use client';
 
-/* imports */
 import { ArrowLeft, Calendar as CalendarIcon } from 'lucide-react';
 
 /* header */

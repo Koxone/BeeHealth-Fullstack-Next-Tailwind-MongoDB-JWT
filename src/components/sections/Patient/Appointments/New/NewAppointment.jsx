@@ -1,10 +1,8 @@
 'use client';
 
-/* imports */
-import { useState } from 'react'; // state
-import { useRouter } from 'next/navigation'; // navigation
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
-/* components */
 import HeaderBar from './Components/HeaderBar';
 import ProgressSteps from './Components/ProgressSteps';
 import DoctorsGrid from './Components/DoctorsGrid';

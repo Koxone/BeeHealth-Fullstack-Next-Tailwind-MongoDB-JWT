@@ -18,7 +18,6 @@ import {
   Sparkles,
 } from 'lucide-react';
 
-/* components */
 import HeaderBar from './Components/HeaderBar';
 import StatsGrid from './Components/StatsGrid';
 import CalendarCard from './Components/CalendarCard';

@@ -1,6 +1,5 @@
 'use client';
 
-/* imports */
 import { Sparkles, User, Calendar as CalendarIcon, Clock } from 'lucide-react';
 
 /* summary */

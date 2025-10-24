@@ -1,6 +1,5 @@
 'use client';
 
-/* imports */
 import { Clock, Check } from 'lucide-react';
 
 /* slots */

@@ -1,6 +1,5 @@
 'use client';
 
-/* imports */
 import { User, Calendar as CalendarIcon, Clock, Check } from 'lucide-react';
 
 /* steps */

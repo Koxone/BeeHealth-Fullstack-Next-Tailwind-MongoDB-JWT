@@ -2,7 +2,6 @@
 
 import { Check, Stethoscope } from 'lucide-react';
 
-/* doctors */
 export default function DoctorsGrid({ selectedDoctor, onSelect }) {
   /* Mock Data */
   const doctors = [

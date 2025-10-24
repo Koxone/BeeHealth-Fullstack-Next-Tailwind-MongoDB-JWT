@@ -1,8 +1,7 @@
 'use client';
 
-/* imports */
-import { useState } from 'react'; // state
-import { useRouter } from 'next/navigation'; // navigation
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import {
   Users,
   DollarSign,
@@ -18,7 +17,6 @@ import {
 } from 'lucide-react';
 import { useAuthStore } from '@/Zustand/useAuthStore'; // auth
 
-/* components */
 import HeaderWelcome from './Components/HeaderWelcome';
 import StatsGrid from './Components/StatsGrid';
 import IncomeChart from './Components/IncomeChart';

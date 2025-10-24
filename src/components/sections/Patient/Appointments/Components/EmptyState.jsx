@@ -1,6 +1,5 @@
 'use client';
 
-/* imports */
 import { Calendar, Plus } from 'lucide-react';
 
 /* empty */
