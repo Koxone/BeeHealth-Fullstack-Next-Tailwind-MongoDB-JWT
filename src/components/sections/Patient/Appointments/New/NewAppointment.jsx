@@ -12,6 +12,7 @@ import CalendarPicker from './Components/CalendarPicker';
 import TimeSlots from './Components/TimeSlots';
 import ReasonField from './Components/ReasonField';
 import SummaryCard from './Components/SummaryCard';
+import { availableSlots } from './Components/AvailableSlots';
 
 /* demo data */
 const doctors = [
@@ -19,15 +20,6 @@ const doctors = [
   { id: 2, nombre: 'Dr. Arturo Lemus', especialidad: 'Medicina Estética', avatar: 'CR' },
   { id: 3, nombre: 'Dra. Maureen Acosta', especialidad: 'Nutrición', avatar: 'AM' },
 ];
-
-/* demo data */
-const availableSlots = {
-  '2024-10-21': ['09:00', '10:00', '11:00', '15:00', '16:00'],
-  '2024-10-22': ['09:00', '10:00', '14:00', '15:00', '16:00', '17:00'],
-  '2024-10-23': ['09:00', '11:00', '15:00', '16:00'],
-  '2024-10-24': ['10:00', '11:00', '14:00', '15:00', '16:00'],
-  '2024-10-25': ['09:00', '10:00', '11:00', '15:00'],
-};
 
 /* utils */
 const getDaysInMonth = (date) => {
