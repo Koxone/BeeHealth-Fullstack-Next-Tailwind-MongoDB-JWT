@@ -54,7 +54,6 @@ export async function POST(req) {
       motivoConsulta: motivoConsulta || lastRecord?.motivoConsulta || 'Consulta general',
       fechaRegistro: fechaRegistro || new Date(),
       talla: talla || lastRecord?.talla || 0,
-      indiceMasaCorporal: indiceMasaCorporal || lastRecord?.indiceMasaCorporal || null,
     });
 
     return NextResponse.json(
@@ -80,7 +79,6 @@ export async function PUT(req) {
       return NextResponse.json({ error: 'Falta el ID del historial' }, { status: 400 });
     }
 
-    // Forzar que la fecha se interprete como Date válida
     if (updates.fechaRegistro) {
       updates.fechaRegistro = new Date(updates.fechaRegistro);
     }
