@@ -47,9 +47,6 @@ export default function AppointmentsCard({ selectedDate, appointments, icons }) 
                   </div>
                   {/* patient */}
                   <div className="mb-3 flex items-start gap-3">
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-linear-to-br from-blue-500 to-purple-600 text-sm font-bold text-white shadow-md">
-                      {apt.avatar}
-                    </div>
                     <div className="min-w-0 flex-1">
                       <div className="mb-1 flex items-center gap-2">
                         <User className="h-4 w-4 shrink-0 text-gray-400" />

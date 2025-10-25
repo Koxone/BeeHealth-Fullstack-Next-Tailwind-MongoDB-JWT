@@ -1,8 +1,7 @@
-// /src/app/api/appointments/route.js
 import { google } from 'googleapis';
 import { NextResponse } from 'next/server';
 
-// auth
+/* Google Auth */
 const auth = new google.auth.GoogleAuth({
   credentials: {
     client_email: process.env.GOOGLE_CLIENT_EMAIL,
@@ -12,9 +11,11 @@ const auth = new google.auth.GoogleAuth({
 });
 
 const calendar = google.calendar({ version: 'v3', auth });
-const calendarId = 'jcdeleonozuna@gmail.com'; 
+const calendarId = 'jcdeleonozuna@gmail.com';
 
-// GET - obtener todas las citas
+/* ============================================================
+   GET - Obtener todas las citas
+============================================================ */
 export async function GET(request) {
   try {
     const { searchParams } = new URL(request.url);
@@ -36,21 +37,36 @@ export async function GET(request) {
   }
 }
 
-// POST - crear cita
+/* ============================================================
+   POST - Crear cita
+============================================================ */
 export async function POST(request) {
   try {
     const body = await request.json();
-    const { summary, description, start, end } = body;
+    const { nombre, telefono, email, motivo, fecha } = body;
 
-    if (!summary || !start || !end) {
-      return NextResponse.json({ error: 'Faltan campos obligatorios' }, { status: 400 });
+    if (!nombre || !telefono || !email || !motivo || !fecha) {
+      return NextResponse.json(
+        { error: 'Faltan campos obligatorios (nombre, telefono, email, motivo, fecha)' },
+        { status: 400 }
+      );
     }
 
     const event = {
-      summary,
-      description: description || '',
-      start: { dateTime: start, timeZone: 'America/Mexico_City' },
-      end: { dateTime: end, timeZone: 'America/Mexico_City' },
+      summary: nombre,
+      description: `Paciente: ${nombre}\nTeléfono: ${telefono}\nEmail: ${email}\nMotivo: ${motivo}`,
+      start: { dateTime: fecha, timeZone: 'America/Mexico_City' },
+      end: {
+        dateTime: new Date(new Date(fecha).getTime() + 30 * 60000).toISOString(), 
+        timeZone: 'America/Mexico_City',
+      },
+      reminders: {
+        useDefault: false,
+        overrides: [
+          { method: 'email', minutes: 60 },
+          { method: 'popup', minutes: 10 },
+        ],
+      },
     };
 
     const res = await calendar.events.insert({ calendarId, resource: event });
@@ -61,24 +77,34 @@ export async function POST(request) {
   }
 }
 
-// PUT - modificar cita
+/* ============================================================
+   PUT - Modificar cita
+============================================================ */
 export async function PUT(request) {
   try {
     const body = await request.json();
-    const { eventId, summary, description, start, end } = body;
+    const { eventId, nombre, telefono, email, motivo, fecha } = body;
 
     if (!eventId) {
       return NextResponse.json({ error: 'Falta eventId' }, { status: 400 });
     }
 
     const updatedEvent = {
-      summary,
-      description,
-      start: { dateTime: start, timeZone: 'America/Mexico_City' },
-      end: { dateTime: end, timeZone: 'America/Mexico_City' },
+      summary: nombre,
+      description:
+        nombre && telefono && email && motivo
+          ? `Paciente: ${nombre}\nTeléfono: ${telefono}\nEmail: ${email}\nMotivo: ${motivo}`
+          : undefined,
+      start: fecha ? { dateTime: fecha, timeZone: 'America/Mexico_City' } : undefined,
+      end: fecha
+        ? {
+            dateTime: new Date(new Date(fecha).getTime() + 30 * 60000).toISOString(),
+            timeZone: 'America/Mexico_City',
+          }
+        : undefined,
     };
 
-    const res = await calendar.events.update({
+    const res = await calendar.events.patch({
       calendarId,
       eventId,
       resource: updatedEvent,
@@ -91,7 +117,9 @@ export async function PUT(request) {
   }
 }
 
-// DELETE - eliminar cita
+/* ============================================================
+   DELETE - Eliminar cita
+============================================================ */
 export async function DELETE(request) {
   try {
     const { searchParams } = new URL(request.url);

@@ -47,7 +47,7 @@ const getDaysInMonth = (date) => {
   return days;
 };
 
-/* fetch function */
+/* Tanstack */
 async function fetchAppointments() {
   const res = await fetch('/api/appointments');
   if (!res.ok) throw new Error('Error al obtener citas');
@@ -67,9 +67,13 @@ async function fetchAppointments() {
         hour12: false,
       }),
       paciente: event.summary || 'Sin título',
-      telefono: event.description?.match(/Tel:\s*(\S+)/)?.[1] || 'N/A',
-      email: event.description?.match(/Email:\s*(\S+)/)?.[1] || 'N/A',
-      motivo: event.description || 'Sin descripción',
+      telefono: event.description?.match(/Tel[eé]fono:\s*([+\d\s-]+)/i)?.[1]?.trim() || 'N/A',
+      email: event.description?.match(/Email:\s*([^\n\r]+)/i)?.[1]?.trim() || 'N/A',
+
+      motivo:
+        event.description?.match(/Motivo:\s*([^\n\r]+)/i)?.[1]?.trim() ||
+        event.description ||
+        'Sin descripción',
       avatar: event.summary
         ? event.summary
             .split(' ')
@@ -79,23 +83,24 @@ async function fetchAppointments() {
     });
   });
 
-  console.log(formatted);
+  console.log('Data:', data);
+  console.log('Formatted:', formatted);
   return formatted;
 }
 
 export default function DoctorCalendar() {
-  /* ui state */
+  /* Local States */
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(null);
 
-  /* query */
+  /* Query */
   const { data: appointmentsData = {}, isLoading } = useQuery({
     queryKey: ['appointments'],
     queryFn: fetchAppointments,
-    refetchInterval: 60 * 1000, // optional: actualiza cada 60s
+    refetchInterval: 60 * 1000,
   });
 
-  /* helpers */
+  /* Helpers */
   const getAppointmentsForDate = (date) => {
     if (!date) return [];
     const dateStr = formatDate(date);
@@ -158,7 +163,14 @@ export default function DoctorCalendar() {
       : 0;
 
   /* loading */
-  if (isLoading) return <div className="py-10 text-center">Cargando citas...</div>;
+  if (isLoading)
+    return (
+      <div className="flex h-full items-center justify-center py-20">
+        {/* spinner */}
+        <div className="h-10 w-10 animate-spin rounded-full border-4 border-blue-400 border-t-transparent" />
+        <span className="ml-3 text-lg font-medium text-gray-600">Cargando citas...</span>
+      </div>
+    );
 
   return (
     <div className="h-full space-y-4 overflow-x-hidden overflow-y-auto md:space-y-6">
