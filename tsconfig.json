@@ -30,6 +30,6 @@
     "**/*.mts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "src/components/sections/doctor/dashboard/DoctorDashboard.jsx"  ],
   "exclude": ["node_modules"]
 }

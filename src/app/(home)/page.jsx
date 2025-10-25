@@ -1,5 +1,5 @@
+import Home from '@/components/sections/home/Home';
 import React from 'react';
-import Home from '../components/sections/home/Home';
 
 function HomePage() {
   return (
