@@ -1,10 +1,12 @@
 'use client';
 
 import { Heart, Mail, Lock, User, Phone, ArrowRight } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 export default function Signup() {
+  const router = useRouter();
   return (
-    <div className="flex min-h-screen items-center justify-center bg-linear-to-br from-blue-50 via-white to-green-50 p-4">
+    <div className="flex items-center justify-center bg-linear-to-br from-blue-50 via-white to-green-50 p-4">
       <div className="w-full max-w-md">
         {/* Header */}
         <div className="mb-6 text-center md:mb-8">
@@ -92,6 +94,7 @@ export default function Signup() {
 
             {/* Continue Button */}
             <button
+              onClick={() => router.push('/auth/signup/medical-history')}
               type="button"
               className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-500 py-3 font-medium text-white shadow-md transition hover:bg-blue-600 active:scale-95"
             >

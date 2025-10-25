@@ -10,7 +10,7 @@ export default function Home() {
   const [showMenu, setShowMenu] = useState<boolean>(false);
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-blue-50 via-white to-green-50">
+    <div className="bg-linear-to-br from-blue-50 via-white to-green-50">
       {/* Header */}
       <HomeHeader setShowMenu={setShowMenu} showMenu={showMenu} />
 
