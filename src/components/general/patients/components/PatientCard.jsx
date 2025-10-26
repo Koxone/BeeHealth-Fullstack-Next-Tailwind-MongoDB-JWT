@@ -39,7 +39,7 @@ export default function PatientCard({ paciente }) {
               {/* Last Appointment */}
               <div className="flex items-center gap-1">
                 <Calendar className="h-4 w-4" />
-                <span>Última: {paciente.ultimaVisita}</span>
+                <span>Última Cita: {paciente.ultimaVisita}</span>
               </div>
 
               {pathname.startsWith('/doctor') ? (

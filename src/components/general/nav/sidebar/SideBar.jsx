@@ -47,7 +47,7 @@ export default function Sidebar() {
                 className={`group relative flex w-full items-center justify-between gap-3 rounded-xl border-2 px-4 py-3.5 font-semibold shadow-md ${
                   isActive
                     ? 'border-blue-500 bg-linear-to-r from-blue-100 to-indigo-100 text-blue-700'
-                    : 'border-blue-200 bg-white text-black hover:border-blue-400'
+                    : 'border-blue-200 bg-white text-neutral-600 hover:border-blue-400'
                 }`}
               >
                 {/* Icon and Text */}
@@ -57,7 +57,7 @@ export default function Sidebar() {
                       isActive ? 'bg-blue-600' : 'bg-neutral-300'
                     }`}
                   >
-                    <Icon className={`h-5 w-5 ${isActive ? 'text-white' : 'text-black'}`} />
+                    <Icon className={`h-5 w-5 ${isActive ? 'text-white' : 'text-neutral-600'}`} />
                   </div>
                   <span className="text-sm">{item.label}</span>
                 </div>
