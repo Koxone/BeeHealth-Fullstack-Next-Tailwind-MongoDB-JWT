@@ -1,20 +1,15 @@
 'use client';
 
-import { ChevronRight } from 'lucide-react';
-
-import HeaderWelcome from './components/doctor/HeaderWelcome';
+import HeaderWelcome from './components/general/HeaderWelcome';
 import StatsGrid from './components/statsGrid/StatsGrid';
 import DoctorIncomeChart from './components/doctor/DoctorIncomeChart';
 import DoctorPatientsChart from './components/doctor/DoctorPatientsChart';
 import AppointmentsList from './components/general/AppointmentsToday';
-import AccountingSummary from './components/doctor/AccountingSummary';
-import InventoryAlerts from './components/doctor/InventoryAlerts';
-import QuickActions from './components/doctor/QuickActions';
-import CancelAppointmentModal from './components/doctor/CancelAppointmentModal';
+import DoctorAccountingSummary from './components/doctor/DoctorAccountingSummary';
+import InventoryAlerts from './components/general/InventoryAlerts';
+import CancelAppointmentModal from './components/general/CancelAppointmentModal';
 import { usePathname } from 'next/navigation';
 import PatientEvolutionChart from './components/patient/EvolutionChart';
-import EmployeeWeekChart from './components/employee/WeekChart';
-import EmployeeInventoryAlerts from './components/employee/EmployeeInventoryAlerts';
 
 export default function GeneralDashboard() {
   const pathname = usePathname();
@@ -61,7 +56,7 @@ export default function GeneralDashboard() {
       {/* Summaries */}
       {dashboardType === 'doctor' && (
         <div className="grid grid-cols-1 gap-4 md:gap-6 lg:grid-cols-2">
-          <AccountingSummary />
+          <DoctorAccountingSummary />
           <InventoryAlerts />
         </div>
       )}

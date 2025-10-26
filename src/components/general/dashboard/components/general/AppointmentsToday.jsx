@@ -2,15 +2,14 @@
 
 import { Clock, Users, ChevronRight } from 'lucide-react';
 
-// today appointments list
 export default function AppointmentsToday({ onConfirm, onViewAll }) {
- const citasHoyData = [
-  { id: 1, hora: '09:00', paciente: 'Juan Pérez', estado: 'Confirmada', telefono: '555-0101' },
-  { id: 2, hora: '10:30', paciente: 'María López', estado: 'Pendiente', telefono: '555-0102' },
-  { id: 3, hora: '11:00', paciente: 'Carlos Ruiz', estado: 'Confirmada', telefono: '555-0103' },
-  { id: 4, hora: '15:00', paciente: 'Ana Martínez', estado: 'Pendiente', telefono: '555-0104' },
-  { id: 5, hora: '16:30', paciente: 'Pedro García', estado: 'Confirmada', telefono: '555-0105' },
-];
+  const citasHoyData = [
+    { id: 1, hora: '09:00', paciente: 'Juan Pérez', estado: 'Confirmada', telefono: '555-0101' },
+    { id: 2, hora: '10:30', paciente: 'María López', estado: 'Pendiente', telefono: '555-0102' },
+    { id: 3, hora: '11:00', paciente: 'Carlos Ruiz', estado: 'Confirmada', telefono: '555-0103' },
+    { id: 4, hora: '15:00', paciente: 'Ana Martínez', estado: 'Pendiente', telefono: '555-0104' },
+    { id: 5, hora: '16:30', paciente: 'Pedro García', estado: 'Confirmada', telefono: '555-0105' },
+  ];
   return (
     <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm md:p-6">
       <div className="mb-4 flex items-center justify-between">

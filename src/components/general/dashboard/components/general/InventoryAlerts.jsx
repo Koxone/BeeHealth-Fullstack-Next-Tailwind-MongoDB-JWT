@@ -13,7 +13,6 @@ import {
 } from 'lucide-react';
 
 export default function InventoryAlerts() {
-  // Render
   return (
     <div className="overflow-hidden rounded-2xl border-2 border-gray-200 bg-white shadow-lg transition-all duration-300 hover:shadow-xl">
       {/* Header */}

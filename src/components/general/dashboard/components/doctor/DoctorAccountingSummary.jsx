@@ -3,8 +3,7 @@
 // Static imports
 import { Users, Pill, AlertCircle, ChevronRight, TrendingUp, DollarSign } from 'lucide-react';
 
-export default function AccountingSummary() {
-  // Render
+export default function DoctorAccountingSummary() {
   return (
     <div className="overflow-hidden rounded-2xl border-2 border-gray-200 bg-white shadow-lg transition-all duration-300 hover:shadow-xl">
       {/* Header */}
