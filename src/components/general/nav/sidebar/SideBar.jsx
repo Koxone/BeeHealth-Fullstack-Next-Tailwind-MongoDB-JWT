@@ -36,7 +36,7 @@ export default function Sidebar() {
       <aside className="hidden min-h-screen w-72 flex-col border-r-2 border-gray-200 bg-linear-to-b from-white to-gray-50 shadow-xl md:flex">
         <nav className="flex-1 space-y-1 p-4">
           {/* Buttons */}
-          {sidebarOptions.map((item) => {
+          {sidebarOptions.map((item, index) => {
             const Icon = item.icon;
             const isActive = pathname === item.path;
 
@@ -44,33 +44,44 @@ export default function Sidebar() {
               <button
                 key={item.path}
                 onClick={() => router.push(`${item.path}`)}
-                className={`group relative flex w-full items-center justify-between gap-3 rounded-xl border-2 px-4 py-3.5 font-semibold shadow-md ${
+                style={{ animationDelay: `${index * 50}ms` }}
+                className={`group animate-fadeInLeft relative flex w-full items-center justify-between gap-3 overflow-hidden rounded-xl px-4 py-3.5 transition-all duration-200 ${
                   isActive
-                    ? 'border-blue-500 bg-linear-to-r from-blue-100 to-indigo-100 text-blue-700'
-                    : 'border-blue-200 bg-white text-neutral-600 hover:border-blue-400'
+                    ? 'scale-105 border-2 border-blue-200 bg-linear-to-r from-blue-50 to-indigo-50 font-semibold text-blue-600 shadow-md'
+                    : 'border-2 border-transparent text-gray-700 hover:scale-105 hover:bg-white hover:shadow-md active:scale-95'
                 }`}
               >
-                {/* Icon and Text */}
+                {/* Active background */}
+                {isActive && (
+                  <div className="absolute inset-0 animate-pulse bg-linear-to-r from-blue-500/5 to-indigo-500/5" />
+                )}
+
+                {/* Icon and label */}
                 <div className="relative z-10 flex flex-1 items-center gap-3">
                   <div
-                    className={`rounded-lg p-2 shadow-lg ${
-                      isActive ? 'bg-blue-600' : 'bg-neutral-300'
+                    className={`rounded-lg p-2 transition-all duration-200 ${
+                      isActive
+                        ? 'bg-blue-500 shadow-lg'
+                        : 'bg-gray-100 group-hover:scale-110 group-hover:bg-blue-100'
                     }`}
                   >
-                    <Icon className={`h-5 w-5 ${isActive ? 'text-white' : 'text-neutral-600'}`} />
+                    <Icon
+                      className={`h-5 w-5 ${
+                        isActive ? 'text-white' : 'text-gray-600 group-hover:text-blue-600'
+                      }`}
+                    />
                   </div>
                   <span className="text-sm">{item.label}</span>
                 </div>
 
                 {/* Chevron */}
-                <ChevronRight
-                  className={`relative z-10 h-4 w-4 ${
-                    isActive ? 'text-blue-700' : 'text-blue-600 group-hover:animate-pulse'
-                  }`}
-                />
+                {isActive && (
+                  <ChevronRight className="relative z-10 h-4 w-4 animate-pulse text-blue-600" />
+                )}
+
                 {/* Decorative Bar */}
                 {isActive && (
-                  <div className="absolute top-0 bottom-0 left-0 w-1.5 rounded-l-full bg-green-500" />
+                  <div className="absolute top-0 bottom-0 left-0 w-1.5 rounded-r-full bg-linear-to-b from-blue-500 to-indigo-600" />
                 )}
               </button>
             );
