@@ -6,10 +6,11 @@ import DoctorIncomeChart from './components/doctor/DoctorIncomeChart';
 import DoctorPatientsChart from './components/doctor/DoctorPatientsChart';
 import AppointmentsList from './components/general/AppointmentsToday';
 import DoctorAccountingSummary from './components/doctor/DoctorAccountingSummary';
-import InventoryAlerts from './components/general/InventoryAlerts';
+import InventoryAlerts from './components/general/InventoryAlerts/InventoryAlerts';
 import CancelAppointmentModal from './components/general/CancelAppointmentModal';
 import { usePathname } from 'next/navigation';
-import PatientEvolutionChart from './components/patient/EvolutionChart';
+import PatientEvolutionChart from './components/patient/PatientEvolutionChart';
+import PatientMotivationalBanner from './components/patient/PatientMotivationalBanner';
 
 export default function GeneralDashboard() {
   const pathname = usePathname();
@@ -27,7 +28,7 @@ export default function GeneralDashboard() {
       {/* Stats */}
       <StatsGrid />
 
-      {/* Charts section */}
+      {/* Doctor Charts */}
       {dashboardType === 'doctor' && (
         <div className="grid grid-cols-1 gap-4 md:gap-6 lg:grid-cols-2">
           <DoctorIncomeChart data={[]} />
@@ -35,10 +36,25 @@ export default function GeneralDashboard() {
         </div>
       )}
 
+      {/* Doctor Appointments */}
+      {dashboardType === 'doctor' && <AppointmentsList />}
+
+      {/* Doctor Summaries */}
+      {dashboardType === 'doctor' && (
+        <div className="grid grid-cols-1 gap-4 md:gap-6 lg:grid-cols-2">
+          <DoctorAccountingSummary />
+          <InventoryAlerts />
+        </div>
+      )}
+
       {/* Patient */}
       {dashboardType === 'patient' && (
         <div className="grid grid-cols-1 gap-4 md:gap-6 lg:grid-cols-1">
+          {/* Chart */}
           <PatientEvolutionChart />
+
+          {/* Motivational Banner */}
+          <PatientMotivationalBanner />
         </div>
       )}
 
@@ -46,17 +62,6 @@ export default function GeneralDashboard() {
       {dashboardType === 'employee' && (
         <div className="grid grid-cols-1 gap-4 md:gap-6 lg:grid-cols-2">
           <AppointmentsList />
-          <InventoryAlerts />
-        </div>
-      )}
-
-      {/* Appointments */}
-      {dashboardType === 'doctor' && <AppointmentsList />}
-
-      {/* Summaries */}
-      {dashboardType === 'doctor' && (
-        <div className="grid grid-cols-1 gap-4 md:gap-6 lg:grid-cols-2">
-          <DoctorAccountingSummary />
           <InventoryAlerts />
         </div>
       )}

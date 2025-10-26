@@ -54,11 +54,11 @@ export default function PatientEvolutionChart({
         </LineChart>
       </ResponsiveContainer>
 
-      <div className="mt-4 rounded-lg bg-blue-50 p-3">
+      {/* <div className="mt-4 rounded-lg bg-blue-50 p-3">
         <p className="text-sm text-gray-700">
           Tip: usa los cards de arriba para cambiar la métrica mostrada.
         </p>
-      </div>
+      </div> */}
     </div>
   );
 }

@@ -23,7 +23,7 @@ export default function AppointmentsToday({ onConfirm, onViewAll }) {
         </button>
       </div>
 
-      <div className="space-y-3">
+      <div className="max-h-[400px] space-y-3 overflow-y-auto">
         {citasHoyData.map((cita) => (
           <div
             key={cita.id}
