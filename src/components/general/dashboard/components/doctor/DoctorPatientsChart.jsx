@@ -4,7 +4,7 @@ import { Users } from 'lucide-react';
 import { ResponsiveContainer, BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Bar } from 'recharts';
 
 /* chart */
-export default function PatientsChart({ data }) {
+export default function DoctorPatientsChart({ data }) {
   return (
     <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm md:p-6">
       <div className="mb-4 flex items-center justify-between">

@@ -12,7 +12,7 @@ import {
 } from 'recharts';
 
 /* chart */
-export default function IncomeChart({ data }) {
+export default function DoctorIncomeChart({ data }) {
   return (
     <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm md:p-6">
       <div className="mb-4 flex items-center justify-between">
