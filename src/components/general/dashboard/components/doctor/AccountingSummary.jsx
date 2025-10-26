@@ -8,7 +8,7 @@ export default function AccountingSummary() {
   return (
     <div className="overflow-hidden rounded-2xl border-2 border-gray-200 bg-white shadow-lg transition-all duration-300 hover:shadow-xl">
       {/* Header */}
-      <div className="relative overflow-hidden bg-linear-to-r from-blue-600 via-indigo-600 to-purple-600 px-6 py-5">
+      <div className="relative overflow-hidden bg-blue-400 px-6 py-5">
         <div className="absolute top-0 right-0 -mt-16 -mr-16 h-32 w-32 rounded-full bg-white/10" />
         <div className="absolute bottom-0 left-0 -mb-12 -ml-12 h-24 w-24 rounded-full bg-white/10" />
 

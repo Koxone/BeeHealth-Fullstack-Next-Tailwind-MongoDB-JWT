@@ -17,7 +17,7 @@ export default function InventoryAlerts() {
   return (
     <div className="overflow-hidden rounded-2xl border-2 border-gray-200 bg-white shadow-lg transition-all duration-300 hover:shadow-xl">
       {/* Header */}
-      <div className="relative overflow-hidden bg-linear-to-r from-rose-600 via-red-600 to-orange-600 px-6 py-5">
+      <div className="relative overflow-hidden bg-red-400 px-6 py-5">
         <div className="absolute top-0 right-0 -mt-16 -mr-16 h-32 w-32 animate-pulse rounded-full bg-white/10" />
         <div className="absolute bottom-0 left-0 -mb-12 -ml-12 h-24 w-24 rounded-full bg-white/10" />
 
@@ -104,13 +104,11 @@ export default function InventoryAlerts() {
             </div>
             <AlertTriangle className="h-6 w-6 shrink-0 animate-bounce text-rose-600" />
           </div>
-
-          <div className="absolute top-0 bottom-0 left-0 w-1.5 bg-linear-to-b from-rose-500 to-red-600" />
         </div>
       </div>
 
       {/* Empty state */}
-      <div className="py-12 text-center">
+      {/* <div className="py-12 text-center">
         <div className="relative mb-4 inline-block">
           <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-linear-to-br from-green-100 to-emerald-100">
             <Package className="h-10 w-10 text-green-600" />
@@ -122,7 +120,7 @@ export default function InventoryAlerts() {
         <h3 className="mb-2 text-xl font-bold text-gray-900">¡Todo está bajo control!</h3>
         <p className="mb-1 text-gray-600">No hay alertas de inventario</p>
         <p className="text-sm text-gray-500">Todo el stock está en niveles óptimos</p>
-      </div>
+      </div> */}
     </div>
   );
 }

@@ -58,7 +58,7 @@ export default function AppointmentsList() {
       </div>
 
       {/* Empty state */}
-      <div className="rounded-2xl border-2 border-dashed border-gray-300 bg-linear-to-br from-gray-50 to-blue-50 p-12 text-center">
+      {/* <div className="rounded-2xl border-2 border-dashed border-gray-300 bg-linear-to-br from-gray-50 to-blue-50 p-12 text-center">
         <div className="mx-auto max-w-md">
           <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-blue-100">
             <Calendar className="h-8 w-8 text-blue-600" />
@@ -66,7 +66,7 @@ export default function AppointmentsList() {
           <h3 className="mb-2 text-xl font-bold text-gray-900">No hay citas programadas</h3>
           <p className="text-gray-600">Las citas aparecerán aquí cuando sean agendadas</p>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
