@@ -1,11 +1,8 @@
 'use client';
 
-// Static imports
 import { Users, DollarSign, AlertTriangle, Activity } from 'lucide-react';
 
-// Layout
 export default function StatsGrid() {
-  // Render
   return (
     <div className="grid grid-cols-2 gap-3 md:gap-4 lg:grid-cols-4">
       {/* Income */}

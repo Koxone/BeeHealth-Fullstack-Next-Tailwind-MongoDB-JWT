@@ -1,9 +1,9 @@
-import DoctorDashboard from '@/components/sections/doctor/dashboard/DoctorDashboard';
+import GeneralDashboard from '@/components/general/dashboard/Dashboard';
 
 function DoctorDashboardPage() {
   return (
     <div>
-      <DoctorDashboard />
+      <GeneralDashboard />
     </div>
   );
 }

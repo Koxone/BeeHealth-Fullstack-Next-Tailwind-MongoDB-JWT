@@ -1,6 +1,5 @@
 'use client';
 
-// Static imports
 import {
   Users,
   DollarSign,
@@ -15,7 +14,6 @@ import {
   Calendar,
 } from 'lucide-react';
 
-// Component imports
 import HeaderWelcome from './components/HeaderWelcome';
 import StatsGrid from './components/StatsGrid';
 import IncomeChart from './components/IncomeChart';
@@ -25,9 +23,10 @@ import AccountingSummary from './components/AccountingSummary';
 import InventoryAlerts from './components/InventoryAlerts';
 import QuickActions from './components/QuickActions';
 import CancelAppointmentModal from './components/CancelAppointmentModal';
+import { usePathname } from 'next/navigation';
 
-export default function Dashboard() {
-  // Render
+export default function GeneralDashboard() {
+  const pathname = usePathname();
   return (
     <div className="h-full space-y-4 overflow-y-auto md:space-y-6">
       {/* Header */}

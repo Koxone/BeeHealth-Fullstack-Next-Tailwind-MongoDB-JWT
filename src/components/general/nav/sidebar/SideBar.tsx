@@ -23,16 +23,19 @@ import { usePathname } from 'next/navigation';
 export default function Sidebar() {
   const pathname = usePathname();
 
-  if (pathname === '/') {
-    return null;
-  }
+  const sidebarOptions = pathname.startsWith('/doctor')
+    ? doctorSidebarItems
+    : pathname.startsWith('/patient')
+      ? patientSidebarItems
+      : employeeSidebarItems;
+
   return (
     <>
       {/* Desktop sidebar */}
       <aside className="hidden min-h-screen w-72 flex-col border-r-2 border-gray-200 bg-linear-to-b from-white to-gray-50 shadow-xl md:flex">
         <nav className="flex-1 space-y-1 p-4">
           {/* Buttons */}
-          {doctorSidebarItems.map((item, index) => {
+          {sidebarOptions.map((item, index) => {
             const Icon = item.icon;
             return (
               <button
