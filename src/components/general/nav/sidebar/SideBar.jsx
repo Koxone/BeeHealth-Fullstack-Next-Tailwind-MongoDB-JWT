@@ -18,10 +18,11 @@ import {
   doctorSidebarItems,
   employeeSidebarItems,
 } from './components/SideBarData';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const router = useRouter();
 
   const sidebarOptions = pathname.startsWith('/doctor')
     ? doctorSidebarItems
@@ -35,21 +36,42 @@ export default function Sidebar() {
       <aside className="hidden min-h-screen w-72 flex-col border-r-2 border-gray-200 bg-linear-to-b from-white to-gray-50 shadow-xl md:flex">
         <nav className="flex-1 space-y-1 p-4">
           {/* Buttons */}
-          {sidebarOptions.map((item, index) => {
+          {sidebarOptions.map((item) => {
             const Icon = item.icon;
+            const isActive = pathname === item.path;
+
             return (
               <button
                 key={item.path}
-                className="group relative flex w-full items-center justify-between gap-3 rounded-xl border-2 border-blue-200 bg-linear-to-r from-blue-50 to-indigo-50 px-4 py-3.5 font-semibold text-blue-600 shadow-md transition-all duration-200"
+                onClick={() => router.push(`${item.path}`)}
+                className={`group relative flex w-full items-center justify-between gap-3 rounded-xl border-2 px-4 py-3.5 font-semibold shadow-md ${
+                  isActive
+                    ? 'border-blue-500 bg-linear-to-r from-blue-100 to-indigo-100 text-blue-700'
+                    : 'border-blue-200 bg-white text-black hover:border-blue-400'
+                }`}
               >
+                {/* Icon and Text */}
                 <div className="relative z-10 flex flex-1 items-center gap-3">
-                  <div className="rounded-lg bg-blue-500 p-2 shadow-lg">
-                    <Icon className={`h-5 w-5`} />
+                  <div
+                    className={`rounded-lg p-2 shadow-lg ${
+                      isActive ? 'bg-blue-600' : 'bg-neutral-300'
+                    }`}
+                  >
+                    <Icon className={`h-5 w-5 ${isActive ? 'text-white' : 'text-black'}`} />
                   </div>
                   <span className="text-sm">{item.label}</span>
                 </div>
-                <ChevronRight className="relative z-10 h-4 w-4 animate-pulse text-blue-600" />
-                <div className="absolute top-0 bottom-0 left-0 w-1.5 rounded-r-full bg-linear-to-b from-purple-500 to-pink-600" />
+
+                {/* Chevron */}
+                <ChevronRight
+                  className={`relative z-10 h-4 w-4 ${
+                    isActive ? 'text-blue-700' : 'text-blue-600 group-hover:animate-pulse'
+                  }`}
+                />
+                {/* Decorative Bar */}
+                {isActive && (
+                  <div className="absolute top-0 bottom-0 left-0 w-1.5 rounded-l-full bg-green-500" />
+                )}
               </button>
             );
           })}
