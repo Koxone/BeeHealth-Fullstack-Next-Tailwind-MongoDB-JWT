@@ -1,6 +1,3 @@
-'use client';
-
-// Static imports
 import { Users, Pill, AlertCircle, ChevronRight, TrendingUp, DollarSign } from 'lucide-react';
 
 export default function DoctorAccountingSummary() {

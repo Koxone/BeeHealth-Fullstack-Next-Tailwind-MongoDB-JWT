@@ -1,6 +1,5 @@
-'use client';
-
 import { Clock, Users, ChevronRight } from 'lucide-react';
+import Link from 'next/link';
 
 export default function AppointmentsToday({ onConfirm, onViewAll }) {
   const citasHoyData = [
@@ -10,17 +9,18 @@ export default function AppointmentsToday({ onConfirm, onViewAll }) {
     { id: 4, hora: '15:00', paciente: 'Ana Martínez', estado: 'Pendiente', telefono: '555-0104' },
     { id: 5, hora: '16:30', paciente: 'Pedro García', estado: 'Confirmada', telefono: '555-0105' },
   ];
+
   return (
     <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm md:p-6">
       <div className="mb-4 flex items-center justify-between">
         <h2 className="text-lg font-semibold text-gray-900 md:text-xl">Citas de Hoy</h2>
-        <button
-          onClick={onViewAll}
+        <Link
+          href="/doctor/calendar"
           className="flex items-center gap-2 rounded-lg bg-blue-500 px-3 py-2 text-sm text-white transition hover:bg-blue-600 active:scale-95"
         >
           Ver todas
           <ChevronRight className="h-4 w-4" />
-        </button>
+        </Link>
       </div>
 
       <div className="max-h-[400px] space-y-3 overflow-y-auto">
@@ -54,14 +54,14 @@ export default function AppointmentsToday({ onConfirm, onViewAll }) {
                   </div>
                 </div>
               </div>
-              {cita.estado === 'Pendiente' && (
+              {/* {cita.estado === 'Pendiente' && (
                 <button
                   onClick={() => onConfirm(cita.id)}
                   className="rounded-lg bg-green-500 px-4 py-2 text-sm text-white transition hover:bg-green-600 active:scale-95"
                 >
                   Confirmar
                 </button>
-              )}
+              )} */}
             </div>
           </div>
         ))}
