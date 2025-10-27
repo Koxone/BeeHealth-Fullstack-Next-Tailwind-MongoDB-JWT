@@ -1,14 +1,4 @@
-import { usePathname } from 'next/navigation';
-
-export default function HeaderWelcome({ fullName }) {
-  const pathname = usePathname();
-
-  const dashboardType = pathname.startsWith('/doctor')
-    ? 'doctor'
-    : pathname.startsWith('/patient')
-      ? 'patient'
-      : 'employee';
-
+export default function HeaderWelcome({ type, fullName }) {
   const today = new Date().toLocaleDateString('es-ES', {
     weekday: 'long',
     year: 'numeric',
@@ -18,17 +8,17 @@ export default function HeaderWelcome({ fullName }) {
 
   return (
     <div>
-      {dashboardType === 'doctor' && (
+      {type === 'doctor' && (
         <h1 className="mb-2 text-2xl font-bold text-gray-900 md:text-3xl">
           Bienvenido, Dr. {fullName}
         </h1>
       )}
-      {dashboardType === 'patient' && (
+      {type === 'patient' && (
         <h1 className="mb-2 text-2xl font-bold text-gray-900 md:text-3xl">
           Bienvenido, {fullName}
         </h1>
       )}
-      {dashboardType === 'employee' && (
+      {type === 'employee' && (
         <h1 className="mb-2 text-2xl font-bold text-gray-900 md:text-3xl">
           Bienvenido, {fullName}
         </h1>
