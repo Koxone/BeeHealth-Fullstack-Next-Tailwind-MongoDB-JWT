@@ -37,48 +37,54 @@ import BackButton from './components/BackButton';
 const mockPatient = {
   fullName: 'Laura Hernández',
   email: 'laura.hernandez@example.com',
-  telefono: '555-1234',
-  edad: 32,
-  genero: 'Femenino',
-  fechaRegistro: '2025-03-15',
+  phone: '555-1234',
+  age: 32,
+  gender: 'Femenino',
+  recordDateRegistro: '2025-03-15',
 };
 
 /* Mock records */
 const mockRecords = [
   {
     _id: '1',
-    fechaRegistro: '2025-10-15',
-    pesoActual: 68,
-    indiceMasaCorporal: 23.4,
-    presionArterial: '120/80',
-    glucosa: '90',
-    colesterol: '180',
-    notas: 'Paciente estable',
-    diagnostico: 'Chequeo general',
-    tratamiento: 'Mantener dieta y ejercicio',
+    recordDate: '2025-10-15',
+    currentWeight: 68,
+    IMC: 23.4,
+    diseases: 'Hypertension',
+    bloodPressure: '120/80',
+    glucose: '90',
+    medication: 'Methylphenidate',
+    size: '120',
+    cholesterol: '180',
+    notes: 'Patient stable',
+    diagnosis: 'General checkup',
+    treatment: 'Maintain diet and exercise',
   },
   {
     _id: '2',
-    fechaRegistro: '2025-09-10',
-    pesoActual: 70,
-    indiceMasaCorporal: 24.0,
-    presionArterial: '125/85',
-    glucosa: '95',
-    colesterol: '190',
-    notas: 'Leve aumento de peso',
-    diagnostico: 'Control de peso',
-    tratamiento: 'Reducir carbohidratos',
+    recordDate: '2025-09-10',
+    currentWeight: 70,
+    IMC: 24.0,
+    diseases: 'Hypertension',
+    bloodPressure: '125/85',
+    glucose: '95',
+    medication: 'Methylphenidate',
+    size: '120',
+    cholesterol: '190',
+    notes: 'Slight weight increase',
+    diagnosis: 'Weight control',
+    treatment: 'Reduce carbohydrates',
   },
 ];
 
 /* Mock weight chart */
 const mockWeightData = mockRecords
   .map((r) => ({
-    fecha: new Date(r.fechaRegistro).toLocaleDateString('es-MX', {
+    fecha: new Date(r.recordDate).toLocaleDateString('es-MX', {
       day: '2-digit',
       month: 'short',
     }),
-    peso: Number(r.pesoActual),
+    peso: Number(r.currentWeight),
   }))
   .reverse();
 
@@ -95,22 +101,22 @@ export default function DoctorPatientDetail() {
 
   /* Form state */
   const [historyForm, setHistoryForm] = useState({
-    fecha: new Date().toISOString().split('T')[0],
-    peso: '',
-    imc: '',
-    presionArterial: '',
-    glucosa: '',
+    recordDate: new Date().toISOString().split('T')[0],
+    currentWeight: '',
+    iMC: '',
+    bloodPressure: '',
+    glucose: '',
     colesterol: '',
-    notas: '',
-    diagnostico: '',
-    tratamiento: '',
+    notes: '',
+    diagnosis: '',
+    treatment: '',
   });
 
   /* Stats mock */
   const records = mockRecords;
   const totalConsultas = records.length;
-  const ultimoPeso = records.length > 0 ? records[0].pesoActual : 'N/A';
-  const ultimoIMC = records.length > 0 ? records[0].indiceMasaCorporal?.toFixed(1) : 'N/A';
+  const ultimoPeso = records.length > 0 ? records[0].currentWeight : 'N/A';
+  const ultimoIMC = records.length > 0 ? records[0].IMC?.toFixed(1) : 'N/A';
   const weightData = mockWeightData;
 
   /* Modal Handlers */
@@ -119,28 +125,28 @@ export default function DoctorPatientDetail() {
     if (record) {
       setEditingHistory(record);
       setHistoryForm({
-        fecha: record.fechaRegistro?.split('T')[0] || '',
-        peso: record.pesoActual || '',
-        imc: record.indiceMasaCorporal || '',
-        presionArterial: record.presionArterial || '',
-        glucosa: record.glucosa || '',
+        recordDate: record.recordDateRegistro?.split('T')[0] || '',
+        currentWeight: record.currentWeight || '',
+        iMC: record.IMC || '',
+        bloodPressure: record.bloodPressure || '',
+        glucose: record.glucose || '',
         colesterol: record.colesterol || '',
-        notas: record.notas || '',
-        diagnostico: record.diagnostico || '',
-        tratamiento: record.tratamiento || '',
+        notes: record.notes || '',
+        diagnosis: record.diagnosis || '',
+        treatment: record.treatment || '',
       });
     } else {
       setEditingHistory(null);
       setHistoryForm({
-        fecha: new Date().toISOString().split('T')[0],
-        peso: '',
-        imc: '',
-        presionArterial: '',
-        glucosa: '',
+        recordDate: new Date().toISOString().split('T')[0],
+        currentWeight: '',
+        iMC: '',
+        bloodPressure: '',
+        glucose: '',
         colesterol: '',
-        notas: '',
-        diagnostico: '',
-        tratamiento: '',
+        notes: '',
+        diagnosis: '',
+        treatment: '',
       });
     }
     setShowHistoryModal(true);
@@ -178,7 +184,7 @@ export default function DoctorPatientDetail() {
 
       {/* Quick stats */}
       <QuickStats
-        stats={{ totalConsultas, ultimoPeso, ultimoIMC }}
+        stats={{ totalConsultas, currentWeight: ultimoPeso, ultimoIMC }}
         icons={{ FileText, Scale, Heart, Activity, TrendingUp }}
       />
 

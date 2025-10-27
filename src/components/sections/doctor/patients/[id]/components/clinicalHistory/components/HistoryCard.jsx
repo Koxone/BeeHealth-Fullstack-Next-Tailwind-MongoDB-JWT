@@ -18,12 +18,12 @@ function HistoryCard({ r, onEdit }) {
       <div className="flex h-12 w-12 flex-col items-center justify-center rounded-lg bg-(--med-blue-light) text-(--med-blue) sm:h-14 sm:w-14">
         {/* Month */}
         <span className="text-xs font-medium uppercase">
-          {new Date(r.fechaRegistro).toLocaleDateString('es-MX', { month: 'short' })}
+          {new Date(r.recordDate).toLocaleDateString('es-MX', { month: 'short' })}
         </span>
 
         {/* Day */}
         <span className="text-base font-bold sm:text-lg">
-          {new Date(r.fechaRegistro).toLocaleDateString('es-MX', { day: '2-digit' })}
+          {new Date(r.recordDate).toLocaleDateString('es-MX', { day: '2-digit' })}
         </span>
       </div>
 
@@ -35,7 +35,7 @@ function HistoryCard({ r, onEdit }) {
             <div className="flex items-center gap-1.5 text-xs font-medium text-(--med-blue) sm:gap-2">
               <Scale className="h-3.5 w-3.5 sm:h-4 sm:w-4" /> <span className="truncate">Peso</span>
             </div>
-            <p className="text-sm font-bold text-(--med-text-dark)">{r.pesoActual} kg</p>
+            <p className="text-sm font-bold text-(--med-text-dark)">{r?.currentWeight} kg</p>
           </div>
 
           {/* IMC */}
@@ -44,9 +44,7 @@ function HistoryCard({ r, onEdit }) {
               <Activity className="h-3.5 w-3.5 sm:h-4 sm:w-4" />{' '}
               <span className="truncate">IMC</span>
             </div>
-            <p className="text-sm font-bold text-(--med-text-dark)">
-              {r.indiceMasaCorporal?.toFixed(1)}
-            </p>
+            <p className="text-sm font-bold text-(--med-text-dark)">{r?.IMC?.toFixed(1)}</p>
           </div>
 
           {/* Enfermedades */}
@@ -55,9 +53,7 @@ function HistoryCard({ r, onEdit }) {
               <Stethoscope className="h-3.5 w-3.5 sm:h-4 sm:w-4" />{' '}
               <span className="truncate">Enfermedades</span>
             </div>
-            <p className="truncate text-sm font-bold text-(--med-text-dark)">
-              {r.enfermedadesCronicas || '—'}
-            </p>
+            <p className="truncate text-sm font-bold text-(--med-text-dark)">{r.diseases || '—'}</p>
           </div>
 
           {/* Medicamentos */}
@@ -67,7 +63,7 @@ function HistoryCard({ r, onEdit }) {
               <span className="truncate">Medicamentos</span>
             </div>
             <p className="truncate text-sm font-bold text-(--med-text-dark)">
-              {r.medicamentosActuales || '—'}
+              {r.medication || '—'}
             </p>
           </div>
 
@@ -78,18 +74,18 @@ function HistoryCard({ r, onEdit }) {
               <span className="truncate">Talla</span>
             </div>
             <p className="text-sm font-bold text-(--med-text-dark)">
-              {r.talla ? `${r.talla} cm` : '—'}
+              {r.size ? `${r.size} cm` : '—'}
             </p>
           </div>
 
           {/* Glucosa */}
-          {r.glucosa && (
+          {r.glucose && (
             <div className="rounded-lg bg-(--med-green)/10 p-2">
               <div className="flex items-center gap-1.5 text-xs font-medium text-(--med-green) sm:gap-2">
                 <Droplet className="h-3.5 w-3.5 sm:h-4 sm:w-4" />{' '}
                 <span className="truncate">Glucosa</span>
               </div>
-              <p className="text-sm font-bold text-(--med-text-dark)">{r.glucosa}</p>
+              <p className="text-sm font-bold text-(--med-text-dark)">{r.glucose}</p>
             </div>
           )}
         </div>

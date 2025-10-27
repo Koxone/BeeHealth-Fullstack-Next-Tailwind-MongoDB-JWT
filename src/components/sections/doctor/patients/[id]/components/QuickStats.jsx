@@ -30,7 +30,7 @@ export default function QuickStats({ stats, icons }) {
               <Scale className="h-6 w-6 text-(--med-blue)" />
             </div>
             <div>
-              <p className="text-3xl font-bold text-(--med-text-dark)">{stats.ultimoPeso}</p>
+              <p className="text-3xl font-bold text-(--med-text-dark)">{stats.currentWeight}</p>
               <p className="text-sm text-(--med-text-muted)">Peso Actual (kg)</p>
             </div>
           </div>

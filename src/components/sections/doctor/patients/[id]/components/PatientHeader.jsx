@@ -26,9 +26,14 @@ export default function PatientHeader({ patient, icons, moment }) {
             <span className="text-sm font-medium">Paciente Activo</span>
           </div>
 
-          {/* Patient Name */}
-          <h1 className="text-4xl font-bold">{patient?.fullName}</h1>
-          <p className="mb-4 text-sm font-bold">{patient?.edad} años</p>
+          <div>
+            {/* Patient Name */}
+            <h1 className="text-4xl font-bold">{patient?.fullName}</h1>
+            {/* Patient Age */}
+            <p className="text-sm font-bold">{patient?.age} años</p>
+            {/* Patient Gender */}
+            <p className="mb-4 text-sm font-bold">{patient?.gender}</p>
+          </div>
 
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
             {/* Patient Mail */}
