@@ -4,6 +4,24 @@ button {
   cursor: pointer;
 }
 
+@theme {
+  --color-asana-green: #8b9c94;
+
+  --color-asana-beige: #efe1d5;
+  --color-asana-blue: #2563eb;
+
+  --med-blue: #2563eb;
+  --med-blue-light: #e0ebff;
+  --med-gray: #f8fafc;
+  --med-gray-border: #e2e8f0;
+  --med-text-dark: #1e293b;
+  --med-text-muted: #64748b;
+  --med-green: #16a34a;
+  --med-red: #dc2626;
+  --med-purple: #6d28d9;
+  --med-cyan: #0891b2;
+}
+
 /* src\components\general\nav\sidebar\SideBar.tsx */
 @keyframes fadeInLeft {
   from {
