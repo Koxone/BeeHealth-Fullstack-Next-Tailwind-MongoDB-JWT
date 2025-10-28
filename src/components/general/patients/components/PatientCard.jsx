@@ -1,7 +1,5 @@
-'use client';
-
 import { Phone, Mail, Calendar, Eye } from 'lucide-react';
-import { usePathname, useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 const getInitials = (name = '') =>
   name
@@ -10,9 +8,7 @@ const getInitials = (name = '') =>
     .map((n) => n[0])
     .join('');
 
-export default function PatientCard({ patient }) {
-  const pathname = usePathname();
-  const router = useRouter();
+export default function PatientCard({ patient, type }) {
   return (
     <div className="rounded-xl border-2 border-gray-200 bg-white p-4 transition hover:border-blue-300">
       <div className="flex items-center gap-4">
@@ -43,14 +39,14 @@ export default function PatientCard({ patient }) {
                 <span>Última Cita: {patient.ultimaVisita}</span>
               </div>
 
-              {pathname.startsWith('/doctor') ? (
-                <button
-                  onClick={() => router.push(`/doctor/patients/${patient._id}`)}
+              {type === 'doctor' ? (
+                <Link
+                  href={`/doctor/patients/${patient._id}`}
                   className="flex items-center gap-2 font-medium text-blue-600 hover:text-blue-700"
                 >
                   <Eye className="h-4 w-4" />
                   Ver Detalles
-                </button>
+                </Link>
               ) : null}
             </div>
           </div>

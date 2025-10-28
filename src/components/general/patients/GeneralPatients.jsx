@@ -2,7 +2,7 @@ import PatientsSearchBar from '@/components/general/patients/components/Patients
 import PatientsHeader from '@/components/general/patients/components/PatientsHeader';
 import PatientsList from '@/components/general/patients/components/PatientsList';
 
-export default function GeneralPatients() {
+export default function GeneralPatients({ type }) {
   return (
     <div className="h-full space-y-6 overflow-y-auto">
       <PatientsHeader />
@@ -11,7 +11,7 @@ export default function GeneralPatients() {
         <PatientsSearchBar />
       </div>
 
-      <PatientsList />
+      <PatientsList type={type} />
     </div>
   );
 }
