@@ -1,6 +1,10 @@
 import { Phone, Mail, Calendar, Eye } from 'lucide-react';
 import Link from 'next/link';
 
+// Get Current User
+import { getCurrentUser } from '@/lib/auth/getCurrentUser';
+export const runtime = 'nodejs';
+
 const getInitials = (name = '') =>
   name
     .trim()
@@ -8,7 +12,10 @@ const getInitials = (name = '') =>
     .map((n) => n[0])
     .join('');
 
-export default function PatientCard({ patient, type }) {
+export default async function PatientCard({ patient, type }) {
+  // Get current User info
+  const currentUser = await getCurrentUser();
+
   return (
     <div className="rounded-xl border-2 border-gray-200 bg-white p-4 transition hover:border-blue-300">
       <div className="flex items-center gap-4">
@@ -39,7 +46,7 @@ export default function PatientCard({ patient, type }) {
                 <span>Última Cita: {patient.ultimaVisita}</span>
               </div>
 
-              {type.value === 'doctor' ? (
+              {currentUser?.role === 'doctor' ? (
                 <Link
                   href={`/doctor/patients/${patient._id}`}
                   className="flex items-center gap-2 font-medium text-blue-600 hover:text-blue-700"

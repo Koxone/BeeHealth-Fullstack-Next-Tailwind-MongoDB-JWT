@@ -1,10 +1,58 @@
 'use client';
 
-// Static imports
+/* Imports */
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Heart, Mail, Lock } from 'lucide-react';
 
 export default function LoginForm() {
-  // Render
+  // Hooks
+  const router = useRouter();
+
+  // Local states
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  // Handle submit
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+        credentials: 'include', 
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        alert(data.error || 'Error al iniciar sesión');
+        setLoading(false);
+        return;
+      }
+
+      console.log('Login successful:', data);
+      console.log('Session cookie set!');
+
+      // Redirect based on role (backend already set cookie)
+      const role = data.user.role;
+      if (role === 'patient') router.push('/patient/dashboard');
+      else if (role === 'doctor') router.push('/doctor/dashboard');
+      else if (role === 'employee') router.push('/employee/dashboard');
+      else router.push('/admin/dashboard');
+    } catch (error) {
+      console.error('Login error:', error);
+      alert('Error al conectar con el servidor');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  /* UI */
   return (
     <div className="flex min-h-screen items-center justify-center bg-linear-to-br from-blue-50 via-white to-green-50 p-4">
       <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-xl">
@@ -19,38 +67,42 @@ export default function LoginForm() {
         <p className="mb-8 text-center text-gray-600">Accede a tu cuenta médica</p>
 
         {/* Form */}
-        <form className="space-y-4 md:space-y-6">
-          {/* Email field */}
+        <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
+          {/* Email */}
           <div>
             <label className="mb-2 block text-sm font-medium text-gray-700">
               Correo Electrónico
             </label>
             <div className="relative">
-              <Mail className="absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 transform text-gray-400" />
+              <Mail className="absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 text-gray-400" />
               <input
                 type="email"
                 required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="w-full rounded-lg border border-gray-300 py-3 pr-4 pl-10 focus:ring-2 focus:ring-blue-500"
                 placeholder="tu@email.com"
               />
             </div>
           </div>
 
-          {/* Password field */}
+          {/* Password */}
           <div>
             <label className="mb-2 block text-sm font-medium text-gray-700">Contraseña</label>
             <div className="relative">
-              <Lock className="absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 transform text-gray-400" />
+              <Lock className="absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 text-gray-400" />
               <input
                 type="password"
                 required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="w-full rounded-lg border border-gray-300 py-3 pr-4 pl-10 focus:ring-2 focus:ring-blue-500"
                 placeholder="••••••••"
               />
             </div>
           </div>
 
-          {/* Remember me & Forgot password */}
+          {/* Options */}
           <div className="flex items-center justify-between text-sm">
             <label className="flex items-center">
               <input type="checkbox" className="mr-2" />
@@ -61,19 +113,27 @@ export default function LoginForm() {
             </button>
           </div>
 
-          {/* Main button */}
+          {/* Submit */}
           <button
             type="submit"
-            className="w-full rounded-lg bg-blue-500 py-3 font-medium text-white transition hover:bg-blue-600"
+            disabled={loading}
+            className={`w-full rounded-lg py-3 font-medium text-white transition ${
+              loading ? 'cursor-not-allowed bg-blue-400' : 'bg-blue-500 hover:bg-blue-600'
+            }`}
           >
-            Iniciar Sesión
+            {loading ? 'Ingresando...' : 'Iniciar Sesión'}
           </button>
         </form>
 
-        {/* Signup link */}
+        {/* Sign up link */}
         <p className="mt-6 text-center text-gray-600">
           ¿No tienes cuenta?{' '}
-          <button className="font-medium text-blue-600 hover:text-blue-700">Regístrate aquí</button>
+          <button
+            onClick={() => router.push('/signup')}
+            className="font-medium text-blue-600 hover:text-blue-700"
+          >
+            Regístrate aquí
+          </button>
         </p>
       </div>
     </div>
