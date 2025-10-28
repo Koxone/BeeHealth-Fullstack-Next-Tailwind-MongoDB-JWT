@@ -37,7 +37,7 @@ export const doctorSidebarItems = [
     badge: '0',
   },
   { icon: Apple, label: 'Dietas', path: '/doctor/diets', badge: null },
-  { icon: Dumbbell, label: 'Ejercicios', path: '/doctor/exercises', badge: null },
+  { icon: Dumbbell, label: 'Ejercicios', path: '/doctor/workouts', badge: null },
   { icon: DollarSign, label: 'Contabilidad', path: '/doctor/accounting', badge: null },
   { icon: Package, label: 'Inventario', path: '/doctor/inventory', badge: '5' },
   { icon: User, label: 'Perfil', path: '/doctor/profile', badge: null },
