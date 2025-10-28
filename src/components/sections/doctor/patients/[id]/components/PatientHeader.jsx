@@ -1,6 +1,3 @@
-'use client';
-
-/* header */
 export default function PatientHeader({ patient, icons, moment }) {
   const { User, Mail, Phone, CalendarIcon, Activity, Stethoscope } = icons;
   return (

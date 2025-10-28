@@ -1,5 +1,3 @@
-'use client';
-
 /* calendar card */
 import CalendarHeader from './CalendarHeader';
 import WeekdaysRow from './WeekdaysRow';

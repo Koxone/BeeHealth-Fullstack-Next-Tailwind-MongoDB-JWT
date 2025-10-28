@@ -1,6 +1,4 @@
-'use client';
 
-/* quick stats */
 export default function QuickStats({ stats, icons }) {
   const { FileText, Scale, Heart, Activity, TrendingUp } = icons;
 

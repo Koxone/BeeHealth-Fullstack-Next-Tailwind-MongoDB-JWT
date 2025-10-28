@@ -1,5 +1,3 @@
-'use client';
-
 export default function HeaderBar({ icons }) {
   const { CalendarIcon } = icons;
   return (

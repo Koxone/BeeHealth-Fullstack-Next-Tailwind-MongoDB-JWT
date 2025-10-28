@@ -1,8 +1,5 @@
-'use client';
-
 import { Cross } from 'lucide-react';
 
-/* right panel */
 export default function AppointmentsCard({ selectedDate, appointments, icons }) {
   const { Users, Clock, CalendarIcon, User, Phone, Mail, Sparkles } = icons;
   const title = selectedDate
