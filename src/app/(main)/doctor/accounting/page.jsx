@@ -1,4 +1,4 @@
-import DoctorAccounting from '@/components/sections/Doctor/Accounting/DoctorAccounting';
+import DoctorAccounting from '@/components/sections/doctor/accounting/DoctorAccounting';
 import React from 'react';
 
 export default function DoctorAccountingPage() {
