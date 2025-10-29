@@ -8,10 +8,10 @@ import { getCurrentUser } from '@/lib/auth/getCurrentUser';
 export const runtime = 'nodejs';
 
 // Mock Data for Diets
-import { diet } from './components/DoctorDietsMockData';
+import { diet } from './components/GeneralDietsMockData';
 import { Apple } from 'lucide-react';
 
-export default async function DoctorDietDetail() {
+export default async function GeneralDietDetail() {
   // Get current User info
   const currentUser = await getCurrentUser();
   const role = currentUser?.role;

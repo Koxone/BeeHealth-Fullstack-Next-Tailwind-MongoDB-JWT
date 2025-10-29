@@ -1,10 +1,10 @@
-import DoctorDietDetail from '@/components/sections/doctor/diets/[id]/DoctorDietDetail';
+import GeneralDietDetail from '@/components/general/diets/[id]/GeneralDietDetail';
 import React from 'react';
 
 function DoctorDietsIDPage() {
   return (
     <div className="h-screen overflow-hidden pb-40">
-      <DoctorDietDetail />
+      <GeneralDietDetail />
     </div>
   );
 }
