@@ -2,7 +2,7 @@ import GeneralDashboard from '@/components/general/dashboard/Dashboard';
 
 function DoctorDashboardPage() {
   return (
-    <div>
+    <div className="h-screen overflow-hidden pb-40">
       <GeneralDashboard type="doctor" />
     </div>
   );

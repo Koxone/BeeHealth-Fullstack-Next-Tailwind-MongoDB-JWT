@@ -3,7 +3,7 @@ import DoctorDiets from '@/components/sections/doctor/diets/DoctorDiets';
 
 export default async function DoctorDietsPage() {
   return (
-    <div>
+    <div className="h-screen overflow-hidden pb-40">
       <DoctorDiets />
     </div>
   );
