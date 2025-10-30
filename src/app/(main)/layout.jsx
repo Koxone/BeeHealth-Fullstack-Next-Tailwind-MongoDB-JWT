@@ -3,6 +3,7 @@ import Header from '@/components/general/nav/Header';
 import { cookies } from 'next/headers';
 import jwt from 'jsonwebtoken';
 import { getCurrentUser } from '@/lib/auth/getCurrentUser';
+import ServerRoleGuard from '@/components/sections/auth/ServerRoleGuard';
 
 export const runtime = 'nodejs';
 
@@ -31,16 +32,18 @@ export default async function MainRootLayout({ children }) {
     }
   }
   return (
-    <div>
-      <div className="grid grid-rows-[auto_1fr]">
-        <Header type={type} />
-        <main className="grid grid-cols-[auto_1fr]">
-          <Sidebar />
-          <div className="mx-auto min-h-screen w-full max-w-7xl overflow-y-auto p-6 pb-10">
-            {children}
-          </div>
-        </main>
+    <ServerRoleGuard allowedRoles={['doctor', 'employee', 'patient']}>
+      <div>
+        <div className="grid grid-rows-[auto_1fr]">
+          <Header type={type} />
+          <main className="grid grid-cols-[auto_1fr]">
+            <Sidebar currentUser={currentUser} role={role} />
+            <div className="mx-auto min-h-screen w-full max-w-7xl overflow-y-auto p-6 pb-10">
+              {children}
+            </div>
+          </main>
+        </div>
       </div>
-    </div>
+    </ServerRoleGuard>
   );
 }

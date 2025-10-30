@@ -9,17 +9,18 @@ import CancelAppointmentModal from './components/general/CancelAppointmentModal'
 import PatientEvolutionChart from './components/patient/PatientEvolutionChart';
 import PatientMotivationalBanner from './components/patient/PatientMotivationalBanner';
 
-export default function GeneralDashboard({ type }) {
+export default function GeneralDashboard({ role }) {
+  console.log(role)
   return (
     <div className="h-full space-y-4 overflow-y-auto md:space-y-6">
       {/* Header */}
-      <HeaderWelcome fullName="Example" type={type} />
+      <HeaderWelcome fullName="Example" role={role} />
 
       {/* Stats */}
-      <StatsGrid type={type} />
+      <StatsGrid role={role} />
 
       {/* Doctor Charts */}
-      {type === 'doctor' && (
+      {role === 'doctor' && (
         <div className="grid grid-cols-1 gap-4 md:gap-6 lg:grid-cols-2">
           <DoctorIncomeChart data={[]} />
           <DoctorPatientsChart data={[]} />
@@ -27,10 +28,10 @@ export default function GeneralDashboard({ type }) {
       )}
 
       {/* Doctor Appointments */}
-      {type === 'doctor' && <AppointmentsToday />}
+      {role === 'doctor' && <AppointmentsToday />}
 
       {/* Doctor Summaries */}
-      {type === 'doctor' && (
+      {role === 'doctor' && (
         <div className="grid grid-cols-1 gap-4 md:gap-6 lg:grid-cols-2">
           <DoctorAccountingSummary />
           <InventoryAlerts />
@@ -38,7 +39,7 @@ export default function GeneralDashboard({ type }) {
       )}
 
       {/* Patient */}
-      {type === 'patient' && (
+      {role === 'patient' && (
         <div className="grid grid-cols-1 gap-4 md:gap-6 lg:grid-cols-1">
           {/* Chart */}
           <PatientEvolutionChart />
@@ -49,7 +50,7 @@ export default function GeneralDashboard({ type }) {
       )}
 
       {/* Employee */}
-      {type === 'employee' && (
+      {role === 'employee' && (
         <div className="grid grid-cols-1 gap-4 md:gap-6 lg:grid-cols-2">
           <AppointmentsToday />
           <InventoryAlerts />

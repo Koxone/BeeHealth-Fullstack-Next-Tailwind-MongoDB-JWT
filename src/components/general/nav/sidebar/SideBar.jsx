@@ -20,15 +20,16 @@ import {
 } from './components/SideBarData';
 import { usePathname, useRouter } from 'next/navigation';
 
-export default function Sidebar() {
+export default function Sidebar({ role, currentUser }) {
   const pathname = usePathname();
   const router = useRouter();
 
-  const sidebarOptions = pathname.startsWith('/doctor')
-    ? doctorSidebarItems
-    : pathname.startsWith('/patient')
-      ? patientSidebarItems
-      : employeeSidebarItems;
+  const sidebarOptions =
+    pathname.startsWith('/doctor') && role === 'doctor'
+      ? doctorSidebarItems
+      : pathname.startsWith('/patient') && role === 'patient'
+        ? patientSidebarItems
+        : employeeSidebarItems;
 
   return (
     <>
