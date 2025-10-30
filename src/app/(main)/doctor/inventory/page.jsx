@@ -1,6 +1,6 @@
-import DoctorInventory from '@/components/sections/doctor/inventory/DoctorInventory';
 import React from 'react';
 import { getCurrentUser } from '@/lib/auth/getCurrentUser';
+import GeneralInventory from '@/components/general/inventory/GeneralInventory';
 export const runtime = 'nodejs';
 
 export default async function DoctorInventoryPage() {
@@ -9,7 +9,7 @@ export default async function DoctorInventoryPage() {
   const role = currentUser?.role;
   return (
     <div className="h-screen overflow-hidden pb-40">
-      <DoctorInventory role={role} />
+      <GeneralInventory role={role} />
     </div>
   );
 }

@@ -1,6 +1,6 @@
-import EmployeeInventory from '@/components/sections/employee/inventory/EmployeeInventory';
 import React from 'react';
 import { getCurrentUser } from '@/lib/auth/getCurrentUser';
+import GeneralInventory from '@/components/general/inventory/GeneralInventory';
 export const runtime = 'nodejs';
 
 export default async function EmployeeInventoryPage() {
@@ -9,7 +9,7 @@ export default async function EmployeeInventoryPage() {
   const role = currentUser?.role;
   return (
     <div className="h-screen overflow-hidden pb-40">
-      <EmployeeInventory role={role} />
+      <GeneralInventory role={role} />
     </div>
   );
 }
