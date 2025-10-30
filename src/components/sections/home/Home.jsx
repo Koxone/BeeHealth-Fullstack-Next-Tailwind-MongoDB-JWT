@@ -27,7 +27,7 @@ export default function Home() {
             </p>
             <div className="flex flex-col gap-3 sm:flex-row md:gap-4">
               <button
-                onClick={() => router.push('/signup')}
+                onClick={() => router.push('/auth/signup')}
                 className="w-full rounded-lg bg-blue-500 px-6 py-3 font-medium text-white shadow-md transition hover:bg-blue-600 active:scale-95 sm:w-auto"
               >
                 Comenzar ahora

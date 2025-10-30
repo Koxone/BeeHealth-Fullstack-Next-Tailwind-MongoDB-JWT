@@ -1,9 +1,11 @@
 import SignupForm from '@/components/sections/auth/signup/SignUp';
+import HomeHeader from '@/components/sections/home/components/HomeHeader';
 import React from 'react';
 
 function SignUpPage() {
   return (
-    <div className="h-screen overflow-hidden pb-40">
+    <div className="grid h-screen grid-rows-[auto_1fr] overflow-hidden">
+      <HomeHeader />
       <SignupForm />
     </div>
   );

@@ -35,8 +35,8 @@ export default function SignupForm() {
     router.push('/signup/medical-history');
   };
   return (
-    <div className="flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
+    <div className="flex h-full items-center justify-center overflow-y-auto">
+      <div className="h-fit w-full max-w-md">
         {/* Header */}
         <div className="mb-6 text-center md:mb-8">
           <h1 className="mb-2 text-2xl font-bold text-gray-900 md:text-2xl">Crear Cuenta</h1>
@@ -132,7 +132,10 @@ export default function SignupForm() {
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-600">
               ¿Ya tienes cuenta?{' '}
-              <button className="font-medium text-blue-500 hover:text-blue-600">
+              <button
+                onClick={() => router.push('/auth/login')}
+                className="font-medium text-blue-500 hover:text-blue-600"
+              >
                 Inicia sesión
               </button>
             </p>

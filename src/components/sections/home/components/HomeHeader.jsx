@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { Heart, Activity, Calendar, Apple, Menu, X } from 'lucide-react';
 import { useRouter } from 'next/navigation';
@@ -7,10 +9,10 @@ function HomeHeader({ setShowMenu, showMenu }) {
   return (
     <header className="sticky top-0 z-50 border-b bg-white/80 backdrop-blur-sm">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
-        <div className="flex items-center gap-2">
-          <Heart className="h-6 w-6 text-blue-500 md:h-8 md:w-8" />
+        <button onClick={() => router.push('/')} className="flex items-center gap-2">
+          <img src="/images/logo.webp" alt="" className="max-w-10" />
           <span className="text-xl font-bold text-gray-900 md:text-2xl">MedTrack</span>
-        </div>
+        </button>
 
         {/* Desktop Menu */}
         <div className="hidden items-center gap-4 md:flex">

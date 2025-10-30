@@ -1,9 +1,12 @@
 import LoginForm from '@/components/sections/auth/login/LoginForm';
+import HomeHeader from '@/components/sections/home/components/HomeHeader';
 import React from 'react';
 
 function LoginPage() {
   return (
-    <div className="h-screen overflow-hidden pb-40">
+    <div className="grid h-screen grid-rows-[auto_1fr] overflow-hidden">
+      <HomeHeader />
+
       <LoginForm />
     </div>
   );
