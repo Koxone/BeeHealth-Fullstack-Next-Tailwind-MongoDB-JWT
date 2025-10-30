@@ -1,5 +1,3 @@
-'use client';
-
 export default function SectionCard({ title, children }) {
   return (
     <div>

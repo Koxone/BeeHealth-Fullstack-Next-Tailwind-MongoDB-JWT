@@ -1,6 +1,4 @@
-'use client';
-
-export default function PatientsList({ patients = [] }) {
+export default function DietAssignedToPatients({ patients = [] }) {
   return (
     <div className="grid gap-3 md:grid-cols-2">
       {patients.map((name, i) => (

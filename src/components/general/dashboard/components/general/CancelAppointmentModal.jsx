@@ -1,10 +1,8 @@
 'use client';
 
-// Static imports
 import { AlertCircle, Clock, FileText, User } from 'lucide-react';
 
 export default function CancelAppointmentModal() {
-  // Render
   return (
     <>
       <div className="animate-fadeIn fixed inset-0 z-50 bg-black/50" />

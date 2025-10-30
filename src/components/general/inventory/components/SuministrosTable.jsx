@@ -1,6 +1,5 @@
 'use client';
 
-/* table */
 export default function SuministrosTable({ rows, getStockStatus, icons, onEdit, onDelete }) {
   const { Edit2, Trash2 } = icons;
   return (

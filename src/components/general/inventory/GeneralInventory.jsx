@@ -4,7 +4,6 @@ import { useState, useMemo } from 'react';
 import {
   Package,
   Pill,
-  FileText,
   Syringe,
   Plus,
   Search,
@@ -12,19 +11,20 @@ import {
   Edit2,
   Trash2,
   Download,
+  FileText,
   X,
 } from 'lucide-react';
 
 import TabsBar from './components/TabsBar';
 import SearchAddBar from './components/SearchAddBar';
 import StatsBar from './components/StatsBar';
-import InventoryAlerts from './components/InventoryAlerts';
 import MedicamentosTable from './components/MedicamentosTable';
 import RecetasGrid from './components/RecetasGrid';
 import SuministrosTable from './components/SuministrosTable';
 import AddEditModal from './components/AddEditModal';
 import DeleteModal from './components/DeleteModal';
 import GeneralSectionHeader from '@/components/general/sections/GeneralSectionHeader';
+import GeneralInventoryAlerts from '../dashboard/components/general/InventoryAlerts/GeneralInventoryAlerts';
 
 /* utils */
 const getStockStatus = (stock, minimo) => {
@@ -356,11 +356,8 @@ export default function GeneralInventory({ role }) {
         )}
       </div>
 
-      {/* alerts */}
-      <InventoryAlerts
-        items={inventarioAlertas}
-        icons={{ AlertTriangle, Package, Pill, FileText, Syringe }}
-      />
+      {/* Inventory Alerts */}
+      <GeneralInventoryAlerts role={role} />
 
       {/* modals */}
       {showModal && (

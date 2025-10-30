@@ -11,7 +11,7 @@ import {
 import AlertCard from './components/AlertCard';
 import ViewMoreButton from '../accountingSummary/components/ViewMoreButton';
 
-export default function InventoryAlerts({ role }) {
+export default function GeneralInventoryAlerts({ role }) {
   return (
     <div className="overflow-hidden rounded-2xl border-2 border-gray-200 bg-white shadow-lg transition-all duration-300 hover:shadow-xl">
       {/* Header */}

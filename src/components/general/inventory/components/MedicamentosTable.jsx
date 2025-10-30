@@ -1,6 +1,3 @@
-'use client';
-
-/* table */
 export default function MedicamentosTable({
   rows,
   getStockStatus,
@@ -9,7 +6,6 @@ export default function MedicamentosTable({
   onEdit,
   onDelete,
 }) {
-  // safe destructuring
   const { Edit2, Trash2, Package: PackageIcon } = icons || {};
 
   if (!Array.isArray(rows) || rows.length === 0) {
@@ -186,23 +182,6 @@ export default function MedicamentosTable({
           </table>
         </div>
       </div>
-
-      {/* keyframes globales */}
-      <style jsx global>{`
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-            transform: translateY(10px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        .animate-fadeIn {
-          animation-name: fadeIn;
-        }
-      `}</style>
     </div>
   );
 }

@@ -3,7 +3,7 @@
 import { ArrowLeft } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
-export default function TopBar() {
+export default function GoBackButton() {
   const router = useRouter();
 
   return (

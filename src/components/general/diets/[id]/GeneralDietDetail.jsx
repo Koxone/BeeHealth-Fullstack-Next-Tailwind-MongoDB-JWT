@@ -1,9 +1,9 @@
-import TopBar from './components/TopBar';
+import GoBackButton from './components/GoBackButton';
 import DietHeader from './components/DietHeader';
 import SectionCard from './components/SectionCard';
 import MealPlan from './components/MealPlan';
-import NotesCallout from './components/NotesCallout';
-import PatientsList from './components/PatientsList';
+import DietNotesAndInstructions from './components/DietNotesAndInstructions';
+import DietAssignedToPatients from './components/DietAssignedToPatients';
 import { getCurrentUser } from '@/lib/auth/getCurrentUser';
 export const runtime = 'nodejs';
 
@@ -18,7 +18,7 @@ export default async function GeneralDietDetail() {
 
   return (
     <div className="h-full space-y-4 overflow-y-auto md:space-y-6">
-      <TopBar />
+      <GoBackButton />
 
       <div className="rounded-xl border border-gray-200 bg-white shadow-sm">
         {/* Diet Image */}
@@ -44,12 +44,12 @@ export default async function GeneralDietDetail() {
             </SectionCard>
 
             <SectionCard title="Notas e Instrucciones">
-              <NotesCallout text={diet.notas} />
+              <DietNotesAndInstructions text={diet.notas} />
             </SectionCard>
 
             {role === 'doctor' && (
               <SectionCard title="Pacientes Asignados">
-                <PatientsList patients={diet.pacientes} />
+                <DietAssignedToPatients patients={diet.pacientes} />
               </SectionCard>
             )}
           </div>

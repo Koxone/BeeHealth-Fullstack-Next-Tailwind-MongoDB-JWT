@@ -4,7 +4,7 @@ import DoctorIncomeChart from './components/doctor/DoctorIncomeChart';
 import DoctorPatientsChart from './components/doctor/DoctorPatientsChart';
 import AppointmentsToday from './components/general/AppointmentsToday';
 import DoctorAccountingSummary from './components/doctor/DoctorAccountingSummary';
-import InventoryAlerts from './components/general/InventoryAlerts/InventoryAlerts';
+import GeneralInventoryAlerts from './components/general/InventoryAlerts/GeneralInventoryAlerts';
 import CancelAppointmentModal from './components/general/CancelAppointmentModal';
 import PatientEvolutionChart from './components/patient/PatientEvolutionChart';
 import PatientMotivationalBanner from './components/patient/PatientMotivationalBanner';
@@ -35,7 +35,7 @@ export default function GeneralDashboard({ role, currentUser }) {
       {role === 'doctor' && (
         <div className="grid grid-cols-1 gap-4 md:gap-6 lg:grid-cols-2">
           <DoctorAccountingSummary role={role} />
-          <InventoryAlerts role={role} />
+          <GeneralInventoryAlerts role={role} />
         </div>
       )}
 
@@ -54,7 +54,7 @@ export default function GeneralDashboard({ role, currentUser }) {
       {role === 'employee' && (
         <div className="grid grid-cols-1 gap-4 md:gap-6 lg:grid-cols-2">
           <AppointmentsToday />
-          <InventoryAlerts role={role} />
+          <GeneralInventoryAlerts role={role} />
         </div>
       )}
 

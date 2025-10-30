@@ -1,7 +1,3 @@
-'use client';
-
-/* stats */
-import { DollarSign, Package } from 'lucide-react'; /* icons */
 export default function StatsBar({ valorTotalMedicamentos, valorTotalSuministros, counts }) {
   const items = [
     {

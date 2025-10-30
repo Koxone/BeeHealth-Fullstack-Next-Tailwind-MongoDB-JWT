@@ -6,7 +6,7 @@ import { Plus, Search } from 'lucide-react';
 import ModalDelete from './components/ModalDelete';
 import ModalAddEdit from './components/ModalAddEdit';
 import { workoutsMockData } from './components/workoutsMockData';
-import WorkoutCard from './components/WorkoutCard';
+import WorkoutCard from './components/workoutCard/WorkoutCard';
 import WorkoutModal from './components/WorkoutModal';
 import GeneralSectionHeader from '../sections/GeneralSectionHeader';
 

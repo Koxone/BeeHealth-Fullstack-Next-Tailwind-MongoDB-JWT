@@ -1,6 +1,5 @@
-'use client';
-
-import { Edit2, Trash2, Users, User, Clock, Calendar } from 'lucide-react';
+import DoctorActionsButton from '@/components/sections/doctor/diets/components/DoctorActionsButton';
+import { Users, User, Clock, Calendar } from 'lucide-react';
 
 export default function DietHeader({ title, duration, assignedCount, onEdit, onDelete, role }) {
   return (
@@ -42,24 +41,7 @@ export default function DietHeader({ title, duration, assignedCount, onEdit, onD
       )}
 
       {/* Doctor Actions */}
-      {role === 'doctor' && (
-        <div className="flex gap-2">
-          <button
-            onClick={onEdit}
-            className="flex items-center gap-2 rounded-lg bg-blue-500 px-4 py-2 text-white transition hover:bg-blue-600 active:scale-95"
-          >
-            <Edit2 className="h-4 w-4" />
-            Editar
-          </button>
-          <button
-            onClick={onDelete}
-            className="flex items-center gap-2 rounded-lg bg-red-500 px-4 py-2 text-white transition hover:bg-red-600 active:scale-95"
-          >
-            <Trash2 className="h-4 w-4" />
-            Eliminar
-          </button>
-        </div>
-      )}
+      {role === 'doctor' && <DoctorActionsButton onDelete={onDelete} onEdit={onEdit} />}
     </div>
   );
 }
