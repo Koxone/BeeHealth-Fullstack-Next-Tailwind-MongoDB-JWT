@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { DollarSign, Users, Pill, TrendingUp } from 'lucide-react';
-import HeaderBar from './components/HeaderBar';
 import MetricsGrid from './components/MetricsGrid';
 import WeeklyIncomeChart from './components/WeeklyIncomeChart';
 import DistributionCard from './components/DistributionCard';
@@ -10,6 +9,7 @@ import ConsultasTable from './components/ConsultasTable';
 import MedicamentosTable from './components/MedicamentosTable';
 import AddEditModal from './components/AddEditModal';
 import DeleteConfirmModal from './components/DeleteConfirmModal';
+import GeneralSectionHeader from '@/components/general/sections/GeneralSectionHeader';
 
 /* demo data */
 const ingresosSemanales = [
@@ -22,7 +22,7 @@ const ingresosSemanales = [
   { dia: 'Dom', consultas: 0, medicamentos: 0 },
 ];
 
-export default function DoctorAccounting() {
+export default function DoctorAccounting({ role }) {
   /* ui state */
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
   const [showModal, setShowModal] = useState(false);
@@ -194,7 +194,12 @@ export default function DoctorAccounting() {
   return (
     <div className="h-full space-y-4 overflow-y-auto md:space-y-6">
       {/* header */}
-      <HeaderBar selectedDate={selectedDate} onChangeDate={setSelectedDate} />
+      <GeneralSectionHeader
+        Icon="accounting"
+        role={role}
+        title="Mis Finanzas"
+        subtitle="Control financiero del consultorio"
+      />
 
       {/* metrics */}
       <MetricsGrid

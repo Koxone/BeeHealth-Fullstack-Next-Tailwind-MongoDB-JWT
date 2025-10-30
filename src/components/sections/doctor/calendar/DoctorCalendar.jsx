@@ -15,11 +15,11 @@ import {
 } from 'lucide-react';
 
 import { useState } from 'react';
-import HeaderBar from './components/HeaderBar';
 import StatsGrid from './components/StatsGrid';
 import AppointmentsCard from './components/AppointmentsCard';
 import DoctorCalendarCard from './components/DoctorCalendarCard';
 import { mockAppointmentsData } from './components/MockAppointmentsData';
+import GeneralSectionHeader from '@/components/general/sections/GeneralSectionHeader';
 
 /* Local Helpers */
 const formatDate = (date) => {
@@ -43,7 +43,7 @@ const getDaysInMonth = (date) => {
   return days;
 };
 
-export default function DoctorCalendar() {
+export default function DoctorCalendar({ role, currentUser }) {
   // Local States
   const [currentMonth, setCurrentMonth] = useState(new Date(2025, 9, 1));
   const [selectedDate, setSelectedDate] = useState(new Date(2025, 9, 10));
@@ -78,7 +78,12 @@ export default function DoctorCalendar() {
 
   return (
     <div className="h-full space-y-4 overflow-x-hidden overflow-y-auto md:space-y-6">
-      <HeaderBar icons={{ CalendarIcon }} />
+      <GeneralSectionHeader
+        Icon="calendar"
+        role={role}
+        title="Mi Calendario"
+        subtitle="Visualiza y gestiona tus citas médicas"
+      />
 
       <StatsGrid
         stats={{

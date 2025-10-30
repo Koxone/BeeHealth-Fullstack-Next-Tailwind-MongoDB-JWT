@@ -1,18 +1,16 @@
 import PatientsSearchBar from '@/components/general/patients/components/PatientsSearchBar';
-import PatientsHeader from '@/components/general/patients/components/PatientsHeader';
 import PatientsList from '@/components/general/patients/components/PatientsList';
+import GeneralSectionHeader from '../sections/GeneralSectionHeader';
 
-// Get Current User
-import { getCurrentUser } from '@/lib/auth/getCurrentUser';
-export const runtime = 'nodejs';
-
-export default async function GeneralPatients() {
-  // Get current User info
-  const currentUser = await getCurrentUser();
-
+export default async function GeneralPatients({ role, currentUser }) {
   return (
     <div className="h-full space-y-6 overflow-y-auto">
-      <PatientsHeader />
+      <GeneralSectionHeader
+        role={role}
+        Icon="pacientes"
+        title="Pacientes"
+        subtitle="Gestiona tu lista de pacientes"
+      />
 
       <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
         <PatientsSearchBar />

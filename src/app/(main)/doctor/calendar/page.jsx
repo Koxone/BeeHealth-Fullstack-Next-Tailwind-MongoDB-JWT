@@ -1,12 +1,15 @@
 import DoctorCalendar from '@/components/sections/doctor/calendar/DoctorCalendar';
 import React from 'react';
+import { getCurrentUser } from '@/lib/auth/getCurrentUser';
+export const runtime = 'nodejs';
 
-function DoctorCalendarPage() {
+export default async function DoctorCalendarPage() {
+  // Get current User info
+  const currentUser = await getCurrentUser();
+  const role = currentUser?.role;
   return (
     <div className="h-screen overflow-hidden pb-40">
-      <DoctorCalendar />
+      <DoctorCalendar currentUser={currentUser} role={role} />
     </div>
   );
 }
-
-export default DoctorCalendarPage;

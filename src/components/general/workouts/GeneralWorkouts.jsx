@@ -8,6 +8,7 @@ import ModalAddEdit from './components/ModalAddEdit';
 import { workoutsMockData } from './components/workoutsMockData';
 import WorkoutCard from './components/WorkoutCard';
 import WorkoutModal from './components/WorkoutModal';
+import GeneralSectionHeader from '../sections/GeneralSectionHeader';
 
 export default function GeneralWorkouts({ role }) {
   // Local States
@@ -65,10 +66,12 @@ export default function GeneralWorkouts({ role }) {
 
   return (
     <div className="h-full space-y-4 overflow-y-auto md:space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold text-gray-900">Gestión de Workouts</h1>
-        <p className="text-gray-600">Crear y administrar workouts</p>
-      </div>
+      <GeneralSectionHeader
+        Icon="workouts"
+        role={role}
+        title="Gestion de Ejercicios"
+        subtitle="Crea y personaliza ejercicios"
+      />
 
       <div className="flex flex-col gap-3 md:flex-row">
         {/* Tabs Filter */}

@@ -12,8 +12,9 @@ import RecetasGrid from './components/RecetasGrid';
 import SuministrosTable from './components/SuministrosTable';
 import AddEditModal from './components/AddEditModal';
 import DeleteModal from './components/DeleteModal';
+import GeneralSectionHeader from '@/components/general/sections/GeneralSectionHeader';
 
-export default function DoctorInventory() {
+export default function DoctorInventory({ role }) {
   const [activeTab, setActiveTab] = useState('medicamentos');
   const [searchTerm, setSearchTerm] = useState('');
   const [showModal, setShowModal] = useState(false);
@@ -264,7 +265,7 @@ export default function DoctorInventory() {
   /* ui */
   return (
     <div className="h-full space-y-4 overflow-y-auto md:space-y-6">
-      <Header
+      {/* <Header
         title="Inventario"
         subtitle="Gestión de medicamentos, recetas y suministros"
         right={
@@ -273,6 +274,12 @@ export default function DoctorInventory() {
             <span className="hidden sm:inline">Exportar</span>
           </button>
         }
+      /> */}
+      <GeneralSectionHeader
+        role={role}
+        Icon="inventory"
+        title="Mi Inventario"
+        subtitle="Gestión de medicamentos, recetas y suministros"
       />
 
       <Metrics

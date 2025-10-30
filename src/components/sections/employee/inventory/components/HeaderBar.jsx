@@ -1,7 +1,6 @@
 'use client';
 
-/* header */
-import { Package } from 'lucide-react'; /* icon */
+import { Package } from 'lucide-react';
 export default function HeaderBar() {
   return (
     <div className="-mx-4 -mt-4 mb-6 bg-linear-to-r from-blue-50 via-indigo-50 to-purple-50 px-4 pt-6 pb-8 md:rounded-2xl">
