@@ -1,4 +1,4 @@
-import EmployeeInventory from '@/components/sections/Employee/Inventory/EmployeeInventory';
+import EmployeeInventory from '@/components/sections/employee/inventory/EmployeeInventory';
 import React from 'react';
 
 function EmployeeInventoryPage() {
