@@ -1,10 +1,8 @@
 'use client';
 
-/* React */
 import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-/* UI */
 import HeaderBar from './components/HeaderBar';
 import ProgressSteps from './components/ProgressSteps';
 import DoctorsGrid from './components/DoctorsGrid';
@@ -13,8 +11,8 @@ import TimeSlots from './components/TimeSlots';
 import ReasonField from './components/ReasonField';
 import SummaryCard from './components/SummaryCard';
 import SuccessModal from './components/SuccessModal';
+import useSound from 'use-sound';
 
-/* Utils */
 import { formatDate, isPastDate, getDaysInMonth } from './components/NewAppointmentUtils';
 
 /* Mock current user (replaces Zustand) */
@@ -89,6 +87,9 @@ export default function NewAppointment() {
   /* Modal state */
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [successData, setSuccessData] = useState(null);
+
+  // Confirm Sound
+  const [play] = useSound('/ping.mp3', { volume: 0.6 });
 
   /* Form state */
   const [appointments, setAppointments] = useState([]);
@@ -190,6 +191,7 @@ export default function NewAppointment() {
 
   /* Submit */
   const handleSubmit = async (e) => {
+    play();
     e.preventDefault();
     if (!selectedDoctor || !selectedDate || !selectedTime || !reason) {
       alert('Por favor completa todos los campos');

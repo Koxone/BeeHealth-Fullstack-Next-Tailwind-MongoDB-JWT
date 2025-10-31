@@ -2,11 +2,16 @@
 
 import { Plus, Check } from 'lucide-react';
 import { useState } from 'react';
+import useSound from 'use-sound';
 
 export default function RegisterVisitButton({ onClick }) {
   const [isChecked, setIsChecked] = useState(false);
 
+  // Load your sound from public/
+  const [play] = useSound('/ping.mp3', { volume: 0.6 });
+
   const handleClick = async () => {
+    play(); 
     setIsChecked(true);
     if (onClick) onClick();
 
