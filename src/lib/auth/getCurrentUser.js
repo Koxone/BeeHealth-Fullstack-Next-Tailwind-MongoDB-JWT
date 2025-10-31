@@ -32,6 +32,7 @@ export async function getCurrentUser() {
       role: user.role,
       avatar: user.avatar,
       createdAt: user.createdAt,
+      specialty: user.specialty,
     };
   } catch (err) {
     console.error('getCurrentUser error:', err);

@@ -16,7 +16,9 @@ export default async function MainRootLayout({ children }) {
   // Get current User info
   const currentUser = await getCurrentUser();
   const role = currentUser?.role;
+  const specialty = currentUser?.specialty;
   console.log(role);
+  
   const cookieStore = await cookies();
   const refreshToken = cookieStore.get('refreshToken')?.value;
 
@@ -37,7 +39,7 @@ export default async function MainRootLayout({ children }) {
         <div className="grid grid-rows-[auto_1fr]">
           <Header type={type} />
           <main className="grid grid-cols-[auto_1fr]">
-            <Sidebar currentUser={currentUser} role={role} />
+            <Sidebar currentUser={currentUser} role={role} specialty={specialty} />
             <div className="mx-auto min-h-screen w-full max-w-7xl overflow-y-auto p-6 pb-10">
               {children}
             </div>

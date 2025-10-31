@@ -33,7 +33,13 @@ export async function POST(req) {
     }
 
     //  Build JWT Payload
-    const payload = { id: user._id, email: user.email, role: user.role, fullName: user.fullName };
+    const payload = {
+      id: user._id,
+      email: user.email,
+      role: user.role,
+      fullName: user.fullName,
+      specialty: user.specialty,
+    };
 
     //  Generate Tokens
     const accessToken = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '15m' });
@@ -46,6 +52,7 @@ export async function POST(req) {
       email: user.email,
       phone: user.phone,
       role: user.role,
+      specialty: user.specialty,
       createdAt: user.createdAt,
     };
 

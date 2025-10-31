@@ -3,21 +3,47 @@
 import { LayoutDashboard, Calendar, ChevronRight } from 'lucide-react';
 import {
   patientSidebarItems,
-  doctorSidebarItems,
+  weightControlSidebarItems,
   employeeSidebarItems,
+  dentalSidebarItems,
 } from './components/SideBarData';
 import { usePathname, useRouter } from 'next/navigation';
+import { fetchDoctors } from '@/lib/mongoDB/getDoctors';
+import { useEffect, useState } from 'react';
 
-export default function Sidebar({ role, currentUser }) {
+export default function Sidebar({ role, currentUser, specialty }) {
+  // Fetch Doctor List
+  const [doctors, setDoctors] = useState([]);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadDoctors() {
+      try {
+        const data = await fetchDoctors();
+        setDoctors(data);
+        console.log('Doctores:', data);
+      } catch (error) {
+        console.error('Error al cargar doctores:', error);
+      }
+    }
+
+    loadDoctors();
+  }, []);
+
+  // Hooks
   const pathname = usePathname();
   const router = useRouter();
 
+  // Sidebar Options
   const sidebarOptions =
-    pathname.startsWith('/doctor') && role === 'doctor'
-      ? doctorSidebarItems
-      : pathname.startsWith('/patient') && role === 'patient'
-        ? patientSidebarItems
-        : employeeSidebarItems;
+    pathname.startsWith('/doctor') && role === 'doctor' && specialty === 'dental'
+      ? dentalSidebarItems
+      : pathname.startsWith('/doctor') && role === 'doctor' && specialty === 'weight'
+        ? weightControlSidebarItems
+        : pathname.startsWith('/patient') && role === 'patient'
+          ? patientSidebarItems
+          : employeeSidebarItems;
 
   if (pathname === '/auth/login') return null;
 

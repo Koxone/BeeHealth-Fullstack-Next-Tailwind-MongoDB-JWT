@@ -22,7 +22,7 @@ export const patientSidebarItems = [
   { icon: HelpCircle, label: 'Soporte', path: '/patient/support', badge: null },
 ];
 
-export const doctorSidebarItems = [
+export const weightControlSidebarItems = [
   { icon: LayoutDashboard, label: 'Inicio', path: '/doctor/dashboard', badge: null },
   {
     icon: Users,
@@ -38,6 +38,25 @@ export const doctorSidebarItems = [
   },
   { icon: Apple, label: 'Dietas', path: '/doctor/diets', badge: null },
   { icon: Dumbbell, label: 'Ejercicios', path: '/doctor/workouts', badge: null },
+  { icon: DollarSign, label: 'Contabilidad', path: '/doctor/accounting', badge: null },
+  { icon: Package, label: 'Inventario', path: '/doctor/inventory', badge: '5' },
+  { icon: User, label: 'Perfil', path: '/doctor/profile', badge: null },
+];
+
+export const dentalSidebarItems = [
+  { icon: LayoutDashboard, label: 'Inicio', path: '/doctor/dashboard', badge: null },
+  {
+    icon: Users,
+    label: 'Pacientes',
+    path: '/doctor/patients',
+    badge: '0',
+  },
+  {
+    icon: Calendar,
+    label: 'Calendario',
+    path: '/doctor/calendar',
+    badge: '0',
+  },
   { icon: DollarSign, label: 'Contabilidad', path: '/doctor/accounting', badge: null },
   { icon: Package, label: 'Inventario', path: '/doctor/inventory', badge: '5' },
   { icon: User, label: 'Perfil', path: '/doctor/profile', badge: null },
