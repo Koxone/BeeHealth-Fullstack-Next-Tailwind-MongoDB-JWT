@@ -24,7 +24,7 @@ export default function DeleteConfirmModal({ type, item, onCancel, onConfirm }) 
           <div className="p-6">
             <p className="mb-4 text-gray-700">
               ¿Estás seguro de que deseas eliminar{' '}
-              {type === 'consulta' ? 'esta consulta' : 'este medicamento'}?
+              {type === 'consulta' ? 'esta consulta' : 'la venta de este medicamento'}?
             </p>
 
             <div className="mb-6 rounded-lg bg-gray-50 p-3">

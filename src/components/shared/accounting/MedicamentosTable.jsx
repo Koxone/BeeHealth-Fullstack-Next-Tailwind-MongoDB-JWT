@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Plus, Edit2, Trash2 } from 'lucide-react';
 import DeleteConfirmModal from './DeleteConfirmModal';
-import AddEditModal from './AddEditModal';
+import AddEditModal from './addEditModal/AddEditModal';
 
 /* Table */
 export default function MedicamentosTable() {
