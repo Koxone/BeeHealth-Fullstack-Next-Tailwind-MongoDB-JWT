@@ -2,7 +2,7 @@ import GeneralSectionHeader from '@/components/shared/sections/GeneralSectionHea
 import EmployeePatientsList from './components/EmployeePatientsList';
 import PatientsSearchBar from '@/components/shared/patients/PatientsSearchBar';
 
-export default function EmployeePatients() {
+export default function EmployeePatients({ currentUser, role }) {
   return (
     <div className="h-full space-y-6 overflow-y-auto">
       <GeneralSectionHeader
@@ -15,7 +15,7 @@ export default function EmployeePatients() {
         <PatientsSearchBar />
       </div>
 
-      <EmployeePatientsList />
+      <EmployeePatientsList currentUser={currentUser} role={role} />
     </div>
   );
 }

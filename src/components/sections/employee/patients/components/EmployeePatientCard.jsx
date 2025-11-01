@@ -8,7 +8,7 @@ const getInitials = (name = '') =>
     .map((n) => n[0])
     .join('');
 
-export default async function DoctorPatientCard({ patient, type, currentUser, role }) {
+export default async function EmployeePatientCard({ patient, currentUser, role }) {
   return (
     <div className="rounded-xl border-2 border-gray-200 bg-white p-4 transition hover:border-blue-300">
       <div className="flex items-center gap-4">
@@ -38,16 +38,6 @@ export default async function DoctorPatientCard({ patient, type, currentUser, ro
                 <Calendar className="h-4 w-4" />
                 <span>Última Cita: {patient?.lastVisit || 'Sin Registro'}</span>
               </div>
-
-              {currentUser?.role === 'doctor' ? (
-                <Link
-                  href={`/doctor/patients/${patient._id}`}
-                  className="flex items-center gap-2 font-medium text-blue-600 hover:text-blue-700"
-                >
-                  <Eye className="h-4 w-4" />
-                  Ver Detalles
-                </Link>
-              ) : null}
             </div>
           </div>
         </div>
