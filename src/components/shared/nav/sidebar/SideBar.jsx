@@ -8,29 +8,8 @@ import {
   dentalSidebarItems,
 } from './components/SideBarData';
 import { usePathname, useRouter } from 'next/navigation';
-import { fetchDoctors } from '@/lib/mongoDB/getDoctors';
-import { useEffect, useState } from 'react';
 
 export default function Sidebar({ role, currentUser, specialty }) {
-  // Fetch Doctor List
-  const [doctors, setDoctors] = useState([]);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function loadDoctors() {
-      try {
-        const data = await fetchDoctors();
-        setDoctors(data);
-        console.log('Doctores:', data);
-      } catch (error) {
-        console.error('Error al cargar doctores:', error);
-      }
-    }
-
-    loadDoctors();
-  }, []);
-
   // Hooks
   const pathname = usePathname();
   const router = useRouter();

@@ -1,8 +1,14 @@
-import { fetchPatients } from '@/lib/mongoDB/getPatients';
 import EmployeePatientCard from './EmployeePatientCard';
+import { connectDB } from '@/lib/mongodb';
+import User from '@/models/User';
 
-export default async function DoctorPatientsList({ currentUser, role }) {
-  const patients = await fetchPatients();
+export default async function EmployeePatientsList({ currentUser, role }) {
+  // Get Patients
+  await connectDB();
+
+  let query = { role: 'patient', isActive: true };
+
+  const patients = await User.find(query, '-password -resetToken').sort({ createdAt: -1 }).lean();
 
   return (
     <div className="grid h-full max-h-[600px] grid-cols-1 gap-3 overflow-y-auto">
