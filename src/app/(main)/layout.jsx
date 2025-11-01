@@ -1,9 +1,9 @@
-import Sidebar from '@/components/general/nav/sidebar/SideBar';
-import Header from '@/components/general/nav/header/Header';
 import { cookies } from 'next/headers';
 import jwt from 'jsonwebtoken';
 import { getCurrentUser } from '@/lib/auth/getCurrentUser';
 import ServerRoleGuard from '@/components/sections/auth/ServerRoleGuard';
+import Sidebar from '@/components/shared/nav/sidebar/SideBar';
+import Header from '@/components/shared/nav/header/Header';
 
 export const runtime = 'nodejs';
 
@@ -18,7 +18,7 @@ export default async function MainRootLayout({ children }) {
   const role = currentUser?.role;
   const specialty = currentUser?.specialty;
   console.log(role);
-  
+
   const cookieStore = await cookies();
   const refreshToken = cookieStore.get('refreshToken')?.value;
 
