@@ -1,11 +1,8 @@
 import GeneralSectionHeader from '@/components/shared/sections/GeneralSectionHeader';
 import EmployeePatientsList from './components/EmployeePatientsList';
 import PatientsSearchBar from '@/components/shared/patients/PatientsSearchBar';
-import { useEmployeePatients } from './hooks/useEmployeePatients';
 
 export default function EmployeePatients() {
-  const { patients, loading } = useEmployeePatients();
-  
   return (
     <div className="h-full space-y-6 overflow-y-auto">
       <GeneralSectionHeader
@@ -18,7 +15,7 @@ export default function EmployeePatients() {
         <PatientsSearchBar />
       </div>
 
-      <EmployeePatientsList patients={patients} loading={loading} />
+      <EmployeePatientsList />
     </div>
   );
 }

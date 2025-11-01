@@ -1,10 +1,10 @@
-import SharedPatients from '@/components/shared/patients/SharedPatients';
+import EmployeePatients from '@/components/sections/employee/patients/EmployeePatients';
 import React from 'react';
 
 function EmployeePatientsPage() {
   return (
     <div className="max-h-screen overflow-hidden">
-      <SharedPatients />
+      <EmployeePatients />
     </div>
   );
 }
