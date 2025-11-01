@@ -15,7 +15,7 @@ import {
 import { useState, useMemo } from 'react';
 
 /* modal */
-export default function SharedAddEditConsultModal({
+export default function AddEditTodaysConsultModal({
   type,
   editingItem,
   onClose,
@@ -53,7 +53,7 @@ export default function SharedAddEditConsultModal({
       />
 
       {/* Modal Container */}
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      <div className="animate-slideUp fixed inset-0 z-50 flex items-center justify-center p-4">
         <div
           className="animate-in fade-in zoom-in-95 relative w-full max-w-lg overflow-hidden rounded-3xl bg-linear-to-br from-white via-gray-50/30 to-purple-50/30 shadow-2xl duration-300"
           onClick={(e) => e.stopPropagation()}

@@ -4,8 +4,8 @@ import SearchAddBar from './SearchAddBar';
 import ConsultationsTable from './ConsultationsTable';
 import ConsultationsMobile from './ConsultationsMobile';
 import EmptyState from './EmptyState';
-import SharedAddEditConsultModal from './SharedAddEditConsultModal';
-import DeleteModal from '@/components/sections/employee/consultations/components/DeleteModal';
+import AddEditTodaysConsultModal from './AddEditTodaysConsultModal';
+import DeleteTodaysConsultModal from '@/components/shared/todayConsults/DeleteTodaysConsultModal';
 import {
   Search,
   Plus,
@@ -216,7 +216,8 @@ export default function TodayConsultsTable() {
 
       {/* Modals */}
       {showModal && (
-        <SharedAddEditConsultModal
+        <AddEditTodaysConsultModal
+          type="consulta"
           editingItem={editingItem}
           form={consultaForm}
           setForm={setConsultaForm}
@@ -227,7 +228,7 @@ export default function TodayConsultsTable() {
       )}
 
       {showDeleteModal && itemToDelete && (
-        <DeleteModal
+        <DeleteTodaysConsultModal
           item={itemToDelete}
           onClose={() => setShowDeleteModal(false)}
           onConfirm={handleDelete}
