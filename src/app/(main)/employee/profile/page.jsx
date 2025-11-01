@@ -1,4 +1,4 @@
-import UserProfile from '@/components/general/profile/UserProfile';
+import SharedUserProfile from '@/components/shared/profile/SharedUserProfile';
 import { getCurrentUser } from '@/lib/auth/getCurrentUser';
 import React from 'react';
 
@@ -10,7 +10,7 @@ export default async function EmployeeProfilePage() {
   const role = currentUser?.role;
   return (
     <div className="h-screen overflow-hidden pb-40">
-      <UserProfile currentUser={currentUser} role={role} />
+      <SharedUserProfile currentUser={currentUser} role={role} />
     </div>
   );
 }

@@ -20,7 +20,7 @@ import {
   CheckCircle2,
 } from 'lucide-react';
 
-export default function UserProfile({ role, currentUser }) {
+export default function SharedUserProfile({ role, currentUser }) {
   /* Local editing state */
   const [isEditing, setIsEditing] = useState(false);
 
