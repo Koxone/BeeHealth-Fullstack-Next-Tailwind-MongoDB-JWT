@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Plus, Edit2, Trash2 } from 'lucide-react';
 import DeleteConfirmModal from './DeleteConfirmModal';
-import AddEditModal from './addEditModal/AddEditModal';
+import AddEditMedicationSellModal from './addEditModal/AddEditMedicationSellModal';
 
 /* Table */
 export default function MedicamentosTable() {
@@ -171,7 +171,7 @@ export default function MedicamentosTable() {
 
       {/* Modals */}
       {showModal && (
-        <AddEditModal
+        <AddEditMedicationSellModal
           type="medicamento"
           editingItem={editingItem}
           onClose={() => {

@@ -4,7 +4,7 @@ import SearchAddBar from './SearchAddBar';
 import ConsultationsTable from './ConsultationsTable';
 import ConsultationsMobile from './ConsultationsMobile';
 import EmptyState from './EmptyState';
-import AddEditModal from '@/components/sections/employee/consultations/components/AddEditModal/AddEditModal';
+import SharedAddEditConsultModal from './SharedAddEditConsultModal';
 import DeleteModal from '@/components/sections/employee/consultations/components/DeleteModal';
 import {
   Search,
@@ -216,7 +216,7 @@ export default function TodayConsultsTable() {
 
       {/* Modals */}
       {showModal && (
-        <AddEditModal
+        <SharedAddEditConsultModal
           editingItem={editingItem}
           form={consultaForm}
           setForm={setConsultaForm}

@@ -13,7 +13,7 @@ import {
 } from 'lucide-react';
 import useStateFromEditing from './hooks/useStateFromEditing';
 
-export default function AddEditModal({
+export default function AddEditMedicationSellModal({
   type,
   editingItem,
   onClose,
