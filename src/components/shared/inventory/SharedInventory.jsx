@@ -46,7 +46,7 @@ const getCaducidadStatus = (caducidad) => {
 };
 
 /* container */
-export default function GeneralInventory({ role }) {
+export default function SharedInventory({ role }) {
   /* ui state */
   const [activeTab, setActiveTab] = useState('medicamentos');
   const [searchTerm, setSearchTerm] = useState('');

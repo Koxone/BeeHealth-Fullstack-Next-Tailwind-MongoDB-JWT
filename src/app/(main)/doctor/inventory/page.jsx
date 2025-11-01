@@ -1,6 +1,6 @@
 import React from 'react';
 import { getCurrentUser } from '@/lib/auth/getCurrentUser';
-import GeneralInventory from '@/components/general/inventory/GeneralInventory';
+import SharedInventory from '@/components/shared/inventory/SharedInventory';
 export const runtime = 'nodejs';
 
 export default async function DoctorInventoryPage() {
@@ -9,7 +9,7 @@ export default async function DoctorInventoryPage() {
   const role = currentUser?.role;
   return (
     <div className="h-screen overflow-hidden pb-40">
-      <GeneralInventory role={role} />
+      <SharedInventory role={role} />
     </div>
   );
 }
