@@ -1,4 +1,4 @@
-import GeneralPatients from '@/components/general/patients/GeneralPatients';
+import SharedPatients from '@/components/shared/patients/SharedPatients';
 import { getCurrentUser } from '@/lib/auth/getCurrentUser';
 export const runtime = 'nodejs';
 
@@ -8,7 +8,7 @@ export default async function DoctorPatientsPage() {
   const role = currentUser?.role;
   return (
     <div className="max-h-screen overflow-hidden">
-      <GeneralPatients currentUser={currentUser} role={role} />
+      <SharedPatients currentUser={currentUser} role={role} />
     </div>
   );
 }

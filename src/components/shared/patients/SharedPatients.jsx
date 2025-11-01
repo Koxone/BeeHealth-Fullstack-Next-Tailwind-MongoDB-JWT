@@ -1,8 +1,8 @@
-import PatientsSearchBar from '@/components/general/patients/components/PatientsSearchBar';
-import PatientsList from '@/components/general/patients/components/PatientsList';
-import GeneralSectionHeader from '../../shared/sections/GeneralSectionHeader';
+import GeneralSectionHeader from '../sections/GeneralSectionHeader';
+import PatientsList from './components/PatientsList';
+import PatientsSearchBar from './components/PatientsSearchBar';
 
-export default async function GeneralPatients({ role, currentUser }) {
+export default async function SharedPatients({ role, currentUser }) {
   return (
     <div className="h-full space-y-6 overflow-y-auto">
       <GeneralSectionHeader
