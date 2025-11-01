@@ -1,6 +1,5 @@
 'use client';
 
-/* Imports */
 import {
   ArrowLeft,
   User,
@@ -93,7 +92,7 @@ const mockWeightData = mockRecords
   }))
   .reverse();
 
-export default function DoctorPatientDetail({ role, currentUser, specialty }) {
+export default function DoctorPatientDetail({ role, currentUser, specialty, patient }) {
   /* Router */
   const router = useRouter();
 
@@ -218,7 +217,8 @@ export default function DoctorPatientDetail({ role, currentUser, specialty }) {
       <div className="grid grid-rows-[auto_1fr]">
         <BackButton onClick={() => router.back()} icon={{ ArrowLeft }} />
         <PatientHeader
-          patient={mockPatient}
+          mockPatient={mockPatient}
+          patient={patient}
           icons={{ User, Mail, Phone, CalendarIcon, Activity, Stethoscope }}
           moment={moment}
           onClickNew={handleCreateAppointmentModal}

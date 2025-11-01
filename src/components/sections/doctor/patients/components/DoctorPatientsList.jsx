@@ -15,9 +15,14 @@ export default async function DoctorPatientsList({ currentUser, role }) {
 
   const patients = await User.find(query, '-password -resetToken').sort({ createdAt: -1 }).lean();
 
+  const serializedPatients = patients.map((p) => ({
+    ...p,
+    _id: p._id.toString(),
+  }));
+
   return (
     <div className="grid h-full max-h-[600px] grid-cols-1 gap-3 overflow-y-auto">
-      {patients.map((patient) => (
+      {serializedPatients.map((patient) => (
         <DoctorPatientCard
           key={patient._id.toString()}
           patient={patient}
