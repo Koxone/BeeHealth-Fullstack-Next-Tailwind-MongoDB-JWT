@@ -1,294 +1,359 @@
-// models/ClinicalRecord.js
-
+/* Core */
 import mongoose from 'mongoose';
+const { Schema, model, models } = mongoose;
 
-const ClinicalRecordSchema = new mongoose.Schema(
+/* Subschemas: Información básica */
+const InformacionBasicaSchema = new Schema(
   {
-    /* --- Relaciones --- */
-    patient: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-      required: true,
-      validate: {
-        validator: async function (id) {
-          const user = await mongoose.model('User').findById(id);
-          return user && user.role === 'patient';
-        },
-        message: 'El ID referenciado no pertenece a un paciente.',
-      },
-    },
-    doctor: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-      required: true,
-      validate: {
-        validator: async function (id) {
-          const user = await mongoose.model('User').findById(id);
-          return user && user.role === 'doctor';
-        },
-        message: 'El ID referenciado no pertenece a un doctor.',
-      },
-    },
-
-    /* --- Información básica --- */
-    informacionBasica: {
-      // Structure
-      fecha: { type: Date, default: Date.now },
-      nombreCompleto: { type: String, trim: true },
-      fechaNacimiento: { type: String },
-      lugarNacimiento: { type: String },
-      edad: { type: Number },
-      genero: { type: String },
-      alturaCm: { type: Number },
-      pesoActualKg: { type: Number },
-      tallaCm: { type: Number },
-      ocupacion: { type: String },
-      estadoCivil: { type: String },
-      rfc: { type: String },
-      correo: { type: String, lowercase: true, trim: true },
-      domicilio: { type: String },
-      telefonoCelular: { type: String },
-      telefonoFijo: { type: String },
-      contactoEmergencia: { type: String },
-      telefonoEmergencia: { type: String },
-    },
-
-    /* --- Información general --- */
-    informacionGeneral: {
-      // Structure
-      motivoConsulta: { type: String },
-      alergiasConocidas: { type: String },
-      medicamentosActuales: { type: String },
-      buenEstadoSalud: { type: String },
-      bajoTratamiento: { type: String },
-      tomandoMedicamentos: { type: String },
-      alergicoMedicamentos: { type: String },
-      operadoHospitalizado: { type: String },
-      hemorragias: { type: String },
-      problemasCicatrizacion: { type: String },
-      otrasEnfermedades: { type: String },
-      enfermedades: {
-        // Map
-        diabetes: { type: Boolean, default: false },
-        hipertension: { type: Boolean, default: false },
-        hepatitis: { type: Boolean, default: false },
-        vih: { type: Boolean, default: false },
-        cancer: { type: Boolean, default: false },
-        asma: { type: Boolean, default: false },
-        epilepsia: { type: Boolean, default: false },
-        gastritis: { type: Boolean, default: false },
-        ansiedadDepresion: { type: Boolean, default: false },
-        otras: { type: String },
-      },
-      consumoAlcohol: { type: String },
-      consumoTabaco: { type: String },
-      consumoDrogas: { type: String },
-      embarazo: { type: String },
-      lactancia: { type: String },
-      anticonceptivos: { type: String },
-      medicamentosPotencia: { type: String },
-      hijos: { type: String },
-    },
-
-    /* --- Información clínica específica --- */
-    informacionClinica: {
-      // Control peso
-      controlPeso: {
-        pesoObjetivo: { type: Number },
-        actividadFisica: { type: String },
-        horasSueno: { type: Number },
-        consumoAgua: { type: Number },
-        enfermedadesCronicas: { type: String },
-        medicamentosActuales: { type: String },
-        alergiasAlimentarias: { type: String },
-        tipoAlimentacion: { type: String },
-        cirugiasPrevias: { type: String },
-        motivoConsultaPeso: { type: String },
-      },
-      // Odontología
-      odontologia: {
-        motivoConsultaOdonto: { type: String },
-        primeraVisita: { type: String },
-        visitaAnteriorAgradable: { type: String },
-        fluor: { type: String },
-        extraccionDientes: { type: String },
-        sangradoPostExtraccion: { type: String },
-        tratamientosPrevios: { type: String },
-        perdidaDientes: { type: String },
-        sangradoEncias: { type: String },
-        cepilladoDiario: { type: String },
-        enjuagueBucal: { type: String },
-        hiloDental: { type: String },
-        usaCepillo: { type: String },
-        dolorDental: { type: String },
-        tipoDolor: { type: String },
-      },
-      // Estética
-      estetica: {
-        motivoTratamiento: { type: String },
-        cirugiasPrevias: { type: String },
-        reaccionesAnestesia: { type: String },
-        enfermedadesInterfieren: { type: String },
-        condicionPiel: { type: String },
-        zonaInteres: { type: String },
-        tratamientosPrevios: { type: String },
-        expectativas: { type: String },
-        alergiasQuimicos: { type: String },
-      },
-    },
-
-    /* --- Antecedentes --- */
-    antecedentes: {
-      // Heredofamiliares
-      heredofamiliares: {
-        diabetes: { type: Boolean, default: false },
-        epilepsia: { type: Boolean, default: false },
-        hepatitis: { type: Boolean, default: false },
-        hipertension: { type: Boolean, default: false },
-        malformaciones: { type: Boolean, default: false },
-        artritis: { type: Boolean, default: false },
-      },
-      // Personales patológicos
-      personalesPatologicos: {
-        cardiopatias: { type: Boolean, default: false },
-        enfermedadesMentales: { type: Boolean, default: false },
-        neoplasias: { type: Boolean, default: false },
-        enfermedadesRenales: { type: Boolean, default: false },
-        varicela: { type: Boolean, default: false },
-        sarampion: { type: Boolean, default: false },
-        neuralgia: { type: Boolean, default: false },
-        viasBiliares: { type: Boolean, default: false },
-        asma: { type: Boolean, default: false },
-        enfermedadesRespiratorias: { type: Boolean, default: false },
-        hepatitis: { type: Boolean, default: false },
-        digestivo: { type: Boolean, default: false },
-        hipotiroidismo: { type: Boolean, default: false },
-        migraña: { type: Boolean, default: false },
-        epilepsia: { type: Boolean, default: false },
-        ansiedadDepresion: { type: Boolean, default: false },
-        hipertension: { type: Boolean, default: false },
-        diabetes: { type: Boolean, default: false },
-        cancer: { type: Boolean, default: false },
-        vih: { type: Boolean, default: false },
-        ets: { type: Boolean, default: false },
-        piel: { type: Boolean, default: false },
-        fracturas: { type: Boolean, default: false },
-        hospitalizaciones: { type: String },
-        cirugias: { type: String },
-        alteracionesHormonales: { type: String },
-        hijos: { type: String },
-        anticonceptivos: { type: String },
-        embarazo: { type: String },
-        lactancia: { type: String },
-      },
-      // No patológicos con alias para el frontend
-      noPatologicos: {
-        tipoAlimentacion: { type: String },
-        comidasDia: { type: String },
-        intolerancias: { type: String },
-        alimentosNoConsume: { type: String },
-        lavadoManos: { type: String },
-        // Aliases
-        usoCepillo: { type: String, alias: 'usoCepilloNP' },
-        usoEnjuague: { type: String, alias: 'usoEnjuagueNP' },
-        usoHilo: { type: String, alias: 'usoHiloNP' },
-      },
-      // Inmunizaciones
-      inmunizaciones: {
-        poliomielitis: { type: Boolean, default: false },
-        tuberculosis: { type: Boolean, default: false },
-        dtp: { type: Boolean, default: false },
-        tripleViral: { type: Boolean, default: false },
-        sarampion: { type: Boolean, default: false },
-        hepatitisB: { type: Boolean, default: false },
-        otras: { type: String },
-      },
-      // Hábitos
-      habitos: {
-        alcohol: { type: String },
-        tabaco: { type: String },
-        drogas: { type: String },
-        deportes: { type: String },
-      },
-    },
-
-    /* --- Exploración física --- */
-    exploracionFisica: {
-      cabeza: { type: String },
-      cuello: { type: String },
-      torax: { type: String },
-      abdomen: { type: String },
-      extremidades: { type: String },
-    },
-
-    /* --- Signos vitales --- */
-    signosVitales: {
-      tensionArterial: { type: String },
-      frecuenciaCardiaca: { type: String },
-      frecuenciaRespiratoria: { type: String },
-      temperatura: { type: String },
-      saturacionOxigeno: { type: String },
-      imc: { type: String },
-      peso: { type: Number },
-      talla: { type: Number },
-    },
-
-    /* --- Campos clínicos del médico --- */
-    camposMedico: {
-      datosClinicos: {
-        fechaRegistro: { type: Date },
-        medicoResponsable: { type: String },
-        diagnosticoPreliminar: { type: String },
-        tratamientoSugerido: { type: String },
-        notas: { type: String },
-      },
-      odontologia: {
-        cavidadBucal: { type: String },
-        cuelloEstructuras: { type: String },
-        diagnosticoDental: { type: String },
-        planTratamientoDental: { type: String },
-        materialesUsados: { type: String },
-        recomendacionesPaciente: { type: String },
-      },
-      estetica: {
-        diagnosticoFacial: { type: String },
-        condicionPiel: { type: String },
-        zonasTratadas: { type: String },
-        productoTecnica: { type: String },
-        fechaTratamiento: { type: Date },
-        evolucion: { type: String },
-        complicaciones: { type: String },
-        recomendacionesPost: { type: String },
-      },
-      seguimiento: {
-        diagnosticoDefinitivo: { type: String },
-        tratamientoPrescrito: { type: String },
-        medicamentosIndicados: { type: String },
-        observacionesEvolucion: { type: String },
-        recomendacionesFinales: { type: String },
-        fechaRevisionSiguiente: { type: Date },
-        firmaMedico: { type: String },
-      },
-    },
-
-    /* --- Observaciones y complementos --- */
-    complementos: {
-      pasatiempos: { type: String },
-      comoSeEntero: { type: String },
-      adultoResponsable: { type: String },
-      recomendadoPor: { type: String },
-      observacionesPersonales: { type: String },
-      comentarioLibre: { type: String },
-    },
+    fecha: Date,
+    nombreCompleto: String,
+    fechaNacimiento: Date,
+    lugarNacimiento: String,
+    edad: Number,
+    genero: String,
+    alturaCm: Number,
+    pesoActualKg: Number,
+    tallaCm: Number,
+    ocupacion: String,
+    estadoCivil: String,
+    rfc: String,
+    correo: String,
+    domicilio: String,
+    telefonoCelular: String,
+    telefonoFijo: String,
+    contactoEmergencia: String,
+    telefonoEmergencia: String,
   },
-  { timestamps: true, collection: 'clinicalRecords' }
+  { _id: false }
 );
 
-/* --- Índices adicionales --- */
-// Indexes
-ClinicalRecordSchema.index({ 'informacionBasica.nombreCompleto': 1 });
-ClinicalRecordSchema.index({ 'informacionGeneral.motivoConsulta': 1 });
-ClinicalRecordSchema.index({ patient: 1, createdAt: -1 });
+/* Subschemas: Información general */
+const EnfermedadesSchema = new Schema(
+  {
+    diabetes: Boolean,
+    hipertension: Boolean,
+    hepatitis: Boolean,
+    vih: Boolean,
+    cancer: Boolean,
+    asma: Boolean,
+    epilepsia: Boolean,
+    gastritis: Boolean,
+    ansiedadDepresion: Boolean,
+    otras: String,
+  },
+  { _id: false }
+);
 
-export default mongoose.models.ClinicalRecord ||
-  mongoose.model('ClinicalRecord', ClinicalRecordSchema);
+const InformacionGeneralSchema = new Schema(
+  {
+    motivoConsulta: String,
+    alergiasConocidas: String,
+    medicamentosActuales: String,
+    buenEstadoSalud: String,
+    bajoTratamiento: String,
+    tomandoMedicamentos: String,
+    alergicoMedicamentos: String,
+    operadoHospitalizado: String,
+    hemorragias: String,
+    problemasCicatrizacion: String,
+    otrasEnfermedades: String,
+    enfermedades: { type: EnfermedadesSchema, default: {} },
+    consumoAlcohol: String,
+    consumoTabaco: String,
+    consumoDrogas: String,
+    embarazo: String,
+    lactancia: String,
+    anticonceptivos: String,
+    medicamentosPotencia: String,
+    hijos: Number,
+  },
+  { _id: false }
+);
+
+/* Subschemas: Información clínica por especialidad */
+const ControlPesoSchema = new Schema(
+  {
+    pesoObjetivo: Number,
+    actividadFisica: String,
+    horasSueno: Number,
+    consumoAgua: Number,
+    enfermedadesCronicas: String,
+    medicamentosActuales: String,
+    alergiasAlimentarias: String,
+    tipoAlimentacion: String,
+    cirugiasPrevias: String,
+    motivoConsultaPeso: String,
+  },
+  { _id: false }
+);
+
+const OdontologiaSchema = new Schema(
+  {
+    motivoConsultaOdonto: String,
+    primeraVisita: String,
+    visitaAnteriorAgradable: String,
+    fluor: String,
+    extraccionDientes: String,
+    sangradoPostExtraccion: String,
+    tratamientosPrevios: String,
+    perdidaDientes: String,
+    sangradoEncias: String,
+    cepilladoDiario: String,
+    enjuagueBucal: String,
+    hiloDental: String,
+    usaCepillo: String,
+    dolorDental: String,
+    tipoDolor: String,
+  },
+  { _id: false }
+);
+
+const EsteticaSchema = new Schema(
+  {
+    motivoTratamiento: String,
+    cirugiasPrevias: String,
+    reaccionesAnestesia: String,
+    enfermedadesInterfieren: String,
+    condicionPiel: String,
+    zonaInteres: String,
+    tratamientosPrevios: String,
+    expectativas: String,
+    alergiasQuimicos: String,
+  },
+  { _id: false }
+);
+
+const InformacionClinicaSchema = new Schema(
+  {
+    controlPeso: { type: ControlPesoSchema, default: {} },
+    odontologia: { type: OdontologiaSchema, default: {} },
+    estetica: { type: EsteticaSchema, default: {} },
+  },
+  { _id: false }
+);
+
+/* Subschemas: Antecedentes */
+const HeredoSchema = new Schema(
+  {
+    diabetes: Boolean,
+    epilepsia: Boolean,
+    hepatitis: Boolean,
+    hipertension: Boolean,
+    malformaciones: Boolean,
+    artritis: Boolean,
+  },
+  { _id: false }
+);
+
+const PersonalesPatologicosSchema = new Schema(
+  {
+    cardiopatias: Boolean,
+    enfermedadesMentales: Boolean,
+    neoplasias: Boolean,
+    enfermedadesRenales: Boolean,
+    varicela: Boolean,
+    sarampion: Boolean,
+    neuralgia: Boolean,
+    viasBiliares: Boolean,
+    asma: Boolean,
+    enfermedadesRespiratorias: Boolean,
+    hepatitis: Boolean,
+    digestivo: Boolean,
+    hipotiroidismo: Boolean,
+    migraña: Boolean,
+    epilepsia: Boolean,
+    ansiedadDepresion: Boolean,
+    hipertension: Boolean,
+    diabetes: Boolean,
+    cancer: Boolean,
+    vih: Boolean,
+    ets: Boolean,
+    piel: Boolean,
+    fracturas: Boolean,
+    hospitalizaciones: String,
+    cirugias: String,
+    alteracionesHormonales: String,
+    hijos: Number,
+    anticonceptivos: String,
+    embarazo: String,
+    lactancia: String,
+  },
+  { _id: false }
+);
+
+const NoPatologicosSchema = new Schema(
+  {
+    tipoAlimentacion: String,
+    comidasDia: String,
+    intolerancias: String,
+    alimentosNoConsume: String,
+    lavadoManos: String,
+    usoCepillo: String,
+    usoEnjuague: String,
+    usoHilo: String,
+  },
+  { _id: false }
+);
+
+const InmunizacionesSchema = new Schema(
+  {
+    poliomielitis: Boolean,
+    tuberculosis: Boolean,
+    dtp: Boolean,
+    tripleViral: Boolean,
+    sarampion: Boolean,
+    hepatitisB: Boolean,
+    otras: String,
+  },
+  { _id: false }
+);
+
+const HabitosSchema = new Schema(
+  {
+    alcohol: String,
+    tabaco: String,
+    drogas: String,
+    deportes: String,
+  },
+  { _id: false }
+);
+
+const AntecedentesSchema = new Schema(
+  {
+    heredofamiliares: { type: HeredoSchema, default: {} },
+    personalesPatologicos: { type: PersonalesPatologicosSchema, default: {} },
+    noPatologicos: { type: NoPatologicosSchema, default: {} },
+    inmunizaciones: { type: InmunizacionesSchema, default: {} },
+    habitos: { type: HabitosSchema, default: {} },
+  },
+  { _id: false }
+);
+
+/* Subschemas: Exploración y signos vitales */
+const ExploracionFisicaSchema = new Schema(
+  {
+    cabeza: String,
+    cuello: String,
+    torax: String,
+    abdomen: String,
+    extremidades: String,
+  },
+  { _id: false }
+);
+
+const SignosVitalesSchema = new Schema(
+  {
+    tensionArterial: String,
+    frecuenciaCardiaca: { type: Number, min: 0 },
+    frecuenciaRespiratoria: { type: Number, min: 0 },
+    temperatura: String,
+    saturacionOxigeno: String,
+    imc: String,
+    peso: Number,
+    talla: Number,
+  },
+  { _id: false }
+);
+
+/* Subschemas: Campos del médico */
+const CamposMedicoDatosClinicosSchema = new Schema(
+  {
+    fechaRegistro: Date,
+    medicoResponsable: String,
+    diagnosticoPreliminar: String,
+    tratamientoSugerido: String,
+    notas: String,
+  },
+  { _id: false }
+);
+
+const CamposMedicoOdontologiaSchema = new Schema(
+  {
+    cavidadBucal: String,
+    cuelloEstructuras: String,
+    diagnosticoDental: String,
+    planTratamientoDental: String,
+    materialesUsados: String,
+    recomendacionesPaciente: String,
+  },
+  { _id: false }
+);
+
+const CamposMedicoEsteticaSchema = new Schema(
+  {
+    diagnosticoFacial: String,
+    condicionPiel: String,
+    zonasTratadas: String,
+    productoTecnica: String,
+    fechaTratamiento: Date,
+    evolucion: String,
+    complicaciones: String,
+    recomendacionesPost: String,
+  },
+  { _id: false }
+);
+
+const CamposMedicoSeguimientoSchema = new Schema(
+  {
+    diagnosticoDefinitivo: String,
+    tratamientoPrescrito: String,
+    medicamentosIndicados: String,
+    observacionesEvolucion: String,
+    recomendacionesFinales: String,
+    fechaRevisionSiguiente: Date,
+    firmaMedico: String,
+  },
+  { _id: false }
+);
+
+const CamposMedicoSchema = new Schema(
+  {
+    datosClinicos: { type: CamposMedicoDatosClinicosSchema, default: {} },
+    odontologia: { type: CamposMedicoOdontologiaSchema, default: {} },
+    estetica: { type: CamposMedicoEsteticaSchema, default: {} },
+    seguimiento: { type: CamposMedicoSeguimientoSchema, default: {} },
+  },
+  { _id: false }
+);
+
+/* Subschemas: Complementos */
+const ComplementosSchema = new Schema(
+  {
+    pasatiempos: String,
+    comoSeEntero: String,
+    adultoResponsable: String,
+    recomendadoPor: String,
+    observacionesPersonales: String,
+    comentarioLibre: String,
+  },
+  { _id: false }
+);
+
+/* Root schema */
+const ClinicalRecordSchema = new Schema(
+  {
+    patient: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+    doctor: { type: Schema.Types.ObjectId, ref: 'User' },
+
+    informacionBasica: { type: InformacionBasicaSchema, default: {} },
+    informacionGeneral: { type: InformacionGeneralSchema, default: {} },
+    informacionClinica: { type: InformacionClinicaSchema, default: {} },
+    antecedentes: { type: AntecedentesSchema, default: {} },
+    exploracionFisica: { type: ExploracionFisicaSchema, default: {} },
+    signosVitales: { type: SignosVitalesSchema, default: {} },
+    camposMedico: { type: CamposMedicoSchema, default: {} },
+    complementos: { type: ComplementosSchema, default: {} },
+
+    /* Mirror por qId */
+    answersByQId: { type: Map, of: Schema.Types.Mixed, default: {} },
+    /* Versión de template */
+    templateVersion: { type: Number, default: 1 },
+    /* Conjunto de qIds usados */
+    selectedQIds: { type: [Number], default: [] },
+  },
+  { timestamps: true }
+);
+
+/* Export */
+const ClinicalRecord = models.ClinicalRecord || model('ClinicalRecord', ClinicalRecordSchema);
+export default ClinicalRecord;

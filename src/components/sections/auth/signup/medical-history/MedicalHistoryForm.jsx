@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import TabsHeader from './components/TabsHeader';
 import ActionButtons from './components/ActionButtons';
@@ -12,134 +12,108 @@ import DateField from './formFields/DateField';
 import CheckboxGroupField from './formFields/CheckboxGroupField';
 import RadioGroupField from './formFields/RadioGroupField';
 
-/* Config */
 import {
-  OPTIONS,
-  DISEASES_OPTIONS,
-  FAMILY_HISTORY_OPTIONS,
-  PERSONAL_PATH_OPTIONS,
-  IMMUNIZATIONS_OPTIONS,
-  BASIC_INFO_FIELDS,
-  GENERAL_INFO_GROUPS,
-  TABS_CONFIG,
-  BACKGROUND_GROUPS,
-  PHYSICAL_EXAM_FIELDS,
-  CLINICAL_SECTIONS,
-  OBSERVATIONS_FIELDS,
+  indexByQId,
+  CONTROL_PESO_IDS,
+  ODONTOLOGIA_IDS,
+  ESTETICO_IDS,
+  YES_NO,
+  normalizeField,
 } from './formFields/medicalHistoryConfig';
 
-/* ============== Helpers ============== */
-function computeAge(dateStr) {
-  if (!dateStr) return '';
-  const today = new Date();
-  const dob = new Date(dateStr);
-  let age = today.getFullYear() - dob.getFullYear();
-  const m = today.getMonth() - dob.getMonth();
-  if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) age--;
-  return age >= 0 ? String(age) : '';
+/* Group by original section */
+function groupBySection(index, ids) {
+  const groups = new Map();
+  for (const id of ids) {
+    const f = index.get(id);
+    if (!f) continue;
+    const sec = f.__section || 'Sección';
+    if (!groups.has(sec)) groups.set(sec, []);
+    groups.get(sec).push(f);
+  }
+  return Array.from(groups.entries()).map(([title, fields]) => ({
+    title,
+    fields,
+    grid: true,
+  }));
 }
 
-function computeIMC(weightKg, heightCm) {
-  const w = parseFloat(weightKg);
-  const h = parseFloat(heightCm) / 100;
-  if (!w || !h) return '';
-  const bmi = w / (h * h);
-  return isFinite(bmi) ? String(Number(bmi.toFixed(1))) : '';
-}
+/* Field renderer */
+function FieldRenderer({ field }) {
+  const f = normalizeField(field);
+  const wrapperClass = 'col-span-1';
 
-/* ============== Field Renderer ============== */
-function FieldRenderer({ field, runtimeValues, setRuntimeValues }) {
-  // Shortcuts
-  const { type, label, rows, name, options, placeholder, readOnly, valueKey, gridSpan, required } =
-    field || {};
-
-  const val =
-    valueKey &&
-    {
-      fechaNacimiento: runtimeValues.fechaNacimiento,
-      alturaCm: runtimeValues.alturaCm,
-      pesoActualKg: runtimeValues.pesoActualKg,
-      edad: computeAge(runtimeValues.fechaNacimiento),
-      imc: computeIMC(runtimeValues.pesoActualKg, runtimeValues.alturaCm),
-    }[valueKey];
-
-  const onChange =
-    valueKey &&
-    {
-      fechaNacimiento: (e) =>
-        setRuntimeValues((s) => ({ ...s, fechaNacimiento: e?.target?.value || e })),
-      alturaCm: (e) => setRuntimeValues((s) => ({ ...s, alturaCm: e?.target?.value })),
-      pesoActualKg: (e) => setRuntimeValues((s) => ({ ...s, pesoActualKg: e?.target?.value })),
-    }[valueKey];
-
-  const sharedProps = {
-    label,
-    placeholder,
-    required,
-    ...(readOnly ? { readOnly: true } : {}),
-    ...(valueKey && val !== undefined ? { value: val } : {}),
-    ...(onChange ? { onChange } : {}),
+  /* Shared props */
+  const shared = {
+    label: f.label,
+    placeholder: f.placeholder,
+    required: !!f.required,
   };
 
-  // Grid span utility
-  const wrapperClass = gridSpan === 'full' ? 'col-span-1 md:col-span-2' : 'col-span-1';
+  /* Switch minimal */
+  if (f.kind === 'input') {
+    const inputType = field.type === 'number' ? 'number' : 'text';
+    return (
+      <div className={wrapperClass}>
+        <InputField type={inputType} {...shared} />
+      </div>
+    );
+  }
 
-  // Switch
-  if (type === 'input') {
+  if (f.kind === 'select') {
+    const opts = Array.isArray(f.options) ? f.options : [];
     return (
       <div className={wrapperClass}>
-        <InputField type={field.inputType || 'text'} {...sharedProps} />
+        <SelectField options={opts} {...shared} />
       </div>
     );
   }
-  if (type === 'select') {
+
+  if (f.kind === 'textarea') {
     return (
       <div className={wrapperClass}>
-        <SelectField options={options || []} {...sharedProps} />
+        <TextareaField rows={2} {...shared} />
       </div>
     );
   }
-  if (type === 'textarea') {
+
+  if (f.kind === 'date') {
     return (
       <div className={wrapperClass}>
-        <TextareaField rows={rows || 2} {...sharedProps} />
+        <DateField {...shared} />
       </div>
     );
   }
-  if (type === 'date') {
+
+  if (f.kind === 'radio') {
     return (
       <div className={wrapperClass}>
-        <DateField {...sharedProps} />
+        <RadioGroupField name={`q_${f.qId}`} options={YES_NO} label={f.label} />
       </div>
     );
   }
-  if (type === 'radio') {
-    return (
-      <div className={wrapperClass}>
-        <RadioGroupField name={name} options={options || OPTIONS.yesNo} label={label} />
-      </div>
-    );
-  }
-  if (type === 'checkboxGroup') {
-    return (
-      <div className={wrapperClass}>
-        <CheckboxGroupField label={label} options={options || []} />
-      </div>
-    );
-  }
+
   return null;
 }
 
-/* ============== Main ============== */
+/* Main */
 export default function MedicalHistoryForm() {
-  // Local States
+  /* Tabs */
   const [activeTab, setActiveTab] = useState('peso');
 
-  const [runtimeValues, setRuntimeValues] = useState({
-    fechaNacimiento: '',
-    alturaCm: '',
-    pesoActualKg: '',
-  });
+  /* Index */
+  const byId = useMemo(() => indexByQId(), []);
+
+  /* IDs per tab */
+  const pickedIds = useMemo(() => {
+    if (activeTab === 'peso') return CONTROL_PESO_IDS;
+    if (activeTab === 'odontologia') return ODONTOLOGIA_IDS;
+    if (activeTab === 'estetico') return ESTETICO_IDS;
+    return [];
+  }, [activeTab]);
+
+  /* Sections */
+  const sections = useMemo(() => groupBySection(byId, pickedIds), [byId, pickedIds]);
 
   return (
     <div className="h-full overflow-y-auto p-4 py-6 md:py-10">
@@ -147,9 +121,7 @@ export default function MedicalHistoryForm() {
         {/* Title */}
         <div className="mb-6 text-center">
           <h1 className="mb-2 text-2xl font-bold text-gray-900 md:text-3xl">Historial Clínico</h1>
-          <p className="text-sm text-gray-600 md:text-base">
-            Selecciona el tipo de consulta de tu interes
-          </p>
+          <p className="text-sm text-gray-600 md:text-base">Selecciona el tipo de consulta</p>
         </div>
 
         {/* Card */}
@@ -157,196 +129,19 @@ export default function MedicalHistoryForm() {
           <TabsHeader activeTab={activeTab} setActiveTab={setActiveTab} />
 
           <form className="p-4 md:p-8">
-            {/* ========== Información básica ========== */}
-            <SectionContainer title="Información básica">
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                {BASIC_INFO_FIELDS.map((f) => (
-                  <FieldRenderer
-                    key={f.key || f.label}
-                    field={f}
-                    runtimeValues={runtimeValues}
-                    setRuntimeValues={setRuntimeValues}
-                  />
-                ))}
-              </div>
-            </SectionContainer>
-
-            {/* ========== Información general ========== */}
-            <SectionContainer title="Información general">
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                {GENERAL_INFO_GROUPS.top.map((f) => (
-                  <FieldRenderer
-                    key={f.key || f.label}
-                    field={f}
-                    runtimeValues={runtimeValues}
-                    setRuntimeValues={setRuntimeValues}
-                  />
-                ))}
-              </div>
-
-              <div className="mt-6 grid grid-cols-1 gap-4">
-                <FieldRenderer
-                  field={{
-                    type: 'checkboxGroup',
-                    label: 'Enfermedades',
-                    options: DISEASES_OPTIONS,
-                    gridSpan: 'full',
-                  }}
-                  runtimeValues={runtimeValues}
-                  setRuntimeValues={setRuntimeValues}
-                />
-                <FieldRenderer
-                  field={{
-                    type: 'textarea',
-                    label: 'Enfermedades: otras',
-                    rows: 2,
-                    gridSpan: 'full',
-                  }}
-                  runtimeValues={runtimeValues}
-                  setRuntimeValues={setRuntimeValues}
-                />
-              </div>
-
-              <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
-                {GENERAL_INFO_GROUPS.bottom.map((f) => (
-                  <FieldRenderer
-                    key={f.key || f.label}
-                    field={f}
-                    runtimeValues={runtimeValues}
-                    setRuntimeValues={setRuntimeValues}
-                  />
-                ))}
-              </div>
-            </SectionContainer>
-
-            {/* ========== Tabs dinámicos ========== */}
-            {TABS_CONFIG[activeTab]?.sections?.map((section) => (
-              <SectionContainer key={section.title} title={section.title}>
-                <div
-                  className={
-                    section.grid
-                      ? 'grid grid-cols-1 gap-4 md:grid-cols-2'
-                      : 'grid grid-cols-1 gap-4'
-                  }
-                >
-                  {section.fields.map((f) => (
-                    <FieldRenderer
-                      key={f.key || f.label}
-                      field={f}
-                      runtimeValues={runtimeValues}
-                      setRuntimeValues={setRuntimeValues}
-                    />
-                  ))}
-                </div>
-              </SectionContainer>
-            ))}
-
-            {/* ========== Antecedentes ========== */}
-            <SectionContainer title="Antecedentes">
-              <div className="grid grid-cols-1 gap-6">
-                <FieldRenderer
-                  field={{
-                    type: 'checkboxGroup',
-                    label: 'Heredofamiliares',
-                    options: FAMILY_HISTORY_OPTIONS,
-                  }}
-                  runtimeValues={runtimeValues}
-                  setRuntimeValues={setRuntimeValues}
-                />
-                <FieldRenderer
-                  field={{
-                    type: 'checkboxGroup',
-                    label: 'Personales patológicos',
-                    options: PERSONAL_PATH_OPTIONS,
-                  }}
-                  runtimeValues={runtimeValues}
-                  setRuntimeValues={setRuntimeValues}
-                />
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                  {BACKGROUND_GROUPS.top.map((f) => (
-                    <FieldRenderer
-                      key={f.key || f.label}
-                      field={f}
-                      runtimeValues={runtimeValues}
-                      setRuntimeValues={setRuntimeValues}
-                    />
-                  ))}
-                </div>
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                  {BACKGROUND_GROUPS.bottom.map((f) => (
-                    <FieldRenderer
-                      key={f.key || f.label}
-                      field={f}
-                      runtimeValues={runtimeValues}
-                      setRuntimeValues={setRuntimeValues}
-                    />
-                  ))}
-                </div>
-                <FieldRenderer
-                  field={{
-                    type: 'checkboxGroup',
-                    label: 'Inmunizaciones',
-                    options: IMMUNIZATIONS_OPTIONS,
-                  }}
-                  runtimeValues={runtimeValues}
-                  setRuntimeValues={setRuntimeValues}
-                />
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                  {BACKGROUND_GROUPS.habits.map((f) => (
-                    <FieldRenderer
-                      key={f.key || f.label}
-                      field={f}
-                      runtimeValues={runtimeValues}
-                      setRuntimeValues={setRuntimeValues}
-                    />
-                  ))}
-                </div>
-              </div>
-            </SectionContainer>
-
-            {/* ========== Exploración física ========== */}
-            <SectionContainer title="Exploración física">
-              <div className="grid grid-cols-1 gap-4">
-                {PHYSICAL_EXAM_FIELDS.map((f) => (
-                  <FieldRenderer
-                    key={f.key || f.label}
-                    field={f}
-                    runtimeValues={runtimeValues}
-                    setRuntimeValues={setRuntimeValues}
-                  />
-                ))}
-              </div>
-            </SectionContainer>
-
-            {/* ========== Campos clínicos del médico ========== */}
-            {CLINICAL_SECTIONS.map((section) => (
-              <SectionContainer key={section.title} title={section.title}>
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                  {section.fields.map((f) => (
-                    <FieldRenderer
-                      key={f.key || f.label}
-                      field={f}
-                      runtimeValues={runtimeValues}
-                      setRuntimeValues={setRuntimeValues}
-                    />
-                  ))}
-                </div>
-              </SectionContainer>
-            ))}
-
-            {/* ========== Observaciones y complementos ========== */}
-            <SectionContainer title="Observaciones y complementos">
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                {OBSERVATIONS_FIELDS.map((f) => (
-                  <FieldRenderer
-                    key={f.key || f.label}
-                    field={f}
-                    runtimeValues={runtimeValues}
-                    setRuntimeValues={setRuntimeValues}
-                  />
-                ))}
-              </div>
-            </SectionContainer>
+            {sections.length === 0 ? (
+              <div className="text-sm text-red-600">No hay preguntas para este formulario.</div>
+            ) : (
+              sections.map((section) => (
+                <SectionContainer key={section.title} title={section.title}>
+                  <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                    {section.fields.map((f) => (
+                      <FieldRenderer key={f.qId} field={f} />
+                    ))}
+                  </div>
+                </SectionContainer>
+              ))
+            )}
 
             {/* Actions */}
             <ActionButtons activeTab={activeTab} />

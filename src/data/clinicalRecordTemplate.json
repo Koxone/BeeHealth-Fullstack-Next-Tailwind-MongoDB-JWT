@@ -31,7 +31,8 @@
         {
           "label": "Edad",
           "type": "number",
-          "qId": 5
+          "qId": 5,
+          "required": true
         },
         {
           "label": "Género",
@@ -50,22 +51,26 @@
               "label": "Otro"
             }
           ],
-          "qId": 6
+          "qId": 6,
+          "required": true
         },
         {
-          "label": "Altura cm",
+          "label": "Altura (cm)",
           "type": "number",
-          "qId": 7
+          "qId": 7,
+          "required": true
         },
         {
-          "label": "Peso kg",
+          "label": "Peso Actual (kg)",
           "type": "number",
-          "qId": 8
+          "qId": 8,
+          "required": true
         },
         {
-          "label": "Talla cm",
+          "label": "Talla (cm)",
           "type": "number",
-          "qId": 9
+          "qId": 9,
+          "required": true
         },
         {
           "label": "Ocupación",
@@ -107,7 +112,8 @@
         {
           "label": "Correo",
           "type": "text",
-          "qId": 13
+          "qId": 13,
+          "required": true
         },
         {
           "label": "Domicilio",
@@ -117,7 +123,8 @@
         {
           "label": "Teléfono celular",
           "type": "text",
-          "qId": 15
+          "qId": 15,
+          "required": true
         },
         {
           "label": "Teléfono fijo",
@@ -143,7 +150,6 @@
         {
           "label": "Motivo de consulta",
           "type": "textarea",
-          "required": true,
           "qId": 19
         },
         {
@@ -318,7 +324,7 @@
     },
     {
       "sectionKey": "informacionClinica_controlPeso",
-      "title": "Información clínica: control de peso",
+      "title": "Información clínica: Control de Peso",
       "fields": [
         {
           "label": "Peso objetivo",
@@ -374,7 +380,7 @@
     },
     {
       "sectionKey": "informacionClinica_odontologia",
-      "title": "Información clínica: odontología",
+      "title": "Información clínica: Odontología",
       "fields": [
         {
           "label": "Motivo odontológico",
@@ -455,7 +461,7 @@
     },
     {
       "sectionKey": "informacionClinica_estetica",
-      "title": "Información clínica: estética",
+      "title": "Información clínica: Estética",
       "fields": [
         {
           "label": "Motivo de tratamiento",
@@ -937,7 +943,7 @@
     },
     {
       "sectionKey": "camposMedico_odontologia",
-      "title": "Campos del médico: odontología",
+      "title": "Campos del médico: Odontología",
       "fields": [
         {
           "label": "Cavidad bucal",
@@ -973,7 +979,7 @@
     },
     {
       "sectionKey": "camposMedico_estetica",
-      "title": "Campos del médico: estética",
+      "title": "Campos del médico: Estética",
       "fields": [
         {
           "label": "Diagnóstico facial",
