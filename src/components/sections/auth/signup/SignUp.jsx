@@ -14,10 +14,16 @@ export default function SignupForm() {
     confirmPassword: '',
   });
 
+  // Field handler
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  // Submit handler
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Basic Validation
     if (formData.password !== formData.confirmPassword) {
       alert('Las contraseñas no coinciden');
       return;
@@ -28,13 +34,13 @@ export default function SignupForm() {
       return;
     }
 
-    // Guardar datos en localStorage para el siguiente paso
+    // Save to localStorage
     localStorage.setItem('signupData', JSON.stringify(formData));
 
-    // Ir al paso 2: historial clínico
-    router.push('/signup/medical-history');
+    // Redirect to step 2
+    router.push('/auth/signup/medical-history');
   };
-  
+
   return (
     <div className="flex h-full items-center justify-center overflow-y-auto">
       <div className="h-fit w-full max-w-md">
@@ -46,8 +52,8 @@ export default function SignupForm() {
 
         {/* Form */}
         <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-xl md:p-8">
-          <form className="space-y-4 md:space-y-5">
-            {/* Full Name */}
+          <form onSubmit={handleSubmit} className="space-y-4 md:space-y-5">
+            {/* Name */}
             <div>
               <label className="mb-2 block text-sm font-medium text-gray-700">
                 Nombre completo
@@ -56,6 +62,10 @@ export default function SignupForm() {
                 <User className="absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 text-gray-400" />
                 <input
                   type="text"
+                  name="nombre"
+                  value={formData.nombre}
+                  onChange={handleChange}
+                  required
                   className="w-full rounded-lg border border-gray-300 py-3 pr-4 pl-10 focus:border-transparent focus:ring-2 focus:ring-blue-500"
                   placeholder="Juan Pérez"
                 />
@@ -71,6 +81,10 @@ export default function SignupForm() {
                 <Mail className="absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 text-gray-400" />
                 <input
                   type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
                   className="w-full rounded-lg border border-gray-300 py-3 pr-4 pl-10 focus:border-transparent focus:ring-2 focus:ring-blue-500"
                   placeholder="tu@email.com"
                 />
@@ -84,6 +98,10 @@ export default function SignupForm() {
                 <Phone className="absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 text-gray-400" />
                 <input
                   type="tel"
+                  name="telefono"
+                  value={formData.telefono}
+                  onChange={handleChange}
+                  required
                   className="w-full rounded-lg border border-gray-300 py-3 pr-4 pl-10 focus:border-transparent focus:ring-2 focus:ring-blue-500"
                   placeholder="+52 55 1234 5678"
                 />
@@ -97,6 +115,10 @@ export default function SignupForm() {
                 <Lock className="absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 text-gray-400" />
                 <input
                   type="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
                   className="w-full rounded-lg border border-gray-300 py-3 pr-4 pl-10 focus:border-transparent focus:ring-2 focus:ring-blue-500"
                   placeholder="Mínimo 6 caracteres"
                 />
@@ -112,6 +134,10 @@ export default function SignupForm() {
                 <Lock className="absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 text-gray-400" />
                 <input
                   type="password"
+                  name="confirmPassword"
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                  required
                   className="w-full rounded-lg border border-gray-300 py-3 pr-4 pl-10 focus:border-transparent focus:ring-2 focus:ring-blue-500"
                   placeholder="Repite tu contraseña"
                 />
@@ -120,8 +146,7 @@ export default function SignupForm() {
 
             {/* Continue Button */}
             <button
-              onClick={() => router.push('/auth/signup/medical-history')}
-              type="button"
+              type="submit"
               className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-500 py-3 font-medium text-white shadow-md transition hover:bg-blue-600 active:scale-95"
             >
               Continuar al historial clínico
@@ -129,7 +154,7 @@ export default function SignupForm() {
             </button>
           </form>
 
-          {/* Login Link */}
+          {/* Go to Login */}
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-600">
               ¿Ya tienes cuenta?{' '}
