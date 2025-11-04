@@ -141,9 +141,56 @@ export default function MedicalHistoryForm() {
           <TabsHeader activeTab={activeTab} setActiveTab={setActiveTab} />
 
           <form
-            onSubmit={(e) => {
+            onSubmit={async (e) => {
               e.preventDefault();
-              console.log(formData);
+
+              // 1. Obtener el usuario creado del paso anterior
+              const storedUser = localStorage.getItem('signupUser');
+              if (!storedUser) {
+                alert('No se encontró la información del usuario');
+                return;
+              }
+              const user = JSON.parse(storedUser);
+
+              // 2. Transformar respuestas al formato del schema
+              const answers = Object.entries(formData).map(([qId, value]) => ({
+                qId: Number(qId),
+                value,
+              }));
+
+              // 3. Crear el payload
+              const payload = {
+                patient: user.id, // usamos el id creado en el signup
+                doctor: null, // aún no aplica
+                specialty: activeTab,
+                version: 'short',
+                answers,
+              };
+
+              // 4. Enviar al backend
+              try {
+                const res = await fetch('/api/clinical-records', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify(payload),
+                });
+
+                const data = await res.json();
+
+                if (!res.ok) {
+                  alert(data.error || 'Error al guardar historial clínico');
+                  return;
+                }
+
+                console.log('Historial clínico creado:', data);
+
+                // 5. (Opcional) Redirigir a dashboard o login
+                alert('Cuenta creada y historial clínico guardado correctamente');
+                // router.push('/auth/login');
+              } catch (error) {
+                console.error(error);
+                alert('Error al guardar el historial clínico');
+              }
             }}
             className="grid grid-cols-2 items-center space-x-4 p-4 md:p-8"
           >

@@ -21,7 +21,8 @@ export default function SignupForm() {
   };
 
   // Submit handler
-  const handleSubmit = (e) => {
+  // Submit handler
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (formData.password !== formData.confirmPassword) {
@@ -34,11 +35,35 @@ export default function SignupForm() {
       return;
     }
 
-    // Save to localStorage
-    localStorage.setItem('signupData', JSON.stringify(formData));
+    try {
+      // Crear usuario en el backend
+      const res = await fetch('/api/auth/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          fullName: formData.nombre,
+          email: formData.email,
+          phone: formData.telefono,
+          password: formData.password,
+        }),
+      });
 
-    // Redirect to step 2
-    router.push('/auth/signup/medical-history');
+      const data = await res.json();
+
+      if (!res.ok) {
+        alert(data.error || 'Error al crear usuario');
+        return;
+      }
+
+      // Guardar datos en localStorage (incluyendo el ID)
+      localStorage.setItem('signupUser', JSON.stringify(data.user));
+
+      // Pasar al paso 2
+      router.push('/auth/signup/medical-history');
+    } catch (error) {
+      console.error(error);
+      alert('Error al crear usuario');
+    }
   };
 
   return (
