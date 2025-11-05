@@ -1,101 +1,45 @@
 'use client';
 
-import {
-  ArrowLeft,
-  Calendar as CalendarIcon,
-  X,
-  Activity,
-  TrendingUp,
-  FileText,
-  Stethoscope,
-  Heart,
-  Scale,
-  ClipboardList,
-  Loader2,
-} from 'lucide-react';
-
 import { useParams, useRouter } from 'next/navigation';
 import { useState } from 'react';
-import 'moment/locale/es';
-
+import {
+  ArrowLeft,
+  TrendingUp,
+  Loader2,
+  X,
+  FileText,
+  Calendar as CalendarIcon,
+  Scale,
+  Heart,
+  Activity,
+  Stethoscope,
+  ClipboardList,
+} from 'lucide-react';
 import PatientHeader from './components/patientHeader/PatientHeader';
 import QuickStats from './components/QuickStats';
 import WeightChart from './components/WeightChart';
 import ClinicalHistory from './components/clinicalHistory/ClinicalHistory';
-import HistoryModal from './components/historyModal/HistoryModal';
 import BackButton from './components/BackButton';
 import TabsNav from './components/TabsNav';
 import DoctorCreateAppointmentModal from './components/createAppointmentModal/DoctorCreateAppointmentModal';
+import HistoryModal from './components/historyModal/HistoryModal';
 import { useClinicalRecord } from './hooks/useClinicalRecord';
 
 export default function DoctorPatientDetail({ patient }) {
-  /* Router */
   const router = useRouter();
-
-  // Get Current Patient Records
   const { id } = useParams();
+
+  // Data
   const { data: patientRecord, isLoading, error } = useClinicalRecord(id);
   const currentPatientInfo = patientRecord?.[0];
 
-  // Local States
+  // Modal states
+  const [showHistoryModal, setShowHistoryModal] = useState(false);
+  const [showCreateAppointmentModal, setShowCreateAppointmentModal] = useState(false);
+  const [selectedRecord, setSelectedRecord] = useState(null);
   const [isReadOnly, setIsReadOnly] = useState(false);
 
-  /* Modal states */
-  const [showHistoryModal, setShowHistoryModal] = useState(false);
-  const [editingHistory, setEditingHistory] = useState(null);
-
-  /* Form state */
-  const [historyForm, setHistoryForm] = useState({
-    recordDate: new Date().toISOString().split('T')[0],
-    currentWeight: '',
-    iMC: '',
-    bloodPressure: '',
-    glucose: '',
-    colesterol: '',
-    notes: '',
-    diagnosis: '',
-    treatment: '',
-  });
-
-  /* Modal Handlers */
-  const openHistoryModal = (record = null, readOnly = false) => {
-    setIsReadOnly(readOnly);
-    if (record) {
-      setEditingHistory(record);
-      setHistoryForm({
-        recordDate: record.recordDateRegistro?.split('T')[0] || '',
-        currentWeight: record.currentWeight || '',
-        iMC: record.IMC || '',
-        bloodPressure: record.bloodPressure || '',
-        glucose: record.glucose || '',
-        colesterol: record.colesterol || '',
-        notes: record.notes || '',
-        diagnosis: record.diagnosis || '',
-        treatment: record.treatment || '',
-      });
-    } else {
-      setEditingHistory(null);
-      setHistoryForm({
-        recordDate: new Date().toISOString().split('T')[0],
-        currentWeight: '',
-        iMC: '',
-        bloodPressure: '',
-        glucose: '',
-        colesterol: '',
-        notes: '',
-        diagnosis: '',
-        treatment: '',
-      });
-    }
-    setShowHistoryModal(true);
-  };
-  const [showCreateAppointmentModal, setShowCreateAppointmentModal] = useState(false);
-
-  const closeHistoryModal = () => {
-    setShowHistoryModal(false);
-    setEditingHistory(null);
-  };
-
+  // Loading/Error states
   if (error || isLoading) {
     return (
       <div className="flex min-h-[400px] items-center justify-center">
@@ -132,8 +76,8 @@ export default function DoctorPatientDetail({ patient }) {
       {/* Clinical history */}
       <ClinicalHistory
         patientRecord={patientRecord}
-        onAdd={() => openHistoryModal()}
-        onEdit={(r, readOnly) => openHistoryModal(r, readOnly)}
+        onAdd={() => setShowHistoryModal(true)}
+        onEdit={() => setShowHistoryModal(true)}
       />
 
       {/* Weight chart */}
@@ -142,17 +86,8 @@ export default function DoctorPatientDetail({ patient }) {
       {/* History Modal */}
       {showHistoryModal && (
         <HistoryModal
-          editingHistory={editingHistory}
-          form={historyForm}
-          setForm={setHistoryForm}
-          onClose={closeHistoryModal}
-          onSubmit={(e) => {
-            e.preventDefault();
-            alert(editingHistory ? 'Historial actualizado (mock)' : 'Historial creado (mock)');
-            closeHistoryModal();
-          }}
+          onClose={() => setShowHistoryModal(false)}
           icons={{ X, FileText, CalendarIcon, Scale, Heart, Activity, Stethoscope, ClipboardList }}
-          isReadOnly={isReadOnly}
         />
       )}
 

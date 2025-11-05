@@ -11,29 +11,76 @@ import DiagnosisSection from './components/DiagnosisSection';
 import QuestionnaireSection from './components/QuestionnaireSection';
 import FooterActions from './components/FooterActions';
 
-export default function HistoryModal({
-  editingHistory,
-  form,
-  setForm,
-  onClose,
-  onSubmit,
-  icons,
-  isReadOnly,
-}) {
-  // Local tab
+export default function HistoryModal({ onClose, icons }) {
+  // Form state
+  const [form, setForm] = useState({
+    recordDate: new Date().toISOString().split('T')[0],
+    currentWeight: '',
+    iMC: '',
+    bloodPressure: '',
+    glucose: '',
+    colesterol: '',
+    notes: '',
+    diagnosis: '',
+    treatment: '',
+  });
+
+  // Mode state
+  const [isReadOnly, setIsReadOnly] = useState(false);
+  const [editingHistory, setEditingHistory] = useState(null);
+
+  // Record open handler
+  const openRecord = (record, readOnly) => {
+    setIsReadOnly(readOnly);
+    setEditingHistory(record);
+    if (record) {
+      setForm({
+        recordDate: record.recordDateRegistro?.split('T')[0] || '',
+        currentWeight: record.currentWeight || '',
+        iMC: record.IMC || '',
+        bloodPressure: record.bloodPressure || '',
+        glucose: record.glucose || '',
+        colesterol: record.colesterol || '',
+        notes: record.notes || '',
+        diagnosis: record.diagnosis || '',
+        treatment: record.treatment || '',
+      });
+    } else {
+      setForm({
+        recordDate: new Date().toISOString().split('T')[0],
+        currentWeight: '',
+        iMC: '',
+        bloodPressure: '',
+        glucose: '',
+        colesterol: '',
+        notes: '',
+        diagnosis: '',
+        treatment: '',
+      });
+    }
+  };
+
+  // Submit handler
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    alert(editingHistory ? 'Historial actualizado (mock)' : 'Historial creado (mock)');
+    onClose();
+  };
+
+  // Tabs
   const [activeTab, setActiveTab] = useState('basico');
 
-  // Icons pass-through
+  // Icons
   const { X, FileText, CalendarIcon, Scale, Heart, Activity, Stethoscope, ClipboardList } = icons;
 
   return (
     <>
-      {/* overlay */}
+      {/* Overlay */}
       <ModalOverlay onClick={onClose} />
 
-      {/* container */}
+      {/* Container */}
       <ModalContainer onClick={(e) => e.stopPropagation()}>
-        {/* header */}
+        {/* Header */}
         <ModalHeader
           title={editingHistory ? 'Editar Historial Clínico' : 'Nuevo Historial Clínico'}
           subtitle="Registro médico del paciente"
@@ -41,14 +88,14 @@ export default function HistoryModal({
           icons={{ X, FileText }}
         />
 
-        {/* tabs */}
+        {/* Tabs */}
         <TabsNav activeTab={activeTab} setActiveTab={setActiveTab} />
 
-        {/* form */}
-        <form onSubmit={onSubmit} className="max-h-[calc(90vh-180px)] overflow-y-auto p-6">
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="max-h-[calc(90vh-180px)] overflow-y-auto p-6">
           {activeTab === 'basico' && (
             <div className="space-y-6">
-              {/* basic */}
+              {/* Basic */}
               <BasicInfoSection
                 form={form}
                 setForm={setForm}
@@ -56,7 +103,7 @@ export default function HistoryModal({
                 icons={{ CalendarIcon, Scale, Heart }}
               />
 
-              {/* vitals */}
+              {/* Vitals */}
               <VitalsSection
                 form={form}
                 setForm={setForm}
@@ -64,7 +111,7 @@ export default function HistoryModal({
                 icons={{ Activity }}
               />
 
-              {/* diagnosis */}
+              {/* Diagnosis */}
               <DiagnosisSection
                 form={form}
                 setForm={setForm}
