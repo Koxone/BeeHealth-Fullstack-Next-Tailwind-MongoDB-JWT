@@ -3,13 +3,13 @@
 import { Plus, Edit2, X, Calendar, Clock, User, Sparkles, Info } from 'lucide-react';
 import { useEffect } from 'react';
 
-export default function CreateEditAppointmentModal({
+export default function EmployeeCreateAppointmentModal({
   editingCita,
   citaForm,
   setCitaForm,
   onClose,
   onSubmit,
-  patients, 
+  patients,
 }) {
   // Color
   const getColor = () =>

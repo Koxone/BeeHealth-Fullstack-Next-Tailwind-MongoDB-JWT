@@ -33,7 +33,7 @@ import ClinicalHistory from './components/clinicalHistory/ClinicalHistory';
 import HistoryModal from './components/historyModal/HistoryModal';
 import BackButton from './components/BackButton';
 import TabsNav from './components/TabsNav';
-import CreateEditAppointmentModal from '@/components/sections/employee/appointments/components/CreateEditAppointmentModal';
+import EmployeeCreateAppointmentModal from '@/components/sections/employee/appointments/components/EmployeeCreateAppointmentModal';
 
 export default function DoctorPatientDetail({ patient }) {
   /* Router */
@@ -215,7 +215,7 @@ export default function DoctorPatientDetail({ patient }) {
 
       {/* Create Appointment Modal */}
       {showCreateAppointmentModal && (
-        <CreateEditAppointmentModal
+        <EmployeeCreateAppointmentModal
           editingCita={editingCita}
           citaForm={citaForm}
           setCitaForm={setCitaForm}
