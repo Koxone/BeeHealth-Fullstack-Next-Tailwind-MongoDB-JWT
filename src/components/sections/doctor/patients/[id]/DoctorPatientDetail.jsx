@@ -33,6 +33,8 @@ export default function DoctorPatientDetail({ patient }) {
   const { data: patientRecord, isLoading, error } = useClinicalRecord(id);
   const currentPatientInfo = patientRecord?.[0];
 
+  console.log('Patient Record:', patientRecord);
+
   // Modal states
   const [showHistoryModal, setShowHistoryModal] = useState(false);
   const [showCreateAppointmentModal, setShowCreateAppointmentModal] = useState(false);
@@ -76,8 +78,17 @@ export default function DoctorPatientDetail({ patient }) {
       {/* Clinical history */}
       <ClinicalHistory
         patientRecord={patientRecord}
-        onAdd={() => setShowHistoryModal(true)}
-        onEdit={() => setShowHistoryModal(true)}
+        onAdd={() => {
+          const lastRecord = patientRecord?.[patientRecord.length - 1] || null;
+          setSelectedRecord(lastRecord);
+          setIsReadOnly(false);
+          setShowHistoryModal(true);
+        }}
+        onEdit={(record, readOnly) => {
+          setSelectedRecord(record);
+          setIsReadOnly(readOnly);
+          setShowHistoryModal(true);
+        }}
       />
 
       {/* Weight chart */}
@@ -87,6 +98,8 @@ export default function DoctorPatientDetail({ patient }) {
       {showHistoryModal && (
         <HistoryModal
           onClose={() => setShowHistoryModal(false)}
+          record={selectedRecord}
+          readOnly={isReadOnly}
           icons={{ X, FileText, CalendarIcon, Scale, Heart, Activity, Stethoscope, ClipboardList }}
         />
       )}

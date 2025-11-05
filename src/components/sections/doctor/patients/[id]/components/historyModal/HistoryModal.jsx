@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ModalOverlay from './components/ModalOverlay';
 import ModalContainer from './components/ModalContainer';
 import ModalHeader from './components/ModalHeader';
@@ -11,8 +11,7 @@ import DiagnosisSection from './components/DiagnosisSection';
 import QuestionnaireSection from './components/QuestionnaireSection';
 import FooterActions from './components/FooterActions';
 
-export default function HistoryModal({ onClose, icons }) {
-  // Form state
+export default function HistoryModal({ onClose, record, readOnly, icons }) {
   const [form, setForm] = useState({
     recordDate: new Date().toISOString().split('T')[0],
     currentWeight: '',
@@ -25,14 +24,9 @@ export default function HistoryModal({ onClose, icons }) {
     treatment: '',
   });
 
-  // Mode state
-  const [isReadOnly, setIsReadOnly] = useState(false);
-  const [editingHistory, setEditingHistory] = useState(null);
+  const [isReadOnly, setIsReadOnly] = useState(readOnly || false);
 
-  // Record open handler
-  const openRecord = (record, readOnly) => {
-    setIsReadOnly(readOnly);
-    setEditingHistory(record);
+  useEffect(() => {
     if (record) {
       setForm({
         recordDate: record.recordDateRegistro?.split('T')[0] || '',
@@ -45,57 +39,44 @@ export default function HistoryModal({ onClose, icons }) {
         diagnosis: record.diagnosis || '',
         treatment: record.treatment || '',
       });
-    } else {
-      setForm({
-        recordDate: new Date().toISOString().split('T')[0],
-        currentWeight: '',
-        iMC: '',
-        bloodPressure: '',
-        glucose: '',
-        colesterol: '',
-        notes: '',
-        diagnosis: '',
-        treatment: '',
-      });
+      setIsReadOnly(readOnly);
     }
-  };
+  }, [record, readOnly]);
 
-  // Submit handler
+  // Submit handler (temporal)
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert(editingHistory ? 'Historial actualizado (mock)' : 'Historial creado (mock)');
+    console.log('Form data:', form);
     onClose();
   };
 
   // Tabs
   const [activeTab, setActiveTab] = useState('basico');
-
-  // Icons
   const { X, FileText, CalendarIcon, Scale, Heart, Activity, Stethoscope, ClipboardList } = icons;
 
   return (
     <>
-      {/* Overlay */}
       <ModalOverlay onClick={onClose} />
 
-      {/* Container */}
       <ModalContainer onClick={(e) => e.stopPropagation()}>
-        {/* Header */}
         <ModalHeader
-          title={editingHistory ? 'Editar Historial Clínico' : 'Nuevo Historial Clínico'}
+          title={
+            record
+              ? isReadOnly
+                ? 'Ver Historial Clínico'
+                : 'Editar Historial Clínico'
+              : 'Nuevo Historial Clínico'
+          }
           subtitle="Registro médico del paciente"
           onClose={onClose}
           icons={{ X, FileText }}
         />
 
-        {/* Tabs */}
         <TabsNav activeTab={activeTab} setActiveTab={setActiveTab} />
 
-        {/* Form */}
         <form onSubmit={handleSubmit} className="max-h-[calc(90vh-180px)] overflow-y-auto p-6">
           {activeTab === 'basico' && (
             <div className="space-y-6">
-              {/* Basic */}
               <BasicInfoSection
                 form={form}
                 setForm={setForm}
@@ -103,7 +84,6 @@ export default function HistoryModal({ onClose, icons }) {
                 icons={{ CalendarIcon, Scale, Heart }}
               />
 
-              {/* Vitals */}
               <VitalsSection
                 form={form}
                 setForm={setForm}
@@ -111,7 +91,6 @@ export default function HistoryModal({ onClose, icons }) {
                 icons={{ Activity }}
               />
 
-              {/* Diagnosis */}
               <DiagnosisSection
                 form={form}
                 setForm={setForm}
@@ -128,7 +107,7 @@ export default function HistoryModal({ onClose, icons }) {
           {!isReadOnly && (
             <FooterActions
               onCancel={onClose}
-              submitLabel={editingHistory ? 'Actualizar Registro' : 'Guardar Registro'}
+              submitLabel={record ? 'Actualizar Registro' : 'Guardar Registro'}
             />
           )}
         </form>

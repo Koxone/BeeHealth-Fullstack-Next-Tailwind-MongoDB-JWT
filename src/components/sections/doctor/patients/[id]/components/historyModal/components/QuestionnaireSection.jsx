@@ -51,6 +51,8 @@ export default function QuestionnaireSection({ isReadOnly = false }) {
       case 'date':
         return (
           <input
+            id={`q-${id}`}
+            name={`q-${id}`}
             type={type}
             disabled={isReadOnly}
             value={value}
@@ -63,6 +65,8 @@ export default function QuestionnaireSection({ isReadOnly = false }) {
       case 'textarea':
         return (
           <textarea
+            id={`q-${id}`}
+            name={`q-${id}`}
             disabled={isReadOnly}
             value={value}
             onChange={(e) => handleChange(id, e.target.value)}
@@ -75,6 +79,8 @@ export default function QuestionnaireSection({ isReadOnly = false }) {
       case 'select':
         return (
           <select
+            id={`q-${id}`}
+            name={`q-${id}`}
             disabled={isReadOnly}
             value={value}
             onChange={(e) => handleChange(id, e.target.value)}
@@ -95,15 +101,20 @@ export default function QuestionnaireSection({ isReadOnly = false }) {
 
       case 'radio':
         return (
-          <div className="flex flex-wrap gap-4">
+          <div id={`q-${id}`} className="flex flex-wrap gap-4">
             {options?.map((opt) => {
               const val = typeof opt === 'object' ? opt.value : opt;
               const lbl = typeof opt === 'object' ? opt.label : opt;
               return (
-                <label key={String(val)} className="flex items-center gap-2">
+                <label
+                  key={String(val)}
+                  htmlFor={`q-${id}-${val}`}
+                  className="flex items-center gap-2"
+                >
                   <input
+                    id={`q-${id}-${val}`}
+                    name={`q-${id}`} // group radios
                     type="radio"
-                    name={`q-${id}`}
                     value={val}
                     checked={value === val}
                     onChange={() => handleChange(id, val)}
