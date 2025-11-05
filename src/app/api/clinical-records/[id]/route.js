@@ -3,10 +3,6 @@ import { connectDB } from '@/lib/mongodb';
 import ClinicalRecord from '@/models/ClinicalRecord';
 import mongoose from 'mongoose';
 
-function isValidId(id) {
-  return mongoose.Types.ObjectId.isValid(id);
-}
-
 // @route    GET /api/clinical-records/:id
 // @desc     Get a patient Clinical Record by his ID
 // @access   Private
@@ -83,10 +79,7 @@ export async function POST(req, { params }) {
     await connectDB();
 
     // Params
-    const { id } = params;
-    if (!isValidId(id)) {
-      return NextResponse.json({ error: 'Paciente id inválido' }, { status: 400 });
-    }
+    const { id } = await params;
 
     // Body
     const { doctor = null, specialty, version, answers } = await req.json();
