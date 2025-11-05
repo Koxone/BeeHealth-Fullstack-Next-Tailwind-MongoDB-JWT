@@ -1,9 +1,6 @@
 'use client';
 
-/* state */
-import { useState } from 'react';
-
-/* parts */
+import { useState, useEffect, useCallback } from 'react';
 import ModalOverlay from './components/ModalOverlay';
 import ModalContainer from './components/ModalContainer';
 import ModalHeader from './components/ModalHeader';
@@ -13,68 +10,179 @@ import VitalsSection from './components/VitalsSection';
 import DiagnosisSection from './components/DiagnosisSection';
 import QuestionnaireSection from './components/QuestionnaireSection';
 import FooterActions from './components/FooterActions';
+import { X, FileText, Stethoscope, ClipboardList } from 'lucide-react';
+import useAuthStore from '@/zustand/useAuthStore';
+
+const ID = {
+  fullName: 1,
+  height: 6,
+  weight: 7,
+  size: 8,
+  bloodPressure: 122,
+  heartRate: 123,
+  temperature: 125,
+  imc: 127,
+  diagnosis: 131,
+  treatment: 132,
+  notes: 133,
+};
 
 export default function HistoryModal({
-  editingHistory,
-  form,
-  setForm,
   onClose,
-  onSubmit,
-  icons,
-  isReadOnly,
+  onSaved,
+  record,
+  readOnly,
+  patientId,
+  mode = 'view',
 }) {
-  // Local tab
+  const { user } = useAuthStore();
+
+  // Single source of truth
+  const [answersDraft, setAnswersDraft] = useState({});
+  const [isReadOnly, setIsReadOnly] = useState(!!readOnly);
   const [activeTab, setActiveTab] = useState('basico');
 
-  // Icons pass-through
-  const { X, FileText, CalendarIcon, Scale, Heart, Activity, Stethoscope, ClipboardList } = icons;
+  const isCreate = mode === 'create';
+
+  useEffect(() => {
+    const base = record?.answers ? { ...record.answers } : {};
+    setAnswersDraft(base);
+    setIsReadOnly(!!readOnly);
+  }, [record, readOnly]);
+
+  // Helpers
+  const getAnswer = useCallback(
+    (id) => {
+      const v = answersDraft?.[id];
+      return v ?? '';
+    },
+    [answersDraft]
+  );
+
+  const setAnswer = useCallback((id, value) => {
+    setAnswersDraft((prev) => {
+      if (prev?.[id] === value) return prev;
+      return { ...(prev || {}), [id]: value };
+    });
+  }, []);
+
+  const recalcIMC = useCallback((h, w) => {
+    const height = Number(h);
+    const weight = Number(w);
+    if (!height || !weight) return '';
+    const m = height / 100;
+    const bmi = weight / (m * m);
+    return bmi ? bmi.toFixed(2) : '';
+  }, []);
+
+  // Recalculate IMC when height or weight change
+  useEffect(() => {
+    const h = answersDraft?.[ID.height] || answersDraft?.[ID.size];
+    const w = answersDraft?.[ID.weight];
+    const bmi = recalcIMC(h, w);
+    if (bmi) {
+      setAnswersDraft((prev) => ({ ...(prev || {}), [ID.imc]: bmi }));
+    }
+  }, [answersDraft?.[ID.height], answersDraft?.[ID.size], answersDraft?.[ID.weight], recalcIMC]);
+
+  // Submit Handler
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const baseBody = {
+        doctor: user?.id || null,
+        specialty: user?.specialty || record?.specialty || 'weight',
+        version: record ? record.version || 'full' : 'full',
+        answers: answersDraft,
+      };
+
+      let res;
+
+      // Create New Record
+      if (isCreate) {
+        res = await fetch(`/api/clinical-records/${patientId}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(baseBody),
+        });
+      } else {
+        // Edit Patient Record
+        res = await fetch(`/api/clinical-records/record/${record._id}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(baseBody),
+        });
+      }
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error || 'Error al guardar el historial clínico');
+      }
+
+      await res.json();
+
+      if (onSaved) onSaved();
+      onClose();
+    } catch (error) {
+      console.error('Error al guardar:', error);
+      alert(error.message);
+    }
+  };
 
   return (
     <>
-      {/* overlay */}
       <ModalOverlay onClick={onClose} />
 
-      {/* container */}
       <ModalContainer onClick={(e) => e.stopPropagation()}>
-        {/* header */}
         <ModalHeader
-          title={editingHistory ? 'Editar Historial Clínico' : 'Nuevo Historial Clínico'}
+          title={
+            record
+              ? isReadOnly
+                ? 'Ver Historial Clínico'
+                : isCreate
+                  ? 'Nuevo Historial Clínico'
+                  : 'Editar Historial Clínico'
+              : 'Nuevo Historial Clínico'
+          }
           subtitle="Registro médico del paciente"
           onClose={onClose}
           icons={{ X, FileText }}
         />
 
-        {/* tabs */}
         <TabsNav activeTab={activeTab} setActiveTab={setActiveTab} />
 
-        {/* form */}
-        <form onSubmit={onSubmit} className="max-h-[calc(90vh-180px)] overflow-y-auto p-6">
+        <form onSubmit={handleSubmit} className="max-h-[calc(90vh-180px)] overflow-y-auto p-6">
           {activeTab === 'basico' && (
             <div className="space-y-6">
-              {/* basic */}
               <BasicInfoSection
-                form={form}
-                setForm={setForm}
                 isReadOnly={isReadOnly}
-                icons={{ CalendarIcon, Scale, Heart }}
+                getAnswer={getAnswer}
+                setAnswer={setAnswer}
               />
-
-              {/* vitals */}
-              <VitalsSection form={form} setForm={setForm} isReadOnly={isReadOnly} icons={{ Activity }} />
-
-              {/* diagnosis */}
-              <DiagnosisSection form={form} setForm={setForm} isReadOnly={isReadOnly} icons={{ Stethoscope }} />
+              <VitalsSection isReadOnly={isReadOnly} getAnswer={getAnswer} setAnswer={setAnswer} />
+              <DiagnosisSection
+                isReadOnly={isReadOnly}
+                getAnswer={getAnswer}
+                setAnswer={setAnswer}
+                icons={{ Stethoscope }}
+              />
             </div>
           )}
 
           {activeTab === 'completo' && (
-            <QuestionnaireSection isReadOnly={isReadOnly} icons={{ ClipboardList }} />
+            <QuestionnaireSection
+              isReadOnly={isReadOnly}
+              getAnswer={getAnswer}
+              setAnswer={setAnswer}
+              icons={{ ClipboardList }}
+            />
           )}
 
           {!isReadOnly && (
             <FooterActions
               onCancel={onClose}
-              submitLabel={editingHistory ? 'Actualizar Registro' : 'Guardar Registro'}
+              submitLabel={isCreate ? 'Guardar nuevo registro' : 'Guardar cambios'}
             />
           )}
         </form>

@@ -20,7 +20,7 @@ import {
 import StatsGrid from './components/StatsGrid';
 import ControlsBar from './components/ControlsBar';
 import AppointmentCard from './components/AppointmentCard';
-import CreateEditAppointmentModal from './components/CreateEditAppointmentModal';
+import EmployeeCreateAppointmentModal from './components/EmployeeCreateAppointmentModal';
 import CancelModal from './components/CancelModal';
 import EmptyState from './components/EmptyState';
 import GeneralSectionHeader from '@/components/shared/sections/GeneralSectionHeader';
@@ -238,7 +238,7 @@ export default function EmployeeAppointments({ role, patients }) {
 
       {/* modals */}
       {showModal && (
-        <CreateEditAppointmentModal
+        <EmployeeCreateAppointmentModal
           patients={patients}
           editingCita={editingCita}
           citaForm={citaForm}

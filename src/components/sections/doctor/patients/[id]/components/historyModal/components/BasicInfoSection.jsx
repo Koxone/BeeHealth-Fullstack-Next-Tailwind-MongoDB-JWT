@@ -1,8 +1,21 @@
+// src/components/sections/doctor/patients/[id]/components/historyModal/components/BasicInfoSection.jsx
 'use client';
 
-/* basic info */
-export default function BasicInfoSection({ form, setForm, isReadOnly, icons }) {
-  const { CalendarIcon, Scale, Heart } = icons;
+import { CalendarIcon, Scale, Ruler } from 'lucide-react';
+import { useMemo } from 'react';
+
+// Ids mapping
+const ID = {
+  fullName: 1,
+  height: 6,
+  weight: 7,
+  size: 8,
+  imc: 127,
+};
+
+export default function BasicInfoSection({ isReadOnly, getAnswer, setAnswer }) {
+  // Compute IMC view-only from current values
+  const imcValue = useMemo(() => getAnswer(ID.imc), [getAnswer]);
 
   return (
     <div>
@@ -12,22 +25,22 @@ export default function BasicInfoSection({ form, setForm, isReadOnly, icons }) {
       </h3>
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-        {/* date */}
+        {/* Full Name */}
         <div>
-          <label className="mb-2 block text-sm font-semibold text-gray-700">
-            Fecha <span className="text-red-500">*</span>
-          </label>
+          <label className="mb-2 block text-sm font-semibold text-gray-700">Nombre completo</label>
           <input
-            type="date"
+            id={ID.fullName}
+            name={`q-${ID.fullName}`}
+            type="text"
+            value={getAnswer(ID.fullName)}
+            onChange={(e) => setAnswer(ID.fullName, e.target.value)}
             disabled={isReadOnly}
-            required
-            value={form.fecha}
-            onChange={(e) => setForm({ ...form, fecha: e.target.value })}
+            placeholder="Ingrese el nombre completo"
             className="w-full rounded-xl border-2 border-gray-200 bg-gray-50 px-4 py-3 transition focus:border-blue-400 focus:bg-white focus:ring-4 focus:ring-blue-100"
           />
         </div>
 
-        {/* weight */}
+        {/* Weight */}
         <div>
           <label className="mb-2 block text-sm font-semibold text-gray-700">
             Peso (kg) <span className="text-red-500">*</span>
@@ -35,35 +48,53 @@ export default function BasicInfoSection({ form, setForm, isReadOnly, icons }) {
           <div className="relative">
             <Scale className="absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 text-gray-400" />
             <input
+              id={ID.weight}
               type="number"
-              disabled={isReadOnly}
               step="0.1"
               required
-              value={form.peso}
-              onChange={(e) => setForm({ ...form, peso: e.target.value })}
+              disabled={isReadOnly}
+              value={getAnswer(ID.weight)}
+              onChange={(e) => setAnswer(ID.weight, e.target.value)}
               className="w-full rounded-xl border-2 border-gray-200 bg-gray-50 py-3 pr-4 pl-11 transition focus:border-blue-400 focus:bg-white focus:ring-4 focus:ring-blue-100"
               placeholder="75.5"
             />
           </div>
         </div>
 
-        {/* imc */}
+        {/* Height or Size */}
         <div>
           <label className="mb-2 block text-sm font-semibold text-gray-700">
-            IMC <span className="text-red-500">*</span>
+            Talla o Altura (cm) <span className="text-red-500">*</span>
           </label>
           <div className="relative">
-            <Heart className="absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 text-gray-400" />
+            <Ruler className="absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 text-gray-400" />
             <input
+              id={ID.size}
               type="number"
-              disabled={isReadOnly}
               step="0.1"
-              value={form.imc}
-              onChange={(e) => setForm({ ...form, imc: e.target.value })}
+              disabled={isReadOnly}
+              value={getAnswer(ID.size) || getAnswer(ID.height)}
+              onChange={(e) => {
+                // Prefer size id if exists
+                setAnswer(ID.size, e.target.value);
+              }}
               className="w-full rounded-xl border-2 border-gray-200 bg-gray-50 py-3 pr-4 pl-11 transition focus:border-blue-400 focus:bg-white focus:ring-4 focus:ring-blue-100"
-              placeholder="25.8"
+              placeholder="180"
             />
           </div>
+        </div>
+
+        {/* IMC (read-only view) */}
+        <div className="md:col-span-1">
+          <label className="mb-2 block text-sm font-semibold text-gray-700">IMC</label>
+          <input
+            id={ID.imc}
+            type="text"
+            readOnly
+            value={imcValue}
+            className="w-full rounded-xl border-2 border-gray-200 bg-gray-100 px-4 py-3"
+            placeholder="Calculado automáticamente"
+          />
         </div>
       </div>
     </div>
