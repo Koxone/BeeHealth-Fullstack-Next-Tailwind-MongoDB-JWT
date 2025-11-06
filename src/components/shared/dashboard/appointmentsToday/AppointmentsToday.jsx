@@ -27,7 +27,7 @@ export default function AppointmentsToday({ onConfirm, onViewAll }) {
         {citasHoyData.map((cita) => (
           <div
             key={cita.id}
-            className="rounded-xl border-2 border-gray-200 p-4 transition hover:border-blue-300"
+            className="border-medtrack-green-solid/30 hover:border-medtrack-green-hover rounded-xl border-2 p-4 transition"
           >
             <div className="flex items-center justify-between">
               <div className="flex-1">
@@ -54,14 +54,6 @@ export default function AppointmentsToday({ onConfirm, onViewAll }) {
                   </div>
                 </div>
               </div>
-              {/* {cita.estado === 'Pendiente' && (
-                <button
-                  onClick={() => onConfirm(cita.id)}
-                  className="rounded-lg bg-green-500 px-4 py-2 text-sm text-white transition hover:bg-green-600 active:scale-95"
-                >
-                  Confirmar
-                </button>
-              )} */}
             </div>
           </div>
         ))}
