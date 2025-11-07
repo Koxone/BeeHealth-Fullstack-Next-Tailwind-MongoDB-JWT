@@ -1,6 +1,9 @@
 import { google } from 'googleapis';
 import { getGoogleOAuthClient } from '@/lib/google/googleClient';
 
+// @route    POST /api/google/calendar/create
+// @desc     Create Appointment
+// @access   Private
 export async function POST(req) {
   try {
     const body = await req.json();
