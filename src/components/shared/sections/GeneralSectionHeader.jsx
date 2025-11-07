@@ -7,7 +7,6 @@ import {
   Download,
   Apple,
   Plus,
-  Weight,
   DollarSign,
   Activity,
   Dumbbell,
