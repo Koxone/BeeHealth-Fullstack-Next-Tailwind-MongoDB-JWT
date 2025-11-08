@@ -69,7 +69,7 @@ export default function AppointmentCard({ index, cita, getEstadoBadge }) {
                 <Sparkles className="mt-0.5 h-4 w-4 shrink-0 text-indigo-600" />
                 <div>
                   <p className="mb-1 text-xs font-semibold text-indigo-900">Motivo de consulta</p>
-                  <p className="text-sm font-medium text-gray-700">{cita.motivo}</p>
+                  <p className="text-sm font-medium text-gray-700">{String(cita.motivo ?? '')}</p>
                 </div>
               </div>
             </div>
