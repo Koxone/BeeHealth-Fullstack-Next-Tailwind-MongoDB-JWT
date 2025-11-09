@@ -15,23 +15,36 @@ import { useClinicalRecord } from './hooks/useClinicalRecord';
 import DoctorBudgets from './components/budgets/DoctorBudgets';
 import DoctorProducts from './components/products/DoctorProducts';
 
+// Types
+import { IClinicalRecord } from '@/types';
+
 export default function DoctorPatientDetail({ patient, specialty }) {
   const router = useRouter();
-  const params = useParams();
+  const params = useParams<{ id: string }>();
 
   // If there is more than one id, it's an array. In that case, take the first element from the URL. Otherwise, use the id directly as a string.
-  const id = Array.isArray(params.id) ? params.id[0] : params.id;
+  const id = params.id as string;
 
   const { data: patientRecord, isLoading, error } = useClinicalRecord(id);
   const currentPatientInfo = patientRecord?.[0];
 
-  const [historyMode, setHistoryMode] = useState('view');
-  const [showHistoryModal, setShowHistoryModal] = useState(false);
-  const [showCreateAppointmentModal, setShowCreateAppointmentModal] = useState(false);
-  const [selectedRecord, setSelectedRecord] = useState(null);
-  const [isReadOnly, setIsReadOnly] = useState(false);
+  const [historyMode, setHistoryMode] = useState<'create' | 'view' | 'edit'>('view');
+  const [showHistoryModal, setShowHistoryModal] = useState<boolean>(false);
+  const [showCreateAppointmentModal, setShowCreateAppointmentModal] = useState<boolean>(false);
+  const [selectedRecord, setSelectedRecord] = useState<IClinicalRecord | null>(null);
+  const [isReadOnly, setIsReadOnly] = useState<boolean>(false);
 
-  const [activeTab, setActiveTab] = useState('Historial');
+  const [activeTab, setActiveTab] = useState<
+    | 'Historial'
+    | 'Presupuestos'
+    | 'Productos'
+    | 'Cotizacion'
+    | 'Caja'
+    | 'Ortodoncia'
+    | 'Imagenes'
+    | 'Receta'
+    | 'Laboratorios'
+  >('Historial');
 
   if (error || isLoading) {
     return (

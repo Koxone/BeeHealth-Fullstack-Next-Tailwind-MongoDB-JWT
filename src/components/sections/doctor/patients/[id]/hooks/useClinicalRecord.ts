@@ -1,37 +1,12 @@
+import { IClinicalRecord, IClinicalRecordResponse } from '@/types';
 import { useState, useEffect } from 'react';
 
-// Types
-interface ClinicalRecord {
-  _id: string;
-  patient: {
-    _id: string;
-    fullName: string;
-    email: string;
-    phone: string;
-  };
-  doctor: {
-    _id: string;
-    fullName: string;
-    email: string;
-    phone: string;
-  };
-  specialty: string;
-  version: string;
-  answers: { [key: string]: any };
-  createdAt: string;
-  updatedAt: string;
-}
-
-interface ClinicalRecordResponse {
-  data: ClinicalRecord[];
-}
-
 export function useClinicalRecord(id: string): {
-  data: ClinicalRecord[] | null;
+  data: IClinicalRecord[] | null;
   isLoading: boolean;
   error: Error | null;
 } {
-  const [data, setData] = useState<ClinicalRecord[] | null>(null);
+  const [data, setData] = useState<IClinicalRecord[] | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
 
@@ -43,7 +18,7 @@ export function useClinicalRecord(id: string): {
       try {
         const res = await fetch(`/api/clinical-records/${id}`);
         if (!res.ok) throw new Error('Error fetching clinical record');
-        const json: ClinicalRecordResponse = await res.json();
+        const json: IClinicalRecordResponse = await res.json();
         setData(json.data);
       } catch (err: unknown) {
         setError(err as Error);
