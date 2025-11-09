@@ -12,9 +12,7 @@ import {
 } from 'recharts';
 import { TrendingUp } from 'lucide-react';
 
-export default function WeightChart({ patientRecord, icons }) {
-  const { TrendingUp: TrendIcon = TrendingUp } = icons;
-
+export default function WeightChart({ patientRecord }) {
   // Transform patientRecord to chart data
   const formattedData = (patientRecord || [])
     .filter((rec) => rec?.answers?.['7']) // Ensure there's a weight
@@ -31,7 +29,7 @@ export default function WeightChart({ patientRecord, icons }) {
       <div className="mb-6 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-linear-to-br from-blue-500 to-cyan-500">
-            <TrendIcon className="h-6 w-6 text-white" />
+            <TrendingUp className="h-6 w-6 text-white" />
           </div>
           <div>
             <h2 className="text-xl font-bold text-gray-900">Evolución de Peso</h2>
@@ -92,7 +90,7 @@ export default function WeightChart({ patientRecord, icons }) {
         </ResponsiveContainer>
       ) : (
         <div className="flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-gray-200 bg-gray-50 py-16">
-          <TrendIcon className="mb-3 h-12 w-12 text-gray-300" />
+          <TrendingUp className="mb-3 h-12 w-12 text-gray-300" />
           <p className="mb-1 font-medium text-gray-600">Sin datos de evolución</p>
           <p className="text-sm text-gray-500">Agrega registros para ver el progreso</p>
         </div>

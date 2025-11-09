@@ -2,7 +2,7 @@
 
 import { useParams, useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { ArrowLeft, TrendingUp, Loader2 } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import PatientHeader from './components/patientHeader/PatientHeader';
 import QuickStats from './components/QuickStats';
 import WeightChart from './components/WeightChart';
@@ -16,35 +16,30 @@ import DoctorBudgets from './components/budgets/DoctorBudgets';
 import DoctorProducts from './components/products/DoctorProducts';
 
 // Types
-import { IClinicalRecord } from '@/types';
+import { IClinicalRecord, TabName } from '@/types';
 
 export default function DoctorPatientDetail({ patient, specialty }) {
   const router = useRouter();
   const params = useParams<{ id: string }>();
 
-  // If there is more than one id, it's an array. In that case, take the first element from the URL. Otherwise, use the id directly as a string.
+  // ID From URL Params
   const id = params.id as string;
 
+  // Patient Clinical Record
+  const [selectedRecord, setSelectedRecord] = useState<IClinicalRecord | null>(null);
   const { data: patientRecord, isLoading, error } = useClinicalRecord(id);
   const currentPatientInfo = patientRecord?.[0];
 
+  // History Modal
   const [historyMode, setHistoryMode] = useState<'create' | 'view' | 'edit'>('view');
   const [showHistoryModal, setShowHistoryModal] = useState<boolean>(false);
-  const [showCreateAppointmentModal, setShowCreateAppointmentModal] = useState<boolean>(false);
-  const [selectedRecord, setSelectedRecord] = useState<IClinicalRecord | null>(null);
   const [isReadOnly, setIsReadOnly] = useState<boolean>(false);
 
-  const [activeTab, setActiveTab] = useState<
-    | 'Historial'
-    | 'Presupuestos'
-    | 'Productos'
-    | 'Cotizacion'
-    | 'Caja'
-    | 'Ortodoncia'
-    | 'Imagenes'
-    | 'Receta'
-    | 'Laboratorios'
-  >('Historial');
+  // Create Appointment Modal
+  const [showCreateAppointmentModal, setShowCreateAppointmentModal] = useState<boolean>(false);
+
+  // Dental Tabs Nav
+  const [activeTab, setActiveTab] = useState<TabName>('Historial');
 
   if (error || isLoading) {
     return (
@@ -127,9 +122,7 @@ export default function DoctorPatientDetail({ patient, specialty }) {
         />
       )}
 
-      {specialty === 'weight' && (
-        <WeightChart patientRecord={patientRecord} icons={{ TrendingUp }} />
-      )}
+      {specialty === 'weight' && <WeightChart patientRecord={patientRecord} />}
 
       {showHistoryModal && (
         <DoctorClinicalRecordModal
