@@ -2,7 +2,7 @@
 
 import { useParams, useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { ArrowLeft, TrendingUp, Loader2 } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import PatientHeader from './components/patientHeader/PatientHeader';
 import QuickStats from './components/QuickStats';
 import WeightChart from './components/WeightChart';
@@ -15,20 +15,31 @@ import { useClinicalRecord } from './hooks/useClinicalRecord';
 import DoctorBudgets from './components/budgets/DoctorBudgets';
 import DoctorProducts from './components/products/DoctorProducts';
 
+// Types
+import { IClinicalRecord, TabName } from '@/types';
+
 export default function DoctorPatientDetail({ patient, specialty }) {
   const router = useRouter();
-  const { id } = useParams();
+  const params = useParams<{ id: string }>();
 
+  // ID From URL Params
+  const id = params.id as string;
+
+  // Patient Clinical Record
+  const [selectedRecord, setSelectedRecord] = useState<IClinicalRecord | null>(null);
   const { data: patientRecord, isLoading, error } = useClinicalRecord(id);
   const currentPatientInfo = patientRecord?.[0];
 
-  const [historyMode, setHistoryMode] = useState('view');
-  const [showHistoryModal, setShowHistoryModal] = useState(false);
-  const [showCreateAppointmentModal, setShowCreateAppointmentModal] = useState(false);
-  const [selectedRecord, setSelectedRecord] = useState(null);
-  const [isReadOnly, setIsReadOnly] = useState(false);
+  // History Modal
+  const [historyMode, setHistoryMode] = useState<'create' | 'view' | 'edit'>('view');
+  const [showHistoryModal, setShowHistoryModal] = useState<boolean>(false);
+  const [isReadOnly, setIsReadOnly] = useState<boolean>(false);
 
-  const [activeTab, setActiveTab] = useState('Historial');
+  // Create Appointment Modal
+  const [showCreateAppointmentModal, setShowCreateAppointmentModal] = useState<boolean>(false);
+
+  // Dental Tabs Nav
+  const [activeTab, setActiveTab] = useState<TabName>('Historial');
 
   if (error || isLoading) {
     return (
@@ -49,7 +60,7 @@ export default function DoctorPatientDetail({ patient, specialty }) {
     <div className="h-full space-y-6 overflow-y-auto">
       {/* Header */}
       <div className="grid grid-rows-[auto_1fr]">
-        <BackButton onClick={() => router.back()} icon={{ ArrowLeft }} />
+        <BackButton />
         <PatientHeader
           patientRecord={patientRecord}
           patient={patient}
@@ -111,9 +122,7 @@ export default function DoctorPatientDetail({ patient, specialty }) {
         />
       )}
 
-      {specialty === 'weight' && (
-        <WeightChart patientRecord={patientRecord} icons={{ TrendingUp }} />
-      )}
+      {specialty === 'weight' && <WeightChart patientRecord={patientRecord} />}
 
       {showHistoryModal && (
         <DoctorClinicalRecordModal

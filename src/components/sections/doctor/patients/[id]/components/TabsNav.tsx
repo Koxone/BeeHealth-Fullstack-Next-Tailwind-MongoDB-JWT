@@ -1,35 +1,17 @@
 'use client';
 
-import {
-  ClipboardList,
-  FileText,
-  Package,
-  DollarSign,
-  Wallet,
-  HeartPulse,
-  AlignLeft,
-  Image,
-  Pill,
-  FlaskRound,
-} from 'lucide-react';
+import React from 'react';
+import { tabs, TabName } from '@/types';
 
-/* Tabs navigation */
-export default function TabsNav({ activeTab, setActiveTab }) {
-  const tabs = [
-    { name: 'Historial', icon: ClipboardList },
-    { name: 'Presupuestos', icon: FileText },
-    { name: 'Productos', icon: Package },
-    { name: 'Cotización', icon: DollarSign },
-    { name: 'Caja', icon: Wallet },
-    { name: 'Ortodoncia', icon: AlignLeft },
-    { name: 'Imágenes', icon: Image },
-    { name: 'Receta', icon: Pill },
-    { name: 'Laboratorios', icon: FlaskRound },
-  ];
+interface TabsNavProps {
+  activeTab: TabName;
+  setActiveTab: React.Dispatch<React.SetStateAction<TabName>>;
+}
 
+export default function TabsNav({ activeTab, setActiveTab }: TabsNavProps) {
   return (
     <div className="scrollbar-thin scrollbar-thumb-emerald-400/30 scrollbar-track-transparent flex w-full justify-between overflow-x-auto rounded-2xl border border-(--med-gray-border) bg-white/80 p-1 shadow-sm backdrop-blur-sm">
-      {tabs.map(({ name, icon: Icon }, index) => (
+      {tabs.map(({ name, icon: Icon }) => (
         <button
           key={name}
           onClick={() => setActiveTab(name)}
