@@ -1,69 +1,130 @@
 'use client';
 
-/* Local, single-responsibility form for supplies */
 import { useState } from 'react';
 
+/* Supply Form (connected to backend) */
 export default function SupplyForm({ mode, initialData, onCancel, onSubmit }) {
   // Local state
   const [form, setForm] = useState(() => ({
-    nombre: initialData?.nombre || '',
-    stock: initialData?.stock != null ? String(initialData.stock) : '',
-    minimo: initialData?.minimo != null ? String(initialData.minimo) : '',
-    precio: initialData?.precio != null ? String(initialData.precio) : '',
+    name: initialData?.name || '',
+    category: initialData?.category || '',
+    quantity: initialData?.quantity != null ? String(initialData.quantity) : '',
+    minStock: initialData?.minStock != null ? String(initialData.minStock) : '',
+    maxStock: initialData?.maxStock != null ? String(initialData.maxStock) : '',
+    costPrice: initialData?.costPrice != null ? String(initialData.costPrice) : '',
+    salePrice: initialData?.salePrice != null ? String(initialData.salePrice) : '',
   }));
 
   // Handlers
-  const handleChange = (k, v) => setForm((s) => ({ ...s, [k]: v }));
+  const handleChange = (key, value) => setForm((s) => ({ ...s, [key]: value }));
+
   const handleSubmit = (e) => {
     e.preventDefault();
+
     const payload = {
-      id: initialData?.id || Date.now(),
-      nombre: form.nombre.trim(),
-      stock: Number(form.stock || 0),
-      minimo: Number(form.minimo || 0),
-      precio: Number(form.precio || 0),
+      name: form.name.trim() || 'Suministro sin nombre',
+      type: 'suministro',
+      category: form.category.trim() || 'General',
+      inStock: true,
+      costPrice: Number(form.costPrice || 0),
+      salePrice: Number(form.salePrice || 0),
+      quantity: Number(form.quantity || 0),
+      minStock: Number(form.minStock || 0),
+      maxStock: Number(form.maxStock || 0),
     };
+
     onSubmit(payload);
   };
+
+  // Categorías predefinidas para suministros médicos
+  const supplyCategories = [
+    'Guantes',
+    'Algodón',
+    'Alcohol y desinfectantes',
+    'Material de curación',
+    'Equipo básico de examen',
+  ];
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
       <div className="space-y-4 rounded-2xl border border-gray-100 bg-white/80 p-5 shadow-lg backdrop-blur-sm">
+        {/* Nombre */}
         <input
           type="text"
           required
-          value={form.nombre}
-          onChange={(e) => handleChange('nombre', e.target.value)}
+          value={form.name}
+          onChange={(e) => handleChange('name', e.target.value)}
           placeholder="Nombre del suministro"
           className="w-full rounded-xl border-2 border-gray-300 px-4 py-3 focus:border-purple-500"
         />
+
+        {/* Categoría */}
+        <select
+          required
+          value={form.category}
+          onChange={(e) => handleChange('category', e.target.value)}
+          className="w-full rounded-xl border-2 border-gray-300 px-4 py-3 focus:border-purple-500"
+        >
+          <option value="">Seleccionar categoría</option>
+          {supplyCategories.map((cat) => (
+            <option key={cat} value={cat}>
+              {cat}
+            </option>
+          ))}
+        </select>
+
+        {/* Stock y mínimo */}
         <div className="grid grid-cols-2 gap-3">
           <input
             type="number"
             min="0"
-            value={form.stock}
-            onChange={(e) => handleChange('stock', e.target.value)}
-            placeholder="Stock"
+            value={form.quantity}
+            onChange={(e) => handleChange('quantity', e.target.value)}
+            placeholder="Cantidad"
             className="w-full rounded-xl border-2 border-gray-300 px-4 py-3 focus:border-purple-500"
           />
           <input
             type="number"
             min="0"
-            value={form.minimo}
-            onChange={(e) => handleChange('minimo', e.target.value)}
-            placeholder="Mínimo"
+            value={form.minStock}
+            onChange={(e) => handleChange('minStock', e.target.value)}
+            placeholder="Stock mínimo"
             className="w-full rounded-xl border-2 border-gray-300 px-4 py-3 focus:border-purple-500"
           />
         </div>
+
+        {/* Stock máximo y costo */}
+        <div className="grid grid-cols-2 gap-3">
+          <input
+            type="number"
+            min="0"
+            value={form.maxStock}
+            onChange={(e) => handleChange('maxStock', e.target.value)}
+            placeholder="Stock máximo"
+            className="w-full rounded-xl border-2 border-gray-300 px-4 py-3 focus:border-purple-500"
+          />
+          <input
+            type="number"
+            min="0"
+            value={form.costPrice}
+            onChange={(e) => handleChange('costPrice', e.target.value)}
+            placeholder="Costo ($)"
+            className="w-full rounded-xl border-2 border-gray-300 px-4 py-3 focus:border-purple-500"
+          />
+        </div>
+
+        {/* Precio de venta */}
         <input
           type="number"
           min="0"
-          value={form.precio}
-          onChange={(e) => handleChange('precio', e.target.value)}
-          placeholder="Precio"
+          value={form.salePrice}
+          onChange={(e) => handleChange('salePrice', e.target.value)}
+          placeholder="Precio de venta ($)"
           className="w-full rounded-xl border-2 border-gray-300 px-4 py-3 focus:border-purple-500"
         />
       </div>
+
+      {/* Botones */}
       <div className="flex gap-3">
         <button
           type="button"

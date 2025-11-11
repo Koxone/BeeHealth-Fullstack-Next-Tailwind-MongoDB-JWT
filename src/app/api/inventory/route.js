@@ -18,11 +18,14 @@ export async function POST(req) {
     }
 
     const validTypes = ['medicamento', 'receta', 'suministro'];
-    if (!validTypes.includes(body.type)) body.type = 'medicamento';
+    const normalizedType =
+      typeof body.type === 'string' && validTypes.includes(body.type.toLowerCase())
+        ? body.type.toLowerCase()
+        : 'medicamento';
 
     const newProduct = await Product.create({
       name: body.name,
-      type: body.type || 'medicamento',
+      type: normalizedType,
       category: body.category || 'General',
       inStock: body.inStock ?? true,
       costPrice: body.costPrice ?? 0,

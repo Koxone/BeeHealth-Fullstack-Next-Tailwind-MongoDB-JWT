@@ -1,26 +1,35 @@
 'use client';
 
-/* Local, single-responsibility form for prescriptions */
 import { useState } from 'react';
 
+/* Prescription Form (connected to backend) */
 export default function PrescriptionForm({ mode, initialData, onCancel, onSubmit }) {
   // Local state
   const [form, setForm] = useState(() => ({
-    tipo: initialData?.tipo || '',
-    stock: initialData?.stock != null ? String(initialData.stock) : '',
-    minimo: initialData?.minimo != null ? String(initialData.minimo) : '',
+    category: initialData?.category || '',
+    quantity: initialData?.quantity != null ? String(initialData.quantity) : '',
+    minStock: initialData?.minStock != null ? String(initialData.minStock) : '',
+    maxStock: initialData?.maxStock != null ? String(initialData.maxStock) : '',
   }));
 
   // Handlers
-  const handleChange = (k, v) => setForm((s) => ({ ...s, [k]: v }));
+  const handleChange = (key, value) => setForm((s) => ({ ...s, [key]: value }));
+
   const handleSubmit = (e) => {
     e.preventDefault();
+
     const payload = {
-      id: initialData?.id || Date.now(),
-      tipo: form.tipo.trim(),
-      stock: Number(form.stock || 0),
-      minimo: Number(form.minimo || 0),
+      name: form.category.trim() || 'Receta sin nombre',
+      type: 'receta',
+      category: form.category.trim() || 'General',
+      inStock: true,
+      costPrice: 0,
+      salePrice: 0,
+      quantity: Number(form.quantity || 0),
+      minStock: Number(form.minStock || 0),
+      maxStock: Number(form.maxStock || 0),
     };
+
     onSubmit(payload);
   };
 
@@ -30,30 +39,41 @@ export default function PrescriptionForm({ mode, initialData, onCancel, onSubmit
         <input
           type="text"
           required
-          value={form.tipo}
-          onChange={(e) => handleChange('tipo', e.target.value)}
-          placeholder="Tipo de receta"
+          value={form.category}
+          onChange={(e) => handleChange('category', e.target.value)}
+          placeholder="Tipo de receta (Control de Peso u Odontología)"
           className="w-full rounded-xl border-2 border-gray-300 px-4 py-3 focus:border-blue-500"
         />
+
         <div className="grid grid-cols-2 gap-3">
           <input
             type="number"
             min="0"
-            value={form.stock}
-            onChange={(e) => handleChange('stock', e.target.value)}
-            placeholder="Stock"
+            value={form.quantity}
+            onChange={(e) => handleChange('quantity', e.target.value)}
+            placeholder="Cantidad"
             className="w-full rounded-xl border-2 border-gray-300 px-4 py-3 focus:border-blue-500"
           />
           <input
             type="number"
             min="0"
-            value={form.minimo}
-            onChange={(e) => handleChange('minimo', e.target.value)}
-            placeholder="Mínimo"
+            value={form.minStock}
+            onChange={(e) => handleChange('minStock', e.target.value)}
+            placeholder="Stock mínimo"
             className="w-full rounded-xl border-2 border-gray-300 px-4 py-3 focus:border-blue-500"
           />
         </div>
+
+        <input
+          type="number"
+          min="0"
+          value={form.maxStock}
+          onChange={(e) => handleChange('maxStock', e.target.value)}
+          placeholder="Stock máximo"
+          className="w-full rounded-xl border-2 border-gray-300 px-4 py-3 focus:border-blue-500"
+        />
       </div>
+
       <div className="flex gap-3">
         <button
           type="button"
