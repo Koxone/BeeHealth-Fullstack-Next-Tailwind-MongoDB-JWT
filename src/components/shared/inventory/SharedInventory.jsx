@@ -14,8 +14,8 @@ import { getStockStatus, getCaducidadStatus } from './utils/helpers';
 import AddProductModal from './components/modals/addProductModal/AddProductModal';
 import EditProductModal from './components/modals/editProductModal/EditProductModal';
 
-// Services Backend
-import { getInventory } from './services/getInventory';
+// Hooks
+import { useInventory } from '@/hooks/useInventory';
 
 export default function SharedInventory({ role }) {
   // UI State
@@ -26,19 +26,8 @@ export default function SharedInventory({ role }) {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [itemToDelete, setItemToDelete] = useState(null);
 
-  // Data State
-  const [inventory, setInventory] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  // Fetch data from backend
-  useEffect(() => {
-    async function fetchInventory() {
-      const data = await getInventory();
-      setInventory(data);
-      setLoading(false);
-    }
-    fetchInventory();
-  }, []);
+  // Custom Hooks
+  const { inventory, loading, error, setInventory } = useInventory();
 
   // Filtered Meds
   const medicamentos = useMemo(
@@ -164,7 +153,7 @@ export default function SharedInventory({ role }) {
       </div>
 
       {/* Inventory Alerts */}
-      <SharedInventoryAlerts role={role} />
+      <SharedInventoryAlerts role={role} inventory={inventory} />
 
       {/* Modals */}
       {showModal && !editingItem && (

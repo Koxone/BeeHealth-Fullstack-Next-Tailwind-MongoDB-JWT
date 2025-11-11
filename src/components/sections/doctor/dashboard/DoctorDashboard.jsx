@@ -9,10 +9,19 @@ import DoctorPatientsChart from '@/components/sections/doctor/dashboard/componen
 import StatsGrid from '@/components/shared/dashboard/statsGrid/StatsGrid';
 import SharedInventoryAlerts from '@/components/shared/dashboard/InventoryAlerts/SharedInventoryAlerts';
 import { useTodayAppointmentsBySpecialty } from '@/hooks/useTodayAppointmentsBySpecialty';
+import { useInventory } from '@/hooks/useInventory';
 
 export default function DoctorDashboard({ currentUser }) {
   // Google Calendar Custom Hooks
   const { appointments, loading, error } = useTodayAppointmentsBySpecialty();
+
+  // Custom Hooks
+  const {
+    inventory,
+    loading: loadingInventory,
+    error: errorInventory,
+    setInventory,
+  } = useInventory();
 
   return (
     <DashboardLayout>
@@ -34,7 +43,7 @@ export default function DoctorDashboard({ currentUser }) {
       {/* Summaries */}
       <div className="grid grid-cols-1 gap-4 md:gap-6 lg:grid-cols-2">
         <DoctorAccountingSummary />
-        <SharedInventoryAlerts />
+        <SharedInventoryAlerts inventory={inventory} role={currentUser?.role} />
       </div>
     </DashboardLayout>
   );
