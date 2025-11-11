@@ -1,8 +1,8 @@
 'use client';
 
-/* controls */
-export default function SearchAddBar({ searchTerm, setSearchTerm, onAdd, icons }) {
-  const { Search, Plus, Download } = icons;
+import { Search, Plus, Download } from 'lucide-react';
+
+export default function SearchAddBar({ searchTerm, setSearchTerm, onAdd }) {
   return (
     <div className="flex flex-col gap-3 p-3 sm:flex-row sm:items-center sm:justify-between">
       <div className="relative flex-1">
@@ -12,13 +12,13 @@ export default function SearchAddBar({ searchTerm, setSearchTerm, onAdd, icons }
           placeholder="Buscar por nombre, categoría o ubicación..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full rounded-xl border-2 border-gray-200 py-3 pr-4 pl-12 font-medium transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20"
+          className="w-full rounded-xl border-2 border-gray-200 py-3 pr-4 pl-12 font-medium transition outline-none"
         />
       </div>
       <div className="flex items-center gap-2">
         <button
           onClick={onAdd}
-          className="flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white shadow-md transition hover:bg-blue-700 active:scale-95"
+          className="bg-medtrack-green-solid hover:bg-medtrack-green-hover flex items-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold text-white shadow-md transition active:scale-95"
         >
           <Plus className="h-4 w-4" />
           Agregar

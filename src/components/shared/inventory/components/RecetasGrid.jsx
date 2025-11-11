@@ -1,5 +1,6 @@
-export default function RecetasGrid({ rows, getStockStatus, icons, onEdit, onDelete }) {
-  const { Edit2, Trash2 } = icons;
+import { Edit2, Trash2 } from 'lucide-react';
+
+export default function RecetasGrid({ rows, getStockStatus, onEdit, onDelete }) {
   return (
     <div className="p-4 md:p-6">
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">

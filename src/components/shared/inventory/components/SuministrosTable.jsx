@@ -1,8 +1,7 @@
 'use client';
+import { Edit2, Trash2 } from 'lucide-react';
 
-export default function SuministrosTable({ rows, getStockStatus, icons, onEdit, onDelete }) {
-  const { Edit2, Trash2 } = icons;
-
+export default function SuministrosTable({ rows, getStockStatus, onEdit, onDelete }) {
   if (!Array.isArray(rows) || rows.length === 0) {
     return (
       <div className="p-4 md:p-6">

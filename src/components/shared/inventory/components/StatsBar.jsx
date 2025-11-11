@@ -1,4 +1,23 @@
-export default function StatsBar({ valorTotalMedicamentos, valorTotalSuministros, counts }) {
+'use client';
+import { useMemo } from 'react';
+
+export default function StatsBar({ medicamentos, suministros, recetas }) {
+  const valorTotalMedicamentos = useMemo(
+    () => medicamentos.reduce((sum, m) => sum + m.quantity * (m.product?.salePrice || 0), 0),
+    [medicamentos]
+  );
+
+  const valorTotalSuministros = useMemo(
+    () => suministros.reduce((sum, s) => sum + s.quantity * (s.product?.salePrice || 0), 0),
+    [suministros]
+  );
+
+  const counts = {
+    meds: medicamentos.length,
+    recs: recetas.length,
+    sums: suministros.length,
+  };
+
   const items = [
     {
       label: 'Valor medicamentos',

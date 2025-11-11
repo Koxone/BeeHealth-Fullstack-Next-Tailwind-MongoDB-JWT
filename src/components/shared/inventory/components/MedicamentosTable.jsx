@@ -1,3 +1,5 @@
+import { Edit2, Trash2 } from 'lucide-react';
+
 export default function MedicamentosTable({
   rows,
   getStockStatus,
@@ -6,18 +8,12 @@ export default function MedicamentosTable({
   onEdit,
   onDelete,
 }) {
-  const { Edit2, Trash2, Package: PackageIcon } = icons || {};
-
   if (!Array.isArray(rows) || rows.length === 0) {
     return (
       <div className="p-4 md:p-6">
         <div className="flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-gray-200 bg-gray-50 py-16">
           <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gray-100">
-            {PackageIcon ? (
-              <PackageIcon className="h-8 w-8 text-gray-400" />
-            ) : (
-              <span className="text-2xl text-gray-400">📦</span>
-            )}
+            <span className="text-2xl text-gray-400">📦</span>
           </div>
           <p className="mb-1 text-base font-medium text-gray-900">
             No hay medicamentos registrados
@@ -74,11 +70,7 @@ export default function MedicamentosTable({
                     <td className="px-4 py-4">
                       <div className="flex items-center gap-3">
                         <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-blue-50 transition-transform duration-200 group-hover:scale-110">
-                          {PackageIcon ? (
-                            <PackageIcon className="h-5 w-5 text-blue-600" />
-                          ) : (
-                            <span className="text-lg text-blue-600">📦</span>
-                          )}
+                          <span className="text-lg text-blue-600">📦</span>
                         </div>
                         <div className="min-w-0">
                           <p className="truncate text-sm font-semibold text-gray-900">

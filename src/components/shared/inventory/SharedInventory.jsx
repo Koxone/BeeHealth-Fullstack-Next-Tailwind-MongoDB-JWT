@@ -1,19 +1,6 @@
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
-import {
-  Package,
-  Pill,
-  Syringe,
-  Plus,
-  Search,
-  Edit2,
-  Trash2,
-  Download,
-  FileText,
-  X,
-} from 'lucide-react';
-
 import TabsBar from './components/TabsBar';
 import SearchAddBar from './components/SearchAddBar';
 import StatsBar from './components/StatsBar';
@@ -26,6 +13,9 @@ import GeneralInventoryAlerts from '@/components/shared/dashboard/InventoryAlert
 import { getStockStatus, getCaducidadStatus } from './utils/helpers';
 import AddProductModal from './components/modals/addProductModal/AddProductModal';
 import EditProductModal from './components/modals/editProductModal/EditProductModal';
+
+// Services Backend
+import { getInventory } from './services/getInventory';
 
 export default function SharedInventory({ role }) {
   // UI State
@@ -43,20 +33,13 @@ export default function SharedInventory({ role }) {
   // Fetch data from backend
   useEffect(() => {
     async function fetchInventory() {
-      try {
-        const res = await fetch('/api/inventory');
-        if (!res.ok) throw new Error('Error al obtener inventario');
-        const data = await res.json();
-        setInventory(data);
-      } catch (err) {
-        console.error('Error al cargar inventario:', err);
-      } finally {
-        setLoading(false);
-      }
+      const data = await getInventory();
+      setInventory(data);
+      setLoading(false);
     }
     fetchInventory();
   }, []);
-  
+
   // Filtered groups
   const medicamentos = useMemo(
     () => inventory.filter((i) => i.product?.type === 'medicamento'),
@@ -88,17 +71,6 @@ export default function SharedInventory({ role }) {
     const q = searchTerm.toLowerCase();
     return suministros.filter((s) => s.product.name.toLowerCase().includes(q));
   }, [suministros, searchTerm]);
-
-  // Derived totals
-  const valorTotalMedicamentos = useMemo(
-    () => medicamentos.reduce((sum, m) => sum + m.quantity * (m.product?.salePrice || 0), 0),
-    [medicamentos]
-  );
-
-  const valorTotalSuministros = useMemo(
-    () => suministros.reduce((sum, s) => sum + s.quantity * (s.product?.salePrice || 0), 0),
-    [suministros]
-  );
 
   // Actions
   const openAddModal = () => {
@@ -144,29 +116,12 @@ export default function SharedInventory({ role }) {
 
       {/* Tabs & Actions */}
       <div className="rounded-xl border border-gray-200 bg-white shadow-sm">
-        <TabsBar
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}
-          icons={{ Package, Pill, FileText, Syringe }}
-        />
-        <SearchAddBar
-          searchTerm={searchTerm}
-          setSearchTerm={setSearchTerm}
-          onAdd={openAddModal}
-          icons={{ Search, Plus, Download }}
-        />
+        <TabsBar activeTab={activeTab} setActiveTab={setActiveTab} />
+        <SearchAddBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} onAdd={openAddModal} />
       </div>
 
       {/* Stats */}
-      <StatsBar
-        valorTotalMedicamentos={valorTotalMedicamentos}
-        valorTotalSuministros={valorTotalSuministros}
-        counts={{
-          meds: medicamentos.length,
-          recs: recetas.length,
-          sums: suministros.length,
-        }}
-      />
+      <StatsBar medicamentos={medicamentos} suministros={suministros} recetas={recetas} />
 
       {/* Content */}
       <div className="rounded-xl border border-gray-200 bg-white shadow-sm">
@@ -175,7 +130,6 @@ export default function SharedInventory({ role }) {
             rows={filteredMedicamentos}
             getStockStatus={getStockStatus}
             getCaducidadStatus={getCaducidadStatus}
-            icons={{ Edit2, Trash2 }}
             onEdit={(item) => setEditingItem(item)}
             onDelete={requestDelete}
           />
@@ -185,7 +139,6 @@ export default function SharedInventory({ role }) {
           <RecetasGrid
             rows={filteredRecetas}
             getStockStatus={getStockStatus}
-            icons={{ Edit2, Trash2 }}
             onEdit={(item) => setEditingItem(item)}
             onDelete={requestDelete}
           />
@@ -195,7 +148,6 @@ export default function SharedInventory({ role }) {
           <SuministrosTable
             rows={filteredSuministros}
             getStockStatus={getStockStatus}
-            icons={{ Edit2, Trash2 }}
             onEdit={(item) => setEditingItem(item)}
             onDelete={requestDelete}
           />
