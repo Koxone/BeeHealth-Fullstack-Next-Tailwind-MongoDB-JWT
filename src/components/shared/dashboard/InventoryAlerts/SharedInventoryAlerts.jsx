@@ -1,13 +1,4 @@
-import {
-  Pill,
-  FileText,
-  Syringe,
-  Package,
-  ChevronRight,
-  AlertTriangle,
-  AlertCircle,
-  TrendingDown,
-} from 'lucide-react';
+import { Package, AlertTriangle, AlertCircle, TrendingDown } from 'lucide-react';
 import AlertCard from './components/AlertCard';
 import ViewMoreButton from '@/components/shared/dashboard/accountingSummary/components/ViewMoreButton';
 
@@ -65,11 +56,6 @@ export default function SharedInventoryAlerts({ role }) {
 
       {/* Alert Items */}
       <div className="h-full max-h-[300px] space-y-2 overflow-y-auto pt-6">
-        <AlertCard />
-        <AlertCard />
-        <AlertCard />
-        <AlertCard />
-        <AlertCard />
         <AlertCard />
       </div>
 
