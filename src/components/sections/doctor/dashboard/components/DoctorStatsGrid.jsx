@@ -2,58 +2,39 @@
 
 import { useTodayAppointmentsBySpecialty } from '@/hooks/useTodayAppointmentsBySpecialty';
 import { useInventory } from '@/hooks/useInventory';
-import {
-  Users,
-  DollarSign,
-  AlertTriangle,
-  Activity,
-  Calendar,
-  Weight,
-  TrendingDown,
-  Clock,
-  FileText,
-  Ruler,
-} from 'lucide-react';
+import { Users, DollarSign, AlertTriangle, Activity, Pill } from 'lucide-react';
 import DoctorStatsCard from './DoctorStatsCard';
 
 export default function DoctorStatsGrid({ role }) {
-  // Hooks
+  // Appointments Today logic
   const { appointments, loading } = useTodayAppointmentsBySpecialty();
   const todaysAppointmentsNumber = appointments?.length || 0;
 
-  const { inventory, loading: loadingInventory, error: errorInventory } = useInventory();
-
-  // Alerts logic
-  const criticalItems = inventory.filter((i) => i.quantity < i.minStock);
-  const lowItems = inventory.filter((i) => i.quantity === i.minStock);
-  const totalAlerts = criticalItems.length + lowItems.length;
-
-  // Mock Data
-  const pendingAppointments = 3;
-  const completedConsults = 5;
+  // Inventory and Alerts logic
+  const { totalAlerts } = useInventory();
 
   return (
     <div className="grid grid-cols-2 gap-3 md:gap-4 lg:grid-cols-4">
       {[
         {
           Icon: DollarSign,
-          mainData: todaysAppointmentsNumber,
+          mainData: '$1,500.00',
           extraData: 'Hoy',
           title: 'Ingresos de Hoy',
           variant: 'primary',
         },
         {
           Icon: Users,
-          mainData: pendingAppointments,
+          mainData: todaysAppointmentsNumber,
           title: 'Citas de Hoy',
           variant: 'success',
           href: '/doctor/calendar',
         },
         {
-          Icon: Activity,
-          mainData: completedConsults,
+          Icon: Pill,
+          mainData: '$500.00',
           extraData: '+12%',
-          title: 'Promedio paciente',
+          title: 'Venta de Medicamentos',
           variant: 'purple',
         },
         {

@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 
 /* --- Types --- */
 interface Product {
@@ -61,6 +61,25 @@ export function useInventory() {
     fetchInventory();
   }, []);
 
+  // --- Inventory Alerts logic ---
+  const criticalItems = useMemo(
+    () => inventory.filter((i) => i.quantity < i.minStock),
+    [inventory]
+  );
+  const lowItems = useMemo(() => inventory.filter((i) => i.quantity === i.minStock), [inventory]);
+  const totalAlerts = useMemo(
+    () => criticalItems.length + lowItems.length,
+    [criticalItems, lowItems]
+  );
+
   // Return state and handlers
-  return { inventory, loading, error, setInventory };
+  return {
+    inventory,
+    loading,
+    error,
+    setInventory,
+    criticalItems,
+    lowItems,
+    totalAlerts,
+  };
 }
