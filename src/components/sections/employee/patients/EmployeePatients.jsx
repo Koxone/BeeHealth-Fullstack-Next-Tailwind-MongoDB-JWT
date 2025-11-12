@@ -1,11 +1,11 @@
-import GeneralSectionHeader from '@/components/shared/sections/GeneralSectionHeader';
+import SharedSectionHeader from '@/components/shared/sections/SharedSectionHeader';
 import EmployeePatientsList from './components/EmployeePatientsList';
 import PatientsSearchBar from '@/components/shared/patients/PatientsSearchBar';
 
 export default function EmployeePatients({ currentUser, role }) {
   return (
     <div className="h-full space-y-6 overflow-y-auto">
-      <GeneralSectionHeader
+      <SharedSectionHeader
         Icon="pacientes"
         title="Pacientes"
         subtitle="Lista de todos los pacientes de la clínica"

@@ -1,7 +1,7 @@
 'use client';
 
 import MetricsGrid from './components/MetricsGrid';
-import GeneralSectionHeader from '@/components/shared/sections/GeneralSectionHeader';
+import SharedSectionHeader from '@/components/shared/sections/SharedSectionHeader';
 import TodayConsultsTable from '@/components/shared/todayConsults/TodayConsultsTable';
 import MedicamentosTable from '../../../shared/medsSale/MedicamentosTable';
 
@@ -17,7 +17,7 @@ export default function EmployeeConsultations({ role }) {
   return (
     <div className="h-full overflow-x-hidden overflow-y-auto pb-8">
       {/* Header */}
-      <GeneralSectionHeader
+      <SharedSectionHeader
         role={role}
         Icon="accounting"
         title="Gestión de Consultas"

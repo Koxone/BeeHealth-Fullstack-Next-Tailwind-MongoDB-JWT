@@ -28,7 +28,7 @@ interface GeneralSectionHeaderProps {
   subtitle?: string;
 }
 
-export default function GeneralSectionHeader({
+export default function SharedSectionHeader({
   role,
   Icon,
   title = '',

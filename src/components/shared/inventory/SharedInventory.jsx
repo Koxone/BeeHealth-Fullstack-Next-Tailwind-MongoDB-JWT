@@ -8,7 +8,7 @@ import MedicamentosTable from './components/MedicamentosTable';
 import RecetasGrid from './components/RecetasGrid';
 import SuministrosTable from './components/SuministrosTable';
 import DeleteModal from './components/modals/deleteProductModal/DeleteModal';
-import GeneralSectionHeader from '@/components/shared/sections/GeneralSectionHeader';
+import SharedSectionHeader from '@/components/shared/sections/SharedSectionHeader';
 import SharedInventoryAlerts from '@/components/shared/dashboard/InventoryAlerts/SharedInventoryAlerts';
 import { getStockStatus, getCaducidadStatus } from './utils/helpers';
 import AddProductModal from './components/modals/addProductModal/AddProductModal';
@@ -105,7 +105,7 @@ export default function SharedInventory({ role }) {
   return (
     <div className="h-full space-y-6 overflow-x-hidden overflow-y-auto">
       {/* Header */}
-      <GeneralSectionHeader
+      <SharedSectionHeader
         role={role}
         Icon="inventory"
         title="Gestión de Inventario"

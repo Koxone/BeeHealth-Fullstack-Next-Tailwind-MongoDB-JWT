@@ -18,7 +18,7 @@ import { useEffect, useMemo, useState } from 'react';
 import StatsGrid from './components/StatsGrid';
 import AppointmentsCard from './components/AppointmentsCard';
 import DoctorCalendarCard from './components/DoctorCalendarCard';
-import GeneralSectionHeader from '@/components/shared/sections/GeneralSectionHeader';
+import SharedSectionHeader from '@/components/shared/sections/SharedSectionHeader';
 
 const getDaysInMonth = (date) => {
   const year = date.getFullYear();
@@ -245,7 +245,7 @@ export default function DoctorCalendar({ role, currentUser }) {
 
   return (
     <div className="h-full space-y-4 overflow-x-hidden overflow-y-auto md:space-y-6">
-      <GeneralSectionHeader
+      <SharedSectionHeader
         Icon="calendar"
         role={role}
         title="Mi Calendario"
