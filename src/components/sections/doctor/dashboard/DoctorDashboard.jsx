@@ -4,15 +4,22 @@ import DashboardLayout from '@/components/shared/layouts/DashboardLayout';
 import HeaderWelcome from '@/components/shared/dashboard/header/HeaderWelcome';
 import AppointmentsToday from '@/components/shared/dashboard/appointmentsToday/AppointmentsToday';
 import DoctorAccountingSummary from '@/components/sections/doctor/dashboard/components/DoctorAccountingSummary';
-import DoctorIncomeChart from '@/components/sections/doctor/dashboard/components/DoctorIncomeChart';
-import DoctorPatientsChart from '@/components/sections/doctor/dashboard/components/DoctorPatientsChart';
-import StatsGrid from '@/components/shared/dashboard/statsGrid/StatsGrid';
-import GeneralInventoryAlerts from '@/components/shared/dashboard/InventoryAlerts/GeneralInventoryAlerts';
+import SharedInventoryAlerts from '@/components/shared/dashboard/InventoryAlerts/SharedInventoryAlerts';
 import { useTodayAppointmentsBySpecialty } from '@/hooks/useTodayAppointmentsBySpecialty';
+import { useInventory } from '@/hooks/useInventory';
+import DoctorStatsGrid from './components/DoctorStatsGrid';
 
 export default function DoctorDashboard({ currentUser }) {
   // Google Calendar Custom Hooks
   const { appointments, loading, error } = useTodayAppointmentsBySpecialty();
+
+  // Custom Hooks
+  const {
+    inventory,
+    loading: loadingInventory,
+    error: errorInventory,
+    setInventory,
+  } = useInventory();
 
   return (
     <DashboardLayout>
@@ -20,13 +27,7 @@ export default function DoctorDashboard({ currentUser }) {
       <HeaderWelcome fullName={currentUser?.fullName} role="doctor" />
 
       {/* Stats */}
-      <StatsGrid role="doctor" />
-
-      {/* Charts */}
-      <div className="grid grid-cols-1 gap-4 md:gap-6 lg:grid-cols-2">
-        <DoctorIncomeChart data={[]} />
-        <DoctorPatientsChart data={[]} />
-      </div>
+      <DoctorStatsGrid role="doctor" />
 
       {/* Appointments */}
       <AppointmentsToday role={currentUser?.role} appointments={appointments} />
@@ -34,7 +35,7 @@ export default function DoctorDashboard({ currentUser }) {
       {/* Summaries */}
       <div className="grid grid-cols-1 gap-4 md:gap-6 lg:grid-cols-2">
         <DoctorAccountingSummary />
-        <GeneralInventoryAlerts />
+        <SharedInventoryAlerts inventory={inventory} role={currentUser?.role} />
       </div>
     </DashboardLayout>
   );

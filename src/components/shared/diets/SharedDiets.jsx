@@ -2,7 +2,7 @@ import { Plus } from 'lucide-react';
 import SharedDietCard from './components/dietCard/SharedDietCard';
 import Link from 'next/link';
 export const runtime = 'nodejs';
-import GeneralSectionHeader from '../sections/GeneralSectionHeader';
+import SharedSectionHeader from '../sections/SharedSectionHeader';
 import { diets } from './[id]/components/sharedDietsMockData';
 
 export default async function SharedDiets({ role }) {
@@ -10,7 +10,7 @@ export default async function SharedDiets({ role }) {
     <div className="h-full space-y-4 overflow-y-auto md:space-y-6">
       <div className="flex items-center justify-between">
         {/* Header */}
-        <GeneralSectionHeader
+        <SharedSectionHeader
           role={role}
           Icon="diets"
           title={role === 'doctor' ? 'Gestion de Dietas' : 'Mis Dietas'}

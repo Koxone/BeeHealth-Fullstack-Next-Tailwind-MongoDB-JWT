@@ -8,7 +8,7 @@ import ModalAddEdit from './components/ModalAddEdit';
 import { workoutsMockData } from './components/workoutsMockData';
 import WorkoutCard from './components/workoutCard/WorkoutCard';
 import WorkoutModal from './components/WorkoutModal';
-import GeneralSectionHeader from '../sections/GeneralSectionHeader';
+import SharedSectionHeader from '../sections/SharedSectionHeader';
 
 export default function SharedWorkouts({ role }) {
   // Local States
@@ -66,7 +66,7 @@ export default function SharedWorkouts({ role }) {
 
   return (
     <div className="h-full space-y-4 overflow-y-auto md:space-y-6">
-      <GeneralSectionHeader
+      <SharedSectionHeader
         role={role}
         Icon="workouts"
         title={role === 'doctor' ? 'Gestion de Ejercicios' : 'Mis Ejercicios'}

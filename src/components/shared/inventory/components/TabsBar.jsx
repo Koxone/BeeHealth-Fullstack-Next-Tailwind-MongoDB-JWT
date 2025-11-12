@@ -1,11 +1,12 @@
 'use client';
 
-/* tabs */
-export default function TabsBar({ activeTab, setActiveTab, icons }) {
+import { Pill, FileText, Syringe } from 'lucide-react';
+
+export default function TabsBar({ activeTab, setActiveTab }) {
   const items = [
-    { id: 'medicamentos', label: 'Medicamentos', Icon: icons.Pill },
-    { id: 'recetas', label: 'Recetas', Icon: icons.FileText },
-    { id: 'suministros', label: 'Suministros', Icon: icons.Syringe },
+    { id: 'medicamentos', label: 'Medicamentos', Icon: Pill },
+    { id: 'recetas', label: 'Recetas', Icon: FileText },
+    { id: 'suministros', label: 'Suministros', Icon: Syringe },
   ];
   return (
     <div className="flex items-center gap-2 border-b border-gray-200 p-2">

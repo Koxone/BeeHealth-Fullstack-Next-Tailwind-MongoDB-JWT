@@ -1,23 +1,18 @@
+import { Edit2, Trash2 } from 'lucide-react';
+
 export default function MedicamentosTable({
   rows,
   getStockStatus,
   getCaducidadStatus,
-  icons,
   onEdit,
   onDelete,
 }) {
-  const { Edit2, Trash2, Package: PackageIcon } = icons || {};
-
   if (!Array.isArray(rows) || rows.length === 0) {
     return (
       <div className="p-4 md:p-6">
         <div className="flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-gray-200 bg-gray-50 py-16">
           <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gray-100">
-            {PackageIcon ? (
-              <PackageIcon className="h-8 w-8 text-gray-400" />
-            ) : (
-              <span className="text-2xl text-gray-400">📦</span>
-            )}
+            <span className="text-2xl text-gray-400">📦</span>
           </div>
           <p className="mb-1 text-base font-medium text-gray-900">
             No hay medicamentos registrados
@@ -47,12 +42,7 @@ export default function MedicamentosTable({
                 <th className="hidden px-4 py-4 text-right text-xs font-semibold tracking-wider text-gray-600 uppercase lg:table-cell">
                   Precio
                 </th>
-                <th className="hidden px-4 py-4 text-center text-xs font-semibold tracking-wider text-gray-600 uppercase md:table-cell">
-                  Caducidad
-                </th>
-                <th className="px-4 py-4 text-center text-xs font-semibold tracking-wider text-gray-600 uppercase">
-                  Ubicación
-                </th>
+
                 <th className="px-4 py-4 text-center text-xs font-semibold tracking-wider text-gray-600 uppercase">
                   Acciones
                 </th>
@@ -75,28 +65,24 @@ export default function MedicamentosTable({
                       animationFillMode: 'forwards',
                     }}
                   >
-                    {/* Medicamento */}
+                    {/* Medication */}
                     <td className="px-4 py-4">
                       <div className="flex items-center gap-3">
                         <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-blue-50 transition-transform duration-200 group-hover:scale-110">
-                          {PackageIcon ? (
-                            <PackageIcon className="h-5 w-5 text-blue-600" />
-                          ) : (
-                            <span className="text-lg text-blue-600">📦</span>
-                          )}
+                          <span className="text-lg text-blue-600">📦</span>
                         </div>
                         <div className="min-w-0">
                           <p className="truncate text-sm font-semibold text-gray-900">
-                            {med.nombre}
+                            {med?.product?.name}
                           </p>
                         </div>
                       </div>
                     </td>
 
-                    {/* Categoría */}
+                    {/* Category */}
                     <td className="px-4 py-4">
                       <span className="inline-flex items-center rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-700">
-                        {med.categoria}
+                        {med?.product?.category}
                       </span>
                     </td>
 
@@ -124,37 +110,22 @@ export default function MedicamentosTable({
                               }`}
                             ></span>
                           </span>
-                          {med.stock} / {med.minimo}
+                          {med?.quantity} / {med?.minStock}
                         </span>
                       </div>
                     </td>
 
-                    {/* Precio */}
+                    {/* Price */}
                     <td className="hidden px-4 py-4 text-right lg:table-cell">
                       <span className="text-sm font-semibold text-gray-900">
-                        ${parseFloat(med.precio).toFixed(2)}
-                      </span>
-                    </td>
-
-                    {/* Caducidad */}
-                    <td className="hidden px-4 py-4 text-center md:table-cell">
-                      <span
-                        className={`inline-flex items-center rounded-full px-3 py-1.5 text-xs font-semibold shadow-sm ${cad.bg} ${cad.color}`}
-                      >
-                        {med.caducidad}
-                      </span>
-                    </td>
-
-                    {/* Ubicación */}
-                    <td className="px-4 py-4 text-center">
-                      <span className="inline-flex items-center rounded-md bg-indigo-50 px-2.5 py-1 text-xs font-medium text-indigo-700">
-                        📍 {med.ubicacion}
+                        ${parseFloat(med?.product?.costPrice).toFixed(2)}
                       </span>
                     </td>
 
                     {/* Acciones */}
                     <td className="px-4 py-4">
                       <div className="flex items-center justify-center gap-2">
+                        {/* Edit Button */}
                         <button
                           onClick={() => onEdit(med)}
                           className="group/btn relative rounded-lg bg-blue-50 p-2 transition-all duration-200 hover:bg-blue-100 hover:shadow-md active:scale-95"
@@ -164,6 +135,8 @@ export default function MedicamentosTable({
                             <Edit2 className="h-4 w-4 text-blue-600 transition-transform duration-200 group-hover/btn:scale-110" />
                           )}
                         </button>
+
+                        {/* Delete Button */}
                         <button
                           onClick={() => onDelete(med)}
                           className="group/btn relative rounded-lg bg-red-50 p-2 transition-all duration-200 hover:bg-red-100 hover:shadow-md active:scale-95"

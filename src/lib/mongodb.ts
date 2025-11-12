@@ -1,6 +1,9 @@
 import mongoose from 'mongoose';
 import '@/models/ClinicalRecord';
 import '@/models/User';
+import '@/models/Product';
+import '@/models/Transaction';
+import '@/models/Inventory';
 
 declare global {
   var mongooseCache:

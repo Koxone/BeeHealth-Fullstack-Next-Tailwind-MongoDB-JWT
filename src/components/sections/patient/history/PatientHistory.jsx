@@ -9,7 +9,7 @@ import RecordsTable from '../history/components/RecordsTable';
 import RecordsMobileList from '../history/components/RecordsMobileList';
 import EmptyState from '../history/components/EmptyState';
 import AddRecordModal from '../history/components/AddRecordModal';
-import GeneralSectionHeader from '@/components/shared/sections/GeneralSectionHeader';
+import SharedSectionHeader from '@/components/shared/sections/SharedSectionHeader';
 
 /* Mock data */
 const mockUser = { id: 'user_12345' };
@@ -71,7 +71,7 @@ export default function PatientHistory({ role }) {
   /* Render */
   return (
     <div className="h-full overflow-x-hidden overflow-y-auto pb-8">
-      <GeneralSectionHeader
+      <SharedSectionHeader
         role={role}
         title="Historial Clínico"
         subtitle="Visualiza tus ultimos registros medicos"

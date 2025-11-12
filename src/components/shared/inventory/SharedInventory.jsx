@@ -1,20 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
-import {
-  Package,
-  Pill,
-  Syringe,
-  Plus,
-  Search,
-  AlertTriangle,
-  Edit2,
-  Trash2,
-  Download,
-  FileText,
-  X,
-} from 'lucide-react';
-
+import { useState, useEffect, useMemo } from 'react';
 import TabsBar from './components/TabsBar';
 import SearchAddBar from './components/SearchAddBar';
 import StatsBar from './components/StatsBar';
@@ -22,17 +8,17 @@ import MedicamentosTable from './components/MedicamentosTable';
 import RecetasGrid from './components/RecetasGrid';
 import SuministrosTable from './components/SuministrosTable';
 import DeleteModal from './components/modals/deleteProductModal/DeleteModal';
-import GeneralSectionHeader from '@/components/shared/sections/GeneralSectionHeader';
-import GeneralInventoryAlerts from '@/components/shared/dashboard/InventoryAlerts/GeneralInventoryAlerts';
+import SharedSectionHeader from '@/components/shared/sections/SharedSectionHeader';
+import SharedInventoryAlerts from '@/components/shared/dashboard/InventoryAlerts/SharedInventoryAlerts';
 import { getStockStatus, getCaducidadStatus } from './utils/helpers';
-
-// Modals
 import AddProductModal from './components/modals/addProductModal/AddProductModal';
 import EditProductModal from './components/modals/editProductModal/EditProductModal';
 
-/* container */
+// Hooks
+import { useInventory } from '@/hooks/useInventory';
+
 export default function SharedInventory({ role }) {
-  /* ui state */
+  // UI State
   const [activeTab, setActiveTab] = useState('medicamentos');
   const [searchTerm, setSearchTerm] = useState('');
   const [showModal, setShowModal] = useState(false);
@@ -40,281 +26,108 @@ export default function SharedInventory({ role }) {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [itemToDelete, setItemToDelete] = useState(null);
 
-  /* data state */
-  const [medicamentos, setMedicamentos] = useState([
-    {
-      id: 1,
-      nombre: 'Metformina 850mg',
-      categoria: 'Antidiabético',
-      stock: 45,
-      minimo: 20,
-      precio: 150,
-      caducidad: '2025-06-15',
-      ubicacion: 'A-1',
-    },
-    {
-      id: 2,
-      nombre: 'Atorvastatina 20mg',
-      categoria: 'Estatina',
-      stock: 12,
-      minimo: 15,
-      precio: 200,
-      caducidad: '2024-12-20',
-      ubicacion: 'A-2',
-    },
-    {
-      id: 3,
-      nombre: 'Losartán 50mg',
-      categoria: 'Antihipertensivo',
-      stock: 67,
-      minimo: 30,
-      precio: 120,
-      caducidad: '2025-08-10',
-      ubicacion: 'A-3',
-    },
-    {
-      id: 4,
-      nombre: 'Omeprazol 20mg',
-      categoria: 'Antiácido',
-      stock: 8,
-      minimo: 25,
-      precio: 80,
-      caducidad: '2024-11-05',
-      ubicacion: 'B-1',
-    },
-    {
-      id: 5,
-      nombre: 'Paracetamol 500mg',
-      categoria: 'Analgésico',
-      stock: 120,
-      minimo: 50,
-      precio: 50,
-      caducidad: '2026-03-22',
-      ubicacion: 'B-2',
-    },
-  ]);
-  const [recetas, setRecetas] = useState([
-    { id: 1, tipo: 'Receta Controlada', stock: 45, minimo: 20 },
-    { id: 2, tipo: 'Receta Simple', stock: 180, minimo: 50 },
-    { id: 3, tipo: 'Receta Especial', stock: 12, minimo: 15 },
-  ]);
-  const [suministros, setSuministros] = useState([
-    { id: 1, nombre: 'Jeringas 5ml', stock: 60, minimo: 30, precio: 4 },
-    { id: 2, nombre: 'Guantes Nitrilo', stock: 90, minimo: 50, precio: 2.5 },
-    { id: 3, nombre: 'Algodón 250g', stock: 12, minimo: 20, precio: 3 },
-  ]);
+  // Custom Hooks
+  const { inventory, loading, error, setInventory } = useInventory();
 
-  /* forms state */
-  const [medicamentoForm, setMedicamentoForm] = useState({
-    nombre: '',
-    categoria: '',
-    stock: '',
-    minimo: '',
-    precio: '',
-    caducidad: '',
-    ubicacion: '',
-  });
-  const [recetaForm, setRecetaForm] = useState({ tipo: '', stock: '', minimo: '' });
-  const [suministroForm, setSuministroForm] = useState({
-    nombre: '',
-    stock: '',
-    minimo: '',
-    precio: '',
-  });
-
-  /* derived */
-  const valorTotalMedicamentos = useMemo(
-    () => medicamentos.reduce((sum, m) => sum + m.stock * m.precio, 0),
-    [medicamentos]
-  );
-  const valorTotalSuministros = useMemo(
-    () => suministros.reduce((sum, s) => sum + s.stock * s.precio, 0),
-    [suministros]
+  // Filtered Meds
+  const medicamentos = useMemo(
+    () => inventory.filter((i) => i.product?.type === 'medicamento'),
+    [inventory]
   );
 
-  /* derived */
+  // Filtered Prescriptions
+  const recetas = useMemo(() => inventory.filter((i) => i.product?.type === 'receta'), [inventory]);
+
+  // Filtered Supplies
+  const suministros = useMemo(
+    () => inventory.filter((i) => i.product?.type === 'suministro'),
+    [inventory]
+  );
+
+  // Search Meds
   const filteredMedicamentos = useMemo(() => {
     const q = searchTerm.toLowerCase();
     return medicamentos.filter(
       (m) =>
-        m.nombre.toLowerCase().includes(q) ||
-        m.categoria.toLowerCase().includes(q) ||
-        m.ubicacion.toLowerCase().includes(q)
+        m.product.name.toLowerCase().includes(q) || m.product.category.toLowerCase().includes(q)
     );
   }, [medicamentos, searchTerm]);
 
-  /* derived */
+  // Search Prescriptions
   const filteredRecetas = useMemo(() => {
     const q = searchTerm.toLowerCase();
-    return recetas.filter((r) => r.tipo.toLowerCase().includes(q));
+    return recetas.filter((r) => r.product.name.toLowerCase().includes(q));
   }, [recetas, searchTerm]);
 
-  /* derived */
+  // Search Supplies
   const filteredSuministros = useMemo(() => {
     const q = searchTerm.toLowerCase();
-    return suministros.filter((s) => s.nombre.toLowerCase().includes(q));
+    return suministros.filter((s) => s.product.name.toLowerCase().includes(q));
   }, [suministros, searchTerm]);
 
-  /* actions */
+  // Actions
   const openAddModal = () => {
     setEditingItem(null);
-    if (activeTab === 'medicamentos')
-      setMedicamentoForm({
-        nombre: '',
-        categoria: '',
-        stock: '',
-        minimo: '',
-        precio: '',
-        caducidad: '',
-        ubicacion: '',
-      });
-    if (activeTab === 'recetas') setRecetaForm({ tipo: '', stock: '', minimo: '' });
-    if (activeTab === 'suministros')
-      setSuministroForm({ nombre: '', stock: '', minimo: '', precio: '' });
     setShowModal(true);
   };
 
-  /* actions */
   const openEditModal = (item) => {
     setEditingItem(item);
-    if (activeTab === 'medicamentos') {
-      setMedicamentoForm({
-        nombre: item.nombre,
-        categoria: item.categoria,
-        stock: String(item.stock),
-        minimo: String(item.minimo),
-        precio: String(item.precio),
-        caducidad: item.caducidad,
-        ubicacion: item.ubicacion,
-      });
-    } else if (activeTab === 'recetas') {
-      setRecetaForm({ tipo: item.tipo, stock: String(item.stock), minimo: String(item.minimo) });
-    } else {
-      setSuministroForm({
-        nombre: item.nombre,
-        stock: String(item.stock),
-        minimo: String(item.minimo),
-        precio: String(item.precio),
-      });
-    }
     setShowModal(true);
   };
 
-  /* actions */
-  const handleSave = (e) => {
-    e.preventDefault();
-    if (activeTab === 'medicamentos') {
-      const payload = {
-        id: editingItem ? editingItem.id : Date.now(),
-        nombre: medicamentoForm.nombre.trim(),
-        categoria: medicamentoForm.categoria.trim(),
-        stock: Number(medicamentoForm.stock),
-        minimo: Number(medicamentoForm.minimo),
-        precio: Number(medicamentoForm.precio),
-        caducidad: medicamentoForm.caducidad,
-        ubicacion: medicamentoForm.ubicacion.trim(),
-      };
-      setMedicamentos((prev) =>
-        editingItem ? prev.map((m) => (m.id === editingItem.id ? payload : m)) : [...prev, payload]
-      );
-    } else if (activeTab === 'recetas') {
-      const payload = {
-        id: editingItem ? editingItem.id : Date.now(),
-        tipo: recetaForm.tipo.trim(),
-        stock: Number(recetaForm.stock),
-        minimo: Number(recetaForm.minimo),
-      };
-      setRecetas((prev) =>
-        editingItem ? prev.map((r) => (r.id === editingItem.id ? payload : r)) : [...prev, payload]
-      );
-    } else {
-      const payload = {
-        id: editingItem ? editingItem.id : Date.now(),
-        nombre: suministroForm.nombre.trim(),
-        stock: Number(suministroForm.stock),
-        minimo: Number(suministroForm.minimo),
-        precio: Number(suministroForm.precio),
-      };
-      setSuministros((prev) =>
-        editingItem ? prev.map((s) => (s.id === editingItem.id ? payload : s)) : [...prev, payload]
-      );
-    }
-    setShowModal(false);
-    setEditingItem(null);
-  };
-
-  /* actions */
   const requestDelete = (item) => {
     setItemToDelete(item);
     setShowDeleteModal(true);
   };
 
-  /* actions */
-  const confirmDelete = () => {
+  const confirmDelete = async () => {
     if (!itemToDelete) return;
-    if (activeTab === 'medicamentos')
-      setMedicamentos((prev) => prev.filter((m) => m.id !== itemToDelete.id));
-    if (activeTab === 'recetas') setRecetas((prev) => prev.filter((r) => r.id !== itemToDelete.id));
-    if (activeTab === 'suministros')
-      setSuministros((prev) => prev.filter((s) => s.id !== itemToDelete.id));
-    setShowDeleteModal(false);
-    setItemToDelete(null);
+    try {
+      await fetch(`/api/inventory/${itemToDelete._id}`, { method: 'DELETE' });
+      setInventory((prev) => prev.filter((i) => i._id !== itemToDelete._id));
+    } catch (err) {
+      console.error('Error eliminando item:', err);
+    } finally {
+      setShowDeleteModal(false);
+      setItemToDelete(null);
+    }
   };
 
-  /* derived */
-  const inventarioAlertas = useMemo(() => {
-    const meds = medicamentos
-      .filter((m) => m.stock < m.minimo)
-      .map((m) => ({ tipo: 'medicamento', nombre: m.nombre, stock: m.stock, minimo: m.minimo }));
-    const recs = recetas
-      .filter((r) => r.stock < r.minimo)
-      .map((r) => ({ tipo: 'receta', nombre: r.tipo, stock: r.stock, minimo: r.minimo }));
-    const sums = suministros
-      .filter((s) => s.stock < s.minimo)
-      .map((s) => ({ tipo: 'suministro', nombre: s.nombre, stock: s.stock, minimo: s.minimo }));
-    return [...meds, ...recs, ...sums];
-  }, [medicamentos, recetas, suministros]);
+  if (loading) {
+    return (
+      <div className="flex h-full items-center justify-center">
+        <p className="text-gray-500">Cargando inventario...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="h-full space-y-6 overflow-x-hidden overflow-y-auto">
-      {/* header */}
-      <GeneralSectionHeader
+      {/* Header */}
+      <SharedSectionHeader
         role={role}
         Icon="inventory"
         title="Gestión de Inventario"
         subtitle="Control de medicamentos, recetas y suministros"
       />
 
-      {/* tabs and actions */}
+      {/* Tabs & Actions */}
       <div className="rounded-xl border border-gray-200 bg-white shadow-sm">
-        <TabsBar
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}
-          icons={{ Package, Pill, FileText, Syringe }}
-        />
-        <SearchAddBar
-          searchTerm={searchTerm}
-          setSearchTerm={setSearchTerm}
-          onAdd={openAddModal}
-          icons={{ Search, Plus, Download }}
-        />
+        <TabsBar activeTab={activeTab} setActiveTab={setActiveTab} />
+        <SearchAddBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} onAdd={openAddModal} />
       </div>
 
-      {/* stats */}
-      <StatsBar
-        valorTotalMedicamentos={valorTotalMedicamentos}
-        valorTotalSuministros={valorTotalSuministros}
-        counts={{ meds: medicamentos.length, recs: recetas.length, sums: suministros.length }}
-      />
+      {/* Stats */}
+      <StatsBar medicamentos={medicamentos} suministros={suministros} recetas={recetas} />
 
-      {/* content */}
+      {/* Content */}
       <div className="rounded-xl border border-gray-200 bg-white shadow-sm">
         {activeTab === 'medicamentos' && (
           <MedicamentosTable
             rows={filteredMedicamentos}
             getStockStatus={getStockStatus}
             getCaducidadStatus={getCaducidadStatus}
-            icons={{ Edit2, Trash2 }}
             onEdit={openEditModal}
             onDelete={requestDelete}
           />
@@ -324,7 +137,6 @@ export default function SharedInventory({ role }) {
           <RecetasGrid
             rows={filteredRecetas}
             getStockStatus={getStockStatus}
-            icons={{ Edit2, Trash2 }}
             onEdit={openEditModal}
             onDelete={requestDelete}
           />
@@ -334,7 +146,6 @@ export default function SharedInventory({ role }) {
           <SuministrosTable
             rows={filteredSuministros}
             getStockStatus={getStockStatus}
-            icons={{ Edit2, Trash2 }}
             onEdit={openEditModal}
             onDelete={requestDelete}
           />
@@ -342,24 +153,17 @@ export default function SharedInventory({ role }) {
       </div>
 
       {/* Inventory Alerts */}
-      <GeneralInventoryAlerts role={role} />
+      <SharedInventoryAlerts role={role} inventory={inventory} />
 
-      {/* modals */}
+      {/* Modals */}
       {showModal && !editingItem && (
         <AddProductModal
           activeTab={activeTab}
           onClose={() => setShowModal(false)}
           onSubmit={(payload) => {
-            if (activeTab === 'medicamentos') {
-              setMedicamentos((prev) => [...prev, payload]);
-            } else if (activeTab === 'recetas') {
-              setRecetas((prev) => [...prev, payload]);
-            } else {
-              setSuministros((prev) => [...prev, payload]);
-            }
+            setInventory((prev) => [...prev, payload]);
             setShowModal(false);
           }}
-          icons={{ X }}
         />
       )}
 
@@ -372,17 +176,10 @@ export default function SharedInventory({ role }) {
             setEditingItem(null);
           }}
           onSubmit={(payload) => {
-            if (activeTab === 'medicamentos') {
-              setMedicamentos((prev) => prev.map((m) => (m.id === payload.id ? payload : m)));
-            } else if (activeTab === 'recetas') {
-              setRecetas((prev) => prev.map((r) => (r.id === payload.id ? payload : r)));
-            } else {
-              setSuministros((prev) => prev.map((s) => (s.id === payload.id ? payload : s)));
-            }
+            setInventory((prev) => prev.map((i) => (i._id === payload._id ? payload : i)));
             setShowModal(false);
             setEditingItem(null);
           }}
-          icons={{ X }}
         />
       )}
 

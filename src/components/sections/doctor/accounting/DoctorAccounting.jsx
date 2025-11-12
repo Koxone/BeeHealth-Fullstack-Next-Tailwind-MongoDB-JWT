@@ -7,7 +7,7 @@ import MetricsGrid from './components/MetricsGrid';
 import WeeklyIncomeChart from './components/WeeklyIncomeChart';
 import DistributionCard from './components/DistributionCard';
 import MedicamentosTable from '../../../shared/medsSale/MedicamentosTable';
-import GeneralSectionHeader from '@/components/shared/sections/GeneralSectionHeader';
+import SharedSectionHeader from '@/components/shared/sections/SharedSectionHeader';
 import TodayConsultsTable from '@/components/shared/todayConsults/TodayConsultsTable';
 
 /* Demo data */
@@ -68,7 +68,7 @@ export default function DoctorAccounting({ role }) {
   return (
     <div className="h-full space-y-4 overflow-y-auto md:space-y-6">
       {/* Header */}
-      <GeneralSectionHeader
+      <SharedSectionHeader
         Icon="accounting"
         role={role}
         title="Mis Finanzas"
