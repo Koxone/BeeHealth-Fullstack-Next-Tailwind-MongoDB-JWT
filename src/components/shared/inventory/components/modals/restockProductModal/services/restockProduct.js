@@ -6,6 +6,7 @@ export async function restockProduct({ inventoryId, quantity, reason }) {
     const res = await fetch('/api/inventory/restock', {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
       body: JSON.stringify({ inventoryId, quantity, reason }),
     });
 

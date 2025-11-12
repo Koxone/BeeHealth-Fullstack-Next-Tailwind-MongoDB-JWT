@@ -1,8 +1,11 @@
 import { connectDB } from '@/lib/mongodb';
 import { NextResponse } from 'next/server';
+import jwt from 'jsonwebtoken';
 import Product from '@/models/Product';
 import Transaction from '@/models/Transaction';
 import Inventory from '@/models/Inventory';
+import mongoose from 'mongoose';
+import { cookies } from 'next/headers';
 
 // @route    PATCH /api/inventory/restock
 // @desc     Restock an inventory item
@@ -15,7 +18,7 @@ export async function PATCH(req) {
     const body = await req.json();
 
     // Validate input
-    const { inventoryId, quantity, reason } = body;
+    const { inventoryId, quantity, reason, performedBy } = body;
     const parsedQuantity = Number(quantity);
 
     if (!inventoryId || isNaN(parsedQuantity) || parsedQuantity <= 0) {
@@ -24,6 +27,26 @@ export async function PATCH(req) {
         { status: 400 }
       );
     }
+
+    // Get token from cookies or Authorization header
+    const refreshToken = req.cookies?.get('refreshToken')?.value || null;
+    const authHeader = req.headers.get('authorization');
+    const bearerToken = authHeader?.startsWith('Bearer ') ? authHeader.split(' ')[1] : null;
+    const token = bearerToken || refreshToken;
+
+    if (!token) {
+      return NextResponse.json({ error: 'No autorizado. Token ausente.' }, { status: 401 });
+    }
+
+    // Verify token
+    let decoded;
+    try {
+      decoded = jwt.verify(token, process.env.JWT_SECRET);
+    } catch (err) {
+      return NextResponse.json({ error: 'Token inválido o expirado.' }, { status: 401 });
+    }
+
+    const userId = decoded.id;
 
     // Find inventory item
     const inventoryItem = await Inventory.findById(inventoryId);
@@ -39,6 +62,7 @@ export async function PATCH(req) {
       inventory: inventoryItem._id,
       movement: 'IN',
       reasonType: 'restock',
+      performedBy: new mongoose.Types.ObjectId(userId),
       quantity: parsedQuantity,
       reason: reason || 'Reabastecimiento de inventario',
     });
@@ -48,7 +72,7 @@ export async function PATCH(req) {
       {
         success: true,
         message: 'Stock actualizado correctamente',
-        inventory: inventoryItem, 
+        inventory: inventoryItem,
         transaction: newTransaction,
       },
       { status: 200 }
