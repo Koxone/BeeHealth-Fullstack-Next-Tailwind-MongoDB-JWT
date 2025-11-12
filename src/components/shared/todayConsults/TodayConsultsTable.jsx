@@ -4,8 +4,12 @@ import SearchAddBar from './SearchAddBar';
 import ConsultationsTable from './ConsultationsTable';
 import ConsultationsMobile from './ConsultationsMobile';
 import EmptyState from './EmptyState';
-import AddEditTodaysConsultModal from './AddEditTodaysConsultModal';
-import DeleteTodaysConsultModal from '@/components/shared/todayConsults/DeleteTodaysConsultModal';
+import EmployeeDeleteConsultModal from '@/components/sections/employee/consultations/components/modals/employeeDeleteConsultModal/EmployeeDeleteConsultModal';
+
+// Modals
+import EmployeeCreateConsultModal from '@/components/sections/employee/consultations/components/modals/employeeCreateConsultModal/EmployeeCreateConsultModal';
+import EmployeeEditConsultModal from '@/components/sections/employee/consultations/components/modals/employeeEditConsultModal/EmployeeEditConsultModal';
+
 import {
   Search,
   Plus,
@@ -23,9 +27,18 @@ import {
   AlertCircle,
 } from 'lucide-react';
 
+/* Helper date */
+function todayISO() {
+  const d = new Date();
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth() + 1).padStart(2, '0');
+  const dd = String(d.getDate()).padStart(2, '0');
+  return `${yyyy}-${mm}-${dd}`;
+}
+
 /* Autonomous component with full logic and modals */
 export default function TodayConsultsTable() {
-  // Data state
+  /* Data state */
   const [consultas, setConsultas] = useState([
     {
       id: 1,
@@ -79,24 +92,14 @@ export default function TodayConsultsTable() {
     },
   ]);
 
-  // UI state
+  /* UI state */
   const [searchTerm, setSearchTerm] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [editingItem, setEditingItem] = useState(null);
   const [itemToDelete, setItemToDelete] = useState(null);
 
-  // Form state
-  const [consultaForm, setConsultaForm] = useState({
-    fecha: '',
-    hora: '',
-    paciente: '',
-    tipo: '',
-    costo: '',
-    pagado: true,
-  });
-
-  // Derived values
+  /* Derived values */
   const filteredConsultas = useMemo(
     () => consultas.filter((c) => c.paciente.toLowerCase().includes(searchTerm.toLowerCase())),
     [consultas, searchTerm]
@@ -104,65 +107,66 @@ export default function TodayConsultsTable() {
 
   const totalIngresos = useMemo(() => consultas.reduce((acc, c) => acc + c.costo, 0), [consultas]);
 
-  // Handlers
+  /* Open create */
   const openCreate = () => {
     setEditingItem(null);
-    setConsultaForm({
-      fecha: '',
-      hora: '',
-      paciente: '',
-      tipo: '',
-      costo: '',
-      pagado: true,
-    });
     setShowModal(true);
   };
 
+  /* Open edit */
   const openEdit = (item) => {
     setEditingItem(item);
-    setConsultaForm({
-      fecha: item.fecha,
-      hora: item.hora,
-      paciente: item.paciente,
-      tipo: item.tipo,
-      costo: String(item.costo),
-      pagado: item.pagado,
-    });
     setShowModal(true);
   };
 
+  /* Ask delete */
   const askDelete = (item) => {
     setItemToDelete(item);
     setShowDeleteModal(true);
   };
 
-  const handleSave = (e) => {
-    e.preventDefault();
+  /* Handle create */
+  const handleCreate = (form) => {
     const payload = {
-      id: editingItem ? editingItem.id : Date.now(),
-      ...consultaForm,
-      costo: parseFloat(consultaForm.costo),
-      avatar: consultaForm.paciente
+      id: Date.now(),
+      fecha: todayISO(),
+      hora: form.hora,
+      paciente: form.paciente,
+      tipo: form.tipo,
+      costo: parseFloat(form.costo),
+      pagado: form.pagado,
+      avatar: form.paciente
         .split(' ')
         .map((n) => n[0])
         .join('')
         .toUpperCase(),
     };
-    setConsultas((prev) =>
-      editingItem ? prev.map((c) => (c.id === editingItem.id ? payload : c)) : [...prev, payload]
-    );
+    setConsultas((prev) => [...prev, payload]);
     setShowModal(false);
-    setEditingItem(null);
-    setConsultaForm({
-      fecha: '',
-      hora: '',
-      paciente: '',
-      tipo: '',
-      costo: '',
-      pagado: true,
-    });
   };
 
+  /* Handle update */
+  const handleUpdate = (form) => {
+    if (!editingItem) return;
+    const updated = {
+      ...editingItem,
+      hora: form.hora,
+      paciente: form.paciente,
+      tipo: form.tipo,
+      costo: parseFloat(form.costo),
+      pagado: form.pagado,
+      avatar: form.paciente
+        .split(' ')
+        .map((n) => n[0])
+        .join('')
+        .toUpperCase(),
+    };
+    setConsultas((prev) => prev.map((c) => (c.id === editingItem.id ? updated : c)));
+    setShowModal(false);
+    setEditingItem(null);
+  };
+
+  /* Handle delete */
   const handleDelete = () => {
     if (!itemToDelete) return;
     setConsultas((prev) => prev.filter((c) => c.id !== itemToDelete.id));
@@ -215,20 +219,20 @@ export default function TodayConsultsTable() {
       </div>
 
       {/* Modals */}
-      {showModal && (
-        <AddEditTodaysConsultModal
-          type="consulta"
+      {showModal && !editingItem && (
+        <EmployeeCreateConsultModal onClose={() => setShowModal(false)} onCreate={handleCreate} />
+      )}
+
+      {showModal && editingItem && (
+        <EmployeeEditConsultModal
           editingItem={editingItem}
-          form={consultaForm}
-          setForm={setConsultaForm}
           onClose={() => setShowModal(false)}
-          onSubmit={handleSave}
-          icons={{ X, Edit2, Plus, Calendar, Clock, Users, FileText, DollarSign, CreditCard }}
+          onUpdate={handleUpdate}
         />
       )}
 
       {showDeleteModal && itemToDelete && (
-        <DeleteTodaysConsultModal
+        <EmployeeDeleteConsultModal
           item={itemToDelete}
           onClose={() => setShowDeleteModal(false)}
           onConfirm={handleDelete}
