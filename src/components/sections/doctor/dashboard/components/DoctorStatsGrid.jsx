@@ -41,9 +41,9 @@ export default function DoctorStatsGrid({ role }) {
         {
           Icon: AlertTriangle,
           mainData: totalAlerts,
-          extraData: 'Revisar',
+          extraData: totalAlerts === 0 ? 'Sin alertas' : 'Revisar',
           title: 'Alertas de Inventario',
-          variant: 'danger',
+          variant: totalAlerts === 0 ? 'success' : 'danger',
           href: '/doctor/inventory',
         },
       ].map((card, index) => (
