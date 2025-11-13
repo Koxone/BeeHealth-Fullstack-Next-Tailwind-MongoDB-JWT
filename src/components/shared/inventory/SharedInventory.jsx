@@ -4,15 +4,20 @@ import { useState, useMemo } from 'react';
 import TabsBar from './components/TabsBar';
 import SearchAddBar from './components/SearchAddBar';
 import StatsBar from './components/StatsBar';
-import MedicamentosTable from './components/MedicamentosTable';
-import RecetasGrid from './components/RecetasGrid';
-import SuministrosTable from './components/SuministrosTable';
 import SharedSectionHeader from '@/components/shared/sections/SharedSectionHeader';
 import SharedInventoryAlerts from '@/components/shared/dashboard/InventoryAlerts/SharedInventoryAlerts';
+
+// Helpers
 import { getStockStatus, getCaducidadStatus } from './utils/helpers';
+
+// Tables
+import MedicamentosTable from './components/MedicamentosTable';
+import SuministrosTable from './components/SuministrosTable';
+import RecetasGrid from './components/RecetasGrid';
 
 // Custom Hooks
 import { useGetFullInventory } from '@/hooks/useGetFullInventory';
+import { toggleProductStatus } from './components/modals/toggleProductModal/services/toggleProductStatus';
 
 // Modals
 import RestockProductModal from './components/modals/restockProductModal/RestockProductModal';
@@ -67,32 +72,23 @@ export default function SharedInventory({ role, showButton = true }) {
     setShowHistoryModal(true);
   };
 
+  // Confirm Toggle Product Status Handler
   const confirmToggle = async () => {
     if (!itemToToggle) return;
 
     try {
-      const res = await fetch('/api/inventory/toggle', {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-        body: JSON.stringify({
-          inventoryId: itemToToggle._id,
-          inStock: !itemToToggle.product.inStock,
-        }),
+      const data = await toggleProductStatus({
+        inventoryId: itemToToggle._id,
+        inStock: !itemToToggle.product.inStock,
       });
 
-      const data = await res.json();
-      if (res.ok) {
-        setInventory((prev) =>
-          prev.map((i) =>
-            i._id === data.inventory._id
-              ? { ...i, product: { ...i.product, inStock: data.inventory.product.inStock } }
-              : i
-          )
-        );
-      } else {
-        console.error('Error toggling item:', data.error);
-      }
+      setInventory((prev) =>
+        prev.map((i) =>
+          i._id === data.inventory._id
+            ? { ...i, product: { ...i.product, inStock: data.inventory.product.inStock } }
+            : i
+        )
+      );
     } catch (err) {
       console.error('Error toggling item:', err);
     } finally {

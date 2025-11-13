@@ -94,11 +94,11 @@ export default function MedicamentosTable({ rows, getStockStatus, onEdit, onDele
                               }`}
                             ></span>
                             <span
-                              className={`relative inline-flex h-2 w-2 rounded-full ${
+                              className={`relative inline-flex h-2 w-2 animate-pulse rounded-full ${
                                 stockStatus.color === 'text-red-700'
                                   ? 'bg-red-500'
                                   : stockStatus.color === 'text-yellow-700'
-                                    ? 'bg-yellow-500'
+                                    ? 'bg-yellow-600'
                                     : 'bg-green-500'
                               }`}
                             ></span>

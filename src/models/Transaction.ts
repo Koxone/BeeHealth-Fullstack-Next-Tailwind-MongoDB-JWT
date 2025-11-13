@@ -2,9 +2,9 @@ import mongoose, { Document, Model, Schema } from 'mongoose';
 
 interface ITransaction extends Document {
   inventory: mongoose.Types.ObjectId;
-  movement: 'IN' | 'OUT';
-  reasonType: 'initial' | 'sale' | 'restock' | 'correction';
-  quantity: number;
+  movement?: 'IN' | 'OUT';
+  reasonType: 'initial' | 'sale' | 'restock' | 'correction' | 'status_change';
+  quantity?: number;
   reason?: string;
   performedBy: mongoose.Types.ObjectId;
   patient?: mongoose.Types.ObjectId;
@@ -15,13 +15,13 @@ interface ITransaction extends Document {
 const TransactionSchema = new Schema<ITransaction>(
   {
     inventory: { type: Schema.Types.ObjectId, ref: 'Inventory', required: true },
-    movement: { type: String, enum: ['IN', 'OUT'], required: true },
+    movement: { type: String, enum: ['IN', 'OUT'], required: false },
     reasonType: {
       type: String,
-      enum: ['initial', 'sale', 'restock', 'correction'],
+      enum: ['initial', 'sale', 'restock', 'correction', 'status_change'],
       required: true,
     },
-    quantity: { type: Number, required: true },
+    quantity: { type: Number, required: false },
     reason: { type: String, trim: true },
     performedBy: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     patient: { type: Schema.Types.ObjectId, ref: 'User' },

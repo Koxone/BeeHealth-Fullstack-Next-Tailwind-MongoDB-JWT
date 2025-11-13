@@ -92,7 +92,7 @@ export default function SuministrosTable({ rows, getStockStatus, onEdit, onDelet
                               }`}
                             ></span>
                             <span
-                              className={`relative inline-flex h-2 w-2 rounded-full ${
+                              className={`relative animate-pulse inline-flex h-2 w-2 rounded-full ${
                                 stockStatus.color === 'text-red-700'
                                   ? 'bg-red-500'
                                   : stockStatus.color === 'text-yellow-700'

@@ -19,7 +19,7 @@ export default function ActionButtons({ item, onEdit, onDelete, onHistory }) {
       <button
         onClick={() => onDelete(item)}
         className={`group/btn relative rounded-lg p-2 transition-all duration-200 hover:shadow-md active:scale-95 ${
-          item?.product?.inStock ? 'bg-green-300 hover:bg-green-500' : 'bg-red-50 hover:bg-red-100'
+          item?.product?.inStock ? 'bg-green-300 hover:bg-green-500' : 'bg-red-100 hover:bg-red-100'
         }`}
         title={item?.product?.inStock ? 'Desactivar producto' : 'Reactivar producto'}
       >
