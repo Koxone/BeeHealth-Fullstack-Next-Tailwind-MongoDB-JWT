@@ -17,7 +17,7 @@ export default function StatsBar({ inventory }) {
 
   // Calculations
   const valorTotalMedicamentos = useMemo(
-    () => medicamentos.reduce((sum, m) => sum + m.quantity * (m.product?.salePrice || 0), 0),
+    () => medicamentos.reduce((sum, m) => sum + m.quantity * (m.product?.costPrice || 0), 0),
     [medicamentos]
   );
 
@@ -25,6 +25,8 @@ export default function StatsBar({ inventory }) {
     () => suministros.reduce((sum, s) => sum + s.quantity * (s.product?.costPrice || 0), 0),
     [suministros]
   );
+
+  console.log(medicamentos);
 
   const counts = {
     meds: medicamentos.length,
@@ -66,7 +68,7 @@ export default function StatsBar({ inventory }) {
           className="animate-[fadeIn_.25s_ease-out] rounded-2xl border-2 border-gray-200 bg-white p-4 shadow-sm"
         >
           <div
-            className={`mb-2 inline-block rounded-lg bg-medtrack-blue-solid px-2 py-1 text-xs font-bold text-white`}
+            className={`bg-medtrack-blue-solid mb-2 inline-block rounded-lg px-2 py-1 text-xs font-bold text-white`}
           >
             {s.label}
           </div>

@@ -60,7 +60,9 @@ export default function RecetasTable({ rows, getStockStatus, onEdit, onDelete, o
                     <td className="px-4 py-4">
                       <div className="flex items-center gap-3">
                         <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-purple-50 transition-transform duration-200 group-hover:scale-110">
-                          <span className="text-lg text-purple-600">💊</span>
+                          <span className="bg-medtrack-blue-solid/40 rounded-md text-lg text-purple-600">
+                            📄
+                          </span>
                         </div>
                         <div className="min-w-0">
                           <p className="truncate text-sm font-semibold text-gray-900">
