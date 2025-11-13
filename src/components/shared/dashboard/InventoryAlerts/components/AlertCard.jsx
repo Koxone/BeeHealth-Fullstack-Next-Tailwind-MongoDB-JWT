@@ -25,12 +25,11 @@ function AlertCard({ item }) {
         border: 'border-amber-300',
       };
     }
-    return null; // Si está bien, no renderizar
+    return null;
   };
 
   const status = getStatus();
 
-  // Si no hay alerta, no renderizar nada
   if (!status) return null;
 
   const Icon = status.icon;
@@ -55,7 +54,13 @@ function AlertCard({ item }) {
             <div className="mb-1 flex items-center gap-2">
               <p className="truncate text-sm font-bold text-gray-900">{item?.product?.name}</p>
               <span
-                className={`animate-pulse rounded-full bg-${status.color}-600 px-2 py-0.5 text-xs font-bold text-white`}
+                className={`animate-pulse rounded-full px-2 py-0.5 text-xs font-bold ${
+                  status.color === 'rose'
+                    ? 'bg-rose-600 text-rose-100'
+                    : status.color === 'amber'
+                      ? 'bg-amber-500 text-amber-50'
+                      : 'bg-gray-500 text-gray-100'
+                }`}
               >
                 {status.label}
               </span>
