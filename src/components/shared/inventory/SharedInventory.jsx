@@ -22,7 +22,7 @@ import DeleteProductModal from './components/modals/deleteProductModal/DeletePro
 import ToggleProductModal from './components/modals/toggleProductModal/ToggleProductModal';
 import TransactionHistoryModal from './components/modals/transactionHistoryModal/TransactionHistoryModal';
 
-export default function SharedInventory({ role }) {
+export default function SharedInventory({ role, showButton = true }) {
   // Fetch Full Inventory Items
   const { inventory, loading, setInventory } = useGetFullInventory();
 
@@ -191,7 +191,7 @@ export default function SharedInventory({ role }) {
       </div>
 
       {/* Inventory Alerts */}
-      <SharedInventoryAlerts role={role} inventory={inventory} />
+      <SharedInventoryAlerts role={role} inventory={inventory} showButton={showButton} />
 
       {/* Create New Product Modal */}
       {showModal && !editingItem && (
