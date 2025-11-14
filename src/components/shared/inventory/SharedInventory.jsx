@@ -11,9 +11,9 @@ import SharedInventoryAlerts from '@/components/shared/dashboard/InventoryAlerts
 import { getStockStatus, getCaducidadStatus } from './utils/helpers';
 
 // Tables
-import MedicamentosTable from './components/MedicamentosTable';
-import SuministrosTable from './components/SuministrosTable';
-import RecetasGrid from './components/RecetasGrid';
+import MedsTable from './components/MedsTable';
+import SuppliesTable from './components/SuppliesTable';
+import RecetasGrid from './components/PrescriptionsTable';
 
 // Custom Hooks
 import { useGetFullInventory } from '@/hooks/useGetFullInventory';
@@ -155,7 +155,7 @@ export default function SharedInventory({ role, showButton = true }) {
       {/* Content */}
       <div className="rounded-xl border border-gray-200 bg-white shadow-sm">
         {activeTab === 'medicamentos' && (
-          <MedicamentosTable
+          <MedsTable
             rows={filteredItems}
             getStockStatus={getStockStatus}
             getCaducidadStatus={getCaducidadStatus}
@@ -176,7 +176,7 @@ export default function SharedInventory({ role, showButton = true }) {
         )}
 
         {activeTab === 'suministros' && (
-          <SuministrosTable
+          <SuppliesTable
             rows={filteredItems}
             getStockStatus={getStockStatus}
             onEdit={openEditModal}
