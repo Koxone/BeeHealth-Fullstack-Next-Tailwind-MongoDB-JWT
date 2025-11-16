@@ -27,8 +27,8 @@ interface IConsultation extends Document {
 
   date: Date;
   time: string;
-  
-  transactions: (mongoose.Types.ObjectId | ITransaction)[];
+
+  transaction: (mongoose.Types.ObjectId | ITransaction)[];
   notes?: string;
   createdAt?: Date;
   updatedAt?: Date;

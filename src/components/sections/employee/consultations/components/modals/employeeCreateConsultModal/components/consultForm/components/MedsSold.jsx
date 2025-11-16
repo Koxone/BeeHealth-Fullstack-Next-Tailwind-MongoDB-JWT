@@ -19,7 +19,7 @@ export default function MedsSold({ form, setForm }) {
   useEffect(() => {
     setForm({ ...form, itemsSold: selected });
   }, [selected]);
-  
+  console.log(selected)
   return (
     <div className="space-y-3">
       {/* Checkbox */}

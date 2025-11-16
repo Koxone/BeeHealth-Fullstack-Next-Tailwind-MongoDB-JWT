@@ -29,7 +29,7 @@ export default function EmployeeCreateConsultModal({ onClose, onCreate }) {
     date: getCurrentDate(),
     time: getCurrentTime(),
     itemsSold: [],
-    transactions: [],
+    transaction: [],
     notes: '',
   });
 

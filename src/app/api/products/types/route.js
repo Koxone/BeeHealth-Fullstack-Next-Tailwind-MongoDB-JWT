@@ -11,7 +11,9 @@ export async function POST(req) {
   try {
     await connectDB();
 
-    const products = await Product.find({ type: 'medicamento' }).lean();
+    const products = await Product.find({ type: 'medicamento' })
+      .populate({ path: 'inventory', select: '_id quantity' })
+      .lean();
 
     return NextResponse.json({ products }, { status: 200 });
   } catch (error) {

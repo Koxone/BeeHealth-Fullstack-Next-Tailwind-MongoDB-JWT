@@ -11,10 +11,10 @@ const handleSelect = (medId, meds, selected, setSelected) => {
     {
       name: med.name,
       product: med._id,
-      inventory: med.inventory,
+      inventory: med.inventory?._id || null,
       quantity: 1,
       price: med.salePrice,
-      total: med.salePrice * 1,
+      total: med.salePrice,
     },
   ]);
 };

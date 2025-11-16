@@ -10,7 +10,7 @@ export default function ConsultationForm({ form, setForm }) {
 
   // Calculate totals
   const medsTotal = Array.isArray(form.itemsSold)
-    ? form.itemsSold.reduce((acc, item) => acc + item.quantity * (item.salePrice || 0), 0)
+    ? form.itemsSold.reduce((acc, item) => acc + item.total, 0)
     : 0;
   const grandTotal = {
     consultPrice: form.consultPrice ? parseFloat(form.consultPrice) : 0,
@@ -19,9 +19,9 @@ export default function ConsultationForm({ form, setForm }) {
 
   useEffect(() => {
     // Subtotal meds
-    const medsTotal = Array.isArray(form.itemsSold)
-      ? form.itemsSold.reduce((acc, item) => acc + item.quantity * (item.salePrice || 0), 0)
-      : 0;
+   const medsTotal = Array.isArray(form.itemsSold)
+  ? form.itemsSold.reduce((acc, item) => acc + item.quantity * item.price, 0)
+  : 0;
 
     const consultPrice = form.consultPrice ? parseFloat(form.consultPrice) : 0;
 
