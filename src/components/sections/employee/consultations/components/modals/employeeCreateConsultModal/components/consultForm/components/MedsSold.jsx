@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Pill } from 'lucide-react';
 import { useGetMeds } from '@/hooks/useGetMeds';
-import { handleSelect, handleQuantity, handleRemove } from './utils/helpers';
+import { handleSelect, handleQuantity, handleRemove } from '../utils/helpers';
 
 export default function MedsSold({ form, setForm }) {
   // Get Patients list call
@@ -17,9 +17,9 @@ export default function MedsSold({ form, setForm }) {
 
   // Sync selected meds with parent form
   useEffect(() => {
-    setForm({ ...form, medsSold: selected });
+    setForm({ ...form, itemsSold: selected });
   }, [selected]);
-
+  
   return (
     <div className="space-y-3">
       {/* Checkbox */}
@@ -44,13 +44,13 @@ export default function MedsSold({ form, setForm }) {
           {/* Select */}
           <select
             value=""
-            onChange={(e) => handleSelect(e.target.value, selected, setSelected)}
+            onChange={(e) => handleSelect(e.target.value, meds, selected, setSelected)}
             className="w-full rounded-xl border-2 border-gray-200 px-4 py-3"
           >
             <option value="">Seleccionar</option>
 
             {meds.map((med) => (
-              <option key={med._id} value={med?.name}>
+              <option key={med._id} value={med?._id}>
                 {med?.name}
               </option>
             ))}
@@ -61,7 +61,7 @@ export default function MedsSold({ form, setForm }) {
             <div className="space-y-3">
               {selected.map((item) => (
                 <div
-                  key={item.name}
+                  key={item.product}
                   className="space-y-2 rounded-xl border border-gray-200 bg-gray-50 p-3"
                 >
                   {/* Row */}
@@ -70,7 +70,7 @@ export default function MedsSold({ form, setForm }) {
 
                     <button
                       type="button"
-                      onClick={() => handleRemove(item.name, selected, setSelected)}
+                      onClick={() => handleRemove(item.product, selected, setSelected)}
                       className="text-sm font-semibold text-red-600"
                     >
                       Quitar
@@ -85,7 +85,7 @@ export default function MedsSold({ form, setForm }) {
                       type="number"
                       min="1"
                       value={item.quantity}
-                      onChange={(e) => handleQuantity(item.name, e.target.value, setSelected)}
+                      onChange={(e) => handleQuantity(item.product, e.target.value, setSelected)}
                       className="w-full rounded-xl border-2 border-gray-200 px-3 py-2"
                     />
                   </div>

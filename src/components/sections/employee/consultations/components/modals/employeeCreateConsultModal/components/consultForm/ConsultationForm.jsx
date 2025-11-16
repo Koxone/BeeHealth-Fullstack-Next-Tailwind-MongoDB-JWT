@@ -1,26 +1,74 @@
 import { Clock, User, DollarSign, Notebook } from 'lucide-react';
-import AutocompleteMedicamentos from './components/medsSold/MedsSold';
+import MedsSold from './components/MedsSold';
 import { useGetAllPatients } from '@/hooks/useGetAllPatients';
+import { useEffect } from 'react';
 
 /* Form */
 export default function ConsultationForm({ form, setForm }) {
   // Get Patients list call
   const { patients, isLoading, error } = useGetAllPatients();
+
+  // Calculate totals
+  const medsTotal = Array.isArray(form.itemsSold)
+    ? form.itemsSold.reduce((acc, item) => acc + item.quantity * (item.salePrice || 0), 0)
+    : 0;
+  const grandTotal = {
+    consultPrice: form.consultPrice ? parseFloat(form.consultPrice) : 0,
+    medsTotal,
+  };
+
+  useEffect(() => {
+    // Subtotal meds
+    const medsTotal = Array.isArray(form.itemsSold)
+      ? form.itemsSold.reduce((acc, item) => acc + item.quantity * (item.salePrice || 0), 0)
+      : 0;
+
+    const consultPrice = form.consultPrice ? parseFloat(form.consultPrice) : 0;
+
+    const total = consultPrice + medsTotal;
+
+    // Update form
+    setForm({
+      ...form,
+      totalCost: total,
+      totalItemsSold: medsTotal,
+    });
+  }, [form.consultPrice, form.itemsSold]);
+
   return (
     <div className="space-y-5">
+      {/* Specialty */}
+      <div className="space-y-2">
+        <label className="text-sm font-semibold text-gray-700">Especialidad</label>
+
+        <select
+          required
+          value={form.speciality}
+          onChange={(e) =>
+            setForm({
+              ...form,
+              speciality: e.target.value,
+            })
+          }
+          className="w-full rounded-xl border-2 border-gray-200 px-4 py-3"
+        >
+          <option value="">Seleccionar</option>
+          <option value="weight">Control de Peso</option>
+          <option value="dental">Odontologia</option>
+        </select>
+      </div>
+
       {/* Consult Type */}
       <div className="space-y-2">
         <label className="text-sm font-semibold text-gray-700">Tipo de consulta</label>
-
-        {/* Helper text */}
         <p className="text-xs text-gray-500">
           Si es paciente de primera vez, priorizar crear su cuenta e historia clinica.
         </p>
 
         <select
           required
-          value={form.type}
-          onChange={(e) => setForm({ ...form, type: e.target.value })}
+          value={form.consultType}
+          onChange={(e) => setForm({ ...form, consultType: e.target.value })}
           className="w-full rounded-xl border-2 border-gray-200 px-4 py-3"
         >
           <option value="">Seleccionar</option>
@@ -36,11 +84,11 @@ export default function ConsultationForm({ form, setForm }) {
           Paciente
         </label>
 
-        {form.type === 'Primera Consulta' ? (
+        {form.consultType === 'Primera Consulta' ? (
           <input
             type="text"
             required
-            disabled={!form.type}
+            disabled={!form.consultType}
             value={form.patient}
             onChange={(e) => setForm({ ...form, patient: e.target.value })}
             placeholder="Nombre del paciente"
@@ -49,14 +97,13 @@ export default function ConsultationForm({ form, setForm }) {
         ) : (
           <select
             required
-            disabled={!form.type}
+            disabled={!form.consultType}
             value={form.patient}
             onChange={(e) => setForm({ ...form, patient: e.target.value })}
             className="w-full rounded-xl border-2 border-gray-200 px-4 py-3 disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-400"
           >
             <option value="">Seleccionar paciente</option>
 
-            {/* Ejemplo temporal */}
             {patients.map((patient) => (
               <option key={patient._id} value={patient.fullName}>
                 {patient.fullName}
@@ -66,7 +113,7 @@ export default function ConsultationForm({ form, setForm }) {
         )}
       </div>
 
-      {/* Costo */}
+      {/* Consult Price */}
       <div className="space-y-2">
         <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
           <DollarSign className="h-4 w-4 text-emerald-500" />
@@ -77,8 +124,8 @@ export default function ConsultationForm({ form, setForm }) {
           required
           min="0"
           step="0.01"
-          value={form.cost}
-          onChange={(e) => setForm({ ...form, cost: e.target.value })}
+          value={form.consultPrice}
+          onChange={(e) => setForm({ ...form, consultPrice: Number(e.target.value) })}
           placeholder="800.00"
           className="w-full rounded-xl border-2 border-gray-200 px-4 py-3"
         />
@@ -101,7 +148,7 @@ export default function ConsultationForm({ form, setForm }) {
       </div>
 
       {/* Meds Sold */}
-      <AutocompleteMedicamentos form={form} setForm={setForm} />
+      <MedsSold form={form} setForm={setForm} />
 
       {/* Optional Notes */}
       <div className="space-y-2">
@@ -136,7 +183,7 @@ export default function ConsultationForm({ form, setForm }) {
             type="number"
             min="0"
             step="0.01"
-            value={form.total}
+            value={form.totalCost}
             readOnly
             className="pointer-events-none w-full rounded-xl border-2 border-gray-200 px-8 py-3"
           />

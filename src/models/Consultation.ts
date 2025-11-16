@@ -14,15 +14,20 @@ interface ISoldItem {
 
 /* --- Main Interface --- */
 interface IConsultation extends Document {
-  employee: mongoose.Types.ObjectId | IUser;
-  consultationType: string;
   patient: mongoose.Types.ObjectId | IUser;
-  cost: number;
-  paymentMethod: 'efectivo' | 'tarjeta' | 'transferencia';
+  employee: mongoose.Types.ObjectId | IUser;
+  consultType: string;
+  speciality?: string;
+
+  consultPrice: number;
+  totalItemsSold: number;
+  totalCost?: number;
   itemsSold: ISoldItem[];
-  
+  paymentMethod: 'efectivo' | 'tarjeta' | 'transferencia';
+
   date: Date;
   time: string;
+  
   transactions: (mongoose.Types.ObjectId | ITransaction)[];
   notes?: string;
   createdAt?: Date;
@@ -38,9 +43,12 @@ const ConsultationSchema = new Schema<IConsultation>(
     date: { type: Date, required: true },
     time: { type: String, required: true },
 
-    consultationType: { type: String, trim: true, required: true },
+    consultType: { type: String, trim: true, required: true },
+    speciality: { type: String, trim: true },
 
-    cost: { type: Number, required: true, min: 0 },
+    consultPrice: { type: Number, required: true, min: 0 },
+    totalItemsSold: { type: Number, required: true, min: 0 },
+    totalCost: { type: Number, required: true, min: 0 },
 
     paymentMethod: {
       type: String,

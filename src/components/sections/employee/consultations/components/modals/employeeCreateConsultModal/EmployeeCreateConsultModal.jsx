@@ -5,22 +5,32 @@ import Header from './components/Header';
 import ConsultationForm from './components/consultForm/ConsultationForm';
 import Actions from './components/Actions';
 import { useModalClose } from '@/hooks/useModalClose';
+import useAuthStore from '@/zustand/useAuthStore';
+import { getCurrentDate, getCurrentTime } from './utils/helpers';
 
 /* Container */
 export default function EmployeeCreateConsultModal({ onClose, onCreate }) {
   // Modal close handler
   const { handleOverlayClick } = useModalClose(onClose);
 
+  // Get user from store
+  const { user } = useAuthStore();
+
   // Local state
   const [form, setForm] = useState({
     patient: '',
-    type: '',
-    cost: '',
-    paid: true,
+    employee: user?.fullName || '',
+    consultType: '',
+    speciality: user?.speciality || '',
+    consultPrice: '',
+    totalItemsSold: 0,
+    totalCost: 0,
     paymentMethod: '',
+    date: getCurrentDate(),
+    time: getCurrentTime(),
+    itemsSold: [],
+    transactions: [],
     notes: '',
-    total: 0,
-    medsSold: [],
   });
 
   // Handlers
@@ -28,6 +38,10 @@ export default function EmployeeCreateConsultModal({ onClose, onCreate }) {
     e.preventDefault();
     onCreate(form);
   };
+
+  useEffect(() => {
+    console.log(form);
+  }, [form]);
 
   return (
     <div
