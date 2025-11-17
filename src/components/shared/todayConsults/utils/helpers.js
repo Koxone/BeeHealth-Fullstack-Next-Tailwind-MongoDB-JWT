@@ -41,11 +41,11 @@ export function buildCreatePayload(form, todayISO) {
     id: Date.now(),
     fecha: todayISO(),
     hora: form.hora,
-    paciente: form.paciente,
-    tipo: form.tipo,
-    costo: parseFloat(form.costo),
-    pagado: form.pagado,
-    avatar: form.paciente
+    paciente: form.patient, // ✅ Cambiar
+    tipo: form.consultType, // ✅ Cambiar
+    costo: parseFloat(form.consultPrice), // ✅ Cambiar
+    pagado: form.paymentMethod, // ✅ Cambiar
+    avatar: form.patient // ✅ Cambiar
       .split(' ')
       .map((n) => n[0])
       .join('')
