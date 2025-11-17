@@ -7,7 +7,7 @@ import MedsSoldTable from '../../../shared/medsSold/MedsSoldTable';
 import { useGetAllConsults } from '@/hooks/useGetAllConsults';
 import { getConsultTotals } from './utils/getConsultTotals';
 
-export default function EmployeeConsultations({ role }) {
+export default function EmployeeConsults({ role }) {
   // Get consults data
   const { consults, isLoading, error } = useGetAllConsults();
 
