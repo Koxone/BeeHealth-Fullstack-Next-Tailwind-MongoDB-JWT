@@ -50,9 +50,9 @@ export default function EmployeeCreateConsultModal({ onClose, onCreate }) {
       className="animate-in fade-in fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md"
     >
       {/* Modal */}
-      <div className="relative inset-0 z-50 flex items-center justify-center p-4">
+      <div className="relative w-full max-w-[600px] inset-0 z-50 flex items-center justify-center p-4">
         <div
-          className="w-full max-w-lg overflow-hidden rounded-3xl bg-white shadow-2xl"
+          className="w-full  overflow-hidden rounded-3xl bg-white shadow-2xl"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
