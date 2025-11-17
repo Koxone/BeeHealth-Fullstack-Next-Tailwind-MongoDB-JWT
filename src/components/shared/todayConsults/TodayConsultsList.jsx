@@ -1,14 +1,13 @@
 'use client';
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import SearchAddBar from './SearchAddBar';
-import ConsultsList from './ConsultsList';
+import ConsultsTable from './ConsultsTable';
 import ConsultationsMobile from './ConsultationsMobile';
 import EmptyState from './EmptyState';
 import EmployeeDeleteConsultModal from '@/components/sections/employee/consultations/components/modals/employeeDeleteConsultModal/EmployeeDeleteConsultModal';
-import { Search, Plus, FileText, Edit2, Trash2, AlertCircle } from 'lucide-react';
+import { FileText, Edit2, Trash2, AlertCircle } from 'lucide-react';
 import {
-  filterConsultas,
-  calculateTotalIngresos,
+  filterConsults,
   openCreate,
   openEdit,
   askDelete,
@@ -22,59 +21,8 @@ import {
 import EmployeeCreateConsultModal from '@/components/sections/employee/consultations/components/modals/employeeCreateConsultModal/EmployeeCreateConsultModal';
 import EmployeeEditConsultModal from '@/components/sections/employee/consultations/components/modals/employeeEditConsultModal/EmployeeEditConsultModal';
 
-export default function TodayConsultsList({ totals }) {
-  const [consultas, setConsultas] = useState([
-    {
-      id: 1,
-      fecha: '2024-10-21',
-      hora: '09:00',
-      paciente: 'Juan Pérez',
-      tipo: 'Primera Vez',
-      costo: 1000,
-      paymentMethod: 'Efectivo',
-      avatar: 'JP',
-    },
-    {
-      id: 2,
-      fecha: '2024-10-21',
-      hora: '10:30',
-      paciente: 'María López',
-      tipo: 'Subsecuente',
-      costo: 600,
-      paymentMethod: 'Tarjeta',
-      avatar: 'ML',
-    },
-    {
-      id: 3,
-      fecha: '2024-10-21',
-      hora: '11:00',
-      paciente: 'Carlos Ruiz',
-      tipo: 'Primera Vez',
-      costo: 800,
-      paymentMethod: 'Transferencia',
-      avatar: 'CR',
-    },
-    {
-      id: 4,
-      fecha: '2024-10-21',
-      hora: '15:00',
-      paciente: 'Ana Martínez',
-      tipo: 'Subsecuente',
-      costo: 800,
-      paymentMethod: 'Tarjeta',
-      avatar: 'AM',
-    },
-    {
-      id: 5,
-      fecha: '2024-10-21',
-      hora: '16:30',
-      paciente: 'Pedro García',
-      tipo: 'Subsecuente',
-      costo: 600,
-      paymentMethod: 'Tarjeta',
-      avatar: 'PG',
-    },
-  ]);
+export default function TodayConsultsList({ totals, consultsData }) {
+  const [consults, setConsults] = useState([]);
 
   const [searchTerm, setSearchTerm] = useState('');
   const [showModal, setShowModal] = useState(false);
@@ -82,23 +30,26 @@ export default function TodayConsultsList({ totals }) {
   const [editingItem, setEditingItem] = useState(null);
   const [itemToDelete, setItemToDelete] = useState(null);
 
-  const filteredConsultas = useMemo(
-    () => filterConsultas(consultas, searchTerm),
-    [consultas, searchTerm]
+  // Filter consultas based on search term
+  useEffect(() => {
+    setConsults(consultsData);
+  }, [consultsData]);
+
+  const filteredConsults = useMemo(
+    () => filterConsults(consults, searchTerm),
+    [consults, searchTerm]
   );
 
-  const totalIngresos = useMemo(() => calculateTotalIngresos(consultas), [consultas]);
-
   const handleCreate = (form) => {
-    handleCreateAction(form, todayISO, setConsultas, setShowModal);
+    handleCreateAction(form, todayISO, setConsults, setShowModal);
   };
 
   const handleUpdate = (form) => {
-    handleUpdateAction(form, editingItem, setConsultas, setShowModal, setEditingItem);
+    handleUpdateAction(form, editingItem, setConsults, setShowModal, setEditingItem);
   };
 
   const handleDelete = () => {
-    handleDeleteAction(itemToDelete, setConsultas, setShowDeleteModal, setItemToDelete);
+    handleDeleteAction(itemToDelete, setConsults, setShowDeleteModal, setItemToDelete);
   };
 
   return (
@@ -107,25 +58,24 @@ export default function TodayConsultsList({ totals }) {
         value={searchTerm}
         onChange={setSearchTerm}
         onAdd={() => openCreate(setEditingItem, setShowModal)}
-        icons={{ Search, Plus }}
       />
 
       <div className="overflow-hidden rounded-2xl border-2 border-gray-200 bg-white shadow-lg">
-        <ConsultsList
-          rows={filteredConsultas}
+        <ConsultsTable
+          rows={filteredConsults}
           totals={totals}
           onEdit={(item) => openEdit(item, setEditingItem, setShowModal)}
           onDelete={(item) => askDelete(item, setItemToDelete, setShowDeleteModal)}
         />
 
         <ConsultationsMobile
-          rows={filteredConsultas}
+          rows={filteredConsults}
           icons={{ Edit2, Trash2 }}
           onEdit={(item) => openEdit(item, setEditingItem, setShowModal)}
           onDelete={(item) => askDelete(item, setItemToDelete, setShowDeleteModal)}
         />
 
-        <EmptyState visible={filteredConsultas.length === 0} icons={{ FileText }} />
+        <EmptyState visible={filteredConsults.length === 0} icons={{ FileText }} />
       </div>
 
       {showModal && !editingItem && (

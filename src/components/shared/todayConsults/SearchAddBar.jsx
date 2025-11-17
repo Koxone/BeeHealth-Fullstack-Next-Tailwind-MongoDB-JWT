@@ -1,8 +1,9 @@
 'use client';
 
+import { Search, Plus } from 'lucide-react';
+
 /* search-add */
-export default function SearchAddBar({ value, onChange, onAdd, icons }) {
-  const { Search, Plus } = icons;
+export default function SearchAddBar({ value, onChange, onAdd }) {
   return (
     <div className="rounded-2xl border-2 border-gray-200 bg-white p-4 shadow-lg">
       <div className="flex flex-col gap-3 sm:flex-row">

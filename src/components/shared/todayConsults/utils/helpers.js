@@ -8,8 +8,10 @@ export function todayISO() {
 }
 
 // Filter list
-export function filterConsultas(consultas, searchTerm) {
-  return consultas.filter((c) => c.paciente.toLowerCase().includes(searchTerm.toLowerCase()));
+export function filterConsults(consults, searchTerm) {
+  return consults.filter((c) =>
+    c?.patient?.fullName?.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 }
 
 // Sum total

@@ -1,6 +1,5 @@
 'use client';
 
-import { useGetAllConsults } from '@/hooks/useGetAllConsults';
 import {
   Calendar,
   Users,
@@ -14,11 +13,7 @@ import {
   ArrowLeftRight,
 } from 'lucide-react';
 
-/* table */
-export default function ConsultsList({ rows, totals, onEdit, onDelete }) {
-  // Get consults data
-  const { consults, isLoading, error } = useGetAllConsults();
-
+export default function ConsultsTable({ rows, totals, onEdit, onDelete }) {
   // Table columns
   const columns = [
     {
@@ -84,7 +79,7 @@ export default function ConsultsList({ rows, totals, onEdit, onDelete }) {
         </thead>
 
         <tbody className="divide-y divide-gray-200">
-          {consults?.map((c, i) => (
+          {rows?.map((c, i) => (
             <tr
               key={c?._id}
               style={{ animationDelay: `${i * 50}ms` }}

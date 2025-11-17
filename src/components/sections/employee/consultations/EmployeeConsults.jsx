@@ -45,7 +45,7 @@ export default function EmployeeConsults({ role }) {
         />
 
         {/* Consultations Table */}
-        <TodayConsultsList totals={metrics} />
+        <TodayConsultsList consultsData={consults} totals={metrics} />
 
         {/* Medications Sold Table */}
         <div className="overflow-hidden rounded-2xl border-2 border-gray-200 bg-white shadow-lg">
