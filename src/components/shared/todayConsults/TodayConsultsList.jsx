@@ -1,27 +1,28 @@
 'use client';
 import React, { useState, useMemo } from 'react';
 import SearchAddBar from './SearchAddBar';
-import ConsultationsTable from './ConsultationsTable';
+import ConsultsList from './ConsultsList';
 import ConsultationsMobile from './ConsultationsMobile';
 import EmptyState from './EmptyState';
 import EmployeeDeleteConsultModal from '@/components/sections/employee/consultations/components/modals/employeeDeleteConsultModal/EmployeeDeleteConsultModal';
 import { Search, Plus, FileText, Edit2, Trash2, AlertCircle } from 'lucide-react';
+import {
+  filterConsultas,
+  calculateTotalIngresos,
+  openCreate,
+  openEdit,
+  askDelete,
+  handleCreateAction,
+  handleUpdateAction,
+  handleDeleteAction,
+  todayISO,
+} from './utils/helpers';
 
 // Modals
 import EmployeeCreateConsultModal from '@/components/sections/employee/consultations/components/modals/employeeCreateConsultModal/EmployeeCreateConsultModal';
 import EmployeeEditConsultModal from '@/components/sections/employee/consultations/components/modals/employeeEditConsultModal/EmployeeEditConsultModal';
 
-/* Helper date */
-function todayISO() {
-  const d = new Date();
-  const yyyy = d.getFullYear();
-  const mm = String(d.getMonth() + 1).padStart(2, '0');
-  const dd = String(d.getDate()).padStart(2, '0');
-  return `${yyyy}-${mm}-${dd}`;
-}
-
-export default function TodayConsultsTable() {
-  /* Data state */
+export default function TodayConsultsList() {
   const [consultas, setConsultas] = useState([
     {
       id: 1,
@@ -75,122 +76,62 @@ export default function TodayConsultsTable() {
     },
   ]);
 
-  /* UI state */
   const [searchTerm, setSearchTerm] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [editingItem, setEditingItem] = useState(null);
   const [itemToDelete, setItemToDelete] = useState(null);
 
-  /* Derived values */
   const filteredConsultas = useMemo(
-    () => consultas.filter((c) => c.paciente.toLowerCase().includes(searchTerm.toLowerCase())),
+    () => filterConsultas(consultas, searchTerm),
     [consultas, searchTerm]
   );
 
-  const totalIngresos = useMemo(() => consultas.reduce((acc, c) => acc + c.costo, 0), [consultas]);
+  const totalIngresos = useMemo(() => calculateTotalIngresos(consultas), [consultas]);
 
-  /* Open create */
-  const openCreate = () => {
-    setEditingItem(null);
-    setShowModal(true);
-  };
-
-  /* Open edit */
-  const openEdit = (item) => {
-    setEditingItem(item);
-    setShowModal(true);
-  };
-
-  /* Ask delete */
-  const askDelete = (item) => {
-    setItemToDelete(item);
-    setShowDeleteModal(true);
-  };
-
-  /* Handle create */
   const handleCreate = (form) => {
-    const payload = {
-      id: Date.now(),
-      fecha: todayISO(),
-      hora: form.hora,
-      paciente: form.paciente,
-      tipo: form.tipo,
-      costo: parseFloat(form.costo),
-      pagado: form.pagado,
-      avatar: form.paciente
-        .split(' ')
-        .map((n) => n[0])
-        .join('')
-        .toUpperCase(),
-    };
-    setConsultas((prev) => [...prev, payload]);
-    setShowModal(false);
+    handleCreateAction(form, todayISO, setConsultas, setShowModal);
   };
 
-  /* Handle update */
   const handleUpdate = (form) => {
-    if (!editingItem) return;
-    const updated = {
-      ...editingItem,
-      hora: form.hora,
-      paciente: form.paciente,
-      tipo: form.tipo,
-      costo: parseFloat(form.costo),
-      pagado: form.pagado,
-      avatar: form.paciente
-        .split(' ')
-        .map((n) => n[0])
-        .join('')
-        .toUpperCase(),
-    };
-    setConsultas((prev) => prev.map((c) => (c.id === editingItem.id ? updated : c)));
-    setShowModal(false);
-    setEditingItem(null);
+    handleUpdateAction(form, editingItem, setConsultas, setShowModal, setEditingItem);
   };
 
-  /* Handle delete */
   const handleDelete = () => {
-    if (!itemToDelete) return;
-    setConsultas((prev) => prev.filter((c) => c.id !== itemToDelete.id));
-    setShowDeleteModal(false);
-    setItemToDelete(null);
+    handleDeleteAction(itemToDelete, setConsultas, setShowDeleteModal, setItemToDelete);
   };
 
   return (
     <div className="flex flex-col gap-4">
-      {/* Search and add */}
       <SearchAddBar
         value={searchTerm}
         onChange={setSearchTerm}
-        onAdd={openCreate}
+        onAdd={() => openCreate(setEditingItem, setShowModal)}
         icons={{ Search, Plus }}
       />
 
-      {/* List */}
       <div className="overflow-hidden rounded-2xl border-2 border-gray-200 bg-white shadow-lg">
-        <ConsultationsTable
+        <ConsultsList
           rows={filteredConsultas}
           totals={{
             totalIngresos,
             cobradas: consultas.filter((c) => c.pagado).length,
             total: consultas.length,
           }}
-          onEdit={openEdit}
-          onDelete={askDelete}
+          onEdit={(item) => openEdit(item, setEditingItem, setShowModal)}
+          onDelete={(item) => askDelete(item, setItemToDelete, setShowDeleteModal)}
         />
 
         <ConsultationsMobile
           rows={filteredConsultas}
           icons={{ Edit2, Trash2 }}
-          onEdit={openEdit}
-          onDelete={askDelete}
+          onEdit={(item) => openEdit(item, setEditingItem, setShowModal)}
+          onDelete={(item) => askDelete(item, setItemToDelete, setShowDeleteModal)}
         />
 
         <EmptyState visible={filteredConsultas.length === 0} icons={{ FileText }} />
       </div>
 
-      {/* Modals */}
       {showModal && !editingItem && (
         <EmployeeCreateConsultModal onClose={() => setShowModal(false)} onCreate={handleCreate} />
       )}

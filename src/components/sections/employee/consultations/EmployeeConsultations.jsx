@@ -2,7 +2,7 @@
 
 import MetricsGrid from './components/MetricsGrid';
 import SharedSectionHeader from '@/components/shared/sections/SharedSectionHeader';
-import TodayConsultsTable from '@/components/shared/todayConsults/TodayConsultsTable';
+import TodayConsultsList from '@/components/shared/todayConsults/TodayConsultsList';
 import MedsSoldTable from '../../../shared/medsSold/MedsSoldTable';
 
 export default function EmployeeConsultations({ role }) {
@@ -36,7 +36,7 @@ export default function EmployeeConsultations({ role }) {
         />
 
         {/* Consultations Table */}
-        <TodayConsultsTable />
+        <TodayConsultsList />
 
         {/* Medications Sold Table */}
         <div className="overflow-hidden rounded-2xl border-2 border-gray-200 bg-white shadow-lg">

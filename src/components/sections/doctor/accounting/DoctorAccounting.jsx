@@ -8,7 +8,7 @@ import WeeklyIncomeChart from './components/WeeklyIncomeChart';
 import DistributionCard from './components/DistributionCard';
 import MedsSoldTable from '../../../shared/medsSold/MedsSoldTable';
 import SharedSectionHeader from '@/components/shared/sections/SharedSectionHeader';
-import TodayConsultsTable from '@/components/shared/todayConsults/TodayConsultsTable';
+import TodayConsultsList from '@/components/shared/todayConsults/TodayConsultsList';
 
 /* Demo data */
 const ingresosSemanales = [
@@ -99,7 +99,7 @@ export default function DoctorAccounting({ role }) {
           <h2 className="text-lg font-semibold text-gray-900 md:text-xl">Consultas del Día</h2>
         </div>
 
-        <TodayConsultsTable />
+        <TodayConsultsList />
       </div>
 
       <MedsSoldTable />

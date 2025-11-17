@@ -16,48 +16,67 @@ import {
 } from 'lucide-react';
 
 /* table */
-export default function ConsultationsTable({ rows, totals, onEdit, onDelete }) {
+export default function ConsultsList({ rows, totals, onEdit, onDelete }) {
+  const columns = [
+    {
+      key: 'fecha',
+      label: 'Fecha',
+      align: 'left',
+      icon: Calendar,
+    },
+    {
+      key: 'paciente',
+      label: 'Paciente',
+      align: 'left',
+      icon: Users,
+    },
+    {
+      key: 'tipo',
+      label: 'Tipo',
+      align: 'left',
+      icon: FileText,
+    },
+    {
+      key: 'costo',
+      label: 'Costo',
+      align: 'right',
+      icon: DollarSign,
+    },
+    {
+      key: 'extras',
+      label: 'Extras',
+      align: 'right',
+      icon: DollarSign,
+    },
+    {
+      key: 'metodo',
+      label: 'Metodo de Pago',
+      align: 'center',
+      icon: null,
+    },
+    {
+      key: 'acciones',
+      label: 'Acciones',
+      align: 'center',
+      icon: null,
+    },
+  ];
+
   return (
     <div className="hidden overflow-x-auto md:block">
       <table className="w-full">
         <thead className="border-b-2 border-gray-200 bg-linear-to-r from-gray-50 to-indigo-50">
           <tr>
-            <th className="px-6 py-4 text-left">
-              <div className="flex items-center gap-2">
-                <Calendar className="h-4 w-4 text-gray-500" />
-                <span className="text-sm font-bold text-gray-900">Fecha</span>
-              </div>
-            </th>
-            <th className="px-6 py-4 text-left">
-              <div className="flex items-center gap-2">
-                <Users className="h-4 w-4 text-gray-500" />
-                <span className="text-sm font-bold text-gray-900">Paciente</span>
-              </div>
-            </th>
-            <th className="px-6 py-4 text-left">
-              <div className="flex items-center gap-2">
-                <FileText className="h-4 w-4 text-gray-500" />
-                <span className="text-sm font-bold text-gray-900">Tipo</span>
-              </div>
-            </th>
-            <th className="px-6 py-4 text-right">
-              <div className="flex items-center justify-end gap-2">
-                <DollarSign className="h-4 w-4 text-gray-500" />
-                <span className="text-sm font-bold text-gray-900">Costo</span>
-              </div>
-            </th>
-            <th className="px-6 py-4 text-right">
-              <div className="flex items-center justify-end gap-2">
-                <DollarSign className="h-4 w-4 text-gray-500" />
-                <span className="text-sm font-bold text-gray-900">Extras</span>
-              </div>
-            </th>
-            <th className="px-6 py-4 text-center">
-              <span className="text-sm font-bold text-gray-900">Metodo de Pago</span>
-            </th>
-            <th className="px-6 py-4 text-center">
-              <span className="text-sm font-bold text-gray-900">Acciones</span>
-            </th>
+            {columns.map((col) => (
+              <th key={col.key} className={`px-6 py-4 text-${col.align} `}>
+                <div
+                  className={`flex items-center ${col.align === 'right' ? 'justify-end' : ''} ${col.align === 'center' ? 'justify-center' : 'gap-2'} `}
+                >
+                  {col.icon && <col.icon className="h-4 w-4 text-gray-500" />}
+                  <span className="text-sm font-bold text-gray-900">{col.label}</span>
+                </div>
+              </th>
+            ))}
           </tr>
         </thead>
 
