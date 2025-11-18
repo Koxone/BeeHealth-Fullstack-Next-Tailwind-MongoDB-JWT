@@ -1,7 +1,7 @@
 'use client';
 
-import { useTodayAppointmentsBySpecialty } from '@/hooks/useTodayAppointmentsBySpecialty';
-import { useGetFullInventory } from '@/hooks/useGetFullInventory';
+import { useTodayAppointmentsBySpecialty } from '@/hooks/appointments/useTodayAppointmentsBySpecialty';
+import { useGetFullInventory } from '@/hooks/inventory/useGetFullInventory';
 import {
   Users,
   DollarSign,

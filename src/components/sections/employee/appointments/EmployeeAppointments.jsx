@@ -6,8 +6,8 @@ import AppointmentCard from './components/AppointmentCard';
 import EmployeeCreateAppointmentModal from './components/EmployeeCreateAppointmentModal';
 import EmptyState from './components/EmptyState';
 import SharedSectionHeader from '@/components/shared/sections/SharedSectionHeader';
-import { useAllAppointments } from '@/hooks/useAllAppointments';
-import { useCreateAppointment } from '@/hooks/useCreateAppointment';
+import { useAllAppointments } from '@/hooks/appointments/useAllAppointments';
+import { useCreateAppointment } from '@/hooks/appointments/useCreateAppointment';
 
 export default function EmployeeAppointments({ role, patients }) {
   const [showModal, setShowModal] = useState(false);

@@ -5,11 +5,11 @@ import HeaderWelcome from '@/components/shared/dashboard/header/HeaderWelcome';
 import AppointmentsToday from '@/components/shared/dashboard/appointmentsToday/AppointmentsToday';
 import DoctorAccountingSummary from '@/components/sections/doctor/dashboard/components/DoctorAccountingSummary';
 import SharedInventoryAlerts from '@/components/shared/dashboard/InventoryAlerts/SharedInventoryAlerts';
-import { useTodayAppointmentsBySpecialty } from '@/hooks/useTodayAppointmentsBySpecialty';
-import { useGetFullInventory } from '@/hooks/useGetFullInventory';
+import { useTodayAppointmentsBySpecialty } from '@/hooks/appointments/useTodayAppointmentsBySpecialty';
+import { useGetFullInventory } from '@/hooks/inventory/useGetFullInventory';
 import DoctorStatsGrid from './components/DoctorStatsGrid';
 import { getConsultTotals } from '../../employee/consultations/utils/getConsultTotals';
-import { useGetAllConsults } from '@/hooks/useGetAllConsults';
+import { useGetAllConsults } from '@/hooks/consults/useGetAllConsults';
 
 export default function DoctorDashboard({ currentUser, role, specialty }) {
   // Google Calendar Custom Hooks

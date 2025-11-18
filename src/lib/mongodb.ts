@@ -1,9 +1,11 @@
 import mongoose from 'mongoose';
 import '@/models/ClinicalRecord';
+import '@/models/Consult';
 import '@/models/User';
 import '@/models/Product';
 import '@/models/Transaction';
 import '@/models/Inventory';
+import '@/models/Diet';
 
 declare global {
   var mongooseCache:
