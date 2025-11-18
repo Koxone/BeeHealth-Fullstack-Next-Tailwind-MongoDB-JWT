@@ -9,7 +9,7 @@ import { useTodayAppointmentsBySpecialty } from '@/hooks/useTodayAppointmentsByS
 import { useGetFullInventory } from '@/hooks/useGetFullInventory';
 import DoctorStatsGrid from './components/DoctorStatsGrid';
 
-export default function DoctorDashboard({ currentUser }) {
+export default function DoctorDashboard({ currentUser, role, specialty }) {
   // Google Calendar Custom Hooks
   const { appointments, loading, error } = useTodayAppointmentsBySpecialty();
 
@@ -27,7 +27,7 @@ export default function DoctorDashboard({ currentUser }) {
       <HeaderWelcome fullName={currentUser?.fullName} role="doctor" />
 
       {/* Stats */}
-      <DoctorStatsGrid role="doctor" />
+      <DoctorStatsGrid role="doctor" specialty={specialty} />
 
       {/* Appointments */}
       <AppointmentsToday role={currentUser?.role} appointments={appointments} />

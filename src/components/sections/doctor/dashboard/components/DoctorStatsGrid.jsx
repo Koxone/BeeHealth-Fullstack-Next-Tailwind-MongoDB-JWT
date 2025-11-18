@@ -6,7 +6,7 @@ import { Users, DollarSign, AlertTriangle, Activity, Pill } from 'lucide-react';
 import DoctorStatsCard from './DoctorStatsCard';
 import { useGetAllConsults } from '@/hooks/useGetAllConsults';
 
-export default function DoctorStatsGrid({ role }) {
+export default function DoctorStatsGrid({ role, specialty }) {
   // Appointments Today logic
   const { appointments, loading } = useTodayAppointmentsBySpecialty();
   const todaysAppointmentsNumber = appointments?.length || 0;
@@ -15,7 +15,7 @@ export default function DoctorStatsGrid({ role }) {
   const { totalAlerts } = useGetFullInventory();
 
   // Consultations logic
-  const { consults } = useGetAllConsults();
+  const { consults } = useGetAllConsults({ speciality: specialty });
 
   const todayConsultsTotal = consults.map((c) => c.consultPrice).reduce((a, b) => a + b, 0) || 0;
   const medsSoldTotal =
