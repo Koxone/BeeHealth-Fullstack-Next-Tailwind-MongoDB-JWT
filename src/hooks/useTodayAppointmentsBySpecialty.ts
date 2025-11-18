@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import useAuthStore from '@/zustand/useAuthStore';
+import { AuthUser } from '@/zustand/useAuthStore';
 
 interface ParsedDescription {
   paciente?: string;
@@ -27,7 +28,7 @@ interface CalendarEvent {
 
 interface NormalizedAppointment {
   id: string;
-  specialty: 'weight' | 'dental';
+  specialty: AuthUser['specialty'];
   tipo: string;
   hora: string;
   paciente: string;
@@ -85,7 +86,7 @@ function dateKey(dateISO?: string | null): string {
 /* --- Normalizador --- */
 function normalizeEvents(
   items: CalendarEvent[],
-  specialty: 'weight' | 'dental'
+  specialty: AuthUser['specialty']
 ): NormalizedAppointment[] {
   return (items || []).map((ev: CalendarEvent) => {
     const fields = parseDescription(ev.description || '');
@@ -127,7 +128,7 @@ export function useTodayAppointmentsBySpecialty(): {
   const [error, setError] = useState<string | null>(null);
 
   const fetchTodayAppointments = useCallback(async () => {
-    if (!user?.specialty) return;
+    if (!user || !user.specialty) return;
 
     setLoading(true);
     setError(null);

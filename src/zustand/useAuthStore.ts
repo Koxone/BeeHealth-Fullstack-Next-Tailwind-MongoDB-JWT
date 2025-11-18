@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 
 /* User type */
-interface AuthUser {
+export interface AuthUser {
   _id: string;
   fullName: string;
   email: string;
