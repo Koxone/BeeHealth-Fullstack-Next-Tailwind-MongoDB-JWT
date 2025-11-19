@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { ZDiet } from '@/zod/diets/diet.schema';
+import { ZDiet, dietSchema } from '@/zod/diets/diet.schema';
+import { z } from 'zod';
 import { dietsResponseSchema } from '@/zod/diets/api.diets.schema';
 
 export function useGetAllDiets() {
@@ -16,6 +17,7 @@ export function useGetAllDiets() {
         }
 
         const json = await res.json();
+
         const data = dietsResponseSchema.parse(json);
         setDietsData(data.diets);
         setIsLoading(false);
@@ -28,5 +30,6 @@ export function useGetAllDiets() {
 
     fetchDiets();
   }, []);
+
   return { dietsData, isLoading, error };
 }

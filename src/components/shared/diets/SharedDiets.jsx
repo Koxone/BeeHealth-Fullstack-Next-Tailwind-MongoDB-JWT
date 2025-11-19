@@ -5,13 +5,12 @@ import SharedDietCard from './components/dietCard/SharedDietCard';
 import Link from 'next/link';
 export const runtime = 'nodejs';
 import SharedSectionHeader from '../sections/SharedSectionHeader';
-import { diets } from './[id]/components/sharedDietsMockData';
 import { useGetAllDiets } from '@/hooks/diets/useGetAllDiets';
-import { useEffect } from 'react';
 
 export default function SharedDiets({ role }) {
   // Fetch all diets
-  const { dietsData, isLoading, isError } = useGetAllDiets();
+  const { dietsData, isLoading, error } = useGetAllDiets();
+  console.log(dietsData);
 
   return (
     <div className="h-full space-y-4 overflow-y-auto md:space-y-6">
@@ -30,7 +29,7 @@ export default function SharedDiets({ role }) {
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {dietsData.map((diet) => (
+        {dietsData?.map((diet) => (
           <SharedDietCard role={role} diet={diet} key={diet._id} />
         ))}
       </div>

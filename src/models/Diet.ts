@@ -2,18 +2,42 @@ import mongoose, { Document, Model, Schema } from 'mongoose';
 import { IUser } from './User';
 
 export interface IDiet {
-  doctor: mongoose.Types.ObjectId | IUser;
-  patients: (mongoose.Types.ObjectId | IUser)[];
+  patients: {
+    patient: mongoose.Types.ObjectId | IUser;
+    isActive: boolean;
+    assignedAt: Date;
+    finishedAt?: Date;
+  }[];
+
+  description?: string;
+  images?: string[];
   name: string;
   category?: string;
-  recommendations?: string;
+  doctor: mongoose.Types.ObjectId | IUser;
+
   benefits?: string;
-  ingredients?: string[];
   instructions?: string;
-  description?: string;
+
+  allowedLiquids?: {
+    items: string[];
+    note?: string;
+  };
+  allowedFoods?: {
+    items: string[];
+    note?: string;
+  };
+  forbiddenFoods?: {
+    items: string[];
+    note?: string;
+  };
+  forbiddenLiquids?: {
+    items: string[];
+    note?: string;
+  };
+
+  duration?: string;
+  ingredients?: string[];
   isActive?: boolean;
-  suggestions?: string;
-  images?: string[];
   notes?: string;
   createdAt?: Date;
   updatedAt?: Date;
@@ -22,16 +46,45 @@ export interface IDiet {
 const DietSchema = new Schema<IDiet>(
   {
     doctor: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-    patients: [{ type: Schema.Types.ObjectId, ref: 'User', required: true }],
+
+    patients: [
+      {
+        patient: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+        isActive: { type: Boolean, default: true },
+        assignedAt: { type: Date, default: Date.now },
+        finishedAt: { type: Date },
+      },
+    ],
+
     name: { type: String, trim: true, required: true },
     category: { type: String, trim: true },
-    recommendations: { type: String, trim: true },
+
     benefits: { type: String, trim: true },
-    ingredients: [{ type: String, trim: true }],
     instructions: { type: String, trim: true },
     description: { type: String, trim: true },
+    ingredients: [{ type: String, trim: true }],
+
+    allowedLiquids: {
+      items: [{ type: String, trim: true }],
+      note: { type: String, trim: true },
+    },
+    allowedFoods: {
+      items: [{ type: String, trim: true }],
+      note: { type: String, trim: true },
+    },
+
+    forbiddenFoods: {
+      items: [{ type: String, trim: true }],
+      note: { type: String, trim: true },
+    },
+    forbiddenLiquids: {
+      items: [{ type: String, trim: true }],
+      note: { type: String, trim: true },
+    },
+
+    duration: { type: String, trim: true },
+
     isActive: { type: Boolean, default: true },
-    suggestions: { type: String, trim: true },
     images: [{ type: String, trim: true }],
     notes: { type: String, trim: true },
   },

@@ -22,7 +22,7 @@ export async function GET(req) {
 
     const diets = await Diet.find()
       .populate('doctor', 'fullName email')
-      .populate('patients', 'fullName email');
+      .populate('patients.patient', 'fullName email');
 
     return NextResponse.json({ diets }, { status: 200 });
   } catch (error) {

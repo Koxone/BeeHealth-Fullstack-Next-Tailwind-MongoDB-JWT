@@ -30,17 +30,20 @@ export async function POST(req) {
 
     // Parse request body
     const {
-      doctor,
       patients,
+      description,
+      images,
       name,
       category,
-      recommendations,
       benefits,
-      ingredients,
       instructions,
-      description,
+      allowedLiquids,
+      forbiddenLiquids,
+      allowedFoods,
+      forbiddenFoods,
+      duration,
+      ingredients,
       isActive,
-      images,
       notes,
     } = await req.json();
     if (!patients || !name) {
@@ -50,16 +53,24 @@ export async function POST(req) {
     // Create new diet
     const newDiet = await Diet.create({
       doctor: new mongoose.Types.ObjectId(userId),
-      patients: patients.map((id) => new mongoose.Types.ObjectId(id)),
+      patients: patients.map((id) => ({
+        patient: new mongoose.Types.ObjectId(id),
+        isActive: true, 
+        assignedAt: new Date(), 
+      })),
+      description,
+      images,
       name,
       category,
-      recommendations,
       benefits,
-      ingredients,
       instructions,
-      description,
+      allowedLiquids,
+      forbiddenLiquids,
+      allowedFoods,
+      forbiddenFoods,
+      duration,
+      ingredients,
       isActive,
-      images,
       notes,
     });
 
