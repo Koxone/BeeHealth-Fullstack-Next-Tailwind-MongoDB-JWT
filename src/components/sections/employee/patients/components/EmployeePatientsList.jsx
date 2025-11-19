@@ -1,6 +1,6 @@
 'use client';
 
-import { useGetAllPatients } from '@/hooks/useGetAllPatients';
+import { useGetAllPatients } from '@/hooks/patients/useGetAllPatients';
 import EmployeePatientCard from './EmployeePatientCard';
 
 export default function EmployeePatientsList({ currentUser, role, searchTerm }) {

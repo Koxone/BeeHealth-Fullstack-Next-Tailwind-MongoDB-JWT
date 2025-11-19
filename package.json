@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@prisma/client": "^6.19.0",
     "@reduxjs/toolkit": "^2.9.2",
     "@tanstack/react-query": "^5.90.5",
     "@tanstack/react-query-devtools": "^5.90.2",
@@ -40,6 +41,7 @@
     "@types/jsonwebtoken": "^9.0.10",
     "prettier": "^3.6.2",
     "prettier-plugin-tailwindcss": "^0.7.1",
+    "prisma": "^6.19.0",
     "tailwindcss": "^4.1.16",
     "typescript": "5.9.3"
   }

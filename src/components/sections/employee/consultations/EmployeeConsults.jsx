@@ -4,7 +4,7 @@ import MetricsGrid from './components/MetricsGrid';
 import SharedSectionHeader from '@/components/shared/sections/SharedSectionHeader';
 import TodayConsultsList from '@/components/shared/todayConsults/TodayConsultsList';
 import MedsSoldTable from '../../../shared/medsSold/MedsSoldTable';
-import { useGetAllConsults } from '@/hooks/useGetAllConsults';
+import { useGetAllConsults } from '@/hooks/consults/useGetAllConsults';
 import { getConsultTotals } from './utils/getConsultTotals';
 
 export default function EmployeeConsults({ role }) {

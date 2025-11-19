@@ -8,7 +8,7 @@ import DistributionCard from './components/DistributionCard';
 import MedsSoldTable from '../../../shared/medsSold/MedsSoldTable';
 import SharedSectionHeader from '@/components/shared/sections/SharedSectionHeader';
 import TodayConsultsList from '@/components/shared/todayConsults/TodayConsultsList';
-import { useGetAllConsults } from '@/hooks/useGetAllConsults';
+import { useGetAllConsults } from '@/hooks/consults/useGetAllConsults';
 import { getConsultTotals } from '../../employee/consultations/utils/getConsultTotals';
 
 export default function DoctorAccounting({ role, specialty }) {

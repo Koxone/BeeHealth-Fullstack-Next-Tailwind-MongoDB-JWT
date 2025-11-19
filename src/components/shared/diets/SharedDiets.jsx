@@ -1,11 +1,15 @@
-import { Plus } from 'lucide-react';
+'use client';
+
 import SharedDietCard from './components/dietCard/SharedDietCard';
 import Link from 'next/link';
 export const runtime = 'nodejs';
 import SharedSectionHeader from '../sections/SharedSectionHeader';
-import { diets } from './[id]/components/sharedDietsMockData';
+import { useGetAllDiets } from '@/hooks/diets/useGetAllDiets';
 
-export default async function SharedDiets({ role }) {
+export default function SharedDiets({ role }) {
+  // Fetch all diets
+  const { dietsData, isLoading, error } = useGetAllDiets();
+
   return (
     <div className="h-full space-y-4 overflow-y-auto md:space-y-6">
       <div className="flex items-center justify-between">
@@ -23,8 +27,8 @@ export default async function SharedDiets({ role }) {
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {diets.map((diet) => (
-          <SharedDietCard role={role} diet={diet} key={diet.id} />
+        {dietsData?.map((diet) => (
+          <SharedDietCard role={role} diet={diet} key={diet._id} />
         ))}
       </div>
     </div>

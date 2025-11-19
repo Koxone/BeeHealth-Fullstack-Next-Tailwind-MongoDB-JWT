@@ -1,10 +1,10 @@
 'use client';
 
-import { useTodayAppointmentsBySpecialty } from '@/hooks/useTodayAppointmentsBySpecialty';
-import { useGetFullInventory } from '@/hooks/useGetFullInventory';
+import { useTodayAppointmentsBySpecialty } from '@/hooks/appointments/useTodayAppointmentsBySpecialty';
+import { useGetFullInventory } from '@/hooks/inventory/useGetFullInventory';
 import { Users, DollarSign, AlertTriangle, Activity, Pill } from 'lucide-react';
 import DoctorStatsCard from './DoctorStatsCard';
-import { useGetAllConsults } from '@/hooks/useGetAllConsults';
+import { useGetAllConsults } from '@/hooks/consults/useGetAllConsults';
 
 export default function DoctorStatsGrid({ role, specialty }) {
   // Appointments Today logic
