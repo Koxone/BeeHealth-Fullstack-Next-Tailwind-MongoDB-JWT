@@ -5,7 +5,15 @@ import { ChevronDown, Check } from 'lucide-react';
 import { useGetAllPatients } from '@/hooks/patients/useGetAllPatients';
 import { useAssignDiet } from '../hooks/useAssignDiet';
 
-export default function AssignDiet({ specialty, dietId }: { specialty: string; dietId: string }) {
+export default function AssignDiet({
+  specialty,
+  dietId,
+  refetch,
+}: {
+  specialty: string;
+  dietId: string;
+  refetch: () => void;
+}) {
   // Fetch patients
   const { patients, isLoading, error } = useGetAllPatients();
   const [patientsData, setPatientsData] = useState(patients || []);
@@ -44,6 +52,7 @@ export default function AssignDiet({ specialty, dietId }: { specialty: string; d
       const updatedDiet = await assignDietToPatients(dietId, patientsPayload);
       console.log('Diet updated:', updatedDiet);
       setShowSuccess(true);
+      refetch();
       setTimeout(() => {
         setShowSuccess(false);
       }, 3000);
