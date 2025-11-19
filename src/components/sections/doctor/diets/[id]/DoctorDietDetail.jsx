@@ -1,7 +1,6 @@
 'use client';
 
-import { ArrowLeft, AlertCircle } from 'lucide-react';
-import Link from 'next/link';
+import { AlertCircle } from 'lucide-react';
 import { useGetAllDiets } from '@/hooks/diets/useGetAllDiets';
 import AssignDiet from './components/AssignDiet';
 import PatientsAssignedViewer from './components/PatientsAssignedViewer';
@@ -20,6 +19,8 @@ import DoctorName from './components/sections/DoctorName';
 import Category from './components/sections/Category';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
+import GoBackButton from '@/components/shared/diets/[id]/components/GoBackButton';
+import DietImage from './components/sections/DietImage';
 
 export default function DoctorDietDetail({ params, role, specialty }) {
   const { id } = params;
@@ -30,10 +31,13 @@ export default function DoctorDietDetail({ params, role, specialty }) {
   const searchParams = useSearchParams();
   const mode = searchParams.get('mode');
   const [isEditing, setIsEditing] = useState(mode === 'edit');
+  const [isReading, setIsReading] = useState(mode !== 'edit');
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
   // Sync when URL changes
   useEffect(() => {
     setIsEditing(mode === 'edit');
+    setIsReading(mode !== 'edit');
   }, [mode]);
 
   if (isLoading) {
@@ -62,25 +66,11 @@ export default function DoctorDietDetail({ params, role, specialty }) {
     <div className="h-full min-h-full overflow-auto bg-linear-to-b from-gray-50 to-white">
       {/* Header */}
       <div className="mb-8">
-        <Link
-          href={`/${role}/diets`}
-          className="mb-6 inline-flex items-center gap-2 font-medium text-gray-600 transition-colors hover:text-gray-900"
-        >
-          <ArrowLeft className="h-5 w-5" />
-          Volver a Dietas
-        </Link>
+        {/* Go Back Button */}
+        <GoBackButton role={role} diet={diet} />
 
         {/* Hero section with image */}
-        {diet?.images?.[0] && (
-          <div className="relative mb-8 overflow-hidden rounded-2xl shadow-lg">
-            <div className="absolute inset-0 z-10 bg-linear-to-b from-transparent via-transparent to-black/20"></div>
-            <img
-              src={diet.images[0]}
-              alt={diet.name}
-              className="h-64 w-full object-cover md:h-80"
-            />
-          </div>
-        )}
+        {diet?.images?.[0] && <DietImage diet={diet} />}
       </div>
 
       {/* Main content */}
@@ -107,45 +97,58 @@ export default function DoctorDietDetail({ params, role, specialty }) {
           <PatientsAssignedViewer patients={diet.patients} />
         </div>
 
+        {/* Collapse toggle */}
+        {isReading && (
+          <button
+            type="button"
+            onClick={() => setIsCollapsed(!isCollapsed)}
+            className="mb-6 rounded-lg bg-blue-600 px-4 py-2 text-white"
+          >
+            {isCollapsed ? 'Ocultar dieta' : 'Mostrar dieta'}
+          </button>
+        )}
+
         {/* Content sections */}
-        <div className="space-y-6">
-          {/* Description section */}
-          {diet?.description && <Description diet={diet} isEditing={isEditing} />}
+        {(isEditing || isCollapsed) && (
+          <div className="space-y-6">
+            {/* Description section */}
+            {diet?.description && <Description diet={diet} isEditing={isEditing} />}
 
-          {/* Benefits section */}
-          {diet?.benefits && <Benefits diet={diet} isEditing={isEditing} />}
+            {/* Benefits section */}
+            {diet?.benefits && <Benefits diet={diet} isEditing={isEditing} />}
 
-          {/* Instructions section */}
-          {diet?.instructions && <Instructions diet={diet} isEditing={isEditing} />}
+            {/* Instructions section */}
+            {diet?.instructions && <Instructions diet={diet} isEditing={isEditing} />}
 
-          {/* Ingredients section */}
-          {diet?.ingredients?.length > 0 && <Ingredients diet={diet} isEditing={isEditing} />}
+            {/* Ingredients section */}
+            {diet?.ingredients?.length > 0 && <Ingredients diet={diet} isEditing={isEditing} />}
 
-          {/* Allowed foods section */}
-          {diet?.allowedFoods?.items?.length > 0 && (
-            <AllowedFoods diet={diet} isEditing={isEditing} />
-          )}
+            {/* Allowed foods section */}
+            {diet?.allowedFoods?.items?.length > 0 && (
+              <AllowedFoods diet={diet} isEditing={isEditing} />
+            )}
 
-          {/* Allowed liquids section */}
-          {diet?.allowedLiquids?.items?.length > 0 && (
-            <AllowedLiquids diet={diet} isEditing={isEditing} />
-          )}
-          {/* Forbidden foods section */}
-          {diet?.forbiddenFoods?.items?.length > 0 && (
-            <ForbiddenFoods diet={diet} isEditing={isEditing} />
-          )}
+            {/* Allowed liquids section */}
+            {diet?.allowedLiquids?.items?.length > 0 && (
+              <AllowedLiquids diet={diet} isEditing={isEditing} />
+            )}
+            {/* Forbidden foods section */}
+            {diet?.forbiddenFoods?.items?.length > 0 && (
+              <ForbiddenFoods diet={diet} isEditing={isEditing} />
+            )}
 
-          {/* Forbidden liquids section */}
-          {diet?.forbiddenLiquids?.items?.length > 0 && (
-            <ForbiddenLiquids diet={diet} isEditing={isEditing} />
-          )}
+            {/* Forbidden liquids section */}
+            {diet?.forbiddenLiquids?.items?.length > 0 && (
+              <ForbiddenLiquids diet={diet} isEditing={isEditing} />
+            )}
 
-          {/* Duration section */}
-          {diet?.duration && <Duration diet={diet} isEditing={isEditing} />}
+            {/* Duration section */}
+            {diet?.duration && <Duration diet={diet} isEditing={isEditing} />}
 
-          {/* Medical notes section */}
-          {diet?.notes && <Notes diet={diet} isEditing={isEditing} />}
-        </div>
+            {/* Medical notes section */}
+            {diet?.notes && <Notes diet={diet} isEditing={isEditing} />}
+          </div>
+        )}
 
         {/* Spacing at bottom */}
         <div className="h-8"></div>
