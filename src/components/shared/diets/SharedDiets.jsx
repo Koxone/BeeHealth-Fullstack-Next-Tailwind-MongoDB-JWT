@@ -1,6 +1,5 @@
 'use client';
 
-import { Plus } from 'lucide-react';
 import SharedDietCard from './components/dietCard/SharedDietCard';
 import Link from 'next/link';
 export const runtime = 'nodejs';
@@ -10,7 +9,6 @@ import { useGetAllDiets } from '@/hooks/diets/useGetAllDiets';
 export default function SharedDiets({ role }) {
   // Fetch all diets
   const { dietsData, isLoading, error } = useGetAllDiets();
-  console.log(dietsData);
 
   return (
     <div className="h-full space-y-4 overflow-y-auto md:space-y-6">

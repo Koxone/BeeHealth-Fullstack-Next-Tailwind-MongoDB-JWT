@@ -14,6 +14,8 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { useGetAllDiets } from '@/hooks/diets/useGetAllDiets';
+import AssignDiet from './components/AssignDiet';
+import PatientsAssignedViewer from './components/PatientsAssignedViewer';
 
 export default function DoctorDietDetail({ params, role }) {
   const { id } = params;
@@ -71,7 +73,7 @@ export default function DoctorDietDetail({ params, role }) {
       {/* Main content */}
       <div className="mx-auto max-w-5xl px-0">
         {/* Title section */}
-        <div className="mb-8">
+        <div className="mb-8 flex flex-col gap-6">
           <h1 className="mb-4 text-3xl font-bold text-gray-900 md:text-4xl">{diet?.name}</h1>
 
           {/* Meta info grid */}
@@ -120,6 +122,12 @@ export default function DoctorDietDetail({ params, role }) {
               </div>
             )}
           </div>
+
+          {/* Select Patient to assign the diet */}
+          <AssignDiet />
+
+          {/* Patients assigned to this diet */}
+          <PatientsAssignedViewer patients={diet.patients} />
         </div>
 
         {/* Content sections */}

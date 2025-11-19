@@ -3,7 +3,6 @@ import DietCardActions from './components/DietCardActions';
 import Link from 'next/link';
 
 export default function SharedDietCard({ diet, role }) {
-  console.log(diet);
   return (
     <div className="group border-medtrack-green-light hover:border-medtrack-green-hover rounded-xl border bg-white p-4 shadow-sm transition-all duration-200 hover:shadow-lg md:p-6">
       {/* Diet Image */}
