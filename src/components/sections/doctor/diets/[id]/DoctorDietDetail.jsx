@@ -90,7 +90,7 @@ export default function DoctorDietDetail({ params, role, specialty }) {
           </div>
 
           {/* Select Patient to assign the diet */}
-          <AssignDiet specialty={specialty} dietId={id} refetch={refetch} />
+          <AssignDiet specialty={specialty} dietId={id} diet={diet} refetch={refetch} />
 
           {/* Patients assigned to this diet */}
           <PatientsAssignedViewer patients={diet.patients} />

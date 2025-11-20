@@ -9,10 +9,12 @@ export default function AssignDiet({
   specialty,
   dietId,
   refetch,
+  diet,
 }: {
   specialty: string;
   dietId: string;
   refetch: () => void;
+  diet: any;
 }) {
   // Fetch patients
   const { patients, isLoading, error } = useGetAllPatients();
@@ -23,6 +25,13 @@ export default function AssignDiet({
       setPatientsData(filteredPatients);
     }
   }, [patients, specialty]);
+
+  useEffect(() => {
+    if (diet?.patients?.length > 0) {
+      const preSelected = diet.patients.map((p) => p.patient._id);
+      setSelected(preSelected);
+    }
+  }, [diet]);
 
   // Dropdown control
   const [open, setOpen] = useState(false);
@@ -46,17 +55,14 @@ export default function AssignDiet({
   } = useAssignDiet();
 
   const handleAssign = async () => {
-    if (selected.length === 0) return;
+    // convert selected ids to payload
     const patientsPayload = selected.map((id) => ({ patient: id }));
     try {
       const updatedDiet = await assignDietToPatients(dietId, patientsPayload);
       console.log('Diet updated:', updatedDiet);
       setShowSuccess(true);
       refetch();
-      setTimeout(() => {
-        setShowSuccess(false);
-      }, 3000);
-      setSelected([]);
+      setTimeout(() => setShowSuccess(false), 3000);
       setOpen(false);
     } catch (err) {
       console.error('Error assigning diet:', err);
@@ -78,9 +84,9 @@ export default function AssignDiet({
         className="flex w-full items-center justify-between rounded-md border border-gray-300 bg-gray-50 px-3 py-2 text-left text-sm text-gray-900 transition-colors hover:border-gray-400"
       >
         <span>
-          {selected.length === 0 && 'Seleccionar pacientes'}
-          {selected.length === 1 && '1 paciente seleccionado'}
-          {selected.length > 1 && `${selected.length} pacientes seleccionados`}
+          {selected.length === 0 && 'Asignar pacientes'}
+          {selected.length === 1 && '1 paciente asignado'}
+          {selected.length > 1 && `${selected.length} pacientes asignados`}
         </span>
         <ChevronDown className="h-4 w-4 text-gray-600" />
       </button>

@@ -77,14 +77,8 @@ export async function PATCH(req, { params }) {
     if (Array.isArray(ingredients)) diet.ingredients = ingredients;
     if (Array.isArray(images)) diet.images = images;
 
-    if (Array.isArray(patients) && patients.length > 0) {
-      const existing = diet.patients.map((p) => p.patient.toString());
-
-      patients.forEach((newP) => {
-        if (!existing.includes(newP.patient)) {
-          diet.patients.push(newP);
-        }
-      });
+    if (Array.isArray(patients)) {
+      diet.patients = patients.map((p) => ({ patient: p.patient }));
     }
 
     updateSection(diet.allowedFoods, allowedFoods);
