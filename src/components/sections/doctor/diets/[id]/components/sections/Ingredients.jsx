@@ -37,7 +37,7 @@ export default function Ingredients({ diet, isEditing = false, editDiet }) {
       {!isEditing && (
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           {ingredients.map((item) => (
-            <div key={item} className="flex items-start gap-3 rounded-lg bg-gray-50 p-3">
+            <div key={item} className="flex items-start gap-3 rounded-lg bg-gray-50">
               <div className="mt-2 h-2 w-2 shrink-0 rounded-full bg-blue-600"></div>
               <span className="text-gray-700">{item}</span>
             </div>

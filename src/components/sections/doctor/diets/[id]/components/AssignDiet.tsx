@@ -73,7 +73,7 @@ export default function AssignDiet({
     <div className="flex flex-col rounded-lg border border-gray-400 bg-white p-4">
       <label className="mb-2 text-xs font-semibold tracking-wide text-gray-500 uppercase">
         Asignar dieta a pacientes{' '}
-        <span className="text-[10px] normal-case">
+        <span className="text-[10px] font-normal normal-case">
           (Esta función solo es visible para Doctores)
         </span>
       </label>
