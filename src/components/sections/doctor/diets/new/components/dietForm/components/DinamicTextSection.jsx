@@ -1,13 +1,13 @@
 import { FileText, CheckCircle } from 'lucide-react';
 import React from 'react';
 
-function InputText({ title = '', Icon, placeholder = '' }) {
+function DinamicTextSection({ title = '', Icon, placeholder = '', optional = true }) {
   return (
     <section className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md md:p-4">
       <h2 className="mb-6 flex items-center gap-2 text-xl font-semibold text-gray-900">
         <div className="h-6 w-1 rounded-full bg-yellow-600"></div>
         {title}
-        <span className="ml-1 text-xs text-gray-400">(Opcional)</span>
+        {optional && <span className="ml-1 text-xs text-gray-400">(Opcional)</span>}
       </h2>
 
       <div className="mt-4 space-y-4">
@@ -27,4 +27,4 @@ function InputText({ title = '', Icon, placeholder = '' }) {
   );
 }
 
-export default InputText;
+export default DinamicTextSection;

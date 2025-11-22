@@ -2,17 +2,12 @@
 
 import { useState } from 'react';
 import BasicInfoSection from './components/BasicInfoSection';
-import DescriptionSection from './components/DescriptionSection';
-import IngredientsSection from './components/IngredientsSection';
-import NotesSection from './components/NotesSection';
 import ImagesSection from './components/ImagesSection';
 import { Check, FileText, CheckCircle, ShoppingBasket, Search, X } from 'lucide-react';
-import InputText from './components/InputText';
-import FoodsAndLiquids from './components/shared/FoodsAndLiquids';
+import DinamicTextSection from './components/DinamicTextSection';
+import DynamicListSection from './components/shared/DynamicListSection';
 
 export default function DietForm() {
-  const [images, setImages] = useState([]);
-
   const [formData, setFormData] = useState({
     name: '',
     category: '',
@@ -33,21 +28,6 @@ export default function DietForm() {
     images: [],
   });
 
-  const handleAddImage = (e) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        setImages([...images, event.target?.result]);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleRemoveImage = (index) => {
-    setImages(images.filter((_, i) => i !== index));
-  };
-
   return (
     <div className="min-h-full bg-linear-to-br from-gray-50 to-white">
       <form className="mx-auto max-w-5xl space-y-8 p-4 md:p-0">
@@ -65,31 +45,37 @@ export default function DietForm() {
         <BasicInfoSection formData={formData} />
 
         {/* Description section */}
-        <InputText
+        <DinamicTextSection
           title="Descripción"
           Icon={FileText}
+          optional={false}
           placeholder="Escribe una descripción del plan nutricional"
         />
 
         {/* Benefits section */}
-        <InputText
+        <DinamicTextSection
           title="Beneficios"
           Icon={CheckCircle}
           placeholder="Escribe los beneficios del plan nutricional"
         />
 
         {/* Instructions section */}
-        <InputText
+        <DinamicTextSection
           title="Instrucciones"
           Icon={Search}
           placeholder="Escribe las instrucciones del plan nutricional"
         />
 
         {/* Ingredients - Optional */}
-        <IngredientsSection />
+        <DynamicListSection
+          title="Ingredientes"
+          Icon={ShoppingBasket}
+          variant="neutral"
+          placeholder="ej. Pollo, arroz, verduras, etc."
+        />
 
         {/* Allowed Foods */}
-        <FoodsAndLiquids
+        <DynamicListSection
           title="Alimentos Permitidos"
           Icon={CheckCircle}
           variant="success"
@@ -97,7 +83,7 @@ export default function DietForm() {
         />
 
         {/* Allowed Liquids */}
-        <FoodsAndLiquids
+        <DynamicListSection
           title="Líquidos Permitidos"
           Icon={CheckCircle}
           variant="success"
@@ -105,7 +91,7 @@ export default function DietForm() {
         />
 
         {/* Forbidden Foods */}
-        <FoodsAndLiquids
+        <DynamicListSection
           title="Alimentos Prohibidos"
           Icon={X}
           variant="warning"
@@ -113,7 +99,7 @@ export default function DietForm() {
         />
 
         {/* Forbidden Liquids */}
-        <FoodsAndLiquids
+        <DynamicListSection
           title="Líquidos Prohibidos"
           Icon={X}
           variant="warning"
@@ -121,20 +107,20 @@ export default function DietForm() {
         />
 
         {/* Medical Notes */}
-        <NotesSection />
+        <DinamicTextSection
+          title="Notas Médicas"
+          Icon={FileText}
+          placeholder="Agrega cualquier nota adicional relevante para el plan nutricional"
+        />
 
         {/* Images - Optional */}
-        <ImagesSection
-          images={images}
-          handleAddImage={handleAddImage}
-          handleRemoveImage={handleRemoveImage}
-        />
+        <ImagesSection />
 
         {/* Actions */}
         <div className="flex flex-col gap-4 pb-8 sm:flex-row">
           <button
             type="button"
-            className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-blue-600 px-6 py-3 font-semibold text-white shadow-md transition-all hover:bg-blue-700 hover:shadow-lg active:scale-95"
+            className="bg-medtrack-blue-solid hover:bg-medtrack-blue-hover flex flex-1 items-center justify-center gap-2 rounded-lg px-6 py-3 font-semibold text-white shadow-md transition-all hover:shadow-lg active:scale-95"
           >
             <Check className="h-5 w-5" />
             Crear Plan Dietético

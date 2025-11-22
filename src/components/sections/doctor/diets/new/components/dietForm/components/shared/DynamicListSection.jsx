@@ -1,0 +1,107 @@
+import { Plus, X } from 'lucide-react';
+import React, { useState } from 'react';
+
+function DynamicListSection({ title, Icon, variant = 'success', placeholder, optional = true }) {
+  // variant styles
+  const variantStyles = {
+    success: {
+      background: 'bg-medtrack-green-secondary-solid',
+      text: 'text-white',
+      buttons: 'bg-medtrack-green-secondary-solid hover:bg-medtrack-green-secondary-hover',
+    },
+    warning: {
+      background: 'bg-medtrack-red-solid',
+      text: 'text-white',
+      buttons: 'bg-medtrack-red-solid hover:bg-medtrack-red-hover',
+    },
+    neutral: {
+      background: 'bg-medtrack-blue-solid',
+      text: 'text-white',
+      buttons: 'bg-medtrack-blue-solid hover:bg-medtrack-blue-hover',
+    },
+  };
+
+  // selected styles
+  const styles = variantStyles[variant];
+
+  // local state
+  const [items, setItems] = useState([]);
+  const [inputValue, setInputValue] = useState('');
+
+  // add item
+  const handleAdd = () => {
+    if (!inputValue.trim()) return;
+    setItems([...items, inputValue.trim()]);
+    setInputValue('');
+  };
+
+  // remove item
+  const handleRemove = (index) => {
+    const filtered = items.filter((_, i) => i !== index);
+    setItems(filtered);
+  };
+
+  return (
+    <section className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md md:p-4">
+      {/* header */}
+      <div className="mb-4 flex items-center gap-3">
+        <div className={`rounded-lg ${styles.background} p-2`}>
+          <Icon className={`h-5 w-5 ${styles.text}`} />
+        </div>
+        <h2 className="text-xl font-semibold text-gray-900">{title}</h2>
+        {optional && <span className="ml-1 text-xs text-gray-400">(Opcional)</span>}
+        {!optional && <span className="ml-1 text-xs text-gray-400">(Requerido)</span>}
+      </div>
+
+      {/* items list */}
+      <div className="mb-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
+        {items.map((item, index) => (
+          <div
+            key={index}
+            className="flex items-center justify-between rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm"
+          >
+            <span>{item}</span>
+
+            {/* remove button */}
+            <button onClick={() => handleRemove(index)} className="rounded-lg bg-gray-200 p-1">
+              <X className="h-4 w-4 text-gray-600" />
+            </button>
+          </div>
+        ))}
+      </div>
+
+      {/* add item input */}
+      <div className="mb-4 flex gap-2">
+        <input
+          type="text"
+          placeholder={placeholder}
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          className="w-full rounded-lg border border-gray-300 p-2 text-sm"
+        />
+        <button
+          type="button"
+          onClick={handleAdd}
+          className={`flex items-center justify-center rounded-lg ${styles.buttons} px-3 py-2 text-sm font-medium text-white`}
+        >
+          <Plus className="h-4 w-4" />
+        </button>
+      </div>
+
+      {/* note */}
+      <label className="mb-1 block text-sm font-medium text-gray-700">Nota opcional</label>
+      <textarea
+        placeholder="Escribe una nota para esta sección"
+        className="w-full rounded-lg border border-gray-300 bg-gray-50 p-3 text-sm"
+        rows={3}
+      />
+
+      {/* save */}
+      <div className="mt-3 flex items-center gap-3">
+        <button className={`rounded-lg ${styles.buttons} px-4 py-2 text-white`}>Guardar</button>
+      </div>
+    </section>
+  );
+}
+
+export default DynamicListSection;

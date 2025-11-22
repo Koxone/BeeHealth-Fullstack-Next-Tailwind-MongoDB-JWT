@@ -1,7 +1,23 @@
 import { ImageIcon } from 'lucide-react';
-import React from 'react';
+import React, { useState } from 'react';
 
-function ImagesSection({ images, handleAddImage, handleRemoveImage }) {
+function ImagesSection() {
+  const [images, setImages] = useState([]);
+
+  const handleAddImage = (e) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setImages([...images, event.target?.result]);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleRemoveImage = (index) => {
+    setImages(images.filter((_, i) => i !== index));
+  };
   return (
     <section className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm md:p-8">
       <h2 className="mb-6 flex items-center gap-2 text-xl font-semibold text-gray-900">
