@@ -1,4 +1,4 @@
-import DietForm from './components/DietForm';
+import DietForm from './components/dietForm/DietForm';
 import TopBar from './components/TopBar';
 
 export default function DoctorDietNew() {
