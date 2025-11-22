@@ -1,63 +1,45 @@
-import { Plus } from 'lucide-react';
 import React from 'react';
+import { Plus, X } from 'lucide-react';
 
-function IngredientsSection({
-  ingredients,
-  handleIngredientChange,
-  handleRemoveIngredient,
-  handleAddIngredient,
-}) {
+export default function IngredientsSection() {
   return (
-    <section className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm md:p-8">
-      <h2 className="mb-6 flex items-center gap-2 text-xl font-semibold text-gray-900">
-        <div className="h-6 w-1 rounded-full bg-yellow-600"></div>
-        Ingredientes
-        <span className="ml-1 text-xs text-gray-400">(Opcional)</span>
-      </h2>
+    <section className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm hover:shadow-md md:p-4">
+      {/* Title */}
+      <h2 className="mb-4 text-xl font-semibold text-gray-900">Ingredientes</h2>
 
-      <div>
-        <label className="mb-4 block text-sm font-semibold text-gray-700">
-          Lista de Ingredientes
-        </label>
+      {/* Empty list */}
+      <div className="space-y-4">
+        {/* Empty item */}
+        <div className="flex items-center gap-3 rounded-lg border border-gray-200 bg-gray-50 p-3">
+          {/* Input */}
+          <input
+            className="flex-1 rounded-lg border border-gray-300 px-3 py-2 text-gray-700 focus:border-blue-500 focus:outline-none"
+            placeholder="Ingrediente"
+          />
 
-        <div className="space-y-3">
-          {ingredients.map((ingredient, index) => (
-            <div key={index} className="flex gap-3">
-              <input
-                type="text"
-                value={ingredient}
-                onChange={(e) => handleIngredientChange(index, e.target.value)}
-                className="flex-1 rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder-gray-400 transition-all focus:border-transparent focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                placeholder={`Ej: ${index === 0 ? '2 pechugas de pollo' : index === 1 ? '1 taza de arroz integral' : 'Ingrediente'}`}
-              />
-              {ingredients.length > 1 && (
-                <button
-                  type="button"
-                  onClick={() => handleRemoveIngredient(index)}
-                  className="flex items-center justify-center rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-red-600 transition-colors hover:bg-red-100"
-                >
-                  <Trash2 className="h-5 w-5" />
-                </button>
-              )}
-            </div>
-          ))}
+          {/* Remove button */}
+          <button className="rounded-lg bg-red-100 p-2 text-red-600 hover:bg-red-200">
+            <X className="h-4 w-4" />
+          </button>
         </div>
 
-        <button
-          type="button"
-          onClick={handleAddIngredient}
-          className="mt-4 inline-flex items-center gap-2 rounded-lg border-2 border-dashed border-gray-300 px-4 py-2 text-sm font-semibold text-gray-700 transition-colors hover:border-gray-400"
-        >
+        {/* Add button */}
+        <button className="bg-medtrack-blue-solid hover:bg-medtrack-blue-hover flex items-center gap-2 rounded-lg px-4 py-2 text-white transition-colors">
           <Plus className="h-4 w-4" />
-          Agregar Ingrediente
+          Agregar ingrediente
         </button>
 
-        <p className="mt-3 text-xs text-gray-500">
-          Haz clic en el botón para agregar más ingredientes
-        </p>
+        {/* Save and cancel */}
+        <div className="flex items-center gap-3 pt-2">
+          <button className="bg-medtrack-green-secondary-solid hover:bg-medtrack-green-secondary-hover rounded-lg px-4 py-2 text-sm font-medium text-white shadow-sm transition-opacity disabled:opacity-50">
+            Guardar
+          </button>
+
+          <button className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-700 transition-colors hover:bg-gray-100">
+            Cancelar
+          </button>
+        </div>
       </div>
     </section>
   );
 }
-
-export default IngredientsSection;

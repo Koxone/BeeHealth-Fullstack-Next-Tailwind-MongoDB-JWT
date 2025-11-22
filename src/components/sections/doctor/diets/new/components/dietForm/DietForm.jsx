@@ -1,14 +1,17 @@
 'use client';
 
-import MealsSection from '../MealsSection';
 import { useState } from 'react';
 import BasicInfoSection from './components/BasicInfoSection';
 import DescriptionSection from './components/DescriptionSection';
-import BeveragesSection from './components/BeveragesSection';
+import AllowedLiquidsSection from './components/AllowedLiquidsSection';
 import IngredientsSection from './components/IngredientsSection';
 import NotesSection from './components/NotesSection';
 import ImagesSection from './components/ImagesSection';
-import { Check } from 'lucide-react';
+import { Check, FileText, CheckCircle, ShoppingBasket, Search } from 'lucide-react';
+import InputText from './components/InputText';
+import AllowedFoodsSection from './components/AllowedFoodsSection';
+import ForbiddenFoodsSection from './components/ForbiddenFoodsSection';
+import ForbiddenLiquidsSection from './components/ForbiddenLiquidsSection';
 
 export default function DietForm() {
   const [ingredients, setIngredients] = useState(['']);
@@ -80,21 +83,40 @@ export default function DietForm() {
         <BasicInfoSection formData={formData} />
 
         {/* Description section */}
-        <DescriptionSection />
+        <InputText
+          title="Descripción"
+          Icon={FileText}
+          placeholder="Escribe una descripción del plan nutricional"
+        />
 
-        {/* Allowed & Forbidden Foods */}
-        <MealsSection />
+        {/* Benefits section */}
+        <InputText
+          title="Beneficios"
+          Icon={CheckCircle}
+          placeholder="Escribe los beneficios del plan nutricional"
+        />
 
-        {/* Beverages */}
-        <BeveragesSection />
+        {/* Instructions section */}
+        <InputText
+          title="Instrucciones"
+          Icon={Search}
+          placeholder="Escribe las instrucciones del plan nutricional"
+        />
 
         {/* Ingredients - Optional */}
-        <IngredientsSection
-          ingredients={ingredients}
-          handleIngredientChange={handleIngredientChange}
-          handleRemoveIngredient={handleRemoveIngredient}
-          handleAddIngredient={handleAddIngredient}
-        />
+        <IngredientsSection />
+
+        {/* Allowed Foods */}
+        <AllowedFoodsSection />
+
+        {/* Allowed Liquids */}
+        <AllowedLiquidsSection />
+
+        {/* Forbidden Foods */}
+        <ForbiddenFoodsSection />
+
+        {/* Forbidden Liquids */}
+        <ForbiddenLiquidsSection />
 
         {/* Medical Notes */}
         <NotesSection />

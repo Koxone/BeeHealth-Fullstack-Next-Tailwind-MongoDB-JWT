@@ -13,7 +13,7 @@ function BasicInfoSection() {
           {/* Plan name - Required */}
           <div>
             <label className="mb-2 block text-sm font-semibold text-gray-700">
-              Nombre del Plan
+              Nombre de la dieta
               <span className="ml-1 text-red-500">*</span>
             </label>
             <input

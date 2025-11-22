@@ -1,20 +1,20 @@
-import { FileText } from 'lucide-react';
+import { FileText, CheckCircle } from 'lucide-react';
 import React from 'react';
 
-function DescriptionSection() {
+function InputText({ title = '', Icon, placeholder = '' }) {
   return (
     <section className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md md:p-4">
-      <div className="mb-4 flex items-center gap-3">
-        <div className="rounded-lg bg-gray-100 p-2">
-          <FileText className="h-5 w-5 text-gray-700" />
-        </div>
-        <h2 className="text-xl font-semibold text-gray-900">Descripción</h2>
-      </div>
+      <h2 className="mb-6 flex items-center gap-2 text-xl font-semibold text-gray-900">
+        <div className="h-6 w-1 rounded-full bg-yellow-600"></div>
+        {title}
+        <span className="ml-1 text-xs text-gray-400">(Opcional)</span>
+      </h2>
 
       <div className="mt-4 space-y-4">
         <textarea
           className="focus:border-medtrack-blue w-full rounded-lg border border-gray-300 p-3 text-gray-700 focus:outline-none"
-          rows={3}
+          rows={2}
+          placeholder={placeholder}
         />
 
         <div className="flex items-center gap-3">
@@ -27,4 +27,4 @@ function DescriptionSection() {
   );
 }
 
-export default DescriptionSection;
+export default InputText;
