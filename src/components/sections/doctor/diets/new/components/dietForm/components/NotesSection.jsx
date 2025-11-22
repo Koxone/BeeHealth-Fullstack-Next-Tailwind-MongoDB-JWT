@@ -14,7 +14,7 @@ function NotesSection() {
           Recomendaciones Especiales
         </label>
         <textarea
-          rows="5"
+          rows="2"
           className="w-full resize-none rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder-gray-400 transition-all focus:border-transparent focus:ring-2 focus:ring-blue-500 focus:outline-none"
           placeholder="Restricciones dietéticas, alergias, contraindicaciones, consejos especiales para el paciente, notas médicas relevantes..."
         ></textarea>

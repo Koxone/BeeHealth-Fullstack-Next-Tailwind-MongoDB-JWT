@@ -3,18 +3,14 @@
 import { useState } from 'react';
 import BasicInfoSection from './components/BasicInfoSection';
 import DescriptionSection from './components/DescriptionSection';
-import AllowedLiquidsSection from './components/AllowedLiquidsSection';
 import IngredientsSection from './components/IngredientsSection';
 import NotesSection from './components/NotesSection';
 import ImagesSection from './components/ImagesSection';
-import { Check, FileText, CheckCircle, ShoppingBasket, Search } from 'lucide-react';
+import { Check, FileText, CheckCircle, ShoppingBasket, Search, X } from 'lucide-react';
 import InputText from './components/InputText';
-import AllowedFoodsSection from './components/AllowedFoodsSection';
-import ForbiddenFoodsSection from './components/ForbiddenFoodsSection';
-import ForbiddenLiquidsSection from './components/ForbiddenLiquidsSection';
+import FoodsAndLiquids from './components/shared/FoodsAndLiquids';
 
 export default function DietForm() {
-  const [ingredients, setIngredients] = useState(['']);
   const [images, setImages] = useState([]);
 
   const [formData, setFormData] = useState({
@@ -36,20 +32,6 @@ export default function DietForm() {
     notes: '',
     images: [],
   });
-
-  const handleAddIngredient = () => {
-    setIngredients([...ingredients, '']);
-  };
-
-  const handleRemoveIngredient = (index) => {
-    setIngredients(ingredients.filter((_, i) => i !== index));
-  };
-
-  const handleIngredientChange = (index, value) => {
-    const newIngredients = [...ingredients];
-    newIngredients[index] = value;
-    setIngredients(newIngredients);
-  };
 
   const handleAddImage = (e) => {
     const file = e.target.files?.[0];
@@ -107,16 +89,36 @@ export default function DietForm() {
         <IngredientsSection />
 
         {/* Allowed Foods */}
-        <AllowedFoodsSection />
+        <FoodsAndLiquids
+          title="Alimentos Permitidos"
+          Icon={CheckCircle}
+          variant="success"
+          placeholder="ej. Pollo a la plancha, ensalada, etc."
+        />
 
         {/* Allowed Liquids */}
-        <AllowedLiquidsSection />
+        <FoodsAndLiquids
+          title="Líquidos Permitidos"
+          Icon={CheckCircle}
+          variant="success"
+          placeholder="ej. Agua, té, etc."
+        />
 
         {/* Forbidden Foods */}
-        <ForbiddenFoodsSection />
+        <FoodsAndLiquids
+          title="Alimentos Prohibidos"
+          Icon={X}
+          variant="warning"
+          placeholder="ej. Pollo frito, comida rápida, etc."
+        />
 
         {/* Forbidden Liquids */}
-        <ForbiddenLiquidsSection />
+        <FoodsAndLiquids
+          title="Líquidos Prohibidos"
+          Icon={X}
+          variant="warning"
+          placeholder="ej. Refrescos, alcohol, etc."
+        />
 
         {/* Medical Notes */}
         <NotesSection />
