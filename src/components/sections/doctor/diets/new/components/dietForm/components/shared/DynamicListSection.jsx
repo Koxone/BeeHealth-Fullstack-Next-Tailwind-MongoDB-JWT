@@ -96,7 +96,15 @@ function DynamicListSection({
       </div>
 
       {/* Add item input */}
-      <div className="mb-4 flex gap-2">
+      <div
+        className="mb-4 flex gap-2"
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            handleAdd();
+          }
+        }}
+      >
         <input
           type="text"
           placeholder={placeholder}

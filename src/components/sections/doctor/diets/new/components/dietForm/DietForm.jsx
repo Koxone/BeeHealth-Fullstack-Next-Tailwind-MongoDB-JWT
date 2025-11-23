@@ -90,7 +90,12 @@ export default function DietForm() {
           Icon={ShoppingBasket}
           variant="neutral"
           value={formData.ingredients}
-          onChange={(e) => setFormData({ ...formData, ingredients: e.target.value })}
+          onChange={(e) =>
+            setFormData({
+              ...formData,
+              ingredients: e.target.value, 
+            })
+          }
           placeholder="ej. Pollo, arroz, verduras, etc."
         />
 
@@ -99,11 +104,14 @@ export default function DietForm() {
           title="Alimentos Permitidos"
           Icon={CheckCircle}
           variant="success"
-          value={formData.allowedFoods.items}
+          value={formData.allowedFoods}
           onChange={(e) =>
             setFormData({
               ...formData,
-              allowedFoods: { ...formData.allowedFoods, items: e.target.value },
+              allowedFoods: {
+                ...formData.allowedFoods,
+                ...e.target.value,
+              },
             })
           }
           placeholder="ej. Pollo a la plancha, ensalada, etc."
@@ -114,11 +122,14 @@ export default function DietForm() {
           title="Líquidos Permitidos"
           Icon={CheckCircle}
           variant="success"
-          value={formData.allowedLiquids.items}
+          value={formData.allowedLiquids}
           onChange={(e) =>
             setFormData({
               ...formData,
-              allowedLiquids: { ...formData.allowedLiquids, items: e.target.value },
+              allowedLiquids: {
+                ...formData.allowedLiquids,
+                ...e.target.value,
+              },
             })
           }
           placeholder="ej. Agua, té, etc."
@@ -129,11 +140,14 @@ export default function DietForm() {
           title="Alimentos Prohibidos"
           Icon={X}
           variant="warning"
-          value={formData.forbiddenFoods.items}
+          value={formData.forbiddenFoods}
           onChange={(e) =>
             setFormData({
               ...formData,
-              forbiddenFoods: { ...formData.forbiddenFoods, items: e.target.value },
+              forbiddenFoods: {
+                ...formData.forbiddenFoods,
+                ...e.target.value,
+              },
             })
           }
           placeholder="ej. Pollo frito, comida rápida, etc."
@@ -144,11 +158,14 @@ export default function DietForm() {
           title="Líquidos Prohibidos"
           Icon={X}
           variant="warning"
-          value={formData.forbiddenLiquids.items}
+          value={formData.forbiddenLiquids}
           onChange={(e) =>
             setFormData({
               ...formData,
-              forbiddenLiquids: { ...formData.forbiddenLiquids, items: e.target.value },
+              forbiddenLiquids: {
+                ...formData.forbiddenLiquids,
+                ...e.target.value,
+              },
             })
           }
           placeholder="ej. Refrescos, alcohol, etc."
