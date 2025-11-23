@@ -1,21 +1,30 @@
 import { put } from '@vercel/blob';
 import { NextResponse } from 'next/server';
+import sharp from 'sharp';
 
-// @route    POST /api/upload
-// @desc     Get products by types
-// @access   Private
 export async function POST(request) {
   try {
     const { searchParams } = new URL(request.url);
-    const filename = searchParams.get('filename');
+    const filenameParam = searchParams.get('filename');
 
-    if (!filename) {
+    if (!filenameParam) {
       return NextResponse.json({ error: 'Filename is required' }, { status: 400 });
     }
 
-    const blob = await put(filename, request.body, {
-      access: 'public',
-    });
+    // Leer el body como ArrayBuffer
+    const arrayBuffer = await request.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
+
+    // Convertir a WebP y comprimir
+    const optimizedBuffer = await sharp(buffer)
+      .webp({ quality: 80 }) // Calidad 0-100
+      .toBuffer();
+
+    // Cambiar extensión a .webp
+    const filename = filenameParam.replace(/\.\w+$/, '.webp');
+
+    // Subir a Vercel Blob
+    const blob = await put(filename, optimizedBuffer, { access: 'public' });
 
     return NextResponse.json({ url: blob.url });
   } catch (error) {
