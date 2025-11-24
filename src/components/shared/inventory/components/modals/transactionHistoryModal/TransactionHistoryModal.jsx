@@ -12,6 +12,7 @@ import StatusOffBlock from './components/StatusOffBlock';
 import InitialStockBlock from './components/InitialStockBlock';
 import NameBlock from './components/NameBlock';
 import CategoryBlock from './components/CategoryBlock';
+import StockBlock from './components/StockBlock';
 
 export default function TransactionHistoryModal({ onClose, history, item, isLoading }) {
   const { handleOverlayClick } = useModalClose(onClose);
@@ -146,7 +147,7 @@ export default function TransactionHistoryModal({ onClose, history, item, isLoad
               )}
 
               {/* BLOCK: RESTOCK */}
-              {/* {transaction?.reasonType === 'restock' && <RestockBlock transaction={transaction} />} */}
+              {transaction?.reasonType === 'restock' && <RestockBlock transaction={transaction} />}
 
               {/* BLOCK: PRODUCT UPDATE: NAME */}
               {transaction?.reasonType === 'correction' &&
@@ -161,9 +162,17 @@ export default function TransactionHistoryModal({ onClose, history, item, isLoad
                 )}
 
               {/* BLOCK: QUANTITY CORRECTION */}
-              {transaction?.reasonType === 'correction' && !transaction?.priceField && (
-                <QuantityBlock transaction={transaction} />
-              )}
+              {transaction?.reasonType === 'correction' &&
+                transaction?.changedFields?.includes('quantity') && (
+                  <QuantityBlock transaction={transaction} />
+                )}
+
+              {/* BLOCK: STOCK CORRECTION */}
+              {transaction?.reasonType === 'correction' &&
+                (transaction?.changedFields?.includes('minStock') ||
+                  transaction?.changedFields?.includes('maxStock')) && (
+                  <StockBlock transaction={transaction} />
+                )}
 
               {/* BLOCK: PRICE CORRECTION */}
               {transaction?.reasonType === 'correction' &&

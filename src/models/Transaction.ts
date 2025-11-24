@@ -17,6 +17,14 @@ interface ITransaction extends Document {
   newQuantity?: number;
   quantityDelta?: number;
 
+  // Stock fields change
+  oldMinStock?: number;
+  newMinStock?: number;
+  minStockDelta?: number;
+  oldMaxStock?: number;
+  newMaxStock?: number;
+  maxStockDelta?: number;
+
   // Product fields change
   oldName?: string;
   newName?: string;
@@ -53,6 +61,14 @@ const TransactionSchema = new Schema<ITransaction>(
     performedBy: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     patient: { type: Schema.Types.ObjectId, ref: 'User' },
     changedFields: { type: [String], required: false },
+
+    // Stock field changes
+    oldMinStock: { type: Number },
+    newMinStock: { type: Number },
+    minStockDelta: { type: Number },
+    oldMaxStock: { type: Number },
+    newMaxStock: { type: Number },
+    maxStockDelta: { type: Number },
 
     // Product field changes
     oldName: { type: String },
