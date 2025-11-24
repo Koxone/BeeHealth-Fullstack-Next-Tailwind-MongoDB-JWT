@@ -161,9 +161,9 @@ export default function TransactionHistoryModal({ onClose, history, item, isLoad
                 )}
 
               {/* BLOCK: QUANTITY CORRECTION */}
-              {/* {transaction?.reasonType === 'correction' && !transaction?.priceField && (
+              {transaction?.reasonType === 'correction' && !transaction?.priceField && (
                 <QuantityBlock transaction={transaction} />
-              )} */}
+              )}
 
               {/* BLOCK: PRICE CORRECTION */}
               {transaction?.reasonType === 'correction' &&

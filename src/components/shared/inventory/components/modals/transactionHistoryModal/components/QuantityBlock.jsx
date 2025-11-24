@@ -19,7 +19,7 @@ function QuantityBlock({ transaction }) {
           ) : (
             <ArrowDownCircle className="h-4 w-4" />
           )}
-          {transaction?.quantity} unidades
+          {transaction?.quantityDelta} unidades
         </span>
       </div>
 
@@ -36,7 +36,7 @@ function QuantityBlock({ transaction }) {
         </p>
         <p>
           <span className="font-medium text-gray-800">Cambio:</span>{' '}
-          {transaction?.movement === 'IN' ? '+' : '-'}
+          {transaction?.movement === 'IN' ? '+' : ''}
           {transaction?.quantityDelta} unidades
         </p>
         <p>
