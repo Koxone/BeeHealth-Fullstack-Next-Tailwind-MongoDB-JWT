@@ -2,8 +2,6 @@
 
 import { X, History } from 'lucide-react';
 import { useModalClose } from '@/hooks/useModalClose';
-
-// Main Blocks
 import PriceBlock from './components/PriceBlock';
 import RestockBlock from './components/RestockBlock';
 import QuantityBlock from './components/QuantityBlock';
