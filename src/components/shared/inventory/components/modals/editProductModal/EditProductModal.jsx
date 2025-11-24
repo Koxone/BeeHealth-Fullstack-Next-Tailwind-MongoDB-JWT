@@ -14,14 +14,14 @@ import { editProductStock } from './services/editStock';
 import { editProductQuantity } from './services/editQuantity';
 
 export default function EditProductModal({ activeTab, item, onClose, onSubmit }) {
+  // Modal close hook
   const { handleOverlayClick } = useModalClose(onClose);
 
   // Submit handler connected to backend
   async function handleEditSubmit(formData) {
     try {
-      let response;
+      const tasks = [];
 
-      // Check which fields actually changed
       const quantityChanged = formData.quantity !== item.quantity;
       const stockChanged =
         formData.minStock !== item.minStock || formData.maxStock !== item.maxStock;
@@ -32,41 +32,61 @@ export default function EditProductModal({ activeTab, item, onClose, onSubmit })
         formData.costPrice !== item.product.costPrice ||
         formData.salePrice !== item.product.salePrice;
 
+      // Quantity task
       if (quantityChanged) {
-        response = await editProductQuantity({
-          productId: item.product._id,
-          quantity: formData.quantity,
-          reason: formData.reason,
-        });
-      } else if (stockChanged) {
-        response = await editProductStock({
-          productId: item.product._id,
-          minStock: formData.minStock,
-          maxStock: formData.maxStock,
-          reason: formData.reason,
-        });
-      } else if (infoChanged) {
-        response = await editProductInfo({
-          productId: item.product._id,
-          name: formData.name,
-          type: formData.type,
-          category: formData.category,
-          costPrice: formData.costPrice,
-          salePrice: formData.salePrice,
-          reason: formData.reason,
-        });
-      } else {
+        tasks.push(() =>
+          editProductQuantity({
+            productId: item.product._id,
+            quantity: formData.quantity,
+            reason: formData.reason,
+          })
+        );
+      }
+
+      // Stock task
+      if (stockChanged) {
+        tasks.push(() =>
+          editProductStock({
+            productId: item.product._id,
+            minStock: formData.minStock,
+            maxStock: formData.maxStock,
+            reason: formData.reason,
+          })
+        );
+      }
+
+      // Info task
+      if (infoChanged) {
+        tasks.push(() =>
+          editProductInfo({
+            productId: item.product._id,
+            name: formData.name,
+            type: formData.type,
+            category: formData.category,
+            costPrice: formData.costPrice,
+            salePrice: formData.salePrice,
+            reason: formData.reason,
+          })
+        );
+      }
+
+      if (tasks.length === 0) {
         alert('No se hicieron cambios');
         return;
       }
 
-      if (response.success) {
-        alert('Producto actualizado correctamente.');
-        onSubmit?.(response.inventory || item);
-        onClose();
-      } else {
-        alert(`Error: ${response.error}`);
+      // Execute all tasks sequentially
+      for (const task of tasks) {
+        const response = await task();
+        if (!response.success) {
+          alert(`Error: ${response.error}`);
+          return;
+        }
       }
+
+      alert('Producto actualizado correctamente.');
+      onSubmit?.(item);
+      onClose();
     } catch (error) {
       alert(`Error: ${error.message}`);
     }
