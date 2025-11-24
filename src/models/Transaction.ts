@@ -2,19 +2,30 @@ import mongoose, { Document, Model, Schema } from 'mongoose';
 
 interface ITransaction extends Document {
   inventory: mongoose.Types.ObjectId;
-  movement?: 'IN' | 'OUT';
+  movement?: 'IN' | 'OUT' | 'PRODUCT_UPDATE';
   reasonType: 'initial' | 'sale' | 'restock' | 'correction' | 'status_change';
   quantity?: number;
   reason?: string;
   performedBy: mongoose.Types.ObjectId;
   patient?: mongoose.Types.ObjectId;
 
-  /* Quantity change fields */
+  // Dynamic changed fields
+  changedFields?: string[];
+
+  // Inventory fields change
   oldQuantity?: number;
   newQuantity?: number;
   quantityDelta?: number;
 
-  /* Price change fields */
+  // Product fields change
+  oldName?: string;
+  newName?: string;
+  oldType?: 'medicamento' | 'receta' | 'suministro';
+  newType?: 'medicamento' | 'receta' | 'suministro';
+  oldCategory?: string;
+  newCategory?: string;
+  oldSpecialty?: string;
+  newSpecialty?: string;
   oldCostPrice?: number;
   newCostPrice?: number;
   oldSalePrice?: number;
@@ -31,7 +42,7 @@ interface ITransaction extends Document {
 const TransactionSchema = new Schema<ITransaction>(
   {
     inventory: { type: Schema.Types.ObjectId, ref: 'Inventory', required: true },
-    movement: { type: String, enum: ['IN', 'OUT'], required: false },
+    movement: { type: String, enum: ['IN', 'OUT', 'PRODUCT_UPDATE'], required: false },
     reasonType: {
       type: String,
       enum: ['initial', 'sale', 'restock', 'correction', 'status_change'],
@@ -41,8 +52,17 @@ const TransactionSchema = new Schema<ITransaction>(
     reason: { type: String, trim: true },
     performedBy: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     patient: { type: Schema.Types.ObjectId, ref: 'User' },
+    changedFields: { type: [String], required: false },
 
-    /* Price change fields */
+    // Product field changes
+    oldName: { type: String },
+    newName: { type: String },
+    oldType: { type: String, enum: ['medicamento', 'receta', 'suministro'] },
+    newType: { type: String, enum: ['medicamento', 'receta', 'suministro'] },
+    oldCategory: { type: String },
+    newCategory: { type: String },
+    oldSpecialty: { type: String },
+    newSpecialty: { type: String },
     oldCostPrice: { type: Number },
     newCostPrice: { type: Number },
     oldSalePrice: { type: Number },

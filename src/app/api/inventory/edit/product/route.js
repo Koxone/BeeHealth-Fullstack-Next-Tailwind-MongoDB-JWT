@@ -15,7 +15,7 @@ export async function PATCH(req) {
     await connectDB();
 
     // Get data from request
-    const { productId, name, type, category, costPrice, salePrice } = await req.json();
+    const { productId, name, type, category, costPrice, salePrice, reason } = await req.json();
     if (!productId) {
       return NextResponse.json(
         {
@@ -61,6 +61,14 @@ export async function PATCH(req) {
     }
     const { userId, specialty } = auth;
 
+    // Save old values before updating
+    const oldName = productItem.name;
+    const oldType = productItem.type;
+    const oldCategory = productItem.category;
+    const oldSpecialty = productItem.specialty;
+    const oldCostPrice = productItem.costPrice;
+    const oldSalePrice = productItem.salePrice;
+
     // Update product fields
     if (name) productItem.name = name;
     if (type) productItem.type = type;
@@ -71,6 +79,73 @@ export async function PATCH(req) {
 
     // Save updated product
     await productItem.save();
+
+    // Only create transaction if something changed
+    const changes = {
+      inventory: productItem.inventory,
+      movement: 'PRODUCT_UPDATE',
+      reasonType: 'correction',
+      performedBy: new mongoose.Types.ObjectId(userId),
+      reason: reason || 'Product field update',
+    };
+
+    // Check if price fields have changed
+    let priceChanged = false;
+    let delta = 0;
+    const changedFields = [];
+
+    if (oldCostPrice !== productItem.costPrice) {
+      changes.oldCostPrice = oldCostPrice;
+      changes.newCostPrice = productItem.costPrice;
+      changedFields.push('costPrice');
+      priceChanged = true;
+      delta = productItem.costPrice - oldCostPrice;
+    }
+    if (oldSalePrice !== productItem.salePrice) {
+      changes.oldSalePrice = oldSalePrice;
+      changes.newSalePrice = productItem.salePrice;
+      changedFields.push('salePrice');
+      priceChanged = true;
+      const saleDelta = productItem.salePrice - oldSalePrice;
+      if (Math.abs(saleDelta) > Math.abs(delta)) delta = saleDelta;
+    }
+
+    // Determine movement if price changed
+    if (priceChanged) {
+      changes.movement = delta > 0 ? 'IN' : 'OUT';
+      changes.priceDelta = delta;
+    }
+
+    // Add changed fields dynamically
+    if (oldName !== productItem.name) {
+      changes.oldName = oldName;
+      changes.newName = productItem.name;
+      changedFields.push('name');
+    }
+
+    if (oldType !== productItem.type) {
+      changes.oldType = oldType;
+      changes.newType = productItem.type;
+      changedFields.push('type');
+    }
+
+    if (oldCategory !== productItem.category) {
+      changes.oldCategory = oldCategory;
+      changes.newCategory = productItem.category;
+      changedFields.push('category');
+    }
+
+    if (oldSpecialty !== productItem.specialty) {
+      changes.oldSpecialty = oldSpecialty;
+      changes.newSpecialty = productItem.specialty;
+      changedFields.push('specialty');
+    }
+
+    // Create transaction only if there is at least one actual field change
+    if (changedFields.length > 0) {
+      changes.changedFields = changedFields;
+      await Transaction.create(changes);
+    }
 
     return NextResponse.json(
       {
