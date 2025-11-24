@@ -12,16 +12,14 @@ import { useModalClose } from '@/hooks/useModalClose';
 import { editProductInfo } from './services/editProductInfo';
 import { editProductStock } from './services/editStock';
 import { editProductQuantity } from './services/editQuantity';
+import { editProduct } from './services/editProduct';
 
 export default function EditProductModal({ activeTab, item, onClose, onSubmit }) {
-  // Modal close hook
   const { handleOverlayClick } = useModalClose(onClose);
 
-  // Submit handler connected to backend
   async function handleEditSubmit(formData) {
     try {
-      const tasks = [];
-
+      // Detect what changed
       const quantityChanged = formData.quantity !== item.quantity;
       const stockChanged =
         formData.minStock !== item.minStock || formData.maxStock !== item.maxStock;
@@ -32,33 +30,46 @@ export default function EditProductModal({ activeTab, item, onClose, onSubmit })
         formData.costPrice !== item.product.costPrice ||
         formData.salePrice !== item.product.salePrice;
 
-      // Quantity task
-      if (quantityChanged) {
-        tasks.push(() =>
-          editProductQuantity({
+      if (!quantityChanged && !stockChanged && !infoChanged) {
+        alert('No se hicieron cambios');
+        return;
+      }
+
+      // Count how many types of changes
+      const changeTypes = [quantityChanged, stockChanged, infoChanged].filter(Boolean).length;
+
+      let response;
+
+      // If multiple types of changes, use universal endpoint with ALL values
+      if (changeTypes > 1) {
+        response = await editProduct({
+          inventoryId: item._id,
+          name: formData.name,
+          category: formData.category,
+          quantity: formData.quantity,
+          costPrice: formData.costPrice,
+          salePrice: formData.salePrice,
+          minStock: formData.minStock,
+          maxStock: formData.maxStock,
+          reason: formData.reason,
+        });
+      } else {
+        // Single type of change - use specific endpoints
+        if (quantityChanged) {
+          response = await editProductQuantity({
             productId: item.product._id,
             quantity: formData.quantity,
             reason: formData.reason,
-          })
-        );
-      }
-
-      // Stock task
-      if (stockChanged) {
-        tasks.push(() =>
-          editProductStock({
+          });
+        } else if (stockChanged) {
+          response = await editProductStock({
             productId: item.product._id,
             minStock: formData.minStock,
             maxStock: formData.maxStock,
             reason: formData.reason,
-          })
-        );
-      }
-
-      // Info task
-      if (infoChanged) {
-        tasks.push(() =>
-          editProductInfo({
+          });
+        } else if (infoChanged) {
+          response = await editProductInfo({
             productId: item.product._id,
             name: formData.name,
             type: formData.type,
@@ -66,27 +77,17 @@ export default function EditProductModal({ activeTab, item, onClose, onSubmit })
             costPrice: formData.costPrice,
             salePrice: formData.salePrice,
             reason: formData.reason,
-          })
-        );
-      }
-
-      if (tasks.length === 0) {
-        alert('No se hicieron cambios');
-        return;
-      }
-
-      // Execute all tasks sequentially
-      for (const task of tasks) {
-        const response = await task();
-        if (!response.success) {
-          alert(`Error: ${response.error}`);
-          return;
+          });
         }
       }
 
-      alert('Producto actualizado correctamente.');
-      onSubmit?.(item);
-      onClose();
+      if (response.success) {
+        alert('Producto actualizado correctamente.');
+        onSubmit?.(response.inventory || item);
+        onClose();
+      } else {
+        alert(`Error: ${response.error}`);
+      }
     } catch (error) {
       alert(`Error: ${error.message}`);
     }
