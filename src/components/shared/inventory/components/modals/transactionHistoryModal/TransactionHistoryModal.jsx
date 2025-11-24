@@ -11,9 +11,11 @@ import InitialStockBlock from './components/InitialStockBlock';
 import NameBlock from './components/NameBlock';
 import CategoryBlock from './components/CategoryBlock';
 import StockBlock from './components/StockBlock';
+import TransactionBlock from './components/TransactionBlock';
 
 export default function TransactionHistoryModal({ onClose, history, item, isLoading }) {
   const { handleOverlayClick } = useModalClose(onClose);
+  console.log(history);
 
   const itemName = item?.product?.name;
 
@@ -138,54 +140,24 @@ export default function TransactionHistoryModal({ onClose, history, item, isLoad
               key={transaction?._id}
               className={`rounded-2xl border border-gray-200 p-4 shadow-sm transition-all hover:shadow-md ${getTransactionBg(transaction)}`}
             >
-              {/* BLOCK: INITIAL STOCK */}
-              {transaction?.reasonType === 'initial' && (
-                <InitialStockBlock transaction={transaction} />
-              )}
+              {/* Initial Stock */}
+              {transaction?.changedFields?.length === 0 &&
+                transaction?.reasonType === 'initial' &&
+                transaction?.movement === 'IN' && <InitialStockBlock transaction={transaction} />}
 
-              {/* BLOCK: RESTOCK */}
-              {transaction?.reasonType === 'restock' && <RestockBlock transaction={transaction} />}
+              {/* Status Block ON */}
+              {transaction?.changedFields?.length === 0 &&
+                transaction?.reasonType === 'status_change' &&
+                transaction?.movement === 'IN' && <StatusOnBlock transaction={transaction} />}
 
-              {/* BLOCK: PRODUCT UPDATE: NAME */}
-              {transaction?.reasonType === 'correction' &&
-                transaction?.changedFields?.includes('name') && (
-                  <NameBlock transaction={transaction} />
-                )}
+              {/* Status Block OFF */}
+              {transaction?.changedFields?.length === 0 &&
+                transaction?.reasonType === 'status_change' &&
+                transaction?.movement === 'OUT' && <StatusOffBlock transaction={transaction} />}
 
-              {/* BLOCK: PRODUCT UPDATE: CATEGORY */}
-              {transaction?.reasonType === 'correction' &&
-                transaction?.changedFields?.includes('category') && (
-                  <CategoryBlock transaction={transaction} />
-                )}
-
-              {/* BLOCK: QUANTITY CORRECTION */}
-              {transaction?.reasonType === 'correction' &&
-                transaction?.changedFields?.includes('quantity') && (
-                  <QuantityBlock transaction={transaction} />
-                )}
-
-              {/* BLOCK: STOCK CORRECTION */}
-              {transaction?.reasonType === 'correction' &&
-                (transaction?.changedFields?.includes('minStock') ||
-                  transaction?.changedFields?.includes('maxStock')) && (
-                  <StockBlock transaction={transaction} />
-                )}
-
-              {/* BLOCK: PRICE CORRECTION */}
-              {transaction?.reasonType === 'correction' &&
-                (transaction?.changedFields?.includes('costPrice') ||
-                  transaction?.changedFields?.includes('salePrice')) && (
-                  <PriceBlock transaction={transaction} />
-                )}
-
-              {/* BLOCK: STATUS ON */}
-              {transaction?.reasonType === 'status_change' && transaction?.movement === 'IN' && (
-                <StatusOnBlock transaction={transaction} />
-              )}
-
-              {/* BLOCK: STATUS OFF */}
-              {transaction?.reasonType === 'status_change' && transaction?.movement === 'OUT' && (
-                <StatusOffBlock transaction={transaction} />
+              {/* General */}
+              {transaction?.changedFields?.length > 0 && (
+                <TransactionBlock transaction={transaction} />
               )}
             </div>
           ))}
