@@ -7,7 +7,7 @@ import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
 
 // @route    PATCH /api/inventory/edit
-// @desc     Edit product name, category, quantity, and prices
+// @desc     Edit product name, category, quantity, stock and prices - Single transaction
 // @access   Private
 export async function PATCH(req) {
   try {
@@ -16,9 +16,19 @@ export async function PATCH(req) {
 
     // Parse request body
     const body = await req.json();
-    const { inventoryId, name, category, quantity, costPrice, salePrice, reason } = body;
+    const {
+      inventoryId,
+      name,
+      category,
+      quantity,
+      costPrice,
+      salePrice,
+      reason,
+      minStock,
+      maxStock,
+    } = body;
 
-    // Extract token from cookie or authorization header
+    // Extract token
     const cookieHeader = req.headers.get('cookie') || '';
     const refreshToken =
       cookieHeader
@@ -42,7 +52,6 @@ export async function PATCH(req) {
       return NextResponse.json({ error: 'Invalid or expired token' }, { status: 401 });
     }
 
-    // Get user ID from decoded token
     const userId = decoded.id;
 
     // Validate inventory ID
@@ -62,106 +71,124 @@ export async function PATCH(req) {
       return NextResponse.json({ error: 'Product not found' }, { status: 404 });
     }
 
-    // Save previous values BEFORE editing
+    // Save previous values
     const previousQuantity = inventoryItem.quantity;
+    const previousMinStock = inventoryItem.minStock;
+    const previousMaxStock = inventoryItem.maxStock;
+    const oldName = productItem.name;
+    const oldCategory = productItem.category;
+    const oldCostPrice = productItem.costPrice;
+    const oldSalePrice = productItem.salePrice;
 
-    const oldCost = productItem.costPrice;
-    const oldSale = productItem.salePrice;
+    const changedFields = [];
+    const transactionData = {
+      inventory: inventoryItem._id,
+      reasonType: 'correction',
+      performedBy: new mongoose.Types.ObjectId(userId),
+      reason: reason || 'Inventory update',
+    };
 
-    // Update editable product fields
-    if (name) productItem.name = name;
-    if (category) productItem.category = category;
-    if (costPrice !== undefined) productItem.costPrice = Number(costPrice);
-    if (salePrice !== undefined) productItem.salePrice = Number(salePrice);
+    // === UPDATE PRODUCT FIELDS ===
+    if (name !== undefined && name !== oldName) {
+      productItem.name = name;
+      transactionData.oldName = oldName;
+      transactionData.newName = name;
+      changedFields.push('name');
+    }
+
+    if (category !== undefined && category !== oldCategory) {
+      productItem.category = category;
+      transactionData.oldCategory = oldCategory;
+      transactionData.newCategory = category;
+      changedFields.push('category');
+    }
+
+    if (costPrice !== undefined && Number(costPrice) !== oldCostPrice) {
+      productItem.costPrice = Number(costPrice);
+      transactionData.oldCostPrice = oldCostPrice;
+      transactionData.newCostPrice = Number(costPrice);
+      changedFields.push('costPrice');
+    }
+
+    if (salePrice !== undefined && Number(salePrice) !== oldSalePrice) {
+      productItem.salePrice = Number(salePrice);
+      transactionData.oldSalePrice = oldSalePrice;
+      transactionData.newSalePrice = Number(salePrice);
+      changedFields.push('salePrice');
+    }
 
     await productItem.save();
 
-    // Determine movement direction
-    let movement = null;
-    let delta = 0;
-
-    if (quantity !== undefined) {
-      delta = Number(quantity) - previousQuantity;
-
-      if (delta > 0) {
-        movement = 'IN';
-      } else if (delta < 0) {
-        movement = 'OUT';
-      } else {
-        movement = 'NONE';
-      }
-    }
-
-    if (quantity !== undefined) {
+    // === UPDATE INVENTORY FIELDS ===
+    if (quantity !== undefined && quantity !== previousQuantity) {
       inventoryItem.quantity = Number(quantity);
-      await inventoryItem.save();
+      transactionData.oldQuantity = previousQuantity;
+      transactionData.newQuantity = Number(quantity);
+      transactionData.quantityDelta = Math.abs(Number(quantity) - previousQuantity);
+      changedFields.push('quantity');
+
+      // Determine movement for quantity
+      const delta = Number(quantity) - previousQuantity;
+      transactionData.movement = delta > 0 ? 'IN' : 'OUT';
     }
 
-    // Detailed quantity change logging
-    if (quantity !== undefined && movement !== 'NONE' && movement !== null) {
-      const newQuantity = Number(quantity);
-
-      await Transaction.create({
-        inventory: inventoryItem._id,
-        movement,
-        reasonType: 'correction',
-        performedBy: new mongoose.Types.ObjectId(userId),
-
-        oldQuantity: previousQuantity,
-        newQuantity: newQuantity,
-        quantityDelta: Math.abs(newQuantity - previousQuantity),
-
-        quantity: Math.abs(delta),
-
-        reason: reason || 'Quantity update',
-      });
+    if (minStock !== undefined && minStock !== previousMinStock) {
+      inventoryItem.minStock = Number(minStock);
+      transactionData.oldMinStock = previousMinStock;
+      transactionData.newMinStock = Number(minStock);
+      changedFields.push('minStock');
     }
 
-    // Detect price changes
-    const priceChanged =
-      (costPrice !== undefined && Number(costPrice) !== oldCost) ||
-      (salePrice !== undefined && Number(salePrice) !== oldSale);
+    if (maxStock !== undefined && maxStock !== previousMaxStock) {
+      inventoryItem.maxStock = Number(maxStock);
+      transactionData.oldMaxStock = previousMaxStock;
+      transactionData.newMaxStock = Number(maxStock);
+      changedFields.push('maxStock');
+    }
 
-    if (priceChanged) {
-      const newCost = costPrice !== undefined ? Number(costPrice) : oldCost;
-      const newSale = salePrice !== undefined ? Number(salePrice) : oldSale;
+    await inventoryItem.save();
 
-      // Determinar qué campo cambió
-      let priceField = 'both';
-      if (newCost !== oldCost && newSale === oldSale) priceField = 'costPrice';
-      if (newSale !== oldSale && newCost === oldCost) priceField = 'salePrice';
+    // === DETERMINE ACTION TYPE ===
+    let actionType = 'inventory-edit';
 
-      // Determinar movimiento
-      let priceMovement = 'NONE';
-      if (newCost > oldCost || newSale > oldSale) priceMovement = 'IN';
-      if (newCost < oldCost || newSale < oldSale) priceMovement = 'OUT';
+    if (changedFields.length === 0) {
+      return NextResponse.json({ success: false, error: 'No changes were made' }, { status: 400 });
+    }
 
-      let priceDelta = 0;
+    // Set action type based on what changed
+    const hasQuantityOrStock = changedFields.some((f) =>
+      ['quantity', 'minStock', 'maxStock'].includes(f)
+    );
+    const hasPriceOrInfo = changedFields.some((f) =>
+      ['costPrice', 'salePrice', 'name', 'category'].includes(f)
+    );
 
-      if (newCost !== oldCost) {
-        priceDelta += Math.abs(newCost - oldCost);
+    if (hasQuantityOrStock && !hasPriceOrInfo) {
+      actionType = changedFields.includes('quantity') ? 'quantity-edit' : 'stock-edit';
+    } else if (hasPriceOrInfo && !hasQuantityOrStock) {
+      actionType = 'product-edit';
+    }
+
+    // Determine movement for prices if not already set
+    if (
+      !transactionData.movement &&
+      (changedFields.includes('costPrice') || changedFields.includes('salePrice'))
+    ) {
+      const newCostPrice = costPrice !== undefined ? Number(costPrice) : oldCostPrice;
+      const newSalePrice = salePrice !== undefined ? Number(salePrice) : oldSalePrice;
+
+      if (newCostPrice > oldCostPrice || newSalePrice > oldSalePrice) {
+        transactionData.movement = 'IN';
+      } else if (newCostPrice < oldCostPrice || newSalePrice < oldSalePrice) {
+        transactionData.movement = 'OUT';
       }
-
-      if (newSale !== oldSale) {
-        priceDelta += Math.abs(newSale - oldSale);
-      }
-
-      await Transaction.create({
-        inventory: inventoryItem._id,
-        movement: priceMovement,
-        reasonType: 'correction',
-        performedBy: new mongoose.Types.ObjectId(userId),
-        reason: reason || 'Price update',
-
-        oldCostPrice: oldCost,
-        newCostPrice: newCost,
-        oldSalePrice: oldSale,
-        newSalePrice: newSale,
-
-        priceField,
-        priceDelta,
-      });
     }
+
+    transactionData.actionType = actionType;
+    transactionData.changedFields = changedFields;
+
+    // === CREATE SINGLE TRANSACTION ===
+    await Transaction.create(transactionData);
 
     // Return success response
     return NextResponse.json(

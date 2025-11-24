@@ -20,6 +20,10 @@ function RestockBlock({ transaction }) {
         <p>
           <span className="font-medium text-gray-800">Tipo:</span> Reposición
         </p>
+        <p>
+          <span className="font-medium text-gray-800">Cantidad:</span> {transaction?.quantity}{' '}
+          unidades
+        </p>
       </div>
 
       <div className="mt-3 flex items-center gap-2 text-sm text-gray-600">

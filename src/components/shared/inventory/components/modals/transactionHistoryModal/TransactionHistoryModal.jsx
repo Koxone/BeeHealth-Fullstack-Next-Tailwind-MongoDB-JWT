@@ -2,17 +2,15 @@
 
 import { X, History } from 'lucide-react';
 import { useModalClose } from '@/hooks/useModalClose';
-
-// Main Blocks
-import PriceBlock from './components/PriceBlock';
 import RestockBlock from './components/RestockBlock';
-import QuantityBlock from './components/QuantityBlock';
 import StatusOnBlock from './components/StatusOnBlock';
 import StatusOffBlock from './components/StatusOffBlock';
 import InitialStockBlock from './components/InitialStockBlock';
+import TransactionBlock from './components/TransactionBlock';
 
 export default function TransactionHistoryModal({ onClose, history, item, isLoading }) {
   const { handleOverlayClick } = useModalClose(onClose);
+  console.log(history);
 
   const itemName = item?.product?.name;
 
@@ -137,32 +135,28 @@ export default function TransactionHistoryModal({ onClose, history, item, isLoad
               key={transaction?._id}
               className={`rounded-2xl border border-gray-200 p-4 shadow-sm transition-all hover:shadow-md ${getTransactionBg(transaction)}`}
             >
-              {/* BLOCK: INITIAL STOCK */}
-              {transaction?.reasonType === 'initial' && (
-                <InitialStockBlock transaction={transaction} />
-              )}
+              {/* Initial Stock */}
+              {transaction?.changedFields?.length === 0 &&
+                transaction?.reasonType === 'initial' &&
+                transaction?.movement === 'IN' && <InitialStockBlock transaction={transaction} />}
 
-              {/* BLOCK: RESTOCK */}
-              {transaction?.reasonType === 'restock' && <RestockBlock transaction={transaction} />}
+              {/* Restock Block */}
+              {transaction?.changedFields?.length === 0 &&
+                transaction?.reasonType === 'restock' && <RestockBlock transaction={transaction} />}
 
-              {/* BLOCK: QUANTITY CORRECTION */}
-              {transaction?.reasonType === 'correction' && !transaction?.priceField && (
-                <QuantityBlock transaction={transaction} />
-              )}
+              {/* Status Block ON */}
+              {transaction?.changedFields?.length === 0 &&
+                transaction?.reasonType === 'status_change' &&
+                transaction?.movement === 'IN' && <StatusOnBlock transaction={transaction} />}
 
-              {/* BLOCK: PRICE CORRECTION */}
-              {transaction?.reasonType === 'correction' && transaction?.priceField && (
-                <PriceBlock transaction={transaction} />
-              )}
+              {/* Status Block OFF */}
+              {transaction?.changedFields?.length === 0 &&
+                transaction?.reasonType === 'status_change' &&
+                transaction?.movement === 'OUT' && <StatusOffBlock transaction={transaction} />}
 
-              {/* BLOCK: STATUS ON */}
-              {transaction?.reasonType === 'status_change' && transaction?.movement === 'IN' && (
-                <StatusOnBlock transaction={transaction} />
-              )}
-
-              {/* BLOCK: STATUS OFF */}
-              {transaction?.reasonType === 'status_change' && transaction?.movement === 'OUT' && (
-                <StatusOffBlock transaction={transaction} />
+              {/* General */}
+              {transaction?.changedFields?.length > 0 && (
+                <TransactionBlock transaction={transaction} />
               )}
             </div>
           ))}

@@ -1,12 +1,16 @@
 import { ArrowDownCircle, ArrowUpCircle, User } from 'lucide-react';
 import React from 'react';
 
-function QuantityBlock({ transaction }) {
+function SalePriceBlock({ transaction }) {
   return (
     <div>
       <div className="mb-2 flex items-center justify-between">
-        <span className="font-semibold">Corrección de Existencias</span>
+        {/* Title */}
+        <span className="font-semibold">
+          {transaction?.changedFields?.includes('salePrice') && 'Precio de venta'}
+        </span>
 
+        {/* Badge */}
         <span
           className={`flex items-center gap-1 rounded-full px-2 py-1 text-xs font-medium ${
             transaction?.movement === 'IN'
@@ -19,32 +23,42 @@ function QuantityBlock({ transaction }) {
           ) : (
             <ArrowDownCircle className="h-4 w-4" />
           )}
-          {transaction?.quantity} unidades
+          {transaction?.movement === 'IN' ? 'Aumento de ' : 'Disminución de '}
+          Precio de venta
         </span>
       </div>
 
+      {/* Info */}
       <div className="space-y-1 text-sm text-gray-700">
+        {/* Reason */}
         <p>
           <span className="font-medium text-gray-800">Motivo:</span> {transaction?.reason}
         </p>
         <p>
-          <span className="font-medium text-gray-800">Tipo:</span> Corrección de Inventario
+          <span className="font-medium text-gray-800">Tipo:</span>{' '}
+          {transaction?.oldSalePrice > transaction?.newSalePrice
+            ? 'Disminución de Precio de venta'
+            : 'Aumento de Precio de venta'}
         </p>
+
+        {/* Change Info */}
         <p>
-          <span className="font-medium text-gray-800">Cantidad Anterior:</span>{' '}
-          {transaction?.oldQuantity} unidades
+          <span className="font-medium text-gray-800">Anterior:</span>{' '}
+          {`$${transaction?.oldSalePrice}`}
         </p>
+
         <p>
           <span className="font-medium text-gray-800">Cambio:</span>{' '}
-          {transaction?.movement === 'IN' ? '+' : '-'}
-          {transaction?.quantityDelta} unidades
+          {transaction?.movement === 'IN' ? '+' : ''}${transaction?.priceDelta}
         </p>
+
         <p>
-          <span className="font-medium text-gray-800">Cantidad Nueva:</span>{' '}
-          {transaction?.newQuantity} unidades
+          <span className="font-medium text-gray-800">Nuevo:</span>{' '}
+          {`$${transaction?.newSalePrice}`}
         </p>
       </div>
 
+      {/* Performed By */}
       <div className="mt-3 flex items-center gap-2 text-sm text-gray-600">
         <User className="h-4 w-4 text-gray-500" />
         <span>{transaction?.performedBy?.fullName}</span>
@@ -57,4 +71,4 @@ function QuantityBlock({ transaction }) {
   );
 }
 
-export default QuantityBlock;
+export default SalePriceBlock;

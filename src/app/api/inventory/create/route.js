@@ -77,6 +77,9 @@ export async function POST(req) {
       maxStock: body.maxStock ?? 0,
     });
 
+    newProduct.inventory = newInventory._id;
+    await newProduct.save();
+
     const newTransaction = await Transaction.create({
       inventory: newInventory._id,
       movement: 'IN',
