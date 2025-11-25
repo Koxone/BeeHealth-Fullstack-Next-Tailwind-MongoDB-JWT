@@ -107,7 +107,7 @@ export default function EmployeeCreateConsultModal({ onClose, onCreate }) {
       {/* Modal */}
       <div className="relative inset-0 z-50 flex w-full max-w-[600px] items-center justify-center p-4">
         <div
-          className="bg-medtrack-body-main w-full overflow-hidden rounded-3xl shadow-2xl"
+          className="bg-beehealth-body-main w-full overflow-hidden rounded-3xl shadow-2xl"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}

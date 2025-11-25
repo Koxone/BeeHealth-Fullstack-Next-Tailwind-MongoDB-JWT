@@ -67,7 +67,7 @@ export const metadata = {
 export default function AuthRootLayout({ children }) {
   return (
     <html lang="es">
-      <body className="bg-medtrack-body-main min-h-screen overflow-hidden">{children}</body>
+      <body className="bg-beehealth-body-main min-h-screen overflow-hidden">{children}</body>
     </html>
   );
 }

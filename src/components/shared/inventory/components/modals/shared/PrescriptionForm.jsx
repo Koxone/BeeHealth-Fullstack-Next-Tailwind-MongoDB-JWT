@@ -35,7 +35,7 @@ export default function PrescriptionForm({ mode, initialData, onCancel, onSubmit
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
-      <div className="bg-medtrack-body-main/80 space-y-4 rounded-2xl border border-gray-100 p-5 shadow-lg backdrop-blur-sm">
+      <div className="bg-beehealth-body-main/80 space-y-4 rounded-2xl border border-gray-100 p-5 shadow-lg backdrop-blur-sm">
         {/* Tipo de receta */}
         <div className="grid gap-1">
           <label className="text-sm font-semibold text-gray-600">Tipo de receta</label>
@@ -95,7 +95,7 @@ export default function PrescriptionForm({ mode, initialData, onCancel, onSubmit
         <button
           type="button"
           onClick={onCancel}
-          className="bg-medtrack-body-main hover:bg-medtrack-body-main flex-1 rounded-xl border-2 border-gray-300 px-6 py-3.5 font-semibold text-gray-700 shadow-sm"
+          className="bg-beehealth-body-main hover:bg-beehealth-body-main flex-1 rounded-xl border-2 border-gray-300 px-6 py-3.5 font-semibold text-gray-700 shadow-sm"
         >
           Cancelar
         </button>

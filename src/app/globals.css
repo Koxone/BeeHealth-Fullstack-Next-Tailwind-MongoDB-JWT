@@ -8,33 +8,33 @@ button {
   --color-asana-green: #8b9c94;
 
   /* Body Main Color */
-  --color-medtrack-body-main: #f7f5f0;
+  --color-beehealth-body-main: #f7f5f0;
 
   /* Green Primary */
-  --color-medtrack-green-dark: #5f6b66;
-  --color-medtrack-green-dark-hover: #4f5a55;
-  --color-medtrack-green-solid: #8b9c94;
-  --color-medtrack-green-hover: #7a8c83;
-  --color-medtrack-green-light: #e7ecea;
-  --color-medtrack-green-light-hover: #d4ddda;
+  --color-beehealth-green-dark: #5f6b66;
+  --color-beehealth-green-dark-hover: #4f5a55;
+  --color-beehealth-green-solid: #8b9c94;
+  --color-beehealth-green-hover: #7a8c83;
+  --color-beehealth-green-light: #e7ecea;
+  --color-beehealth-green-light-hover: #d4ddda;
 
   /* Green Secondary */
-  --color-medtrack-green-secondary-solid: #73c89f;
-  --color-medtrack-green-secondary-hover: #66b592;
-  --color-medtrack-green-secondary-light: #c6e6d8;
-  --color-medtrack-green-secondary-light-hover: #b2dccb;
+  --color-beehealth-green-secondary-solid: #73c89f;
+  --color-beehealth-green-secondary-hover: #66b592;
+  --color-beehealth-green-secondary-light: #c6e6d8;
+  --color-beehealth-green-secondary-light-hover: #b2dccb;
 
   /* Blue */
-  --color-medtrack-blue-solid: #678bda;
-  --color-medtrack-blue-hover: #5176cc;
-  --color-medtrack-blue-light: #bbd3fa;
-  --color-medtrack-blue-light-hover: #a3c0f5;
+  --color-beehealth-blue-solid: #678bda;
+  --color-beehealth-blue-hover: #5176cc;
+  --color-beehealth-blue-light: #bbd3fa;
+  --color-beehealth-blue-light-hover: #a3c0f5;
 
   /* Red */
-  --color-medtrack-red-solid: #da6767;
-  --color-medtrack-red-hover: #cc5151;
-  --color-medtrack-red-light: #fabbba;
-  --color-medtrack-red-light-hover: #f5a3a3;
+  --color-beehealth-red-solid: #da6767;
+  --color-beehealth-red-hover: #cc5151;
+  --color-beehealth-red-light: #fabbba;
+  --color-beehealth-red-light-hover: #f5a3a3;
 
   --color-asana-beige: #efe1d5;
   --color-asana-blue: #2563eb;

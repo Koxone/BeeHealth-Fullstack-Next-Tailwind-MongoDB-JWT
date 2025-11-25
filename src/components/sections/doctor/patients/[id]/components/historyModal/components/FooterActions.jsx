@@ -7,7 +7,7 @@ export default function FooterActions({ onCancel, submitLabel }) {
       <button
         type="button"
         onClick={onCancel}
-        className="bg-medtrack-body-main hover:bg-medtrack-body-main flex-1 rounded-xl border-2 border-gray-300 px-6 py-3 font-semibold text-gray-700 transition active:scale-95"
+        className="bg-beehealth-body-main hover:bg-beehealth-body-main flex-1 rounded-xl border-2 border-gray-300 px-6 py-3 font-semibold text-gray-700 transition active:scale-95"
       >
         Cancelar
       </button>

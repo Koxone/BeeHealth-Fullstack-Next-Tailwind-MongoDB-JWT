@@ -63,7 +63,7 @@ export default function TodayConsultsList({ totals, consultsData }) {
         onAdd={() => openCreate(setEditingItem, setShowModal)}
       />
 
-      <div className="bg-medtrack-body-main overflow-hidden rounded-2xl border-2 border-gray-200 shadow-lg">
+      <div className="bg-beehealth-body-main overflow-hidden rounded-2xl border-2 border-gray-200 shadow-lg">
         <ConsultsTable
           rows={filteredConsults}
           totals={totals}

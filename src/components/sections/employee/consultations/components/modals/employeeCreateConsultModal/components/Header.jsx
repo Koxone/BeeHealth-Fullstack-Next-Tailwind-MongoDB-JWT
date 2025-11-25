@@ -3,11 +3,11 @@ import { X, Calendar, Sparkles } from 'lucide-react';
 /* Header */
 export default function Header({ title, onClose }) {
   return (
-    <div className="bg-medtrack-body-main relative border-b border-gray-100">
+    <div className="bg-beehealth-body-main relative border-b border-gray-100">
       <div className="relative px-6 py-5">
         <div className="flex items-start justify-between">
           <div className="flex items-start gap-3">
-            <div className="bg-medtrack-blue-solid rounded-2xl p-3 shadow-lg">
+            <div className="bg-beehealth-blue-solid rounded-2xl p-3 shadow-lg">
               <Calendar className="h-6 w-6 text-white" />
             </div>
             <div>

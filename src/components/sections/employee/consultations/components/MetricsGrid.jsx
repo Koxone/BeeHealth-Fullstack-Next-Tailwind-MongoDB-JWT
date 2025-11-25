@@ -14,14 +14,14 @@ export default function MetricsGrid({ totals }) {
   return (
     <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
       {/* total ingresos */}
-      <div className="bg-medtrack-body-main rounded-2xl border-2 border-gray-200 p-5 shadow-lg">
-        <div className="bg-medtrack-body-main/10 absolute top-0 right-0 -mt-12 -mr-12 h-24 w-24 rounded-full" />
+      <div className="bg-beehealth-body-main rounded-2xl border-2 border-gray-200 p-5 shadow-lg">
+        <div className="bg-beehealth-body-main/10 absolute top-0 right-0 -mt-12 -mr-12 h-24 w-24 rounded-full" />
         <div className="relative z-10">
           <div className="mb-3 flex items-center justify-between">
-            <div className="bg-medtrack-blue-solid rounded-xl p-2">
+            <div className="bg-beehealth-blue-solid rounded-xl p-2">
               <TrendingUp className="h-6 w-6 text-white" />
             </div>
-            <span className="bg-medtrack-blue-solid rounded-full px-3 py-1.5 text-xs font-bold text-white">
+            <span className="bg-beehealth-blue-solid rounded-full px-3 py-1.5 text-xs font-bold text-white">
               Total
             </span>
           </div>
@@ -31,12 +31,12 @@ export default function MetricsGrid({ totals }) {
       </div>
 
       {/* cobrado */}
-      <div className="bg-medtrack-body-main rounded-2xl border-2 border-gray-200 p-5 shadow-lg">
+      <div className="bg-beehealth-body-main rounded-2xl border-2 border-gray-200 p-5 shadow-lg">
         <div className="mb-3 flex items-center justify-between">
-          <div className="bg-medtrack-blue-solid rounded-xl p-2">
+          <div className="bg-beehealth-blue-solid rounded-xl p-2">
             <Users className="h-6 w-6 text-white" />
           </div>
-          <span className="bg-medtrack-blue-solid rounded-full px-3 py-1.5 text-xs font-bold text-white">
+          <span className="bg-beehealth-blue-solid rounded-full px-3 py-1.5 text-xs font-bold text-white">
             {cobradas}
           </span>
         </div>
@@ -45,12 +45,12 @@ export default function MetricsGrid({ totals }) {
       </div>
 
       {/* pendiente */}
-      <div className="bg-medtrack-body-main rounded-2xl border-2 border-gray-200 p-5 shadow-lg">
+      <div className="bg-beehealth-body-main rounded-2xl border-2 border-gray-200 p-5 shadow-lg">
         <div className="mb-3 flex items-center justify-between">
-          <div className="bg-medtrack-blue-solid rounded-xl p-2">
+          <div className="bg-beehealth-blue-solid rounded-xl p-2">
             <Pill className="h-6 w-6 text-white" />
           </div>
-          <span className="bg-medtrack-blue-solid rounded-full px-3 py-1.5 text-xs font-bold text-white">
+          <span className="bg-beehealth-blue-solid rounded-full px-3 py-1.5 text-xs font-bold text-white">
             {total - cobradas}
           </span>
         </div>

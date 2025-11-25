@@ -17,13 +17,13 @@ interface DoctorPatientCardProps {
 
 export default function DoctorPatientCard({ patient }: DoctorPatientCardProps) {
   return (
-    <div className="bg-medtrack-body-main rounded-xl border-2 border-gray-200 p-4 transition hover:border-blue-300">
+    <div className="bg-beehealth-body-main rounded-xl border-2 border-gray-200 p-4 transition hover:border-blue-300">
       <div className="flex items-center gap-4">
         {/* Patient Avatar */}
         <img
           src={patient?.avatar || '/oochel.jpg'}
           alt=""
-          className="border-medtrack-green-solid h-12 w-12 scale-95 transform-gpu rounded-full border object-cover transition-all duration-100 ease-in-out hover:scale-100"
+          className="border-beehealth-green-solid h-12 w-12 scale-95 transform-gpu rounded-full border object-cover transition-all duration-100 ease-in-out hover:scale-100"
         />
 
         <div className="flex-1">

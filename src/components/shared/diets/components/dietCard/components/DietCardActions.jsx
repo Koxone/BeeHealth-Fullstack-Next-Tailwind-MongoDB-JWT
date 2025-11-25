@@ -7,7 +7,7 @@ export default function DietCardActions({ id }) {
       {/* View button */}
       <Link
         href={`/doctor/diets/${id}?mode=read`}
-        className="bg-medtrack-blue-solid hover:bg-medtrack-blue-hover flex flex-1 items-center justify-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-white transition active:scale-95"
+        className="bg-beehealth-blue-solid hover:bg-beehealth-blue-hover flex flex-1 items-center justify-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-white transition active:scale-95"
       >
         <Eye className="h-4 w-4" />
         Ver
@@ -16,7 +16,7 @@ export default function DietCardActions({ id }) {
       {/* Edit button */}
       <Link
         href={`/doctor/diets/${id}?mode=edit`}
-        className="hover:bg-medtrack-body-main flex flex-1 items-center justify-center gap-2 rounded-lg border border-gray-300 px-3 py-2 text-sm font-medium text-gray-700 transition active:scale-95"
+        className="hover:bg-beehealth-body-main flex flex-1 items-center justify-center gap-2 rounded-lg border border-gray-300 px-3 py-2 text-sm font-medium text-gray-700 transition active:scale-95"
       >
         <Edit className="h-4 w-4" />
         Editar

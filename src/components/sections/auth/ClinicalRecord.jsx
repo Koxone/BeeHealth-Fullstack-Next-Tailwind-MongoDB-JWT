@@ -241,7 +241,7 @@ export default function ClinicalRecordTestPage() {
       {/* Form */}
       <form
         onSubmit={handleSubmit}
-        className="bg-medtrack-body-main space-y-6 rounded-2xl border p-6"
+        className="bg-beehealth-body-main space-y-6 rounded-2xl border p-6"
       >
         {/* Fields */}
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">

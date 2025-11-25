@@ -3,12 +3,12 @@ import Link from 'next/link';
 
 export default function AppointmentsToday({ appointments, role }) {
   return (
-    <div className="bg-medtrack-body-main rounded-xl border border-gray-200 p-4 shadow-sm md:p-6">
+    <div className="bg-beehealth-body-main rounded-xl border border-gray-200 p-4 shadow-sm md:p-6">
       <div className="mb-4 flex items-center justify-between">
         <h2 className="text-lg font-semibold text-gray-900 md:text-xl">Citas de Hoy</h2>
         <Link
           href={role === 'doctor' ? '/doctor/calendar' : '/employee/appointments'}
-          className="bg-medtrack-blue-solid hover:bg-medtrack-blue-hover flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-white transition active:scale-95"
+          className="bg-beehealth-blue-solid hover:bg-beehealth-blue-hover flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-white transition active:scale-95"
         >
           Ver todas
           <ChevronRight className="h-4 w-4" />
@@ -17,7 +17,7 @@ export default function AppointmentsToday({ appointments, role }) {
 
       {/* No appointments */}
       {appointments.length === 0 && (
-        <div className="bg-medtrack-body-main flex h-40 items-center justify-center rounded-xl border border-gray-200">
+        <div className="bg-beehealth-body-main flex h-40 items-center justify-center rounded-xl border border-gray-200">
           <p className="text-gray-500">No hay citas programadas para hoy</p>
         </div>
       )}
@@ -29,7 +29,7 @@ export default function AppointmentsToday({ appointments, role }) {
             <Link
               key={cita.id}
               href={`/doctor/patients/${cita?.patientId}`}
-              className="border-medtrack-green-solid/30 hover:border-medtrack-green-hover block rounded-xl border-2 p-4 transition hover:bg-emerald-50"
+              className="border-beehealth-green-solid/30 hover:border-beehealth-green-hover block rounded-xl border-2 p-4 transition hover:bg-emerald-50"
             >
               <div className="flex items-center justify-between">
                 <div className="flex-1">
@@ -65,7 +65,7 @@ export default function AppointmentsToday({ appointments, role }) {
           {appointments.map((cita) => (
             <div
               key={cita.id}
-              className="border-medtrack-green-solid/30 hover:border-medtrack-green-hover block rounded-xl border-2 p-4 transition hover:bg-emerald-50"
+              className="border-beehealth-green-solid/30 hover:border-beehealth-green-hover block rounded-xl border-2 p-4 transition hover:bg-emerald-50"
             >
               <div className="flex items-center justify-between">
                 <div className="flex-1">

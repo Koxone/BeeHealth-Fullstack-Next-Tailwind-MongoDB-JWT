@@ -40,11 +40,11 @@ export default function WorkoutModal({
       />
       <div className="pointer-events-none fixed inset-0 z-50 flex items-center justify-center p-4">
         <div
-          className="animate-slideUp bg-medtrack-body-main pointer-events-auto max-h-[90vh] w-full max-w-4xl overflow-y-auto rounded-2xl shadow-2xl"
+          className="animate-slideUp bg-beehealth-body-main pointer-events-auto max-h-[90vh] w-full max-w-4xl overflow-y-auto rounded-2xl shadow-2xl"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
-          <div className="bg-medtrack-body-main sticky top-0 z-10 flex items-center justify-between border-b border-gray-200 px-6 py-4">
+          <div className="bg-beehealth-body-main sticky top-0 z-10 flex items-center justify-between border-b border-gray-200 px-6 py-4">
             <div>
               <h2 className="text-2xl font-bold text-gray-900">{workout.nombre}</h2>
               <div className="mt-1 flex items-center gap-2">
@@ -96,8 +96,8 @@ export default function WorkoutModal({
                           onClick={() => setCurrentImageIndex(index)}
                           className={`h-2 w-2 rounded-full transition ${
                             index === currentImageIndex
-                              ? 'bg-medtrack-body-main w-6'
-                              : 'bg-medtrack-body-main/50'
+                              ? 'bg-beehealth-body-main w-6'
+                              : 'bg-beehealth-body-main/50'
                           }`}
                         />
                       ))}

@@ -13,19 +13,19 @@ function DynamicListSection({
   // Variant styles
   const variantStyles = {
     success: {
-      background: 'bg-medtrack-green-secondary-solid',
+      background: 'bg-beehealth-green-secondary-solid',
       text: 'text-white',
-      buttons: 'bg-medtrack-green-secondary-solid hover:bg-medtrack-green-secondary-hover',
+      buttons: 'bg-beehealth-green-secondary-solid hover:bg-beehealth-green-secondary-hover',
     },
     warning: {
-      background: 'bg-medtrack-red-solid',
+      background: 'bg-beehealth-red-solid',
       text: 'text-white',
-      buttons: 'bg-medtrack-red-solid hover:bg-medtrack-red-hover',
+      buttons: 'bg-beehealth-red-solid hover:bg-beehealth-red-hover',
     },
     neutral: {
-      background: 'bg-medtrack-blue-solid',
+      background: 'bg-beehealth-blue-solid',
       text: 'text-white',
-      buttons: 'bg-medtrack-blue-solid hover:bg-medtrack-blue-hover',
+      buttons: 'bg-beehealth-blue-solid hover:bg-beehealth-blue-hover',
     },
   };
 
@@ -69,7 +69,7 @@ function DynamicListSection({
   };
 
   return (
-    <section className="bg-medtrack-body-main rounded-xl border border-gray-200 p-6 shadow-sm transition-shadow hover:shadow-md md:p-4">
+    <section className="bg-beehealth-body-main rounded-xl border border-gray-200 p-6 shadow-sm transition-shadow hover:shadow-md md:p-4">
       {/* Header */}
       <div className="mb-4 flex items-center gap-3">
         <div className={`rounded-lg ${styles.background} p-2`}>
@@ -85,7 +85,7 @@ function DynamicListSection({
         {items.map((item, index) => (
           <div
             key={index}
-            className="bg-medtrack-body-main flex items-center justify-between rounded-lg border border-gray-300 p-2 text-sm"
+            className="bg-beehealth-body-main flex items-center justify-between rounded-lg border border-gray-300 p-2 text-sm"
           >
             <span>{item}</span>
             <button onClick={() => handleRemove(index)} className="rounded-lg bg-gray-200 p-1">
@@ -127,7 +127,7 @@ function DynamicListSection({
           <label className="mb-1 block text-sm font-medium text-gray-700">Nota opcional</label>
           <textarea
             placeholder="Escribe una nota para esta sección"
-            className="bg-medtrack-body-main w-full rounded-lg border border-gray-300 p-3 text-sm"
+            className="bg-beehealth-body-main w-full rounded-lg border border-gray-300 p-3 text-sm"
             rows={3}
             value={note}
             onChange={handleNoteChange}

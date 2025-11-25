@@ -37,7 +37,7 @@ export default function DeleteMedSaleModal({ type, item, onCancel, onConfirm }) 
           />
 
           {/* Header */}
-          <div className="bg-medtrack-body-main/80 relative overflow-hidden border-b border-white/50 backdrop-blur-xl">
+          <div className="bg-beehealth-body-main/80 relative overflow-hidden border-b border-white/50 backdrop-blur-xl">
             <div className={`absolute inset-0 bg-linear-to-r ${getGradientColor()} opacity-10`} />
             <div className="relative flex items-center justify-between px-6 py-5">
               <div className="flex items-center gap-4">
@@ -64,7 +64,7 @@ export default function DeleteMedSaleModal({ type, item, onCancel, onConfirm }) 
 
           {/* Content */}
           <div className="relative p-6">
-            <div className="bg-medtrack-body-main/80 mb-6 flex items-center rounded-xl border-2 border-gray-100 p-4 shadow-md backdrop-blur-sm">
+            <div className="bg-beehealth-body-main/80 mb-6 flex items-center rounded-xl border-2 border-gray-100 p-4 shadow-md backdrop-blur-sm">
               <p className="font-medium text-gray-700">
                 ¿Estás seguro de que deseas eliminar{' '}
                 {isConsulta ? 'esta consulta médica' : 'esta venta de medicamento'}?
@@ -72,7 +72,7 @@ export default function DeleteMedSaleModal({ type, item, onCancel, onConfirm }) 
             </div>
 
             {/* Med Info */}
-            <div className="bg-medtrack-body-main/80 mb-6 flex items-center gap-3 rounded-xl border-2 border-gray-100 p-4 shadow-md backdrop-blur-sm">
+            <div className="bg-beehealth-body-main/80 mb-6 flex items-center gap-3 rounded-xl border-2 border-gray-100 p-4 shadow-md backdrop-blur-sm">
               <div className={`rounded-lg bg-linear-to-br ${getGradientColor()} p-2.5 shadow-sm`}>
                 {isConsulta ? (
                   <Calendar className="h-5 w-5 text-white" />
@@ -93,7 +93,7 @@ export default function DeleteMedSaleModal({ type, item, onCancel, onConfirm }) 
             <div className="flex gap-3">
               <button
                 onClick={onCancel}
-                className="bg-medtrack-body-main hover:bg-medtrack-body-main flex-1 rounded-xl border-2 border-gray-300 px-6 py-3.5 font-semibold text-gray-700 shadow-sm transition-all duration-300 hover:border-gray-400 hover:shadow-md active:scale-95"
+                className="bg-beehealth-body-main hover:bg-beehealth-body-main flex-1 rounded-xl border-2 border-gray-300 px-6 py-3.5 font-semibold text-gray-700 shadow-sm transition-all duration-300 hover:border-gray-400 hover:shadow-md active:scale-95"
               >
                 Cancelar
               </button>

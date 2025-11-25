@@ -7,10 +7,10 @@ export default function RecordsTable({ historyData = [] }) {
   return (
     <>
       {/* Header de la tabla */}
-      <div className="bg-medtrack-blue-solid relative overflow-hidden px-6 py-4">
-        <div className="bg-medtrack-body-main/10 absolute top-0 right-0 -mt-16 -mr-16 h-32 w-32 rounded-full" />
+      <div className="bg-beehealth-blue-solid relative overflow-hidden px-6 py-4">
+        <div className="bg-beehealth-body-main/10 absolute top-0 right-0 -mt-16 -mr-16 h-32 w-32 rounded-full" />
         <div className="relative z-10 flex items-center gap-3">
-          <div className="bg-medtrack-body-main/20 rounded-xl p-2 backdrop-blur-sm">
+          <div className="bg-beehealth-body-main/20 rounded-xl p-2 backdrop-blur-sm">
             <BarChart3 className="h-5 w-5 text-white" />
           </div>
           <div>
@@ -62,7 +62,7 @@ export default function RecordsTable({ historyData = [] }) {
                 >
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-2">
-                      <div className="bg-medtrack-blue-solid group-hover:bg-medtrack-blue-solid-hover rounded-lg p-2 transition-all duration-200">
+                      <div className="bg-beehealth-blue-solid group-hover:bg-beehealth-blue-solid-hover rounded-lg p-2 transition-all duration-200">
                         <Calendar className="h-4 w-4 text-white transition-colors duration-200 group-hover:text-white" />
                       </div>
                       <span className="text-sm font-semibold text-gray-900">{record.fecha}</span>

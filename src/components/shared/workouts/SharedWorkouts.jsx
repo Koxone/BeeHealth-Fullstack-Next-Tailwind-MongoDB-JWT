@@ -82,8 +82,8 @@ export default function SharedWorkouts({ role }) {
               onClick={() => setFilterCategorie(cat)}
               className={`rounded-lg px-4 py-2 font-medium ${
                 filterCategorie === cat
-                  ? 'bg-medtrack-blue-solid hover:bg-medtrack-blue-hover text-white'
-                  : 'bg-medtrack-body-main hover:bg-medtrack-body-main border border-gray-300'
+                  ? 'bg-beehealth-blue-solid hover:bg-beehealth-blue-hover text-white'
+                  : 'bg-beehealth-body-main hover:bg-beehealth-body-main border border-gray-300'
               }`}
             >
               {cat}
@@ -111,7 +111,7 @@ export default function SharedWorkouts({ role }) {
                 setEditingWorkout(null);
                 setShowEditModal(true);
               }}
-              className="bg-medtrack-blue-solid hover:bg-medtrack-blue-hover flex items-center gap-2 rounded-lg px-4 py-2 text-white"
+              className="bg-beehealth-blue-solid hover:bg-beehealth-blue-hover flex items-center gap-2 rounded-lg px-4 py-2 text-white"
             >
               <Plus className="h-5 w-5" /> Nuevo
             </button>

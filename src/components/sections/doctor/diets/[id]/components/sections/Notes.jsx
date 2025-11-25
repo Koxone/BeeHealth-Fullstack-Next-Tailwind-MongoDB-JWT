@@ -42,7 +42,7 @@ function Notes({ diet, isEditing, editDiet }) {
           value={noteValue}
           onChange={(e) => setNoteValue(e.target.value)}
           placeholder="Escribe las notas del médico"
-          className="bg-medtrack-body-main w-full rounded-lg border border-blue-300 p-3 text-blue-900 focus:border-blue-600 focus:outline-none"
+          className="bg-beehealth-body-main w-full rounded-lg border border-blue-300 p-3 text-blue-900 focus:border-blue-600 focus:outline-none"
           rows={2}
         />
       )}
@@ -52,7 +52,7 @@ function Notes({ diet, isEditing, editDiet }) {
           <button
             onClick={handleSave}
             disabled={isSaving}
-            className="bg-medtrack-green-secondary-solid hover:bg-medtrack-green-secondary-hover rounded-lg px-4 py-2 text-sm font-medium text-white shadow-sm transition-opacity disabled:opacity-50"
+            className="bg-beehealth-green-secondary-solid hover:bg-beehealth-green-secondary-hover rounded-lg px-4 py-2 text-sm font-medium text-white shadow-sm transition-opacity disabled:opacity-50"
           >
             {isSaving ? 'Guardando...' : 'Guardar'}
           </button>

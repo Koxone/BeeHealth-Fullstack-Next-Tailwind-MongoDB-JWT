@@ -26,7 +26,7 @@ export default function TabsHeader({ activeTab, setActiveTab }) {
           className={`flex items-center justify-center gap-2 px-4 py-4 font-medium transition ${
             activeTab === id
               ? activeBg(id)
-              : 'bg-medtrack-body-main text-gray-600 hover:bg-gray-100'
+              : 'bg-beehealth-body-main text-gray-600 hover:bg-gray-100'
           }`}
         >
           <Icon className="h-5 w-5" />

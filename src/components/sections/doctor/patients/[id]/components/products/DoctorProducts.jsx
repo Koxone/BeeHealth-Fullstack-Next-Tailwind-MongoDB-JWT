@@ -49,12 +49,12 @@ export default function DoctorProducts() {
   ];
 
   return (
-    <div className="bg-medtrack-body-main rounded-2xl border border-(--med-gray-border) p-4 shadow-sm sm:p-6">
+    <div className="bg-beehealth-body-main rounded-2xl border border-(--med-gray-border) p-4 shadow-sm sm:p-6">
       {/* Header */}
       <div className="mb-4 flex flex-col gap-3 sm:mb-6 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-3">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-(--med-blue-light) sm:h-12 sm:w-12">
-            <Package className="text-medtrack-green-solid h-5 w-5 sm:h-6 sm:w-6" />
+            <Package className="text-beehealth-green-solid h-5 w-5 sm:h-6 sm:w-6" />
           </div>
           <div>
             <h2 className="text-lg font-semibold text-(--med-text-dark) sm:text-xl">
@@ -69,7 +69,7 @@ export default function DoctorProducts() {
         {/* Add Product Button */}
         <button
           onClick={() => setShowCreateModal(true)}
-          className="bg-medtrack-green-solid flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-700 active:scale-95"
+          className="bg-beehealth-green-solid flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-700 active:scale-95"
         >
           <Plus className="h-4 w-4" />
           Registrar Venta
@@ -77,7 +77,7 @@ export default function DoctorProducts() {
       </div>
 
       {/* Table */}
-      <div className="bg-medtrack-body-main overflow-x-auto rounded-xl border border-(--med-gray-border) shadow-sm">
+      <div className="bg-beehealth-body-main overflow-x-auto rounded-xl border border-(--med-gray-border) shadow-sm">
         <table className="w-full border-collapse text-sm">
           <thead>
             <tr className="bg-(--med-blue-light)/30 text-left text-(--med-text-muted)">
@@ -98,7 +98,7 @@ export default function DoctorProducts() {
             {products.map((p, index) => (
               <tr
                 key={p.id}
-                className="bg-medtrack-body-main border-t border-(--med-gray-border) transition hover:bg-(--med-blue-light)/10"
+                className="bg-beehealth-body-main border-t border-(--med-gray-border) transition hover:bg-(--med-blue-light)/10"
                 style={{
                   animationDelay: `${index * 80}ms`,
                   animation: 'fadeIn 0.3s ease-out forwards',
