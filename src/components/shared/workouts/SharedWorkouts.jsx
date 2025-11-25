@@ -32,9 +32,9 @@ export default function SharedWorkouts({ role }) {
 
   const categories = ['Todos', 'Fuerza', 'Cardio', 'Core', 'Flexibilidad', 'Movilidad'];
 
-  const filteredWorkouts = workouts.filter((e) => {
-    const matchCategorie = filterCategorie === 'Todos' || e.categoria === filterCategorie;
-    const matchSearch = e.nombre.toLowerCase().includes(searchTerm.toLowerCase());
+  const filteredWorkouts = workoutData.filter((e) => {
+    const matchCategorie = filterCategorie === 'Todos' || e.type === filterCategorie;
+    const matchSearch = e.name.toLowerCase().includes(searchTerm.toLowerCase());
     return matchCategorie && matchSearch;
   });
 
@@ -127,7 +127,7 @@ export default function SharedWorkouts({ role }) {
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
         {filteredWorkouts.map((workout) => (
           <WorkoutCard
-            key={workout.id}
+            key={workout._id}
             role={role}
             workout={workout}
             setShowDeleteModal={setShowDeleteModal}
