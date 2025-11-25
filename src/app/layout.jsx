@@ -1,8 +1,8 @@
 import './globals.css';
 
 export const metadata = {
-  title: 'MedTrack',
-  description: 'Aplicación médica moderna',
+  title: 'BeeHealth',
+  description: 'Gestion de salud y nutrición',
 };
 
 export default function AuthRootLayout({ children }) {

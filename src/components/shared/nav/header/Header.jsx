@@ -26,7 +26,7 @@ export default async function Header() {
         <div className="flex items-center gap-4">
           <img src="/images/logo.webp" alt="" className="max-w-10" />
           <div>
-            <h2 className="text-2xl font-bold tracking-tight text-gray-900">MedTrack</h2>
+            <h2 className="text-2xl font-bold tracking-tight text-gray-900">BeeHealth</h2>
             <p className="text-sm font-medium text-gray-500">Panel de {roleLabel}</p>
           </div>
         </div>

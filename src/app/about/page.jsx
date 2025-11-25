@@ -12,7 +12,7 @@ export default function About() {
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
           <button onClick={() => router.push('/')} className="flex items-center gap-2">
             <img src="/images/logo.webp" alt="" className="max-w-10" />
-            <span className="text-2xl font-bold text-gray-900">MedTrack</span>
+            <span className="text-2xl font-bold text-gray-900">BeeHealth</span>
           </button>
           <button
             onClick={() => router.push('/auth/login')}
@@ -24,7 +24,7 @@ export default function About() {
       </header>
 
       <div className="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
-        <h1 className="mb-6 text-4xl font-bold text-gray-900">Acerca de MedTrack</h1>
+        <h1 className="mb-6 text-4xl font-bold text-gray-900">Acerca de BeeHealth</h1>
         <p className="mb-12 text-xl text-gray-600">
           Somos una plataforma médica digital dedicada a mejorar la calidad de vida de nuestros
           pacientes a través de tecnología innovadora.

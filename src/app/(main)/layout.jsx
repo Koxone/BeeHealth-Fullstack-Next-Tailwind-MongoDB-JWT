@@ -9,8 +9,8 @@ import ServerRoleGuard from '@/components/sections/auth/ServerRoleGuard';
 export const runtime = 'nodejs';
 
 export const metadata = {
-  title: 'MedTrack',
-  description: 'Medical management platform',
+  title: 'BeeHealth',
+  description: 'Gestion de salud y nutrición',
 };
 
 export default async function MainRootLayout({ children }) {
