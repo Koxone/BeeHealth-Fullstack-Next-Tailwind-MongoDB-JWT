@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Plus, Search } from 'lucide-react';
 
 import ModalDelete from './components/ModalDelete';
@@ -9,8 +9,12 @@ import { workoutsMockData } from './components/workoutsMockData';
 import WorkoutCard from './components/workoutCard/WorkoutCard';
 import WorkoutModal from './components/WorkoutModal';
 import SharedSectionHeader from '../headers/SharedSectionHeader';
+import { useGetAllWorkouts } from '@/hooks/workouts/useGetAllWorkouts';
 
 export default function SharedWorkouts({ role }) {
+  // Get Workouts from API
+  const { workoutData, isLoading, error, refetch: fetchWorkouts } = useGetAllWorkouts();
+
   // Local States
   const [workouts, setWorkouts] = useState(workoutsMockData);
   const [filterCategorie, setFilterCategorie] = useState('Todos');
