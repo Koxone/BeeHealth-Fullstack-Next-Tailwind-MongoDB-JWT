@@ -3,13 +3,14 @@
 import { useEffect, useState } from 'react';
 import { Plus, Search } from 'lucide-react';
 
-import ModalDelete from './components/ModalDelete';
-import ModalAddEdit from './components/ModalAddEdit';
+import ModalDelete from './components/modals/ModalDelete';
 import { workoutsMockData } from './components/workoutsMockData';
 import WorkoutCard from './components/workoutCard/WorkoutCard';
-import WorkoutModal from './components/WorkoutModal';
+import WorkoutModal from './components/modals/WorkoutModal';
 import SharedSectionHeader from '../headers/SharedSectionHeader';
 import { useGetAllWorkouts } from '@/hooks/workouts/useGetAllWorkouts';
+import ModalEditWorkout from './components/modals/ModalEditWorkout';
+import ModalCreateWorkout from './components/modals/ModalCreateWorkout';
 
 export default function SharedWorkouts({ role }) {
   // Get Workouts from API
@@ -25,6 +26,7 @@ export default function SharedWorkouts({ role }) {
   const [editingWorkout, setEditingWorkout] = useState(null);
   const [workoutToDelete, setWorkoutToDelete] = useState(null);
   const [showEditModal, setShowEditModal] = useState(false);
+  const [showCreateWorkoutModal, setShowCreateWorkoutModal] = useState(false);
 
   // Workout Modal States
   const [seletctedWorkout, setSelectedWorkout] = useState();
@@ -113,7 +115,7 @@ export default function SharedWorkouts({ role }) {
             <button
               onClick={() => {
                 setEditingWorkout(null);
-                setShowEditModal(true);
+                setShowCreateWorkoutModal(true);
               }}
               className="bg-beehealth-blue-solid hover:bg-beehealth-blue-hover flex items-center gap-2 rounded-lg px-4 py-2 text-white"
             >
@@ -161,10 +163,19 @@ export default function SharedWorkouts({ role }) {
         />
       )}
 
-      {/* Doctor Create New Workout Modal */}
+      {/* Doctor Edit Workout Modal */}
       {showEditModal && (
-        <ModalAddEdit
+        <ModalEditWorkout
           setShowEditModal={setShowEditModal}
+          editingWorkout={editingWorkout}
+          handleSave={handleSave}
+        />
+      )}
+
+      {/* Doctor Create New Workout Modal */}
+      {showCreateWorkoutModal && (
+        <ModalCreateWorkout
+          setShowCreateModal={setShowCreateWorkoutModal}
           editingWorkout={editingWorkout}
           handleSave={handleSave}
         />

@@ -15,7 +15,7 @@ import {
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
-export default function ModalAddEdit({ setShowEditModal, editingWorkout, handleSave }) {
+export default function ModalEditWorkout({ setShowEditModal, editingWorkout, handleSave }) {
   const [form, setForm] = useState({
     nombre: '',
     categoria: 'Fuerza',
@@ -45,16 +45,6 @@ export default function ModalAddEdit({ setShowEditModal, editingWorkout, handleS
       });
     }
   }, [editingWorkout]);
-
-  const getCategoriaColor = (cat) => {
-    const colors = {
-      Fuerza: 'from-orange-500 to-red-500',
-      Cardio: 'from-red-500 to-pink-500',
-      Core: 'from-purple-500 to-indigo-500',
-      Flexibilidad: 'from-teal-500 to-cyan-500',
-    };
-    return colors[cat] || 'from-blue-500 to-purple-500';
-  };
 
   const getNivelColor = (nivel) => {
     const colors = {
@@ -98,12 +88,10 @@ export default function ModalAddEdit({ setShowEditModal, editingWorkout, handleS
                   </div>
                   <div>
                     <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">
-                      {editingWorkout ? 'Editar Ejercicio' : 'Crear Nuevo Ejercicio'}
+                      Editar Ejercicio
                     </h2>
                     <p className="mt-1 flex items-center gap-2 text-sm text-gray-600">
-                      {editingWorkout
-                        ? 'Actualiza la información del ejercicio'
-                        : 'Completa todos los campos para agregar un nuevo ejercicio'}
+                      Actualiza la información del ejercicio
                     </p>
                   </div>
                 </div>
@@ -348,7 +336,7 @@ export default function ModalAddEdit({ setShowEditModal, editingWorkout, handleS
                 </div>
               </div>
 
-              {/* Doctor Actions */}
+              {/* Actions */}
               <div className="flex gap-3">
                 <button
                   type="button"
@@ -362,14 +350,7 @@ export default function ModalAddEdit({ setShowEditModal, editingWorkout, handleS
                   className="group bg-beehealth-blue-solid hover:shadow-beehealth-blue-solid flex-1 rounded-xl px-6 py-3.5 font-semibold text-white shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl active:scale-95"
                 >
                   <span className="flex items-center justify-center gap-2">
-                    {editingWorkout ? (
-                      <>Actualizar Ejercicio</>
-                    ) : (
-                      <>
-                        <Dumbbell className="h-5 w-5 transition-transform group-hover:rotate-12" />
-                        Crear Ejercicio
-                      </>
-                    )}
+                    Actualizar Ejercicio
                   </span>
                 </button>
               </div>
