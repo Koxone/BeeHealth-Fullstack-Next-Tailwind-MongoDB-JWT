@@ -12,7 +12,7 @@ export default function Terms() {
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
           <button onClick={() => router.push('/')} className="flex items-center gap-2">
             <img src="/images/logo.webp" alt="" className="max-w-10" />
-            <span className="text-2xl font-bold text-gray-900">MedTrack</span>
+            <span className="text-2xl font-bold text-gray-900">BeeHealth</span>
           </button>
         </div>
       </header>
@@ -23,13 +23,13 @@ export default function Terms() {
           <section>
             <h2 className="mb-3 text-2xl font-semibold text-gray-900">1. Aceptación de Términos</h2>
             <p className="text-gray-600">
-              Al acceder y utilizar MedTrack, aceptas estar sujeto a estos términos y condiciones.
+              Al acceder y utilizar BeeHealth, aceptas estar sujeto a estos términos y condiciones.
             </p>
           </section>
           <section>
             <h2 className="mb-3 text-2xl font-semibold text-gray-900">2. Uso del Servicio</h2>
             <p className="text-gray-600">
-              MedTrack es una plataforma de gestión médica. El usuario se compromete a proporcionar
+              BeeHealth es una plataforma de gestión médica. El usuario se compromete a proporcionar
               información veraz.
             </p>
           </section>
@@ -43,7 +43,7 @@ export default function Terms() {
           <section>
             <h2 className="mb-3 text-2xl font-semibold text-gray-900">4. Responsabilidades</h2>
             <p className="text-gray-600">
-              MedTrack no sustituye la consulta médica profesional. Siempre consulta con tu médico.
+              BeeHealth no sustituye la consulta médica profesional. Siempre consulta con tu médico.
             </p>
           </section>
         </div>

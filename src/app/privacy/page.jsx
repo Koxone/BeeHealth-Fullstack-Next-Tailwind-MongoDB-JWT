@@ -12,7 +12,7 @@ export default function Privacy() {
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
           <button onClick={() => router.push('/')} className="flex items-center gap-2">
             <img src="/images/logo.webp" alt="" className="max-w-10" />
-            <span className="text-2xl font-bold text-gray-900">MedTrack</span>
+            <span className="text-2xl font-bold text-gray-900">BeeHealth</span>
           </button>
         </div>
       </header>
