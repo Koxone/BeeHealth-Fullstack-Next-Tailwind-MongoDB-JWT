@@ -1,7 +1,9 @@
 import { ArrowDownCircle, ArrowUpCircle, User } from 'lucide-react';
+import Link from 'next/link';
 import React from 'react';
 
 function TransactionBlock({ transaction }) {
+  console.log(transaction);
   /* Maps */
   const fieldMap = {
     costPrice: 'Costo',
@@ -79,7 +81,12 @@ function TransactionBlock({ transaction }) {
           {transaction.patient && (
             <p className="mt-2 text-gray-700">
               <span className="font-medium text-gray-800">Paciente:</span>{' '}
-              {transaction.patient.fullName}
+              <Link
+                href={`/doctor/patients/${transaction.patient._id}`}
+                className="text-blue-600 underline"
+              >
+                {transaction.patient.fullName}
+              </Link>
             </p>
           )}
         </div>
