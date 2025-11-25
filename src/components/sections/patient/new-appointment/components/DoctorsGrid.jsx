@@ -19,7 +19,7 @@ export default function DoctorsGrid({ selectedDoctor, onSelect }) {
   ];
 
   return (
-    <div className="rounded-2xl border-2 border-gray-200 bg-white p-6 shadow-sm transition-all duration-300 hover:shadow-lg">
+    <div className="bg-beehealth-body-main rounded-2xl border-2 border-gray-200 p-6 shadow-sm transition-all duration-300 hover:shadow-lg">
       {/* header */}
       <div className="mb-4 flex items-center gap-3">
         <div className="rounded-lg bg-blue-100 p-2">
@@ -53,7 +53,7 @@ export default function DoctorsGrid({ selectedDoctor, onSelect }) {
                     className={`flex h-14 w-14 items-center justify-center rounded-full text-lg font-bold transition-all duration-300 ${
                       selectedDoctor === doctor.id
                         ? 'bg-linear-to-br from-blue-600 to-blue-700 text-white shadow-lg'
-                        : 'text-medtrack-blue-solid bg-linear-to-br from-blue-100 to-indigo-100 group-hover:scale-110'
+                        : 'text-beehealth-blue-solid bg-linear-to-br from-blue-100 to-indigo-100 group-hover:scale-110'
                     }`}
                   >
                     <Icon className="h-7 w-7" />

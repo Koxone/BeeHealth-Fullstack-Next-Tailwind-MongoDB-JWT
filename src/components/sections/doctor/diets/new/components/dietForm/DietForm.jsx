@@ -225,7 +225,7 @@ export default function DietForm() {
             type="button"
             onClick={handleSubmit}
             disabled={loading}
-            className="bg-medtrack-blue-solid hover:bg-medtrack-blue-hover flex flex-1 items-center justify-center gap-2 rounded-lg px-6 py-3 font-semibold text-white shadow-md transition-all hover:shadow-lg active:scale-95 disabled:opacity-50"
+            className="bg-beehealth-blue-solid hover:bg-beehealth-blue-hover flex flex-1 items-center justify-center gap-2 rounded-lg px-6 py-3 font-semibold text-white shadow-md transition-all hover:shadow-lg active:scale-95 disabled:opacity-50"
           >
             <Check className="h-5 w-5" />
             {loading ? 'Creando...' : 'Crear Plan Dietético'}
@@ -235,7 +235,7 @@ export default function DietForm() {
           <button
             type="button"
             onClick={resetForm}
-            className="flex flex-1 items-center justify-center gap-2 rounded-lg border-2 border-gray-300 px-6 py-3 font-semibold text-gray-700 transition-all hover:bg-gray-50 active:scale-95"
+            className="hover:bg-beehealth-body-main flex flex-1 items-center justify-center gap-2 rounded-lg border-2 border-gray-300 px-6 py-3 font-semibold text-gray-700 transition-all active:scale-95"
           >
             Cancelar
           </button>

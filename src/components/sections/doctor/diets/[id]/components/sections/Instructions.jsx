@@ -23,7 +23,7 @@ function Instructions({ diet, isEditing = false, onChange, onSave, editDiet }) {
     }
   };
   return (
-    <section className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md md:p-4">
+    <section className="bg-beehealth-body-main rounded-xl border border-gray-200 p-6 shadow-sm transition-shadow hover:shadow-md md:p-4">
       {/* Header */}
       <div className="mb-4 flex items-center gap-3">
         <div className="rounded-lg bg-blue-100 p-2">
@@ -41,7 +41,7 @@ function Instructions({ diet, isEditing = false, onChange, onSave, editDiet }) {
       {isEditing && (
         <div className="mt-4 space-y-4">
           <textarea
-            className="focus:border-medtrack-blue w-full rounded-lg border border-gray-300 p-3 text-gray-700 focus:outline-none"
+            className="focus:border-beehealth-blue w-full rounded-lg border border-gray-300 p-3 text-gray-700 focus:outline-none"
             value={instValue}
             onChange={(e) => setInstValue(e.target.value)}
             rows={3}
@@ -51,7 +51,7 @@ function Instructions({ diet, isEditing = false, onChange, onSave, editDiet }) {
             <button
               onClick={handleSave}
               disabled={isSaving}
-              className="bg-medtrack-green-secondary-solid hover:bg-medtrack-green-secondary-hover rounded-lg px-4 py-2 text-sm font-medium text-white shadow-sm transition-opacity disabled:opacity-50"
+              className="bg-beehealth-green-secondary-solid hover:bg-beehealth-green-secondary-hover rounded-lg px-4 py-2 text-sm font-medium text-white shadow-sm transition-opacity disabled:opacity-50"
             >
               {isSaving ? 'Guardando...' : 'Guardar'}
             </button>

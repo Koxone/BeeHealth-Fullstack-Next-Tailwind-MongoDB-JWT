@@ -11,7 +11,7 @@ import {
   Banknote,
   CreditCard,
   ArrowLeftRight,
-} from 'lucide-react'; 
+} from 'lucide-react';
 
 export default function ConsultsTable({ rows, totals, onEdit, onDelete }) {
   // Table columns
@@ -88,7 +88,7 @@ export default function ConsultsTable({ rows, totals, onEdit, onDelete }) {
               {/* Dates */}
               <td className="px-6 py-4">
                 <div className="flex items-center gap-3">
-                  <div className="bg-medtrack-blue-solid group-hover:bg-medtrack-blue-hover rounded-lg p-2 transition">
+                  <div className="bg-beehealth-blue-solid group-hover:bg-beehealth-blue-hover rounded-lg p-2 transition">
                     <Calendar className="h-4 w-4 text-white transition group-hover:text-white" />
                   </div>
                   <div>
@@ -106,7 +106,7 @@ export default function ConsultsTable({ rows, totals, onEdit, onDelete }) {
               <td className="px-6 py-4">
                 <div className="flex items-center gap-3">
                   {/* Avatar or Initials */}
-                  <div className="bg-medtrack-blue-solid flex h-10 w-10 items-center justify-center overflow-hidden rounded-xl text-sm font-bold text-white shadow-md">
+                  <div className="bg-beehealth-blue-solid flex h-10 w-10 items-center justify-center overflow-hidden rounded-xl text-sm font-bold text-white shadow-md">
                     {c?.patient?.avatar ? (
                       /* Image */
                       <img
@@ -195,12 +195,12 @@ export default function ConsultsTable({ rows, totals, onEdit, onDelete }) {
           <tr className="font-bold">
             <td colSpan="3" className="px-6 py-4 text-sm text-gray-900">
               <div className="flex items-center gap-2">
-                <Award className="h-5 w-5 text-indigo-600" />
+                <Award className="text-beehealth-blue-solid h-5 w-5" />
                 <span>Total General</span>
               </div>
             </td>
 
-            <td className="px-6 py-4 text-right text-lg font-bold text-indigo-600">
+            <td className="text-beehealth-blue-solid px-6 py-4 text-right text-lg font-bold">
               ${totals.grandTotal.toLocaleString()}
             </td>
           </tr>

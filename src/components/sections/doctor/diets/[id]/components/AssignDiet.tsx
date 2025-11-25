@@ -40,7 +40,7 @@ export default function AssignDiet({
   const [selected, setSelected] = useState<string[]>([]);
 
   // Success notification state
-  const [showSuccess, setShowSuccess] = useState(false); 
+  const [showSuccess, setShowSuccess] = useState(false);
 
   // Toggle selection
   const togglePatient = (id: string) => {
@@ -60,7 +60,7 @@ export default function AssignDiet({
     try {
       const updatedDiet = await assignDietToPatients(dietId, patientsPayload);
       console.log('Diet updated:', updatedDiet);
-      setShowSuccess(true); 
+      setShowSuccess(true);
       refetch();
       setTimeout(() => setShowSuccess(false), 3000);
       setOpen(false);
@@ -70,7 +70,7 @@ export default function AssignDiet({
   };
 
   return (
-    <div className="flex flex-col rounded-lg border border-gray-400 bg-white p-4">
+    <div className="bg-beehealth-body-main flex flex-col rounded-lg border border-gray-400 p-4">
       <label className="mb-2 text-xs font-semibold tracking-wide text-gray-500 uppercase">
         Asignar dieta a pacientes{' '}
         <span className="text-[10px] font-normal normal-case">
@@ -81,7 +81,7 @@ export default function AssignDiet({
       {/* Dropdown button */}
       <button
         onClick={() => setOpen(!open)}
-        className="flex w-full items-center justify-between rounded-md border border-gray-300 bg-gray-50 px-3 py-2 text-left text-sm text-gray-900 transition-colors hover:border-gray-400"
+        className="bg-beehealth-body-main flex w-full items-center justify-between rounded-md border border-gray-300 px-3 py-2 text-left text-sm text-gray-900 transition-colors hover:border-gray-400"
       >
         <span>
           {selected.length === 0 && 'Asignar pacientes'}
@@ -93,8 +93,8 @@ export default function AssignDiet({
 
       {/* Dropdown panel */}
       {open && (
-        <div className="mt-2 max-h-56 w-full overflow-y-auto rounded-lg border border-gray-400 bg-white shadow-md">
-          <div className="sticky top-0 bg-white p-2 shadow-sm">
+        <div className="bg-beehealth-body-main mt-2 max-h-56 w-full overflow-y-auto rounded-lg border border-gray-400 shadow-md">
+          <div className="bg-beehealth-body-main sticky top-0 p-2 shadow-sm">
             <input
               type="text"
               placeholder="Buscar..."
@@ -106,14 +106,14 @@ export default function AssignDiet({
             {patientsData.map((patient) => (
               <li
                 key={patient._id}
-                className="flex cursor-pointer items-center gap-3 px-3 py-2 hover:bg-gray-50"
+                className="hover:bg-beehealth-body-main flex cursor-pointer items-center gap-3 px-3 py-2"
                 onClick={() => togglePatient(patient._id)}
               >
                 <input
                   type="checkbox"
                   checked={selected.includes(patient._id)}
                   onChange={() => togglePatient(patient._id)}
-                  className="text-medtrack-blue-solid focus:ring-medtrack-blue-solid h-4 w-4 rounded border-gray-300"
+                  className="text-beehealth-blue-solid focus:ring-beehealth-blue-solid h-4 w-4 rounded border-gray-300"
                 />
                 <span className="text-sm text-gray-700">{patient.fullName}</span>
               </li>
@@ -126,7 +126,7 @@ export default function AssignDiet({
       <button
         onClick={handleAssign}
         disabled={assigning}
-        className="bg-medtrack-blue-solid hover:bg-medtrack-blue-hover mt-2 rounded-md px-3 py-2 text-sm text-white disabled:opacity-50"
+        className="bg-beehealth-blue-solid hover:bg-beehealth-blue-hover mt-2 rounded-md px-3 py-2 text-sm text-white disabled:opacity-50"
       >
         {assigning ? 'Asignando...' : 'Asignar dieta'}
       </button>

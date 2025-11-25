@@ -10,7 +10,7 @@ function DinamicTextSection({
   onChange,
 }) {
   return (
-    <section className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md md:p-4">
+    <section className="bg-beehealth-body-main rounded-xl border border-gray-200 p-6 shadow-sm transition-shadow hover:shadow-md md:p-4">
       <h2 className="mb-6 flex items-center gap-2 text-xl font-semibold text-gray-900">
         <div className="h-6 w-1 rounded-full bg-yellow-600"></div>
         {title}
@@ -19,7 +19,7 @@ function DinamicTextSection({
 
       <div className="mt-4 space-y-4">
         <textarea
-          className="focus:border-medtrack-blue w-full rounded-lg border border-gray-300 p-3 text-gray-700 focus:outline-none"
+          className="focus:border-beehealth-blue w-full rounded-lg border border-gray-300 p-3 text-gray-700 focus:outline-none"
           rows={2}
           placeholder={placeholder}
           value={value}

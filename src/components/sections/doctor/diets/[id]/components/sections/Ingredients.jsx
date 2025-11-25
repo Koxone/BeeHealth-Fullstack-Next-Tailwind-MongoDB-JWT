@@ -31,13 +31,13 @@ export default function Ingredients({ diet, isEditing = false, editDiet }) {
   };
 
   return (
-    <section className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm hover:shadow-md md:p-4">
+    <section className="bg-beehealth-body-main rounded-xl border border-gray-200 p-6 shadow-sm hover:shadow-md md:p-4">
       <h2 className="mb-4 text-xl font-semibold text-gray-900">Ingredientes</h2>
 
       {!isEditing && (
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           {ingredients.map((item) => (
-            <div key={item} className="flex items-start gap-3 rounded-lg bg-gray-50">
+            <div key={item} className="bg-beehealth-body-main flex items-start gap-3 rounded-lg">
               <div className="mt-2 h-2 w-2 shrink-0 rounded-full bg-blue-600"></div>
               <span className="text-gray-700">{item}</span>
             </div>
@@ -50,7 +50,7 @@ export default function Ingredients({ diet, isEditing = false, editDiet }) {
           {ingredients.map((item, index) => (
             <div
               key={index}
-              className="flex items-center gap-3 rounded-lg border border-gray-200 bg-gray-50 p-3"
+              className="bg-beehealth-body-main flex items-center gap-3 rounded-lg border border-gray-200 p-3"
             >
               <input
                 className="flex-1 rounded-lg border border-gray-300 px-3 py-2 text-gray-700 focus:border-blue-500 focus:outline-none"
@@ -69,7 +69,7 @@ export default function Ingredients({ diet, isEditing = false, editDiet }) {
 
           <button
             onClick={handleAdd}
-            className="bg-medtrack-blue-solid hover:bg-medtrack-blue-hover flex items-center gap-2 rounded-lg px-4 py-2 text-white transition-colors"
+            className="bg-beehealth-blue-solid hover:bg-beehealth-blue-hover flex items-center gap-2 rounded-lg px-4 py-2 text-white transition-colors"
           >
             <Plus className="h-4 w-4" />
             Agregar ingrediente
@@ -85,7 +85,7 @@ export default function Ingredients({ diet, isEditing = false, editDiet }) {
             </button>
 
             <button
-              className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-700 transition-colors hover:bg-gray-100"
+              className="bg-beehealth-body-main rounded-lg border border-gray-300 px-4 py-2 text-gray-700 transition-colors hover:bg-gray-100"
               onClick={() => setIngredients(diet.ingredients)}
             >
               Cancelar
