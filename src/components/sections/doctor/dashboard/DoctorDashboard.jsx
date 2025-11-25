@@ -10,6 +10,7 @@ import { useGetFullInventory } from '@/hooks/inventory/useGetFullInventory';
 import DoctorStatsGrid from './components/DoctorStatsGrid';
 import { getConsultTotals } from '../../employee/consultations/utils/getConsultTotals';
 import { useGetAllConsults } from '@/hooks/consults/useGetAllConsults';
+import { Loader2 } from 'lucide-react';
 
 export default function DoctorDashboard({ currentUser, role, specialty }) {
   // Google Calendar Custom Hooks
@@ -34,8 +35,15 @@ export default function DoctorDashboard({ currentUser, role, specialty }) {
 
   if (loading || loadingInventory || loadingConsults) {
     return (
-      <div className="flex h-full w-full items-center justify-center">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-300 border-t-transparent"></div>
+      <div className="flex min-h-[400px] items-center justify-center">
+        {error ? (
+          <p className="text-lg font-medium text-red-600">Error al cargar los datos del paciente</p>
+        ) : (
+          <div className="text-center">
+            <Loader2 className="mx-auto mb-4 h-16 w-16 animate-spin text-blue-600" />
+            <p className="text-lg font-medium text-gray-600">Cargando información...</p>
+          </div>
+        )}
       </div>
     );
   }

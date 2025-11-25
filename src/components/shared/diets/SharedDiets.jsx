@@ -1,19 +1,27 @@
 'use client';
 
 import SharedDietCard from './components/dietCard/SharedDietCard';
-import Link from 'next/link';
 export const runtime = 'nodejs';
 import SharedSectionHeader from '../headers/SharedSectionHeader';
 import { useGetAllDiets } from '@/hooks/diets/useGetAllDiets';
+import { Loader2 } from 'lucide-react';
 
 export default function SharedDiets({ role }) {
   // Fetch all diets
   const { dietsData, isLoading, error } = useGetAllDiets();
 
+  // Loading
   if (isLoading) {
     return (
-      <div className="flex h-full w-full items-center justify-center">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-300 border-t-transparent"></div>
+      <div className="flex min-h-[400px] items-center justify-center">
+        {error ? (
+          <p className="text-lg font-medium text-red-600">Error al cargar los datos del paciente</p>
+        ) : (
+          <div className="text-center">
+            <Loader2 className="mx-auto mb-4 h-16 w-16 animate-spin text-blue-600" />
+            <p className="text-lg font-medium text-gray-600">Cargando información...</p>
+          </div>
+        )}
       </div>
     );
   }
