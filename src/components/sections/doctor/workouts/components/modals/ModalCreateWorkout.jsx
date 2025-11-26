@@ -49,6 +49,34 @@ export default function ModalCreateWorkout({ setShowCreateModal }) {
     setInstructionInputs(newInputs);
   };
 
+  // Benefits
+  const [benefitInputs, setBenefitInputs] = useState(['']);
+  const handleAddBenefitInput = () => {
+    setBenefitInputs([...benefitInputs, '']);
+  };
+  const handleRemoveBenefitInput = (index) => {
+    setBenefitInputs(benefitInputs.filter((_, i) => i !== index));
+  };
+  const handleBenefitInputChange = (index, value) => {
+    const newInputs = [...benefitInputs];
+    newInputs[index] = value;
+    setBenefitInputs(newInputs);
+  };
+
+  // Cautions
+  const [cautionInputs, setCautionInputs] = useState(['']);
+  const handleAddCautionInput = () => {
+    setCautionInputs([...cautionInputs, '']);
+  };
+  const handleRemoveCautionInput = (index) => {
+    setCautionInputs(cautionInputs.filter((_, i) => i !== index));
+  };
+  const handleCautionInputChange = (index, value) => {
+    const newInputs = [...cautionInputs];
+    newInputs[index] = value;
+    setCautionInputs(newInputs);
+  };
+
   // Form State
   const [form, setForm] = useState({
     patients: [],
@@ -93,15 +121,9 @@ export default function ModalCreateWorkout({ setShowCreateModal }) {
 
     const instructions = instructionInputs.map((i) => i.trim()).filter((i) => i.length > 0);
 
-    const benefits = form.benefits
-      .split('\n')
-      .map((i) => i.trim())
-      .filter((i) => i.length > 0);
+    const benefits = benefitInputs.map((i) => i.trim()).filter((i) => i.length > 0);
 
-    const cautions = form.cautions
-      .split('\n')
-      .map((i) => i.trim())
-      .filter((i) => i.length > 0);
+    const cautions = cautionInputs.map((i) => i.trim()).filter((i) => i.length > 0);
 
     const images = imageInputs.map((i) => i.trim()).filter((i) => i.length > 0);
 
@@ -160,6 +182,8 @@ export default function ModalCreateWorkout({ setShowCreateModal }) {
       });
       setImageInputs(['']);
       setInstructionInputs(['']);
+      setBenefitInputs(['']);
+      setCautionInputs(['']);
     }
   };
 
@@ -509,32 +533,108 @@ export default function ModalCreateWorkout({ setShowCreateModal }) {
                   </div>
 
                   <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-                    <div className="space-y-2">
+                    {/* BENEFICIOS */}
+                    <div className="space-y-3">
                       <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
                         <Award className="h-4 w-4 text-yellow-500" />
                         Beneficios
                       </label>
-                      <textarea
-                        value={form.benefits}
-                        onChange={(e) => setForm({ ...form, benefits: e.target.value })}
-                        placeholder="• Fortalece los músculos&#10;• Mejora la resistencia&#10;• Aumenta la flexibilidad..."
-                        className="bg-beehealth-body-main w-full rounded-xl border-2 border-gray-200 px-4 py-3.5 text-gray-900 shadow-sm transition-all duration-300 placeholder:text-gray-400 focus:border-yellow-500 focus:shadow-md focus:shadow-yellow-500/20 focus:outline-none"
-                        rows="4"
-                      />
+
+                      {/* Benefits List */}
+                      <div className="space-y-3">
+                        {benefitInputs.map((benefit, index) => (
+                          <div key={index} className="flex gap-2">
+                            <div className="mt-2 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-yellow-100">
+                              <span className="text-xs font-bold text-yellow-600">•</span>
+                            </div>
+                            <textarea
+                              value={benefit}
+                              onChange={(e) => handleBenefitInputChange(index, e.target.value)}
+                              placeholder={`Beneficio ${index + 1}...`}
+                              className="bg-beehealth-body-main flex-1 resize-none rounded-xl border-2 border-gray-200 px-4 py-3.5 text-gray-900 shadow-sm transition-all duration-300 placeholder:text-gray-400 focus:border-yellow-500 focus:shadow-md focus:shadow-yellow-500/20 focus:outline-none"
+                              rows="1"
+                            />
+                            {benefitInputs.length > 1 && (
+                              <button
+                                type="button"
+                                onClick={() => handleRemoveBenefitInput(index)}
+                                className="h-fit rounded-xl border-2 border-red-300 bg-red-50 px-3 py-3.5 font-semibold text-red-600 shadow-sm transition-all duration-300 hover:border-red-400 hover:bg-red-100 active:scale-95"
+                              >
+                                Eliminar
+                              </button>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Add Button */}
+                      <button
+                        type="button"
+                        onClick={handleAddBenefitInput}
+                        className="w-full rounded-xl border-2 border-dashed border-yellow-300 bg-yellow-50 px-4 py-3.5 font-semibold text-yellow-600 shadow-sm transition-all duration-300 hover:border-yellow-400 hover:bg-yellow-100 active:scale-95"
+                      >
+                        + Agregar beneficio
+                      </button>
+
+                      {/* Info */}
+                      <div className="flex items-start gap-2 rounded-lg bg-yellow-50 px-3 py-2">
+                        <Info className="mt-0.5 h-4 w-4 shrink-0 text-yellow-600" />
+                        <p className="text-xs text-yellow-700">
+                          Lista los beneficios principales que proporciona este ejercicio.
+                        </p>
+                      </div>
                     </div>
 
-                    <div className="space-y-2">
+                    {/* PRECAUCIONES */}
+                    <div className="space-y-3">
                       <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
                         <AlertCircle className="h-4 w-4 text-orange-500" />
                         Precauciones
                       </label>
-                      <textarea
-                        value={form.cautions}
-                        onChange={(e) => setForm({ ...form, cautions: e.target.value })}
-                        placeholder="• Mantén la espalda recta&#10;• No fuerces las articulaciones&#10;• Calienta antes de comenzar..."
-                        className="bg-beehealth-body-main w-full rounded-xl border-2 border-gray-200 px-4 py-3.5 text-gray-900 shadow-sm transition-all duration-300 placeholder:text-gray-400 focus:border-orange-500 focus:shadow-md focus:shadow-orange-500/20 focus:outline-none"
-                        rows="4"
-                      />
+
+                      {/* Cautions List */}
+                      <div className="space-y-3">
+                        {cautionInputs.map((caution, index) => (
+                          <div key={index} className="flex gap-2">
+                            <div className="mt-2 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-orange-100">
+                              <span className="text-xs font-bold text-orange-600">!</span>
+                            </div>
+                            <textarea
+                              value={caution}
+                              onChange={(e) => handleCautionInputChange(index, e.target.value)}
+                              placeholder={`Precaución ${index + 1}...`}
+                              className="bg-beehealth-body-main flex-1 resize-none rounded-xl border-2 border-gray-200 px-4 py-3.5 text-gray-900 shadow-sm transition-all duration-300 placeholder:text-gray-400 focus:border-orange-500 focus:shadow-md focus:shadow-orange-500/20 focus:outline-none"
+                              rows="1"
+                            />
+                            {cautionInputs.length > 1 && (
+                              <button
+                                type="button"
+                                onClick={() => handleRemoveCautionInput(index)}
+                                className="h-fit rounded-xl border-2 border-red-300 bg-red-50 px-3 py-3.5 font-semibold text-red-600 shadow-sm transition-all duration-300 hover:border-red-400 hover:bg-red-100 active:scale-95"
+                              >
+                                Eliminar
+                              </button>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Add Button */}
+                      <button
+                        type="button"
+                        onClick={handleAddCautionInput}
+                        className="w-full rounded-xl border-2 border-dashed border-orange-300 bg-orange-50 px-4 py-3.5 font-semibold text-orange-600 shadow-sm transition-all duration-300 hover:border-orange-400 hover:bg-orange-100 active:scale-95"
+                      >
+                        + Agregar precaución
+                      </button>
+
+                      {/* Info */}
+                      <div className="flex items-start gap-2 rounded-lg bg-orange-50 px-3 py-2">
+                        <Info className="mt-0.5 h-4 w-4 shrink-0 text-orange-600" />
+                        <p className="text-xs text-orange-700">
+                          Advierte sobre lesiones o errores comunes al realizar este ejercicio.
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
