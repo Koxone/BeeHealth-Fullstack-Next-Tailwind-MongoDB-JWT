@@ -18,8 +18,6 @@ export const patientSidebarItems = [
   { icon: Calendar, label: 'Agendar Cita', path: '/patient/new-appointment', badge: null },
   { icon: Apple, label: 'Dietas', path: '/patient/diets', badge: null },
   { icon: Dumbbell, label: 'Ejercicios', path: '/patient/workouts', badge: null },
-  { icon: User, label: 'Perfil', path: '/patient/profile', badge: null },
-  { icon: HelpCircle, label: 'Soporte', path: '/patient/support', badge: null },
 ];
 
 export const weightControlSidebarItems = [
@@ -40,7 +38,7 @@ export const weightControlSidebarItems = [
   { icon: Dumbbell, label: 'Ejercicios', path: '/doctor/workouts', badge: null },
   { icon: DollarSign, label: 'Contabilidad', path: '/doctor/accounting', badge: null },
   { icon: Package, label: 'Inventario', path: '/doctor/inventory', badge: '5' },
-  { icon: User, label: 'Perfil', path: '/doctor/profile', badge: null },
+  // { icon: User, label: 'Perfil', path: '/doctor/profile', badge: null },
 ];
 
 export const dentalSidebarItems = [
