@@ -9,8 +9,8 @@ export default function ClinicalHistory({ onAdd, onEdit, patientRecord, specialt
       {/* Header */}
       <div className="mb-4 flex flex-col gap-3 sm:mb-6 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-(--med-blue-light) sm:h-12 sm:w-12">
-            <ClipboardList className="text-beehealth-green-primary-dark h-5 w-5 sm:h-6 sm:w-6" />
+          <div className="bg-beehealth-blue-primary-solid flex h-10 w-10 items-center justify-center rounded-xl sm:h-12 sm:w-12">
+            <ClipboardList className="h-5 w-5 text-white sm:h-6 sm:w-6" />
           </div>
           <div>
             <h2 className="text-lg font-semibold text-(--med-text-dark) sm:text-xl">
