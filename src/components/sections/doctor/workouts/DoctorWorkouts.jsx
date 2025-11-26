@@ -135,7 +135,7 @@ export default function DoctorWorkouts({ role }) {
               setEditingWorkout(null);
               setShowCreateWorkoutModal(true);
             }}
-            className="bg-beehealth-green-secondary-solid hover:bg-beehealth-green-secondary-hover flex items-center gap-2 rounded-lg px-4 py-2 text-white"
+            className="bg-beehealth-green-secondary-solid hover:bg-beehealth-green-secondary-solid-hover flex items-center gap-2 rounded-lg px-4 py-2 text-white"
           >
             <Plus className="h-5 w-5" /> Nuevo
           </button>

@@ -1,6 +1,6 @@
 'use client';
 
-import { Clock, Edit2, Trash2 } from 'lucide-react';
+import { Clock, Edit2, Trash2, User } from 'lucide-react';
 import ActionsButtons from './components/ActionsButtons';
 
 const getNivelColor = (nivel) => {
@@ -53,6 +53,10 @@ export default function WorkoutCard({
         <div className="flex items-center gap-2 text-sm text-gray-600">
           <Clock className="h-4 w-4" />
           <span>{workout?.duration} minutos</span>
+        </div>
+        <div className="flex items-center gap-2 text-sm text-gray-600">
+          <User className="h-4 w-4" />
+          <span>{workout?.patients?.length} pacientes asignados</span>
         </div>
 
         {/* Doctor Actions */}
