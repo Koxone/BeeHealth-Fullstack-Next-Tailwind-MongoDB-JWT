@@ -21,6 +21,62 @@ export default function ModalCreateWorkout({ setShowCreateModal }) {
   // Create Workout Hook
   const { createWorkout, loading, error } = useCreateWorkout();
 
+  // Images
+  const [imageInputs, setImageInputs] = useState(['']);
+  const handleAddImageInput = () => {
+    setImageInputs([...imageInputs, '']);
+  };
+  const handleRemoveImageInput = (index) => {
+    setImageInputs(imageInputs.filter((_, i) => i !== index));
+  };
+  const handleImageInputChange = (index, value) => {
+    const newInputs = [...imageInputs];
+    newInputs[index] = value;
+    setImageInputs(newInputs);
+  };
+
+  // Instructions
+  const [instructionInputs, setInstructionInputs] = useState(['']);
+  const handleAddInstructionInput = () => {
+    setInstructionInputs([...instructionInputs, '']);
+  };
+  const handleRemoveInstructionInput = (index) => {
+    setInstructionInputs(instructionInputs.filter((_, i) => i !== index));
+  };
+  const handleInstructionInputChange = (index, value) => {
+    const newInputs = [...instructionInputs];
+    newInputs[index] = value;
+    setInstructionInputs(newInputs);
+  };
+
+  // Benefits
+  const [benefitInputs, setBenefitInputs] = useState(['']);
+  const handleAddBenefitInput = () => {
+    setBenefitInputs([...benefitInputs, '']);
+  };
+  const handleRemoveBenefitInput = (index) => {
+    setBenefitInputs(benefitInputs.filter((_, i) => i !== index));
+  };
+  const handleBenefitInputChange = (index, value) => {
+    const newInputs = [...benefitInputs];
+    newInputs[index] = value;
+    setBenefitInputs(newInputs);
+  };
+
+  // Cautions
+  const [cautionInputs, setCautionInputs] = useState(['']);
+  const handleAddCautionInput = () => {
+    setCautionInputs([...cautionInputs, '']);
+  };
+  const handleRemoveCautionInput = (index) => {
+    setCautionInputs(cautionInputs.filter((_, i) => i !== index));
+  };
+  const handleCautionInputChange = (index, value) => {
+    const newInputs = [...cautionInputs];
+    newInputs[index] = value;
+    setCautionInputs(newInputs);
+  };
+
   // Form State
   const [form, setForm] = useState({
     patients: [],
@@ -63,25 +119,13 @@ export default function ModalCreateWorkout({ setShowCreateModal }) {
       return;
     }
 
-    const instructions = form.instructions
-      .split('\n')
-      .map((i) => i.trim())
-      .filter((i) => i.length > 0);
+    const instructions = instructionInputs.map((i) => i.trim()).filter((i) => i.length > 0);
 
-    const benefits = form.benefits
-      .split('\n')
-      .map((i) => i.trim())
-      .filter((i) => i.length > 0);
+    const benefits = benefitInputs.map((i) => i.trim()).filter((i) => i.length > 0);
 
-    const cautions = form.cautions
-      .split('\n')
-      .map((i) => i.trim())
-      .filter((i) => i.length > 0);
+    const cautions = cautionInputs.map((i) => i.trim()).filter((i) => i.length > 0);
 
-    const images = form.images
-      .split('\n')
-      .map((i) => i.trim())
-      .filter((i) => i.length > 0);
+    const images = imageInputs.map((i) => i.trim()).filter((i) => i.length > 0);
 
     if (instructions.length === 0) {
       setSubmitError('Debes agregar al menos una instrucción');
@@ -136,6 +180,10 @@ export default function ModalCreateWorkout({ setShowCreateModal }) {
         images: '',
         video: '',
       });
+      setImageInputs(['']);
+      setInstructionInputs(['']);
+      setBenefitInputs(['']);
+      setCautionInputs(['']);
     }
   };
 
@@ -218,6 +266,7 @@ export default function ModalCreateWorkout({ setShowCreateModal }) {
                   <h3 className="text-xl font-bold text-gray-900">Información Básica</h3>
                 </div>
 
+                {/* Name */}
                 <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                   <div className="space-y-2">
                     <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
@@ -234,6 +283,7 @@ export default function ModalCreateWorkout({ setShowCreateModal }) {
                     />
                   </div>
 
+                  {/* Category */}
                   <div className="space-y-2">
                     <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
                       <Sparkles className="h-4 w-4 text-purple-500" />
@@ -269,6 +319,7 @@ export default function ModalCreateWorkout({ setShowCreateModal }) {
                     </div>
                   </div>
 
+                  {/* Duration */}
                   <div className="space-y-2">
                     <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
                       <Clock className="h-4 w-4 text-green-500" />
@@ -284,6 +335,7 @@ export default function ModalCreateWorkout({ setShowCreateModal }) {
                     />
                   </div>
 
+                  {/* Difficulty Level */}
                   <div className="space-y-2">
                     <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
                       <TrendingUp className="h-4 w-4 text-orange-500" />
@@ -329,28 +381,59 @@ export default function ModalCreateWorkout({ setShowCreateModal }) {
                   <h3 className="text-xl font-bold text-gray-900">Contenido Multimedia</h3>
                 </div>
 
-                {/* Images */}
+                {/* Images Gallery */}
                 <div className="space-y-5">
-                  <div className="space-y-2">
+                  <div className="space-y-3">
                     <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
                       <ImageIcon className="h-4 w-4 text-pink-500" />
                       Galería de Imágenes
                     </label>
-                    <textarea
-                      value={form.images}
-                      onChange={(e) => setForm({ ...form, images: e.target.value })}
-                      placeholder="https://ejemplo.com/imagen1.jpg&#10;https://ejemplo.com/imagen2.jpg&#10;https://ejemplo.com/imagen3.jpg"
-                      className="bg-beehealth-body-main w-full rounded-xl border-2 border-gray-200 px-4 py-3.5 font-mono text-sm text-gray-900 shadow-sm transition-all duration-300 placeholder:text-gray-400 focus:border-pink-500 focus:shadow-md focus:shadow-pink-500/20 focus:outline-none"
-                      rows="3"
-                    />
+
+                    {/* Images List */}
+                    <div className="space-y-3">
+                      {imageInputs.map((imageUrl, index) => (
+                        <div key={index} className="flex gap-2">
+                          <input
+                            type="url"
+                            value={imageUrl}
+                            onChange={(e) => handleImageInputChange(index, e.target.value)}
+                            placeholder={
+                              index === 0 ? 'Imagen principal (URL)' : 'Imagen adicional (URL)'
+                            }
+                            className="bg-beehealth-body-main flex-1 rounded-xl border-2 border-gray-200 px-4 py-3.5 font-mono text-sm text-gray-900 shadow-sm transition-all duration-300 placeholder:text-gray-400 focus:border-pink-500 focus:shadow-md focus:shadow-pink-500/20 focus:outline-none"
+                          />
+                          {imageInputs.length > 1 && (
+                            <button
+                              type="button"
+                              onClick={() => handleRemoveImageInput(index)}
+                              className="rounded-xl border-2 border-red-300 bg-red-50 px-4 py-3.5 font-semibold text-red-600 shadow-sm transition-all duration-300 hover:border-red-400 hover:bg-red-100 active:scale-95"
+                            >
+                              Eliminar
+                            </button>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Add Button */}
+                    <button
+                      type="button"
+                      onClick={handleAddImageInput}
+                      className="w-full rounded-xl border-2 border-dashed border-pink-300 bg-pink-50 px-4 py-3.5 font-semibold text-pink-600 shadow-sm transition-all duration-300 hover:border-pink-400 hover:bg-pink-100 active:scale-95"
+                    >
+                      + Agregar otra imagen
+                    </button>
+
+                    {/* Info */}
                     <div className="flex items-start gap-2 rounded-lg bg-pink-50 px-3 py-2">
                       <Info className="mt-0.5 h-4 w-4 shrink-0 text-pink-600" />
                       <p className="text-xs text-pink-700">
-                        Ingresa una URL por línea. La primera imagen será la principal.
+                        La primera imagen será la portada principal de la galería.
                       </p>
                     </div>
                   </div>
 
+                  {/* Video Tutorial */}
                   <div className="space-y-2">
                     <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
                       <Play className="h-4 w-4 text-red-500" />
@@ -396,47 +479,162 @@ export default function ModalCreateWorkout({ setShowCreateModal }) {
                     />
                   </div>
 
-                  <div className="space-y-2">
+                  {/* Instructions */}
+                  <div className="space-y-3">
                     <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
                       <List className="h-4 w-4 text-blue-500" />
                       Instrucciones Paso a Paso
                     </label>
-                    <textarea
-                      value={form.instructions}
-                      onChange={(e) => setForm({ ...form, instructions: e.target.value })}
-                      placeholder="Paso 1: Colócate en la posición inicial...&#10;Paso 2: Realiza el movimiento...&#10;Paso 3: Regresa a la posición inicial..."
-                      className="bg-beehealth-body-main w-full rounded-xl border-2 border-gray-200 px-4 py-3.5 text-gray-900 shadow-sm transition-all duration-300 placeholder:text-gray-400 focus:border-blue-500 focus:shadow-md focus:shadow-blue-500/20 focus:outline-none"
-                      rows="4"
-                    />
+
+                    {/* Instructions List */}
+                    <div className="space-y-3">
+                      {instructionInputs.map((instruction, index) => (
+                        <div key={index} className="flex gap-2">
+                          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-blue-100">
+                            <span className="text-sm font-bold text-blue-600">{index + 1}</span>
+                          </div>
+                          <textarea
+                            value={instruction}
+                            onChange={(e) => handleInstructionInputChange(index, e.target.value)}
+                            placeholder={`Paso ${index + 1}: Describe la instrucción...`}
+                            className="bg-beehealth-body-main flex-1 resize-none rounded-xl border-2 border-gray-200 px-4 py-3.5 text-gray-900 shadow-sm transition-all duration-300 placeholder:text-gray-400 focus:border-blue-500 focus:shadow-md focus:shadow-blue-500/20 focus:outline-none"
+                            rows="1"
+                          />
+                          {instructionInputs.length > 1 && (
+                            <button
+                              type="button"
+                              onClick={() => handleRemoveInstructionInput(index)}
+                              className="h-fit rounded-xl border-2 border-red-300 bg-red-50 px-4 py-3.5 font-semibold text-red-600 shadow-sm transition-all duration-300 hover:border-red-400 hover:bg-red-100 active:scale-95"
+                            >
+                              Eliminar
+                            </button>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Add Button */}
+                    <button
+                      type="button"
+                      onClick={handleAddInstructionInput}
+                      className="w-full rounded-xl border-2 border-dashed border-blue-300 bg-blue-50 px-4 py-3.5 font-semibold text-blue-600 shadow-sm transition-all duration-300 hover:border-blue-400 hover:bg-blue-100 active:scale-95"
+                    >
+                      + Agregar paso
+                    </button>
+
+                    {/* Info */}
+                    <div className="flex items-start gap-2 rounded-lg bg-blue-50 px-3 py-2">
+                      <Info className="mt-0.5 h-4 w-4 shrink-0 text-blue-600" />
+                      <p className="text-xs text-blue-700">
+                        Cada paso se mostrará numerado para el usuario. Sé claro y conciso en cada
+                        instrucción.
+                      </p>
+                    </div>
                   </div>
 
                   <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-                    <div className="space-y-2">
+                    {/* Benefits */}
+                    <div className="space-y-3">
                       <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
                         <Award className="h-4 w-4 text-yellow-500" />
                         Beneficios
                       </label>
-                      <textarea
-                        value={form.benefits}
-                        onChange={(e) => setForm({ ...form, benefits: e.target.value })}
-                        placeholder="• Fortalece los músculos&#10;• Mejora la resistencia&#10;• Aumenta la flexibilidad..."
-                        className="bg-beehealth-body-main w-full rounded-xl border-2 border-gray-200 px-4 py-3.5 text-gray-900 shadow-sm transition-all duration-300 placeholder:text-gray-400 focus:border-yellow-500 focus:shadow-md focus:shadow-yellow-500/20 focus:outline-none"
-                        rows="4"
-                      />
+
+                      {/* Benefits List */}
+                      <div className="space-y-3">
+                        {benefitInputs.map((benefit, index) => (
+                          <div key={index} className="flex gap-2">
+                            <div className="mt-2 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-yellow-100">
+                              <span className="text-xs font-bold text-yellow-600">•</span>
+                            </div>
+                            <textarea
+                              value={benefit}
+                              onChange={(e) => handleBenefitInputChange(index, e.target.value)}
+                              placeholder={`Beneficio ${index + 1}...`}
+                              className="bg-beehealth-body-main flex-1 resize-none rounded-xl border-2 border-gray-200 px-4 py-3.5 text-gray-900 shadow-sm transition-all duration-300 placeholder:text-gray-400 focus:border-yellow-500 focus:shadow-md focus:shadow-yellow-500/20 focus:outline-none"
+                              rows="1"
+                            />
+                            {benefitInputs.length > 1 && (
+                              <button
+                                type="button"
+                                onClick={() => handleRemoveBenefitInput(index)}
+                                className="h-fit rounded-xl border-2 border-red-300 bg-red-50 px-3 py-3.5 font-semibold text-red-600 shadow-sm transition-all duration-300 hover:border-red-400 hover:bg-red-100 active:scale-95"
+                              >
+                                Eliminar
+                              </button>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Add Button */}
+                      <button
+                        type="button"
+                        onClick={handleAddBenefitInput}
+                        className="w-full rounded-xl border-2 border-dashed border-yellow-300 bg-yellow-50 px-4 py-3.5 font-semibold text-yellow-600 shadow-sm transition-all duration-300 hover:border-yellow-400 hover:bg-yellow-100 active:scale-95"
+                      >
+                        + Agregar beneficio
+                      </button>
+
+                      {/* Info */}
+                      <div className="flex items-start gap-2 rounded-lg bg-yellow-50 px-3 py-2">
+                        <Info className="mt-0.5 h-4 w-4 shrink-0 text-yellow-600" />
+                        <p className="text-xs text-yellow-700">
+                          Lista los beneficios principales que proporciona este ejercicio.
+                        </p>
+                      </div>
                     </div>
 
-                    <div className="space-y-2">
+                    {/* Cautions */}
+                    <div className="space-y-3">
                       <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
                         <AlertCircle className="h-4 w-4 text-orange-500" />
                         Precauciones
                       </label>
-                      <textarea
-                        value={form.cautions}
-                        onChange={(e) => setForm({ ...form, cautions: e.target.value })}
-                        placeholder="• Mantén la espalda recta&#10;• No fuerces las articulaciones&#10;• Calienta antes de comenzar..."
-                        className="bg-beehealth-body-main w-full rounded-xl border-2 border-gray-200 px-4 py-3.5 text-gray-900 shadow-sm transition-all duration-300 placeholder:text-gray-400 focus:border-orange-500 focus:shadow-md focus:shadow-orange-500/20 focus:outline-none"
-                        rows="4"
-                      />
+
+                      {/* Cautions List */}
+                      <div className="space-y-3">
+                        {cautionInputs.map((caution, index) => (
+                          <div key={index} className="flex gap-2">
+                            <div className="mt-2 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-orange-100">
+                              <span className="text-xs font-bold text-orange-600">!</span>
+                            </div>
+                            <textarea
+                              value={caution}
+                              onChange={(e) => handleCautionInputChange(index, e.target.value)}
+                              placeholder={`Precaución ${index + 1}...`}
+                              className="bg-beehealth-body-main flex-1 resize-none rounded-xl border-2 border-gray-200 px-4 py-3.5 text-gray-900 shadow-sm transition-all duration-300 placeholder:text-gray-400 focus:border-orange-500 focus:shadow-md focus:shadow-orange-500/20 focus:outline-none"
+                              rows="1"
+                            />
+                            {cautionInputs.length > 1 && (
+                              <button
+                                type="button"
+                                onClick={() => handleRemoveCautionInput(index)}
+                                className="h-fit rounded-xl border-2 border-red-300 bg-red-50 px-3 py-3.5 font-semibold text-red-600 shadow-sm transition-all duration-300 hover:border-red-400 hover:bg-red-100 active:scale-95"
+                              >
+                                Eliminar
+                              </button>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Add Button */}
+                      <button
+                        type="button"
+                        onClick={handleAddCautionInput}
+                        className="w-full rounded-xl border-2 border-dashed border-orange-300 bg-orange-50 px-4 py-3.5 font-semibold text-orange-600 shadow-sm transition-all duration-300 hover:border-orange-400 hover:bg-orange-100 active:scale-95"
+                      >
+                        + Agregar precaución
+                      </button>
+
+                      {/* Info */}
+                      <div className="flex items-start gap-2 rounded-lg bg-orange-50 px-3 py-2">
+                        <Info className="mt-0.5 h-4 w-4 shrink-0 text-orange-600" />
+                        <p className="text-xs text-orange-700">
+                          Advierte sobre lesiones o errores comunes al realizar este ejercicio.
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
