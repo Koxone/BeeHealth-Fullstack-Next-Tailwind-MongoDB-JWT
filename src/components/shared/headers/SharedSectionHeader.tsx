@@ -15,6 +15,9 @@ import Link from 'next/link';
 
 interface GeneralSectionHeaderProps {
   newPatient?: boolean;
+  newWorkout?: boolean;
+  setShowCreateWorkoutModal?: React.Dispatch<React.SetStateAction<boolean>>;
+  setEditingWorkout?: React.Dispatch<React.SetStateAction<any>>;
   role?: 'doctor' | 'patient' | 'employee' | 'admin';
   Icon:
     | 'inventory'
@@ -32,6 +35,9 @@ interface GeneralSectionHeaderProps {
 export default function SharedSectionHeader({
   role,
   newPatient,
+  newWorkout,
+  setEditingWorkout,
+  setShowCreateWorkoutModal,
   Icon,
   title = '',
   subtitle = '',
@@ -80,12 +86,6 @@ export default function SharedSectionHeader({
             <Plus className="h-5 w-5" />
             Nueva Dieta
           </Link>
-
-          {/* Doctor Export Button */}
-          <button className="bg-beehealth-blue-primary-solid hover:bg-beehealth-blue-primary-solid-hover flex items-center gap-2 rounded-lg px-4 py-2 text-white transition active:scale-95">
-            <Download className="h-5 w-5" />
-            <span className="hidden sm:inline">Exportar</span>
-          </button>
         </div>
       )}
 
@@ -100,6 +100,22 @@ export default function SharedSectionHeader({
             <Plus className="h-5 w-5" />
             Nuevo Paciente
           </Link>
+        </div>
+      )}
+
+      {/* New Workout Button */}
+      {role === 'doctor' && newWorkout && (
+        <div className="flex items-center gap-4">
+          {/* Doctor New Diet Button */}
+          <button
+            onClick={() => {
+              setEditingWorkout(null);
+              setShowCreateWorkoutModal(true);
+            }}
+            className="bg-beehealth-green-secondary-solid hover:bg-beehealth-green-secondary-solid-hover flex items-center gap-2 rounded-lg px-4 py-2 text-white"
+          >
+            <Plus className="h-5 w-5" /> Nuevo Ejercicio
+          </button>
         </div>
       )}
     </div>

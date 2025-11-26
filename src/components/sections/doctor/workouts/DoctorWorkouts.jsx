@@ -103,6 +103,9 @@ export default function DoctorWorkouts({ role }) {
       <SharedSectionHeader
         role={role}
         Icon="workouts"
+        newWorkout
+        setEditingWorkout={setEditingWorkout}
+        setShowCreateWorkoutModal={setShowCreateWorkoutModal}
         title={role === 'doctor' ? 'Gestion de Ejercicios' : 'Mis Ejercicios'}
         subtitle={role === 'doctor' ? 'Crea y personaliza ejercicios' : 'Ejercicios Personalizados'}
       />
@@ -139,7 +142,7 @@ export default function DoctorWorkouts({ role }) {
           </div>
 
           {/* Create Workout Button */}
-          <button
+          {/* <button
             onClick={() => {
               setEditingWorkout(null);
               setShowCreateWorkoutModal(true);
@@ -147,7 +150,7 @@ export default function DoctorWorkouts({ role }) {
             className="bg-beehealth-green-secondary-solid hover:bg-beehealth-green-secondary-solid-hover flex items-center gap-2 rounded-lg px-4 py-2 text-white"
           >
             <Plus className="h-5 w-5" /> Nuevo
-          </button>
+          </button> */}
         </div>
       </div>
 
