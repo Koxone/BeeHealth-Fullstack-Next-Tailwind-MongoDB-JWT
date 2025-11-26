@@ -347,9 +347,8 @@ export default function ModalCreateWorkout({ setShowCreateModal }) {
                   <h3 className="text-xl font-bold text-gray-900">Contenido Multimedia</h3>
                 </div>
 
-                {/* Images */}
+                {/* Images Gallery */}
                 <div className="space-y-5">
-                  {/* Images Gallery */}
                   <div className="space-y-3">
                     <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
                       <ImageIcon className="h-4 w-4 text-pink-500" />
