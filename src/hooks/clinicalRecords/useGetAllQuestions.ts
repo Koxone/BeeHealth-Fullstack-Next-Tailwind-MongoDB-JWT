@@ -7,6 +7,7 @@ export interface Question {
   specialty: 'weight' | 'dental' | 'stetic';
   version: 'short' | 'full';
   isMetric: boolean;
+  type: string,
   createdAt: string;
   updatedAt: string;
 }

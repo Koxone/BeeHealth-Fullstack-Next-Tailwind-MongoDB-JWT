@@ -1,12 +1,24 @@
 import mongoose, { Schema, Document } from 'mongoose';
 
+export interface IOption {
+  value: string;
+  label: string;
+}
+
 export interface IQuestion extends Document {
   questionId: number;
   text: string;
   specialty: 'weight' | 'dental' | 'stetic';
   version: 'short' | 'full';
   isMetric?: boolean;
+  type: string;
+  options?: IOption[];
 }
+
+const OptionSchema: Schema<IOption> = new Schema({
+  value: { type: String, required: true },
+  label: { type: String, required: true },
+});
 
 const QuestionSchema: Schema<IQuestion> = new Schema({
   questionId: { type: Number, required: true },
@@ -14,6 +26,8 @@ const QuestionSchema: Schema<IQuestion> = new Schema({
   specialty: { type: String, enum: ['weight', 'dental', 'stetic'], required: true },
   version: { type: String, enum: ['short', 'full'], required: true },
   isMetric: { type: Boolean, default: false },
+  type: { type: String },
+  options: { type: [OptionSchema], required: false },
 });
 
 export const Question =

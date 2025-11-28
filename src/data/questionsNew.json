@@ -6,7 +6,8 @@
       "stetic": ["short", "full"],
       "dental": ["short", "full"],
       "weight": ["short", "full"]
-    }
+    },
+    "type": "text"
   },
   "2": {
     "text": "Fecha de nacimiento",
@@ -15,7 +16,8 @@
       "stetic": ["short", "full"],
       "dental": ["short", "full"],
       "weight": ["short", "full"]
-    }
+    },
+    "type": "date"
   },
   "3": {
     "text": "Lugar de nacimiento",
@@ -24,7 +26,8 @@
       "stetic": ["short", "full"],
       "dental": ["short", "full"],
       "weight": ["short", "full"]
-    }
+    },
+    "type": "text"
   },
   "4": {
     "text": "Edad",
@@ -33,7 +36,8 @@
       "stetic": ["short", "full"],
       "dental": ["short", "full"],
       "weight": ["short", "full"]
-    }
+    },
+    "type": "number"
   },
   "5": {
     "text": "Genero",
@@ -42,7 +46,12 @@
       "stetic": ["short", "full"],
       "dental": ["short", "full"],
       "weight": ["short", "full"]
-    }
+    },
+    "type": "select",
+    "options": [
+      { "value": "male", "label": "Masculino" },
+      { "value": "female", "label": "Femenino" }
+    ]
   },
   "6": {
     "text": "Altura (cm)",
@@ -51,21 +60,24 @@
       "stetic": ["short", "full"],
       "dental": ["short", "full"],
       "weight": ["short", "full"]
-    }
+    },
+    "type": "number"
   },
   "7": {
     "text": "Peso actual (kg)",
     "isMetric": true,
     "specialties": {
       "weight": ["short", "full"]
-    }
+    },
+    "type": "number"
   },
   "8": {
     "text": "Talla (cm)",
     "isMetric": true,
     "specialties": {
       "weight": ["short", "full"]
-    }
+    },
+    "type": "number"
   },
   "9": {
     "text": "Ocupación",
@@ -73,8 +85,9 @@
     "specialties": {
       "stetic": ["short", "full"],
       "dental": ["short", "full"],
-      "weight": ["short", "full"]
-    }
+      "weight": []
+    },
+    "type": "text"
   },
   "10": {
     "text": "Estado civil",
@@ -83,23 +96,30 @@
       "stetic": ["short", "full"],
       "dental": ["short", "full"],
       "weight": ["short", "full"]
-    }
+    },
+    "type": "select",
+    "options": [
+      { "value": "soltero", "label": "Soltero(a)" },
+      { "value": "casado", "label": "Casado(a)" }
+    ]
   },
   "11": {
     "text": "RFC",
     "isMetric": false,
     "specialties": {
       "dental": ["full"]
-    }
+    },
+    "type": "text"
   },
   "12": {
     "text": "Email",
     "isMetric": false,
     "specialties": {
-      "stetic": ["short", "full"],
-      "dental": ["short", "full"],
-      "weight": ["short", "full"]
-    }
+      "stetic": [],
+      "dental": [],
+      "weight": []
+    },
+    "type": "email"
   },
   "13": {
     "text": "Domicilio",
@@ -108,7 +128,8 @@
       "stetic": ["short", "full"],
       "dental": ["short", "full"],
       "weight": ["short", "full"]
-    }
+    },
+    "type": "text"
   },
   "14": {
     "text": "Telefono celular",
@@ -117,7 +138,8 @@
       "stetic": ["short", "full"],
       "dental": ["short", "full"],
       "weight": ["short", "full"]
-    }
+    },
+    "type": "tel"
   },
   "15": {
     "text": "Contacto de emergencia",
@@ -126,7 +148,8 @@
       "stetic": ["short", "full"],
       "dental": ["short", "full"],
       "weight": ["short", "full"]
-    }
+    },
+    "type": "text"
   },
   "16": {
     "text": "Telefono de emergencia",
@@ -135,7 +158,8 @@
       "stetic": ["short", "full"],
       "dental": ["short", "full"],
       "weight": ["short", "full"]
-    }
+    },
+    "type": "tel"
   },
   "17": {
     "text": "Motivo de consulta",
@@ -144,7 +168,8 @@
       "stetic": ["short", "full"],
       "dental": ["short", "full"],
       "weight": ["short", "full"]
-    }
+    },
+    "type": "text"
   },
   "18": {
     "text": "Alergias conocidas",
@@ -153,7 +178,8 @@
       "stetic": ["short", "full"],
       "dental": ["short", "full"],
       "weight": ["short", "full"]
-    }
+    },
+    "type": "text"
   },
   "19": {
     "text": "Medicamentos actuales",
@@ -162,56 +188,88 @@
       "stetic": ["short", "full"],
       "dental": ["short", "full"],
       "weight": ["short", "full"]
-    }
+    },
+    "type": "text"
   },
   "20": {
     "text": "¿Se encuentra en buen estado de salud?",
     "isMetric": false,
     "specialties": {
       "dental": ["full"]
-    }
+    },
+    "type": "radio",
+    "options": [
+      { "value": "true", "label": "Si" },
+      { "value": "false", "label": "No" }
+    ]
   },
   "21": {
     "text": "¿Se encuentra bajo tratamiento?",
     "isMetric": false,
     "specialties": {
       "dental": ["full"]
-    }
+    },
+    "type": "radio",
+    "options": [
+      { "value": "true", "label": "Si" },
+      { "value": "false", "label": "No" }
+    ]
   },
   "22": {
     "text": "¿Actualmente toma algún medicamento?",
     "isMetric": false,
     "specialties": {
       "dental": ["full"]
-    }
+    },
+    "type": "radio",
+    "options": [
+      { "value": "true", "label": "Si" },
+      { "value": "false", "label": "No" }
+    ]
   },
   "23": {
     "text": "¿Ha sido operado u hospitalizado?",
     "isMetric": false,
     "specialties": {
       "dental": ["full"]
-    }
+    },
+    "type": "radio",
+    "options": [
+      { "value": "true", "label": "Si" },
+      { "value": "false", "label": "No" }
+    ]
   },
   "24": {
     "text": "¿Ha presentado alguna hemorragia?",
     "isMetric": false,
     "specialties": {
       "dental": ["full"]
-    }
+    },
+    "type": "radio",
+    "options": [
+      { "value": "true", "label": "Si" },
+      { "value": "false", "label": "No" }
+    ]
   },
   "25": {
     "text": "¿Ha tenido problemas de cicatrización?",
     "isMetric": false,
     "specialties": {
       "dental": ["full"]
-    }
+    },
+    "type": "radio",
+    "options": [
+      { "value": "true", "label": "Si" },
+      { "value": "false", "label": "No" }
+    ]
   },
   "26": {
     "text": "Otras enfermedades",
     "isMetric": false,
     "specialties": {
       "dental": ["full"]
-    }
+    },
+    "type": "number"
   },
   "27": {
     "text": "Diabetes",
@@ -219,7 +277,8 @@
     "specialties": {
       "dental": ["full"],
       "weight": ["full"]
-    }
+    },
+    "type": "checkbox"
   },
   "28": {
     "text": "Hipertensión",
@@ -227,7 +286,8 @@
     "specialties": {
       "dental": ["full"],
       "weight": ["full"]
-    }
+    },
+    "type": "checkbox"
   },
   "29": {
     "text": "Hepatitis",
@@ -235,7 +295,8 @@
     "specialties": {
       "dental": ["full"],
       "weight": ["full"]
-    }
+    },
+    "type": "checkbox"
   },
   "30": {
     "text": "VIH",
@@ -243,7 +304,8 @@
     "specialties": {
       "dental": ["full"],
       "weight": ["full"]
-    }
+    },
+    "type": "checkbox"
   },
   "31": {
     "text": "Cáncer",
@@ -251,7 +313,8 @@
     "specialties": {
       "dental": ["full"],
       "weight": ["full"]
-    }
+    },
+    "type": "checkbox"
   },
   "32": {
     "text": "Asma",
@@ -259,21 +322,24 @@
     "specialties": {
       "dental": ["full"],
       "weight": ["full"]
-    }
+    },
+    "type": "checkbox"
   },
   "33": {
     "text": "Epilepsia",
     "isMetric": false,
     "specialties": {
       "dental": ["full"]
-    }
+    },
+    "type": "checkbox"
   },
   "34": {
     "text": "Gastritis",
     "isMetric": false,
     "specialties": {
       "dental": ["full"]
-    }
+    },
+    "type": "checkbox"
   },
   "35": {
     "text": "Ansiedad o depresión",
@@ -281,7 +347,8 @@
     "specialties": {
       "dental": ["full"],
       "weight": ["full"]
-    }
+    },
+    "type": "number"
   },
   "36": {
     "text": "¿Consume alcohol?",
@@ -290,7 +357,12 @@
       "stetic": ["short", "full"],
       "dental": ["short", "full"],
       "weight": ["short", "full"]
-    }
+    },
+    "type": "radio",
+    "options": [
+      { "value": "true", "label": "Si" },
+      { "value": "false", "label": "No" }
+    ]
   },
   "37": {
     "text": "¿Consume tabaco?",
@@ -299,7 +371,12 @@
       "stetic": ["short", "full"],
       "dental": ["short", "full"],
       "weight": ["short", "full"]
-    }
+    },
+    "type": "radio",
+    "options": [
+      { "value": "true", "label": "Si" },
+      { "value": "false", "label": "No" }
+    ]
   },
   "38": {
     "text": "¿Consume drogas?",
@@ -308,7 +385,12 @@
       "stetic": ["short", "full"],
       "dental": ["short", "full"],
       "weight": ["short", "full"]
-    }
+    },
+    "type": "radio",
+    "options": [
+      { "value": "true", "label": "Si" },
+      { "value": "false", "label": "No" }
+    ]
   },
   "39": {
     "text": "Embarazo",
@@ -316,7 +398,8 @@
     "specialties": {
       "dental": ["full"],
       "weight": ["full"]
-    }
+    },
+    "type": "checkbox"
   },
   "40": {
     "text": "Lactancia",
@@ -324,7 +407,8 @@
     "specialties": {
       "dental": ["full"],
       "weight": ["full"]
-    }
+    },
+    "type": "checkbox"
   },
   "41": {
     "text": "Anticonceptivos",
@@ -332,224 +416,287 @@
     "specialties": {
       "dental": ["full"],
       "weight": ["full"]
-    }
+    },
+    "type": "checkbox"
   },
   "42": {
     "text": "¿Tiene hijos?",
     "isMetric": false,
     "specialties": {
       "dental": ["full"]
-    }
+    },
+    "type": "radio",
+    "options": [
+      { "value": "true", "label": "Si" },
+      { "value": "false", "label": "No" }
+    ]
   },
   "43": {
     "text": "Peso objetivo (kg)",
     "isMetric": true,
     "specialties": {
-      "dental": ["full"]
-    }
+      "stetic": [],
+      "dental": [],
+      "weight": ["full"]
+    },
+    "type": "number"
   },
   "44": {
     "text": "Actividad física",
     "isMetric": false,
     "specialties": {
       "dental": ["full"]
-    }
+    },
+    "type": "select",
+    "options": [
+      { "value": "sedentario", "label": "Sedentario" },
+      { "value": "activo", "label": "Activo" }
+    ]
   },
   "45": {
     "text": "Horas de sueño por día",
     "isMetric": true,
     "specialties": {
       "dental": ["full"]
-    }
+    },
+    "type": "number"
   },
   "46": {
     "text": "Consumo de agua por día (litros)",
     "isMetric": true,
     "specialties": {
       "dental": ["full"]
-    }
+    },
+    "type": "number"
   },
   "47": {
     "text": "Enfermedades crónicas",
     "isMetric": false,
     "specialties": {
       "dental": ["full"]
-    }
+    },
+    "type": "number"
   },
   "48": {
     "text": "Medicamentos actuales adicionales",
     "isMetric": false,
     "specialties": {
       "dental": ["full"]
-    }
+    },
+    "type": "text"
   },
   "49": {
     "text": "Tipo de alimentación",
     "isMetric": false,
     "specialties": {
       "dental": ["full"]
-    }
+    },
+    "type": "select",
+    "options": [
+      { "value": "omnivora", "label": "Omnivora" },
+      { "value": "vegetariana", "label": "Vegetariana" },
+      { "value": "vegana", "label": "Vegana" }
+    ]
   },
   "50": {
     "text": "Cirugías previas",
     "isMetric": false,
     "specialties": {
       "dental": ["full"]
-    }
+    },
+    "type": "text"
   },
   "51": {
     "text": "Motivo de consulta por peso",
     "isMetric": false,
     "specialties": {
-      "dental": ["full"]
-    }
+      "weight": ["full"]
+    },
+    "type": "number"
   },
   "52": {
     "text": "¿Es su primera visita dental?",
     "isMetric": false,
     "specialties": {
       "dental": ["full"]
-    }
+    },
+    "type": "radio",
+    "options": [
+      { "value": "true", "label": "Si" },
+      { "value": "false", "label": "No" }
+    ]
   },
   "53": {
     "text": "¿Ha recibido aplicaciones de flúor?",
     "isMetric": false,
     "specialties": {
       "dental": ["full"]
-    }
+    },
+    "type": "radio",
+    "options": [
+      { "value": "true", "label": "Si" },
+      { "value": "false", "label": "No" }
+    ]
   },
   "54": {
     "text": "¿Le han realizado extracciones dentales?",
     "isMetric": false,
     "specialties": {
       "dental": ["full"]
-    }
+    },
+    "type": "radio",
+    "options": [
+      { "value": "true", "label": "Si" },
+      { "value": "false", "label": "No" }
+    ]
   },
   "55": {
     "text": "¿Presentó sangrado post extracción?",
     "isMetric": false,
     "specialties": {
       "dental": ["full"]
-    }
+    },
+    "type": "radio",
+    "options": [
+      { "value": "true", "label": "Si" },
+      { "value": "false", "label": "No" }
+    ]
   },
   "56": {
     "text": "Tratamientos odontológicos previos",
     "isMetric": false,
     "specialties": {
       "dental": ["full"]
-    }
+    },
+    "type": "text"
   },
   "57": {
     "text": "Pérdida de dientes",
     "isMetric": false,
     "specialties": {
       "dental": ["full"]
-    }
+    },
+    "type": "text"
   },
   "58": {
     "text": "Sangrado de encías",
     "isMetric": false,
     "specialties": {
       "dental": ["full"]
-    }
+    },
+    "type": "text"
   },
   "59": {
     "text": "Cepillado diario",
     "isMetric": false,
     "specialties": {
       "dental": ["full"]
-    }
+    },
+    "type": "text"
   },
   "60": {
     "text": "Uso de enjuague bucal",
     "isMetric": false,
     "specialties": {
       "dental": ["full"]
-    }
+    },
+    "type": "text"
   },
   "61": {
     "text": "Uso de hilo dental",
     "isMetric": false,
     "specialties": {
       "dental": ["full"]
-    }
+    },
+    "type": "text"
   },
   "62": {
     "text": "Uso de cepillo dental adecuado",
     "isMetric": false,
     "specialties": {
       "dental": ["full"]
-    }
+    },
+    "type": "text"
   },
   "63": {
     "text": "Dolor dental",
     "isMetric": false,
     "specialties": {
       "dental": ["full"]
-    }
+    },
+    "type": "text"
   },
   "64": {
     "text": "Descripción del dolor dental",
     "isMetric": false,
     "specialties": {
       "dental": ["full"]
-    }
+    },
+    "type": "text"
   },
   "65": {
     "text": "Motivo de tratamiento estético",
     "isMetric": false,
     "specialties": {
       "dental": ["full"]
-    }
+    },
+    "type": "text"
   },
   "66": {
     "text": "Cirugías previas (estética)",
     "isMetric": false,
     "specialties": {
       "dental": ["full"]
-    }
+    },
+    "type": "text"
   },
   "67": {
     "text": "Reacciones a anestesia",
     "isMetric": false,
     "specialties": {
       "dental": ["full"]
-    }
+    },
+    "type": "text"
   },
   "68": {
     "text": "Enfermedades que interfieren con el tratamiento",
     "isMetric": false,
     "specialties": {
       "dental": ["full"]
-    }
+    },
+    "type": "number"
   },
   "69": {
     "text": "Condición de la piel (autoevaluación)",
     "isMetric": false,
     "specialties": {
       "dental": ["full"]
-    }
+    },
+    "type": "text"
   },
   "70": {
     "text": "Zona de interés",
     "isMetric": false,
     "specialties": {
       "dental": ["full"]
-    }
+    },
+    "type": "text"
   },
   "71": {
     "text": "Tratamientos estéticos previos",
     "isMetric": false,
     "specialties": {
       "dental": ["full"]
-    }
+    },
+    "type": "text"
   },
   "72": {
     "text": "Expectativas del tratamiento",
     "isMetric": false,
     "specialties": {
       "dental": ["full"]
-    }
+    },
+    "type": "text"
   },
   "73": {
     "text": "Antecedente familiar de diabetes",
@@ -558,7 +705,8 @@
       "stetic": ["short", "full"],
       "dental": ["short", "full"],
       "weight": ["short", "full"]
-    }
+    },
+    "type": "checkbox"
   },
   "74": {
     "text": "Antecedente familiar de epilepsia",
@@ -567,7 +715,8 @@
       "stetic": ["short", "full"],
       "dental": ["short", "full"],
       "weight": ["short", "full"]
-    }
+    },
+    "type": "checkbox"
   },
   "75": {
     "text": "Antecedente familiar de hepatitis",
@@ -576,7 +725,8 @@
       "stetic": ["short", "full"],
       "dental": ["short", "full"],
       "weight": ["short", "full"]
-    }
+    },
+    "type": "checkbox"
   },
   "76": {
     "text": "Antecedente familiar de hipertensión",
@@ -585,7 +735,8 @@
       "stetic": ["short", "full"],
       "dental": ["short", "full"],
       "weight": ["short", "full"]
-    }
+    },
+    "type": "checkbox"
   },
   "77": {
     "text": "Antecedente familiar de malformaciones",
@@ -594,7 +745,8 @@
       "stetic": ["short", "full"],
       "dental": ["short", "full"],
       "weight": ["short", "full"]
-    }
+    },
+    "type": "checkbox"
   },
   "78": {
     "text": "Antecedente familiar de artritis",
@@ -603,7 +755,8 @@
       "stetic": ["short", "full"],
       "dental": ["short", "full"],
       "weight": ["short", "full"]
-    }
+    },
+    "type": "checkbox"
   },
   "79": {
     "text": "Cardiopatías",
@@ -612,7 +765,8 @@
       "stetic": ["short", "full"],
       "dental": ["short", "full"],
       "weight": ["short", "full"]
-    }
+    },
+    "type": "checkbox"
   },
   "80": {
     "text": "Enfermedades mentales",
@@ -621,7 +775,8 @@
       "stetic": ["short", "full"],
       "dental": ["short", "full"],
       "weight": ["short", "full"]
-    }
+    },
+    "type": "number"
   },
   "81": {
     "text": "Neoplasias",
@@ -630,7 +785,8 @@
       "stetic": ["short", "full"],
       "dental": ["short", "full"],
       "weight": ["short", "full"]
-    }
+    },
+    "type": "checkbox"
   },
   "82": {
     "text": "Enfermedades renales",
@@ -639,7 +795,8 @@
       "stetic": ["short", "full"],
       "dental": ["short", "full"],
       "weight": ["short", "full"]
-    }
+    },
+    "type": "number"
   },
   "83": {
     "text": "Varicela",
@@ -647,7 +804,8 @@
     "specialties": {
       "stetic": ["short", "full"],
       "dental": ["short", "full"]
-    }
+    },
+    "type": "checkbox"
   },
   "84": {
     "text": "Sarampión",
@@ -655,7 +813,8 @@
     "specialties": {
       "stetic": ["short", "full"],
       "dental": ["short", "full"]
-    }
+    },
+    "type": "checkbox"
   },
   "85": {
     "text": "Neuralgia",
@@ -663,7 +822,8 @@
     "specialties": {
       "stetic": ["short", "full"],
       "dental": ["short", "full"]
-    }
+    },
+    "type": "checkbox"
   },
   "86": {
     "text": "Vías biliares",
@@ -671,7 +831,8 @@
     "specialties": {
       "stetic": ["short", "full"],
       "dental": ["short", "full"]
-    }
+    },
+    "type": "text"
   },
   "87": {
     "text": "Enfermedades respiratorias",
@@ -680,7 +841,8 @@
       "stetic": ["short", "full"],
       "dental": ["short", "full"],
       "weight": ["short", "full"]
-    }
+    },
+    "type": "number"
   },
   "88": {
     "text": "Trastornos digestivos",
@@ -689,7 +851,8 @@
       "stetic": ["short", "full"],
       "dental": ["short", "full"],
       "weight": ["short", "full"]
-    }
+    },
+    "type": "text"
   },
   "89": {
     "text": "Hipotiroidismo",
@@ -698,7 +861,8 @@
       "stetic": ["short", "full"],
       "dental": ["short", "full"],
       "weight": ["short", "full"]
-    }
+    },
+    "type": "checkbox"
   },
   "90": {
     "text": "Migraña",
@@ -706,7 +870,8 @@
     "specialties": {
       "stetic": ["short", "full"],
       "dental": ["short", "full"]
-    }
+    },
+    "type": "checkbox"
   },
   "91": {
     "text": "Enfermedades de transmisión sexual (ETS)",
@@ -715,7 +880,8 @@
       "stetic": ["short", "full"],
       "dental": ["short", "full"],
       "weight": ["short", "full"]
-    }
+    },
+    "type": "number"
   },
   "92": {
     "text": "Padecimientos de piel",
@@ -724,7 +890,8 @@
       "stetic": ["short", "full"],
       "dental": ["short", "full"],
       "weight": ["short", "full"]
-    }
+    },
+    "type": "text"
   },
   "93": {
     "text": "Fracturas",
@@ -733,7 +900,8 @@
       "stetic": ["short", "full"],
       "dental": ["short", "full"],
       "weight": ["short", "full"]
-    }
+    },
+    "type": "checkbox"
   },
   "94": {
     "text": "Hospitalizaciones",
@@ -742,7 +910,8 @@
       "stetic": ["short", "full"],
       "dental": ["short", "full"],
       "weight": ["short", "full"]
-    }
+    },
+    "type": "text"
   },
   "95": {
     "text": "Cirugías",
@@ -751,7 +920,8 @@
       "stetic": ["short", "full"],
       "dental": ["short", "full"],
       "weight": ["short", "full"]
-    }
+    },
+    "type": "text"
   },
   "96": {
     "text": "Alteraciones hormonales",
@@ -760,7 +930,8 @@
       "stetic": ["short", "full"],
       "dental": ["short", "full"],
       "weight": ["short", "full"]
-    }
+    },
+    "type": "text"
   },
   "97": {
     "text": "Número de hijos",
@@ -769,16 +940,18 @@
       "stetic": ["short", "full"],
       "dental": ["short", "full"],
       "weight": ["short", "full"]
-    }
+    },
+    "type": "number"
   },
   "98": {
     "text": "Tipo de alimentación (hábito)",
     "isMetric": false,
     "specialties": {
-      "stetic": ["short", "full"],
-      "dental": ["short", "full"],
-      "weight": ["short", "full"]
-    }
+      "stetic": [],
+      "dental": [],
+      "weight": []
+    },
+    "type": "select"
   },
   "99": {
     "text": "Comidas por día",
@@ -787,7 +960,8 @@
       "stetic": ["short", "full"],
       "dental": ["short", "full"],
       "weight": ["short", "full"]
-    }
+    },
+    "type": "number"
   },
   "100": {
     "text": "Intolerancias alimentarias",
@@ -796,7 +970,8 @@
       "stetic": ["short", "full"],
       "dental": ["short", "full"],
       "weight": ["short", "full"]
-    }
+    },
+    "type": "text"
   },
   "101": {
     "text": "Alimentos que no consume",
@@ -805,7 +980,8 @@
       "stetic": ["short", "full"],
       "dental": ["short", "full"],
       "weight": ["short", "full"]
-    }
+    },
+    "type": "text"
   },
   "102": {
     "text": "Lavado de manos",
@@ -814,7 +990,8 @@
       "stetic": ["short", "full"],
       "dental": ["short", "full"],
       "weight": ["short", "full"]
-    }
+    },
+    "type": "text"
   },
   "103": {
     "text": "Uso de cepillo dental",
@@ -823,7 +1000,8 @@
       "stetic": ["short", "full"],
       "dental": ["short", "full"],
       "weight": ["short", "full"]
-    }
+    },
+    "type": "text"
   },
   "104": {
     "text": "Uso de enjuague bucal",
@@ -832,7 +1010,8 @@
       "stetic": ["short", "full"],
       "dental": ["short", "full"],
       "weight": ["short", "full"]
-    }
+    },
+    "type": "text"
   },
   "105": {
     "text": "Uso de hilo dental",
@@ -841,7 +1020,8 @@
       "stetic": ["short", "full"],
       "dental": ["short", "full"],
       "weight": ["short", "full"]
-    }
+    },
+    "type": "text"
   },
   "106": {
     "text": "Vacuna: Poliomielitis",
@@ -850,7 +1030,8 @@
       "stetic": ["short", "full"],
       "dental": ["short", "full"],
       "weight": ["short", "full"]
-    }
+    },
+    "type": "checkbox"
   },
   "107": {
     "text": "Vacuna: Tuberculosis",
@@ -859,7 +1040,8 @@
       "stetic": ["short", "full"],
       "dental": ["short", "full"],
       "weight": ["short", "full"]
-    }
+    },
+    "type": "checkbox"
   },
   "108": {
     "text": "Vacuna: DTP",
@@ -868,7 +1050,8 @@
       "stetic": ["short", "full"],
       "dental": ["short", "full"],
       "weight": ["short", "full"]
-    }
+    },
+    "type": "checkbox"
   },
   "109": {
     "text": "Vacuna: Triple viral",
@@ -877,7 +1060,8 @@
       "stetic": ["short", "full"],
       "dental": ["short", "full"],
       "weight": ["short", "full"]
-    }
+    },
+    "type": "checkbox"
   },
   "110": {
     "text": "Vacuna: Sarampión",
@@ -886,7 +1070,8 @@
       "stetic": ["short", "full"],
       "dental": ["short", "full"],
       "weight": ["short", "full"]
-    }
+    },
+    "type": "checkbox"
   },
   "111": {
     "text": "Vacuna: Hepatitis B",
@@ -895,7 +1080,8 @@
       "stetic": ["short", "full"],
       "dental": ["short", "full"],
       "weight": ["short", "full"]
-    }
+    },
+    "type": "checkbox"
   },
   "112": {
     "text": "Otras vacunas",
@@ -904,352 +1090,402 @@
       "stetic": ["short", "full"],
       "dental": ["short", "full"],
       "weight": ["short", "full"]
-    }
+    },
+    "type": "checkbox"
   },
   "113": {
     "text": "Alcohol (detalle de consumo)",
     "isMetric": false,
     "specialties": {
       "dental": ["short", "full"]
-    }
+    },
+    "type": "text"
   },
   "114": {
     "text": "Tabaco (detalle de consumo)",
     "isMetric": false,
     "specialties": {
       "dental": ["short", "full"]
-    }
+    },
+    "type": "text"
   },
   "115": {
     "text": "Drogas (tipo o frecuencia)",
     "isMetric": false,
     "specialties": {
       "dental": ["short", "full"]
-    }
+    },
+    "type": "text"
   },
   "116": {
     "text": "Deportes",
     "isMetric": false,
     "specialties": {
       "dental": ["short", "full"]
-    }
+    },
+    "type": "text"
   },
   "117": {
     "text": "Cabeza",
     "isMetric": false,
     "specialties": {
-      "dental": ["full"]
-    }
+      "dental": []
+    },
+    "type": "text"
   },
   "118": {
     "text": "Cuello",
     "isMetric": false,
     "specialties": {
-      "dental": ["full"]
-    }
+      "dental": ["short"]
+    },
+    "type": "text"
   },
   "119": {
     "text": "Tórax",
     "isMetric": false,
     "specialties": {
-      "dental": ["full"]
-    }
+      "dental": ["short"]
+    },
+    "type": "text"
   },
   "120": {
     "text": "Abdomen",
     "isMetric": false,
     "specialties": {
-      "dental": ["full"]
-    }
+      "dental": ["short"]
+    },
+    "type": "text"
   },
   "121": {
     "text": "Extremidades",
     "isMetric": false,
     "specialties": {
-      "dental": ["full"]
-    }
+      "dental": ["short"]
+    },
+    "type": "text"
   },
   "122": {
     "text": "Presion arterial",
     "isMetric": false,
     "specialties": {
-      "dental": ["full"]
-    }
+      "dental": ["short"]
+    },
+    "type": "text"
   },
   "123": {
     "text": "Frecuencia cardiaca",
     "isMetric": true,
     "specialties": {
-      "dental": ["full"]
-    }
+      "dental": ["short"]
+    },
+    "type": "text"
   },
   "124": {
     "text": "Frecuencia respiratoria",
     "isMetric": true,
     "specialties": {
-      "dental": ["full"]
-    }
+      "dental": ["short"]
+    },
+    "type": "text"
   },
   "125": {
     "text": "Temperatura",
     "isMetric": false,
     "specialties": {
-      "dental": ["full"],
-      "weight": ["full"]
-    }
+      "dental": ["short"],
+      "weight": ["short"]
+    },
+    "type": "text"
   },
   "126": {
     "text": "Saturación de oxígeno",
     "isMetric": false,
     "specialties": {
-      "dental": ["full"]
-    }
+      "dental": ["short"]
+    },
+    "type": "text"
   },
   "127": {
     "text": "IMC",
     "isMetric": false,
     "specialties": {
-      "dental": ["full"]
-    }
+      "dental": ["short"]
+    },
+    "type": "text"
   },
   "128": {
     "text": "Peso",
     "isMetric": true,
     "specialties": {
-      "dental": ["full"]
-    }
+      "dental": []
+    },
+    "type": "number"
   },
   "129": {
     "text": "Talla",
     "isMetric": true,
     "specialties": {
-      "dental": ["full"]
-    }
+      "dental": []
+    },
+    "type": "number"
   },
   "130": {
     "text": "Médico responsable",
     "isMetric": false,
     "specialties": {
-      "dental": ["full"]
-    }
+      "dental": ["short"]
+    },
+    "type": "text"
   },
   "131": {
     "text": "Diagnóstico preliminar",
     "isMetric": false,
     "specialties": {
-      "dental": ["full"]
-    }
+      "dental": ["short"]
+    },
+    "type": "text"
   },
   "132": {
     "text": "Tratamiento sugerido",
     "isMetric": false,
     "specialties": {
-      "dental": ["full"]
-    }
+      "dental": ["short"]
+    },
+    "type": "text"
   },
   "133": {
     "text": "Notas del Medico",
     "isMetric": false,
     "specialties": {
-      "dental": ["full"],
-      "weight": ["full"],
-      "stetic": ["full"]
-    }
+      "dental": ["short"],
+      "weight": ["short"],
+      "stetic": ["short"]
+    },
+    "type": "text"
   },
   "134": {
     "text": "Evaluación de cavidad bucal",
     "isMetric": false,
     "specialties": {
-      "dental": ["full"]
-    }
+      "dental": ["short"]
+    },
+    "type": "text"
   },
   "135": {
     "text": "Cuello y estructuras adyacentes",
     "isMetric": false,
     "specialties": {
-      "dental": ["full"]
-    }
+      "dental": ["short"]
+    },
+    "type": "text"
   },
   "136": {
     "text": "Diagnóstico dental",
     "isMetric": false,
     "specialties": {
-      "dental": ["full"]
-    }
+      "dental": ["short"]
+    },
+    "type": "text"
   },
   "137": {
     "text": "Plan de tratamiento dental",
     "isMetric": false,
     "specialties": {
-      "dental": ["full"]
-    }
+      "dental": ["short"]
+    },
+    "type": "text"
   },
   "138": {
     "text": "Materiales utilizados",
     "isMetric": false,
     "specialties": {
-      "dental": ["full"]
-    }
+      "dental": ["short"]
+    },
+    "type": "text"
   },
   "139": {
     "text": "Recomendaciones al paciente",
     "isMetric": false,
     "specialties": {
-      "dental": ["full"]
-    }
+      "dental": ["short"]
+    },
+    "type": "text"
   },
   "140": {
     "text": "Diagnóstico facial",
     "isMetric": false,
     "specialties": {
-      "dental": ["full"]
-    }
+      "dental": ["short"]
+    },
+    "type": "text"
   },
   "141": {
     "text": "Condición de la piel observada",
     "isMetric": false,
     "specialties": {
-      "dental": ["full"]
-    }
+      "dental": ["short"]
+    },
+    "type": "text"
   },
   "142": {
     "text": "Zonas tratadas",
     "isMetric": false,
     "specialties": {
-      "dental": ["full"]
-    }
+      "dental": ["short"]
+    },
+    "type": "text"
   },
   "143": {
     "text": "Producto o técnica aplicada",
     "isMetric": false,
     "specialties": {
-      "dental": ["full"]
-    }
+      "dental": ["short"]
+    },
+    "type": "text"
   },
   "144": {
     "text": "Fecha de tratamiento",
     "isMetric": false,
     "specialties": {
-      "dental": ["full"]
-    }
+      "dental": []
+    },
+    "type": "date"
   },
   "145": {
     "text": "Evolución del tratamiento",
     "isMetric": false,
     "specialties": {
-      "dental": ["full"]
-    }
+      "dental": ["short"]
+    },
+    "type": "text"
   },
   "146": {
     "text": "Complicaciones observadas",
     "isMetric": false,
     "specialties": {
-      "dental": ["full"]
-    }
+      "dental": ["short"]
+    },
+    "type": "text"
   },
   "147": {
     "text": "Recomendaciones posteriores",
     "isMetric": false,
     "specialties": {
-      "dental": ["full"]
-    }
+      "dental": ["short"]
+    },
+    "type": "text"
   },
   "148": {
     "text": "Diagnóstico",
     "isMetric": false,
     "specialties": {
-      "dental": ["full"]
-    }
+      "dental": ["short"]
+    },
+    "type": "text"
   },
   "149": {
     "text": "Tratamiento",
     "isMetric": false,
     "specialties": {
-      "dental": ["full"]
-    }
+      "dental": ["short"]
+    },
+    "type": "text"
   },
   "150": {
     "text": "Medicamentos indicados",
     "isMetric": false,
     "specialties": {
-      "dental": ["full"]
-    }
+      "dental": ["short"]
+    },
+    "type": "text"
   },
   "151": {
     "text": "Observaciones de evolución",
     "isMetric": false,
     "specialties": {
-      "dental": ["full"]
-    }
+      "dental": ["short"]
+    },
+    "type": "text"
   },
   "152": {
     "text": "Recomendaciones finales",
     "isMetric": false,
     "specialties": {
-      "dental": ["full"]
-    }
+      "dental": ["short"]
+    },
+    "type": "text"
   },
   "153": {
     "text": "Fecha de próxima revisión",
     "isMetric": false,
     "specialties": {
-      "dental": ["full"]
-    }
+      "dental": []
+    },
+    "type": "date"
   },
   "154": {
     "text": "Firma del médico",
     "isMetric": false,
     "specialties": {
-      "dental": ["full"]
-    }
+      "dental": []
+    },
+    "type": "text"
   },
   "155": {
     "text": "Pasatiempos",
     "isMetric": false,
     "specialties": {
       "dental": ["full"]
-    }
+    },
+    "type": "text"
   },
   "156": {
     "text": "Cómo se enteró",
     "isMetric": false,
     "specialties": {
       "dental": ["full"]
-    }
+    },
+    "type": "text"
   },
   "157": {
-    "text": "Adulto responsable",
+    "text": "Adulto responsable (en caso el paciente sea menor de edad)",
     "isMetric": false,
     "specialties": {
       "dental": ["full"]
-    }
+    },
+    "type": "text"
   },
   "158": {
     "text": "Recomendado por",
     "isMetric": false,
     "specialties": {
       "dental": ["full"]
-    }
+    },
+    "type": "text"
   },
   "159": {
     "text": "Observaciones personales",
     "isMetric": false,
     "specialties": {
       "dental": ["full"]
-    }
+    },
+    "type": "text"
   },
   "160": {
     "text": "Comentario libre",
     "isMetric": false,
     "specialties": {
       "dental": ["full"]
-    }
+    },
+    "type": "text"
   },
   "161": {
     "text": "Adeudos",
     "isMetric": true,
     "specialties": {
-      "dental": ["full"]
-    }
+      "dental": ["short"]
+    },
+    "type": "text"
   }
 }
