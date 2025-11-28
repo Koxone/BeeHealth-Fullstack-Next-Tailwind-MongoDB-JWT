@@ -8,11 +8,13 @@ import WeightChart from './components/WeightChart';
 import ClinicalHistory from './components/clinicalHistory/ClinicalHistory';
 import BackButton from './components/BackButton';
 import TabsNav from './components/TabsNav';
-import DoctorCreateAppointmentModal from './components/createAppointmentModal/DoctorCreateAppointmentModal';
-import DoctorClinicalRecordModal from './components/historyModal/DoctorClinicalRecordModal';
 import DoctorBudgets from './components/budgets/DoctorBudgets';
 import DoctorProducts from './components/products/DoctorProducts';
 import LoadingState from '@/components/shared/feedback/LoadingState';
+
+// Modals
+import DoctorCreateAppointmentModal from './components/createAppointmentModal/DoctorCreateAppointmentModal';
+import DoctorClinicalRecordModal from './components/historyModal/DoctorClinicalRecordModal';
 
 // Custom Hooks
 import { useGetPatientClinicalRecords } from '@/hooks/clinicalRecords/useGetPatientClinicalRecords';

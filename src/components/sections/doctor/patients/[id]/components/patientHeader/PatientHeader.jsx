@@ -13,11 +13,19 @@ export default function PatientHeader({ patient, onClickNew, patientRecord }) {
 
   const specialtyName = specialtyLabels[patientRecord?.[0]?.specialty] || 'Sin especialidad';
 
-  // Get answer in Spanish
   function getAnswer(questionId) {
-    const answerObj = patientRecord?.[0]?.answers?.find(
-      (ans) => ans?.question?.questionId === questionId
-    );
+    const answers = patientRecord?.[0]?.answers;
+
+    // Handle both object and array formats
+    let answersArray = [];
+    if (Array.isArray(answers)) {
+      answersArray = answers;
+    } else if (answers && typeof answers === 'object') {
+      answersArray = Object.values(answers);
+    }
+
+    const answerObj = answersArray.find((ans) => ans?.question?.questionId === questionId);
+
     if (!answerObj) return 'Sin respuesta';
     if (answerObj.question?.options?.length > 0) {
       const option = answerObj.question.options.find((o) => o.value === answerObj.value);

@@ -5,7 +5,16 @@ export default function QuickStats({ patientRecord, specialty }) {
   function getValueByQuestionId(questionId) {
     const record = patientRecord?.[0];
     if (!record?.answers) return null;
-    const answer = record.answers.find((a) => a.question?.questionId === questionId);
+
+    // Handle both object and array formats
+    let answersArray = [];
+    if (Array.isArray(record.answers)) {
+      answersArray = record.answers;
+    } else if (typeof record.answers === 'object') {
+      answersArray = Object.values(record.answers);
+    }
+
+    const answer = answersArray.find((a) => a?.question?.questionId === questionId);
     return answer ? answer.value : null;
   }
 

@@ -15,8 +15,19 @@ import { TrendingUp } from 'lucide-react';
 export default function WeightChart({ patientRecord }) {
   const formattedData = (patientRecord || [])
     .map((rec) => {
-      const pesoAnswer = rec.answers.find((a) => a.question?.questionId === 7);
+      if (!rec?.answers) return null;
+
+      // Handle both object and array formats
+      let answersArray = [];
+      if (Array.isArray(rec.answers)) {
+        answersArray = rec.answers;
+      } else if (typeof rec.answers === 'object') {
+        answersArray = Object.values(rec.answers);
+      }
+
+      const pesoAnswer = answersArray.find((a) => a?.question?.questionId === 7);
       if (!pesoAnswer) return null;
+
       return {
         fecha: new Date(rec.createdAt).toLocaleDateString('es-MX'),
         peso: Number(pesoAnswer.value),

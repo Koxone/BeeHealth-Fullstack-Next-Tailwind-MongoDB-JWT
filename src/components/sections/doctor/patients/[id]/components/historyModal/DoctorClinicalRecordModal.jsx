@@ -5,28 +5,11 @@ import ModalOverlay from './components/ModalOverlay';
 import ModalContainer from './components/ModalContainer';
 import ModalHeader from './components/ModalHeader';
 import TabsNav from './components/TabsNav';
-import BasicInfoSection from './components/BasicInfoSection';
-import VitalsSection from './components/VitalsSection';
-import DiagnosisSection from './components/DiagnosisSection';
 import QuestionnaireSection from './components/QuestionnaireSection';
 import FooterActions from './components/FooterActions';
 import { X, FileText, Stethoscope, ClipboardList } from 'lucide-react';
 import useAuthStore from '@/zustand/useAuthStore';
 import ShortVersion from './components/ShortVersion';
-
-const ID = {
-  fullName: 1,
-  height: 6,
-  weight: 7,
-  size: 8,
-  bloodPressure: 122,
-  heartRate: 123,
-  temperature: 125,
-  imc: 127,
-  diagnosis: 131,
-  treatment: 132,
-  notes: 133,
-};
 
 export default function DoctorClinicalRecordModal({
   onClose,
@@ -39,14 +22,14 @@ export default function DoctorClinicalRecordModal({
 }) {
   const { user } = useAuthStore();
 
-  console.log(record);
-
   // Single source of truth
   const [answersDraft, setAnswersDraft] = useState({});
   const [isReadOnly, setIsReadOnly] = useState(!!readOnly);
   const [activeTab, setActiveTab] = useState('basico');
 
   const isCreate = mode === 'create';
+
+  const [form, setForm] = useState();
 
   useEffect(() => {
     const base = record?.answers ? { ...record.answers } : {};
@@ -69,25 +52,6 @@ export default function DoctorClinicalRecordModal({
       return { ...(prev || {}), [id]: value };
     });
   }, []);
-
-  const recalcIMC = useCallback((h, w) => {
-    const height = Number(h);
-    const weight = Number(w);
-    if (!height || !weight) return '';
-    const m = height / 100;
-    const bmi = weight / (m * m);
-    return bmi ? bmi.toFixed(2) : '';
-  }, []);
-
-  // Recalculate IMC when height or weight change
-  useEffect(() => {
-    const h = answersDraft?.[ID.height] || answersDraft?.[ID.size];
-    const w = answersDraft?.[ID.weight];
-    const bmi = recalcIMC(h, w);
-    if (bmi) {
-      setAnswersDraft((prev) => ({ ...(prev || {}), [ID.imc]: bmi }));
-    }
-  }, [answersDraft?.[ID.height], answersDraft?.[ID.size], answersDraft?.[ID.weight], recalcIMC]);
 
   // Submit Handler
   const handleSubmit = async (e) => {

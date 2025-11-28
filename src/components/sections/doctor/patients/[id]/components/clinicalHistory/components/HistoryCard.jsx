@@ -1,10 +1,19 @@
-import React from 'react';
-import { Scale, Activity, Stethoscope, Pill, Ruler, Edit2, Eye } from 'lucide-react';
+import { Scale, Edit2, Eye } from 'lucide-react';
 import { useGetAllQuestions } from '@/hooks/clinicalRecords/useGetAllQuestions';
 
 function HistoryCard({ r, onEdit, specialty }) {
   function getValueByQuestionId(questionId) {
-    const ans = r?.answers?.find((a) => a.question?.questionId === questionId);
+    if (!r?.answers) return null;
+
+    // Handle both object and array formats
+    let answersArray = [];
+    if (Array.isArray(r.answers)) {
+      answersArray = r.answers;
+    } else if (typeof r.answers === 'object') {
+      answersArray = Object.values(r.answers);
+    }
+
+    const ans = answersArray.find((a) => a?.question?.questionId === questionId);
     return ans ? ans.value : null;
   }
 

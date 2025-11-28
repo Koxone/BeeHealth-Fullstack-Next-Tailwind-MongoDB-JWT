@@ -12,7 +12,17 @@ export default function ShortVersion({ specialty, record, isReadOnly = true }) {
 
   // Helper function to get the answer value for a specific question
   const getAnswerValue = (questionId) => {
-    const answer = currentRecord?.find((a) => a?.question?.questionId === questionId);
+    if (!currentRecord) return '';
+
+    // Handle both object and array formats
+    let answersArray = [];
+    if (Array.isArray(currentRecord)) {
+      answersArray = currentRecord;
+    } else if (typeof currentRecord === 'object') {
+      answersArray = Object.values(currentRecord);
+    }
+
+    const answer = answersArray.find((a) => a?.question?.questionId === questionId);
     return answer?.value || '';
   };
 
