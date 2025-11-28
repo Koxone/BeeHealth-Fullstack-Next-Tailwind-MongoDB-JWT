@@ -44,26 +44,21 @@ export default function CreateClinicalRecord({ currentUser }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-
     const answersArray = Object.entries(formData).map(([questionId, value]) => ({
       questionId,
       value,
     }));
-
     try {
       const { ok, clinicalRecord, error } = await createClinicalRecord({
         specialty: activeTab,
         answers: answersArray,
       });
-
       if (!ok) {
         console.error('Error creating Clinical Record:', error);
         return;
       }
-
       console.log('Clinical Record created:', clinicalRecord);
       setFormData({});
-      
     } finally {
       setIsSubmitting(false);
     }
