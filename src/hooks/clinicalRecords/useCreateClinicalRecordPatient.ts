@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 
-export function useCreateClinicalRecord() {
+export function useCreateClinicalRecordPatient() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(null);
   const [record, setRecord] = useState(null);

@@ -11,7 +11,7 @@ import Number from './components/inputs/Number';
 import Date from './components/inputs/Date';
 import Select from './components/inputs/Select';
 import Radio from './components/inputs/Radio';
-import { useCreateClinicalRecord } from '@/hooks/clinicalRecords/useCreateClinicalRecord';
+import { useCreateClinicalRecordPatient } from '@/hooks/clinicalRecords/useCreateClinicalRecordPatient';
 
 export default function CreateClinicalRecord({ currentUser }) {
   // Local States
@@ -39,7 +39,7 @@ export default function CreateClinicalRecord({ currentUser }) {
   }, []);
 
   // Custom Hook Create Clinical Record
-  const { submit, isSubmitting: loadingCreate } = useCreateClinicalRecord();
+  const { submit, isSubmitting: loadingCreate } = useCreateClinicalRecordPatient();
 
   // Submit handler
   const handleSubmit = async (e) => {
