@@ -514,7 +514,7 @@
     "text": "Motivo de consulta por peso",
     "isMetric": false,
     "specialties": {
-      "weight": ["full", "short"]
+      "weight": []
     },
     "type": "text"
   },
@@ -780,7 +780,11 @@
       "dental": ["short", "full"],
       "weight": ["short", "full"]
     },
-    "type": "text"
+    "type": "redio",
+    "options": [
+      { "value": "true", "label": "Si" },
+      { "value": "false", "label": "No" }
+    ]
   },
   "81": {
     "text": "Neoplasias",
@@ -800,7 +804,7 @@
       "dental": ["short", "full"],
       "weight": ["short", "full"]
     },
-    "type": "text",
+    "type": "radio",
     "options": [
       { "value": "true", "label": "Si" },
       { "value": "false", "label": "No" }
@@ -977,7 +981,11 @@
       "dental": ["short", "full"],
       "weight": ["short", "full"]
     },
-    "type": "text"
+    "type": "radio",
+    "options": [
+      { "value": "true", "label": "Si" },
+      { "value": "false", "label": "No" }
+    ]
   },
   "96": {
     "text": "Alteraciones hormonales",
@@ -1031,7 +1039,11 @@
       "dental": ["short", "full"],
       "weight": ["short", "full"]
     },
-    "type": "text"
+    "type": "radio",
+    "options": [
+      { "value": "true", "label": "Si" },
+      { "value": "false", "label": "No" }
+    ]
   },
   "101": {
     "text": "Alimentos que no consume",

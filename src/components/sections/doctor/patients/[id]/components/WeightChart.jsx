@@ -14,13 +14,17 @@ import { TrendingUp } from 'lucide-react';
 
 export default function WeightChart({ patientRecord }) {
   const formattedData = (patientRecord || [])
-    .filter((rec) => rec?.answers?.['7'])
-    .map((rec) => ({
-      fecha: new Date(rec.createdAt).toLocaleDateString('es-MX'),
-      peso: Number(rec.answers['7']),
-    }));
+    .map((rec) => {
+      const pesoAnswer = rec.answers.find((a) => a.question?.questionId === 7);
+      if (!pesoAnswer) return null;
+      return {
+        fecha: new Date(rec.createdAt).toLocaleDateString('es-MX'),
+        peso: Number(pesoAnswer.value),
+      };
+    })
+    .filter(Boolean);
 
-  const total = formattedData.length;
+  const total = patientRecord?.length;
 
   return (
     <div className="bg-beehealth-body-main rounded-2xl border border-gray-200 p-6 shadow-lg">

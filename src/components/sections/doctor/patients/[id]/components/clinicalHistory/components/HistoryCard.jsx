@@ -13,17 +13,26 @@ function HistoryCard({ r, onEdit, specialty }) {
 
   return (
     <div className="flex flex-col gap-3 sm:flex-row sm:justify-between sm:gap-4">
-      {/* Date */}
-      <div className="bg-beehealth-blue-primary-light text-beehealth-blue-primary-dark border-beehealth-blue-primary-solid flex h-12 w-12 flex-col items-center justify-center rounded-lg border sm:h-14 sm:w-14">
-        {/* Month */}
-        <span className="text-xs font-medium uppercase">
-          {new Date(r.updatedAt).toLocaleDateString('es-MX', { month: 'short' })}
-        </span>
+      <div className="flex flex-col items-center justify-center">
+        {/* Date */}
+        <div className="bg-beehealth-blue-primary-light text-beehealth-blue-primary-dark border-beehealth-blue-primary-solid flex h-12 w-12 flex-col items-center justify-center rounded-lg border sm:h-14 sm:w-14">
+          {/* Month */}
+          <span className="text-xs font-medium uppercase">
+            {new Date(r.updatedAt).toLocaleDateString('es-MX', { month: 'short' })}
+          </span>
 
-        {/* Day */}
-        <span className="text-base font-bold sm:text-lg">
-          {new Date(r.updatedAt).toLocaleDateString('es-MX', { day: '2-digit' })}
-        </span>
+          {/* Day */}
+          <span className="text-base font-bold sm:text-lg">
+            {new Date(r.updatedAt).toLocaleDateString('es-MX', { day: '2-digit' })}
+          </span>
+        </div>
+
+        {/* First Time? */}
+        {r?.version === 'full' && (
+          <span className="text-beehealth-blue-primary-solid text-xs font-semibold">
+            Primera Vez
+          </span>
+        )}
       </div>
 
       {/* Weight Control Info */}
@@ -38,6 +47,17 @@ function HistoryCard({ r, onEdit, specialty }) {
               </div>
               <p className="text-sm font-bold text-(--med-text-dark)">
                 {getValueByQuestionId(7)} kg
+              </p>
+            </div>
+
+            {/* Talla */}
+            <div className="bg-beehealth-green-secondary-light rounded-lg p-2">
+              <div className="text-beehealth-green-primary-solid flex items-center gap-1.5 text-xs font-medium sm:gap-2">
+                <Ruler className="h-3.5 w-3.5 sm:h-4 sm:w-4" />{' '}
+                <span className="truncate">Talla</span>
+              </div>
+              <p className="text-sm font-bold text-(--med-text-dark)">
+                {getValueByQuestionId(8)} cm
               </p>
             </div>
 
@@ -60,17 +80,6 @@ function HistoryCard({ r, onEdit, specialty }) {
               </div>
               <p className="truncate text-sm font-bold text-(--med-text-dark)">
                 {getValueByQuestionId(19)}
-              </p>
-            </div>
-
-            {/* Talla */}
-            <div className="bg-beehealth-green-secondary-light rounded-lg p-2">
-              <div className="text-beehealth-green-primary-solid flex items-center gap-1.5 text-xs font-medium sm:gap-2">
-                <Ruler className="h-3.5 w-3.5 sm:h-4 sm:w-4" />{' '}
-                <span className="truncate">Talla</span>
-              </div>
-              <p className="text-sm font-bold text-(--med-text-dark)">
-                {getValueByQuestionId(8)} cm
               </p>
             </div>
           </div>
