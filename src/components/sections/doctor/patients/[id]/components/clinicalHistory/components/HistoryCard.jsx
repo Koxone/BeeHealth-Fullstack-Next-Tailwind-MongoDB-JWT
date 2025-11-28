@@ -3,13 +3,14 @@ import { Scale, Activity, Stethoscope, Pill, Ruler, Edit2, Eye } from 'lucide-re
 import useGetAnswer from '@/hooks/useGetAnswer';
 
 function HistoryCard({ r, onEdit, specialty }) {
-  const getAnswer = useGetAnswer(r);
+  // Helper function
+  function getValueByQuestionId(questionId) {
+    // const record = patientRecord?.[0];
+    if (!r?.answers) return null;
+    const answer = r.answers.find((a) => a.question?.questionId === questionId);
+    return answer ? answer.value : null;
+  }
 
-  // BMI calculation
-  const height = Number(r?.answers?.['6']);
-  const weight = Number(r?.answers?.['7']);
-
-  const imc = height && weight ? (weight / (height / 100) ** 2).toFixed(2) : null;
   return (
     <div className="flex flex-col gap-3 sm:flex-row sm:justify-between sm:gap-4">
       {/* Date */}
@@ -35,16 +36,9 @@ function HistoryCard({ r, onEdit, specialty }) {
                 <Scale className="h-3.5 w-3.5 sm:h-4 sm:w-4" />{' '}
                 <span className="truncate">Peso</span>
               </div>
-              <p className="text-sm font-bold text-(--med-text-dark)">{getAnswer(7)} kg</p>
-            </div>
-
-            {/* IMC */}
-            <div className="bg-beehealth-green-secondary-light rounded-lg p-2">
-              <div className="text-beehealth-green-primary-solid flex items-center gap-1.5 text-xs font-medium sm:gap-2">
-                <Activity className="h-3.5 w-3.5 sm:h-4 sm:w-4" />{' '}
-                <span className="truncate">IMC</span>
-              </div>
-              <p className="text-sm font-bold text-(--med-text-dark)">{imc}</p>
+              <p className="text-sm font-bold text-(--med-text-dark)">
+                {getValueByQuestionId(7)} kg
+              </p>
             </div>
 
             {/* Enfermedades */}
@@ -53,7 +47,9 @@ function HistoryCard({ r, onEdit, specialty }) {
                 <Stethoscope className="text-beehealth-green-primary-solid h-3.5 w-3.5 sm:h-4 sm:w-4" />{' '}
                 <span className="truncate">Enfermedades</span>
               </div>
-              <p className="truncate text-sm font-bold text-(--med-text-dark)">{getAnswer(26)}</p>
+              <p className="truncate text-sm font-bold text-(--med-text-dark)">
+                {getValueByQuestionId(26)}
+              </p>
             </div>
 
             {/* Medicamentos */}
@@ -62,7 +58,9 @@ function HistoryCard({ r, onEdit, specialty }) {
                 <Pill className="h-3.5 w-3.5 sm:h-4 sm:w-4" />{' '}
                 <span className="truncate">Medicamentos</span>
               </div>
-              <p className="truncate text-sm font-bold text-(--med-text-dark)">{getAnswer(19)}</p>
+              <p className="truncate text-sm font-bold text-(--med-text-dark)">
+                {getValueByQuestionId(19)}
+              </p>
             </div>
 
             {/* Talla */}
@@ -71,7 +69,9 @@ function HistoryCard({ r, onEdit, specialty }) {
                 <Ruler className="h-3.5 w-3.5 sm:h-4 sm:w-4" />{' '}
                 <span className="truncate">Talla</span>
               </div>
-              <p className="text-sm font-bold text-(--med-text-dark)">{getAnswer(8)} cm</p>
+              <p className="text-sm font-bold text-(--med-text-dark)">
+                {getValueByQuestionId(8)} cm
+              </p>
             </div>
           </div>
 
@@ -83,7 +83,7 @@ function HistoryCard({ r, onEdit, specialty }) {
                 Notas del médico
               </p>
               <p className="mt-2 line-clamp-4 text-sm leading-relaxed text-(--med-text-dark)">
-                {getAnswer(133)}
+                {getValueByQuestionId(133)}
               </p>
             </div>
 
@@ -94,7 +94,7 @@ function HistoryCard({ r, onEdit, specialty }) {
                 Tratamiento sugerido
               </p>
               <p className="mt-2 line-clamp-4 text-sm leading-relaxed text-(--med-text-dark)">
-                {getAnswer(132)}
+                {getValueByQuestionId(132)}
               </p>
             </div>
           </div>
@@ -111,7 +111,9 @@ function HistoryCard({ r, onEdit, specialty }) {
                 <Scale className="h-3.5 w-3.5 sm:h-4 sm:w-4" />{' '}
                 <span className="truncate">Peso</span>
               </div>
-              <p className="text-sm font-bold text-(--med-text-dark)">{getAnswer(7)} kg</p>
+              <p className="text-sm font-bold text-(--med-text-dark)">
+                {getValueByQuestionId(7)} kg
+              </p>
             </div>
 
             {/* IMC */}
@@ -129,7 +131,9 @@ function HistoryCard({ r, onEdit, specialty }) {
                 <Stethoscope className="h-3.5 w-3.5 sm:h-4 sm:w-4" />{' '}
                 <span className="truncate">Enfermedades</span>
               </div>
-              <p className="truncate text-sm font-bold text-(--med-text-dark)">{getAnswer(26)}</p>
+              <p className="truncate text-sm font-bold text-(--med-text-dark)">
+                {getValueByQuestionId(26)}
+              </p>
             </div>
 
             {/* Medicamentos */}
@@ -138,7 +142,9 @@ function HistoryCard({ r, onEdit, specialty }) {
                 <Pill className="h-3.5 w-3.5 sm:h-4 sm:w-4" />{' '}
                 <span className="truncate">Medicamentos</span>
               </div>
-              <p className="truncate text-sm font-bold text-(--med-text-dark)">{getAnswer(19)}</p>
+              <p className="truncate text-sm font-bold text-(--med-text-dark)">
+                {getValueByQuestionId(19)}
+              </p>
             </div>
 
             {/* Talla */}
@@ -147,7 +153,9 @@ function HistoryCard({ r, onEdit, specialty }) {
                 <Ruler className="h-3.5 w-3.5 sm:h-4 sm:w-4" />{' '}
                 <span className="truncate">Talla</span>
               </div>
-              <p className="text-sm font-bold text-(--med-text-dark)">{getAnswer(8)} cm</p>
+              <p className="text-sm font-bold text-(--med-text-dark)">
+                {getValueByQuestionId(8)} cm
+              </p>
             </div>
           </div>
 
@@ -159,7 +167,7 @@ function HistoryCard({ r, onEdit, specialty }) {
                 Notas del médico
               </p>
               <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-(--med-text-dark)">
-                {getAnswer(133)}
+                {getValueByQuestionId(133)}
               </p>
             </div>
 
@@ -170,7 +178,7 @@ function HistoryCard({ r, onEdit, specialty }) {
                 Tratamiento sugerido
               </p>
               <p className="mt-2 line-clamp-4 text-sm leading-relaxed text-(--med-text-dark)">
-                {getAnswer(132)}
+                {getValueByQuestionId(132)}
               </p>
             </div>
           </div>

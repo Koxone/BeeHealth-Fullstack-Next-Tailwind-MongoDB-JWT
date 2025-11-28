@@ -114,7 +114,7 @@ export default function DoctorPatientDetail({ patient, specialty }) {
         />
       )}
 
-      {/* {specialty === 'weight' && <WeightChart patientRecord={patientRecord} />}
+      {specialty === 'weight' && <WeightChart patientRecord={patientRecord} />}
 
       {showHistoryModal && (
         <DoctorClinicalRecordModal
@@ -134,7 +134,7 @@ export default function DoctorPatientDetail({ patient, specialty }) {
           currentPatientInfo={currentPatientInfo}
           onClose={() => setShowCreateAppointmentModal(false)}
         />
-      )} */}
+      )}
     </div>
   );
 }

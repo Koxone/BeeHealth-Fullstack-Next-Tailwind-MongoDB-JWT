@@ -269,7 +269,7 @@
     "specialties": {
       "dental": ["full"]
     },
-    "type": "number"
+    "type": "text"
   },
   "27": {
     "text": "Diabetes",

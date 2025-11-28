@@ -18,18 +18,13 @@ export default function PatientHeader({ patient, onClickNew, patientRecord }) {
     const answerObj = patientRecord?.[0]?.answers?.find(
       (ans) => ans?.question?.questionId === questionId
     );
-
     if (!answerObj) return 'Sin respuesta';
-
-    // Map select/radio options
     if (answerObj.question?.options?.length > 0) {
       const option = answerObj.question.options.find((o) => o.value === answerObj.value);
       return option ? option.label : answerObj.value;
     }
-
     if (answerObj.value === 'true') return 'Sí';
     if (answerObj.value === 'false') return 'No';
-
     return answerObj.value;
   }
 
