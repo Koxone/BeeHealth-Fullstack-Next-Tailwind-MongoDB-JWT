@@ -1257,7 +1257,8 @@
     "text": "Presion arterial",
     "isMetric": false,
     "specialties": {
-      "dental": ["short"]
+      "dental": ["short"],
+      "weight": ["short"]
     },
     "type": "text"
   },
@@ -1265,7 +1266,8 @@
     "text": "Frecuencia cardiaca",
     "isMetric": true,
     "specialties": {
-      "dental": ["short"]
+      "dental": ["short"],
+      "weight": ["short"]
     },
     "type": "text"
   },
@@ -1284,13 +1286,14 @@
       "dental": ["short"],
       "weight": ["short"]
     },
-    "type": "text"
+    "type": "number"
   },
   "126": {
     "text": "Saturación de oxígeno",
     "isMetric": false,
     "specialties": {
-      "dental": ["short"]
+      "dental": ["short"],
+      "weight": ["short"]
     },
     "type": "text"
   },
@@ -1350,7 +1353,7 @@
       "weight": ["short"],
       "stetic": ["short"]
     },
-    "type": "text"
+    "type": "textarea"
   },
   "134": {
     "text": "Evaluación de cavidad bucal",
@@ -1465,26 +1468,32 @@
     "type": "text"
   },
   "148": {
-    "text": "Diagnóstico",
+    "text": "Diagnóstico en esta consulta",
     "isMetric": false,
     "specialties": {
-      "dental": ["short"]
+      "dental": ["short"],
+      "stetic": ["short"],
+      "weight": ["short"]
     },
-    "type": "text"
+    "type": "textarea"
   },
   "149": {
-    "text": "Tratamiento",
+    "text": "Tratamiento en esta consulta",
     "isMetric": false,
     "specialties": {
-      "dental": ["short"]
+      "dental": ["short"],
+      "stetic": ["short"],
+      "weight": ["short"]
     },
-    "type": "text"
+    "type": "textarea"
   },
   "150": {
     "text": "Medicamentos indicados",
     "isMetric": false,
     "specialties": {
-      "dental": ["short"]
+      "dental": ["short"],
+      "stetic": [],
+      "weight": []
     },
     "type": "text"
   },

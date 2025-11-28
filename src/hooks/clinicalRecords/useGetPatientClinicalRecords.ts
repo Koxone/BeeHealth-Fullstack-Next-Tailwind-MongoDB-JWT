@@ -1,7 +1,7 @@
 import { IClinicalRecord, IClinicalRecordResponse } from '@/types';
 import { useState, useEffect } from 'react';
 
-export function useClinicalRecord(id: string): {
+export function useGetPatientClinicalRecords(id: string): {
   data: IClinicalRecord[] | null;
   isLoading: boolean;
   error: Error | null;

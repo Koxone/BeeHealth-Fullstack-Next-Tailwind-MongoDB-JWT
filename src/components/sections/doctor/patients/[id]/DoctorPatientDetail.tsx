@@ -15,7 +15,7 @@ import DoctorProducts from './components/products/DoctorProducts';
 import LoadingState from '@/components/shared/feedback/LoadingState';
 
 // Custom Hooks
-import { useClinicalRecord } from './hooks/useClinicalRecord';
+import { useGetPatientClinicalRecords } from '@/hooks/clinicalRecords/useGetPatientClinicalRecords';
 
 // Types
 import { IClinicalRecord, TabName } from '@/types';
@@ -29,7 +29,7 @@ export default function DoctorPatientDetail({ patient, specialty }) {
 
   // Patient Clinical Record
   const [selectedRecord, setSelectedRecord] = useState<IClinicalRecord | null>(null);
-  const { data: patientRecord, isLoading, error } = useClinicalRecord(id);
+  const { data: patientRecord, isLoading, error } = useGetPatientClinicalRecords(id);
   const currentPatientInfo = patientRecord?.[0];
 
   console.log(patientRecord);
@@ -127,6 +127,7 @@ export default function DoctorPatientDetail({ patient, specialty }) {
           readOnly={isReadOnly}
           patientId={id}
           mode={historyMode}
+          specialty={specialty}
         />
       )}
 

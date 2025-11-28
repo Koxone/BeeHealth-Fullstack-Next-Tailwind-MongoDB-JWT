@@ -7,7 +7,7 @@ export interface Question {
   specialty: 'weight' | 'dental' | 'stetic';
   version: 'short' | 'full';
   isMetric: boolean;
-  type: string,
+  type: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -28,7 +28,7 @@ export function useGetAllQuestions() {
           throw new Error(data.message || 'Failed to fetch questions');
         }
 
-        setQuestions(data.data);
+        setQuestions(data.data.sort((a, b) => a.questionId - b.questionId));
       } catch (err: any) {
         setError(err.message || 'Unknown error');
       } finally {
