@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Text({ question, required, value, placeholder }) {
+function Text({ question, required, value, placeholder, id, onChange }) {
   return (
     <div className="mb-6">
       <label className="mb-2 block text-sm font-medium text-gray-700">{question}</label>

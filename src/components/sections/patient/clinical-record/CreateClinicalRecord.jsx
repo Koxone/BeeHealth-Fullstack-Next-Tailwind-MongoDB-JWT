@@ -51,7 +51,7 @@ export default function CreateClinicalRecord({ currentUser }) {
   return (
     <div className="h-full overflow-y-auto p-4 py-6 md:py-10">
       <div className="mx-auto max-w-4xl">
-        {/* header */}
+        {/* Header */}
         <div className="mb-6 text-center">
           <h1 className="mb-2 text-2xl font-bold text-gray-900 md:text-3xl">
             Crea tu primer Historial Clinico
@@ -59,7 +59,7 @@ export default function CreateClinicalRecord({ currentUser }) {
           <p className="text-sm text-gray-600 md:text-base">Selecciona el tipo de consulta</p>
         </div>
 
-        {/* card */}
+        {/* Card */}
         <div className="bg-beehealth-body-main overflow-hidden rounded-2xl border border-gray-200 shadow-xl">
           <TabsHeader activeTab={activeTab} setActiveTab={setActiveTab} />
 
@@ -72,6 +72,7 @@ export default function CreateClinicalRecord({ currentUser }) {
               return (
                 <Component
                   key={question?._id}
+                  id={question?._id}
                   question={question?.text}
                   value={formData[question?._id] || ''}
                   onChange={(val) => handleChange(question?._id, val)}
@@ -83,12 +84,6 @@ export default function CreateClinicalRecord({ currentUser }) {
             {/* Actions */}
             <ActionButtons activeTab={activeTab} />
           </form>
-        </div>
-
-        {/* progress */}
-        <div className="mt-6 flex items-center justify-center gap-2">
-          <div className="h-2 w-8 rounded-full bg-blue-500"></div>
-          <div className="h-2 w-8 rounded-full bg-blue-500"></div>
         </div>
       </div>
     </div>
