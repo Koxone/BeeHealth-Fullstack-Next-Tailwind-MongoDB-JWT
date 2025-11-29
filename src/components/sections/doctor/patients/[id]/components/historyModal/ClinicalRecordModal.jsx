@@ -11,7 +11,7 @@ import FullVersion from './components/FullVersion';
 import { useModalClose } from '@/hooks/useModalClose';
 import { useCreateClinicalRecordDoctor } from '@/hooks/clinicalRecords/useCreateClinicalRecordDoctor';
 import { useGetAllQuestions } from '@/hooks/clinicalRecords/useGetAllQuestions';
-import AssignSection from '@/components/sections/test/AssignSection';
+import AssignSection from '@/components/sections/doctor/patients/[id]/components/historyModal/components/assign-section/AssignSection';
 
 export default function ClinicalRecordModal({
   onClose,
