@@ -12,6 +12,8 @@ import {
 import CreateAppointmentButton from './components/CreateAppointmentButton';
 import RegisterVisitButton from './components/RegisterVisitButton';
 import moment from 'moment';
+import AssignedDiets from '@/components/sections/test/AssignedDiets';
+import AssignedWorkouts from '@/components/sections/test/AssignedWorkouts';
 
 export default function PatientHeader({ patient, onClickNew, patientRecord }) {
   // Specialty map
@@ -52,11 +54,22 @@ export default function PatientHeader({ patient, onClickNew, patientRecord }) {
       <div className="bg-beehealth-body-main/10 absolute -bottom-10 -left-10 h-40 w-40 rounded-full blur-3xl" />
 
       <div className="relative flex flex-col items-start gap-6 md:flex-row md:items-center">
-        <div className="group relative">
-          <div className="bg-beehealth-body-main absolute inset-0 rounded-full opacity-75 blur-xl transition-opacity group-hover:opacity-100" />
+        <div className="flex flex-col items-center gap-4">
+          {/* Avatar */}
+          <div className="group relative">
+            <div className="bg-beehealth-body-main absolute inset-0 rounded-full opacity-75 blur-xl transition-opacity group-hover:opacity-100" />
 
-          <div className="bg-beehealth-body-main relative flex h-28 w-28 items-center justify-center overflow-hidden rounded-full shadow-2xl ring-4 ring-white/30 transition-transform duration-300 group-hover:scale-105">
-            <img src={patient?.avatar || '/oochel.jpg'} alt="" />
+            <div className="bg-beehealth-body-main relative flex h-28 w-28 items-center justify-center overflow-hidden rounded-full shadow-2xl ring-4 ring-white/30 transition-transform duration-300 group-hover:scale-105">
+              <img src={patient?.avatar || '/oochel.jpg'} alt="" />
+            </div>
+          </div>
+
+          <div className="flex flex-col items-center gap-2">
+            {/* Check In */}
+            <RegisterVisitButton />
+
+            {/* Create Appointment */}
+            <CreateAppointmentButton onClickNew={onClickNew} />
           </div>
         </div>
 
@@ -67,17 +80,11 @@ export default function PatientHeader({ patient, onClickNew, patientRecord }) {
               <span className="text-sm font-medium capitalize">Paciente de: {specialtyName}</span>
             </div>
 
+            {/* Assigned Section */}
             <div className="grid grid-cols-2 items-center gap-4">
-              <CreateAppointmentButton onClickNew={onClickNew} />
-              <RegisterVisitButton />
-              <button className="bg-beehealth-green-secondary-dark hover:bg-beehealth-green-secondary-dark-hover relative flex w-full items-center justify-center gap-2 overflow-hidden rounded-lg px-5 py-2.5 text-sm font-medium text-white shadow-md transition-all duration-300 active:scale-95 sm:w-auto">
-                <Apple className="h-5 w-5" />
-                Asignar Dieta
-              </button>
-              <button className="bg-beehealth-green-secondary-dark hover:bg-beehealth-green-secondary-dark-hover relative flex w-full items-center justify-center gap-2 overflow-hidden rounded-lg px-5 py-2.5 text-sm font-medium text-white shadow-md transition-all duration-300 active:scale-95 sm:w-auto">
-                <Dumbbell className="h-5 w-5" />
-                Asignar Ejercicio
-              </button>
+              <AssignedDiets />
+
+              <AssignedWorkouts />
             </div>
           </div>
 

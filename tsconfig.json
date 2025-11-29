@@ -7,6 +7,7 @@
     },
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
+    "checkJs": false,
     "skipLibCheck": true,
     "strict": false,
     "noEmit": true,
@@ -23,18 +24,6 @@
       }
     ]
   },
-  "include": [
-    "next-env.d.ts",
-    ".next\\dev/types/**/*.ts",
-    ".next\\dev/types/**/*.ts",
-    "**/*.mts",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts",
-    ".next/dev/types/**/*.ts",
-    "src/lib/auth/getCurrentUser.ts",
-    "src/hooks/consults/useGetAllConsults.js",
-    "src/components/shared/patients/PatientsSearchBar.tsx"
-  ],
-  "exclude": ["node_modules"]
+  "include": ["next-env.d.ts", "src/**/*", "**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
+  "exclude": ["node_modules", ".next"]
 }

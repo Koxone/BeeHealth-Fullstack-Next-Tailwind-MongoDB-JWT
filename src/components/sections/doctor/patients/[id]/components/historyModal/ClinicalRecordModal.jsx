@@ -5,14 +5,15 @@ import ModalContainer from './components/ModalContainer';
 import ModalHeader from './components/ModalHeader';
 import TabsNav from './components/TabsNav';
 import FooterActions from './components/FooterActions';
-import { X, FileText, CalendarIcon, Search } from 'lucide-react';
+import { X, FileText, Search } from 'lucide-react';
 import ShortVersion from './components/ShortVersion';
 import FullVersion from './components/FullVersion';
 import { useModalClose } from '@/hooks/useModalClose';
 import { useCreateClinicalRecordDoctor } from '@/hooks/clinicalRecords/useCreateClinicalRecordDoctor';
 import { useGetAllQuestions } from '@/hooks/clinicalRecords/useGetAllQuestions';
+import AssignSection from '@/components/sections/test/AssignSection';
 
-export default function DoctorClinicalRecordModal({
+export default function ClinicalRecordModal({
   onClose,
   record,
   specialty,
@@ -104,11 +105,9 @@ export default function DoctorClinicalRecordModal({
 
         <TabsNav activeTab={activeTab} setActiveTab={setActiveTab} />
 
-        <div className="p-6">
-          <h3 className="flex items-center gap-2 text-lg font-semibold text-gray-900">
-            <Search className="h-5 w-5 text-blue-600" />
-            Dietas y ejercicios asignados a este paciente:
-          </h3>
+        {/* Assign Diet or Workout Section */}
+        <div className="px-6 pt-6">
+          <AssignSection />
         </div>
 
         {/* Main Content */}

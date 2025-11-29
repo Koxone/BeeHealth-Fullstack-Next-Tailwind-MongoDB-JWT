@@ -5,6 +5,8 @@ import { Answer } from '@/models/records/Answer';
 import { ClinicalRecord } from '@/models/records/ClinicalRecord';
 import { getAuthUser } from '@/lib/auth/getAuthUser';
 import User from '@/models/User';
+import Workout from '@/models/Workout';
+import Diet from '@/models/Diet';
 
 // @route    POST /api/clinicalRecords
 // @desc     Create a new Clinical Record
@@ -14,7 +16,7 @@ export async function POST(req) {
     await connectDB();
 
     // Read body
-    const { patientId, specialty, version, answers } = await req.json();
+    const { patientId, dietId, workoutId, specialty, version, answers } = await req.json();
 
     let finalPatientId = patientId;
     let finalVersion = version;
@@ -76,11 +78,62 @@ export async function POST(req) {
       version: finalVersion,
       answers: answerDocs,
     });
-
     await newRecord.save();
 
     // Update hasRecord to true for the patient
     await User.findByIdAndUpdate(finalPatientId, { hasRecord: true });
+
+    // Assign Diet if dietId exists
+    if (dietId && patientId) {
+      const diet = await Diet.findById(dietId);
+      if (diet) {
+        const alreadyAssigned = diet.patients.some((p) => p.patient.toString() === patientId);
+
+        if (alreadyAssigned) {
+          return NextResponse.json(
+            {
+              ok: false,
+              message: 'El paciente ya está asignado a esta dieta',
+            },
+            { status: 400 }
+          );
+        }
+
+        diet.patients.push({
+          patient: patientId,
+          isActive: true,
+          assignedAt: new Date(),
+        });
+        await diet.save();
+      }
+    }
+
+    // Assign Diet if dietId exists
+    if (workoutId && patientId) {
+      const workout = await Workout.findById(workoutId);
+
+      if (workout) {
+        const alreadyAssigned = workout.patients.some((p) => p.patient.toString() === patientId);
+
+        if (alreadyAssigned) {
+          return NextResponse.json(
+            {
+              ok: false,
+              message: 'El paciente ya está asignado a este ejercicio',
+            },
+            { status: 400 }
+          );
+        }
+
+        workout.patients.push({
+          patient: patientId,
+          isActive: true,
+          assignedAt: new Date(),
+        });
+
+        await workout.save();
+      }
+    }
 
     return NextResponse.json({
       ok: true,

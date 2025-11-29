@@ -45,16 +45,17 @@ function HistoryCard({ r, onEdit, specialty }) {
         {filtered?.map((element) => {
           const value = getValueByQuestionId(element.questionId);
 
+          const bgClass =
+            element.questionId === 18 || element.questionId === 26
+              ? 'bg-beehealth-red-primary-light'
+              : 'bg-beehealth-green-secondary-light';
+
           return (
-            <div
-              key={element._id}
-              className="bg-beehealth-green-secondary-light h-full rounded-lg p-2"
-            >
+            <div key={element._id} className={`${bgClass} h-full rounded-lg p-2`}>
               <div className="text-beehealth-green-primary-solid flex items-center gap-1.5 text-xs font-medium sm:gap-2">
-                <Scale className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                 <span className="truncate">{element.text}</span>
               </div>
-              <p className="text-sm font-bold text-(--med-text-dark)">{value}</p>
+              <p className="text-sm font-medium text-gray-900">{value}</p>
             </div>
           );
         })}
