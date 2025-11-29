@@ -65,10 +65,10 @@ export default function DoctorPatientDetail({ patient, specialty }) {
       <QuickStats patientRecord={patientRecord} specialty={specialty} />
 
       {/* Tabs Dental */}
-      {/* {specialty === 'dental' && <TabsNav activeTab={activeTab} setActiveTab={setActiveTab} />} */}
+      {specialty === 'dental' && <TabsNav activeTab={activeTab} setActiveTab={setActiveTab} />}
 
       {/* Dental Clinical Records */}
-      {/* {activeTab === 'Historial' && specialty === 'dental' && (
+      {activeTab === 'Historial' && specialty === 'dental' && (
         <ClinicalHistory
           specialty={specialty}
           patientRecord={patientRecord}
@@ -86,13 +86,13 @@ export default function DoctorPatientDetail({ patient, specialty }) {
             setShowHistoryModal(true);
           }}
         />
-      )} */}
+      )}
 
       {/* Dental Patient Budgets */}
-      {/* {activeTab === 'Presupuestos' && specialty === 'dental' && <DoctorBudgets />} */}
+      {activeTab === 'Presupuestos' && specialty === 'dental' && <DoctorBudgets />}
 
       {/* Dental Patient Budgets */}
-      {/* {activeTab === 'Productos' && specialty === 'dental' && <DoctorProducts />} */}
+      {activeTab === 'Productos' && specialty === 'dental' && <DoctorProducts />}
 
       {/* Weight Control Clinical Records */}
       {specialty === 'weight' && (
@@ -120,9 +120,6 @@ export default function DoctorPatientDetail({ patient, specialty }) {
       {showHistoryModal && (
         <DoctorClinicalRecordModal
           onClose={() => setShowHistoryModal(false)}
-          onSaved={() => {
-            router.refresh();
-          }}
           record={selectedRecord}
           readOnly={isReadOnly}
           patientId={id}

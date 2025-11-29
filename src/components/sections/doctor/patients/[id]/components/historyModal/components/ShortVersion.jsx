@@ -2,29 +2,10 @@ import LoadingState from '@/components/shared/feedback/LoadingState';
 import { useGetAllQuestions } from '@/hooks/clinicalRecords/useGetAllQuestions';
 import { CalendarIcon } from 'lucide-react';
 
-export default function ShortVersion({ specialty, record, isReadOnly = true }) {
+export default function ShortVersion({ specialty, isReadOnly = true, formData, setFormData }) {
   // Fetch Questions to render UI
   const { questions, loading } = useGetAllQuestions();
   const filtered = questions?.filter((q) => q.version === 'short' && q.specialty === specialty);
-
-  // Get answers to render
-  const currentRecord = record?.answers;
-
-  // Helper function to get the answer value for a specific question
-  const getAnswerValue = (questionId) => {
-    if (!currentRecord) return '';
-
-    // Handle both object and array formats
-    let answersArray = [];
-    if (Array.isArray(currentRecord)) {
-      answersArray = currentRecord;
-    } else if (typeof currentRecord === 'object') {
-      answersArray = Object.values(currentRecord);
-    }
-
-    const answer = answersArray.find((a) => a?.question?.questionId === questionId);
-    return answer?.value || '';
-  };
 
   // Loading State
   if (loading) {
@@ -56,23 +37,27 @@ export default function ShortVersion({ specialty, record, isReadOnly = true }) {
             {q?.type === 'textarea' ? (
               <textarea
                 rows={3}
-                id={q?.questionId}
+                value={formData[q.questionId] || ''}
+                onChange={(e) =>
+                  setFormData((prev) => ({ ...prev, [q.questionId]: e.target.value }))
+                }
                 readOnly={isReadOnly}
                 disabled={isReadOnly}
                 placeholder=""
-                defaultValue={getAnswerValue(q?.questionId)}
                 className={`focus:bg-beehealth-body-main bg-beehealth-body-main w-full resize-none rounded-xl border-2 px-4 py-3 transition outline-none ${
                   isReadOnly ? 'border-gray-300 bg-gray-100 text-gray-500' : 'border-gray-200'
                 }`}
               />
             ) : (
               <input
-                id={q?.questionId}
                 type={q?.type}
+                value={formData[q.questionId] || ''}
+                onChange={(e) =>
+                  setFormData((prev) => ({ ...prev, [q.questionId]: e.target.value }))
+                }
                 readOnly={isReadOnly}
                 disabled={isReadOnly}
                 placeholder=""
-                defaultValue={getAnswerValue(q?.questionId)}
                 className={`focus:bg-beehealth-body-main bg-beehealth-body-main w-full rounded-xl border-2 px-4 py-3 transition outline-none ${
                   isReadOnly ? 'border-gray-300 bg-gray-100 text-gray-500' : 'border-gray-200'
                 }`}
