@@ -5,7 +5,7 @@ import ModalContainer from './components/ModalContainer';
 import ModalHeader from './components/ModalHeader';
 import TabsNav from './components/TabsNav';
 import FooterActions from './components/FooterActions';
-import { X, FileText } from 'lucide-react';
+import { X, FileText, CalendarIcon, Search } from 'lucide-react';
 import ShortVersion from './components/ShortVersion';
 import FullVersion from './components/FullVersion';
 import { useModalClose } from '@/hooks/useModalClose';
@@ -104,6 +104,14 @@ export default function DoctorClinicalRecordModal({
 
         <TabsNav activeTab={activeTab} setActiveTab={setActiveTab} />
 
+        <div className="p-6">
+          <h3 className="flex items-center gap-2 text-lg font-semibold text-gray-900">
+            <Search className="h-5 w-5 text-blue-600" />
+            Dietas y ejercicios asignados a este paciente:
+          </h3>
+        </div>
+
+        {/* Main Content */}
         <form onSubmit={handleSubmit} className="max-h-[calc(90vh-180px)] overflow-y-auto p-6">
           {/* Short Version */}
           {activeTab === 'basico' && (
