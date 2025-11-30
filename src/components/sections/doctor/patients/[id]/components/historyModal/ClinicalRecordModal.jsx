@@ -105,11 +105,6 @@ export default function ClinicalRecordModal({
 
         <TabsNav activeTab={activeTab} setActiveTab={setActiveTab} />
 
-        {/* Assign Diet or Workout Section */}
-        <div className="px-6 pt-6">
-          <AssignSection />
-        </div>
-
         {/* Main Content */}
         <form onSubmit={handleSubmit} className="max-h-[calc(90vh-180px)] overflow-y-auto p-6">
           {/* Short Version */}
@@ -119,6 +114,10 @@ export default function ClinicalRecordModal({
               isReadOnly={isReadOnly}
               formData={formData}
               setFormData={setFormData}
+              activeTab={activeTab}
+              isCreate={isCreate}
+              isSubmitting={isSubmitting}
+              onClose={onClose}
             />
           )}
 
@@ -130,14 +129,6 @@ export default function ClinicalRecordModal({
               formData={formData}
               setFormData={setFormData}
               patientId={patientId}
-            />
-          )}
-
-          {!isReadOnly && activeTab === 'basico' && (
-            <FooterActions
-              onCancel={onClose}
-              submitLabel={isCreate ? 'Guardar nuevo registro' : 'Guardar cambios'}
-              isSubmitting={isSubmitting}
             />
           )}
         </form>

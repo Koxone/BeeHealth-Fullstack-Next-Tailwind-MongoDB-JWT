@@ -1,40 +1,54 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ChevronDown, Check, X } from 'lucide-react';
+import { useGetAllDiets } from '@/hooks/diets/useGetAllDiets';
+import { useAssignDiet } from '@/hooks/diets/useAssignDiet';
+import { useParams } from 'next/navigation';
 
-export default function AssignDiet() {
-  /* State */
+export default function AssignDiet({ user }) {
+  const { editPatients } = useAssignDiet();
+  const { id: patientId } = useParams();
+  const { dietsData, refetch: fetchDiets } = useGetAllDiets();
+
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState([]);
   const [assigned, setAssigned] = useState([]);
   const [showSuccess, setShowSuccess] = useState(false);
 
-  /* Mock */
-  const mockDiets = [
-    { id: '1', name: 'Dieta Keto' },
-    { id: '2', name: 'Dieta Mediterránea' },
-    { id: '3', name: 'Dieta Detox' },
-  ];
-
-  /* Toggle */
+  // Force single selection
   const toggleItem = (id) => {
-    setSelected((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]));
+    setSelected((prev) => (prev.includes(id) ? [] : [id]));
   };
 
-  /* Assign */
-  const handleAssign = () => {
-    const assignedItems = mockDiets.filter((d) => selected.includes(d.id));
-    setAssigned((prev) => [...prev, ...assignedItems]);
-    setSelected([]);
-    setOpen(false);
-    setShowSuccess(true);
-    setTimeout(() => setShowSuccess(false), 3000);
+  // Assign Handler
+  const handleAssign = async () => {
+    if (selected.length === 0) return;
+    const dietId = selected[0];
+    try {
+      await editPatients(dietId, [patientId]);
+      await fetchDiets();
+      setShowSuccess(true);
+      setSelected([]);
+      setOpen(false);
+      setTimeout(() => setShowSuccess(false), 3000);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
-  /* Remove */
+  useEffect(() => {
+    if (!dietsData) return;
+
+    const alreadyAssigned = dietsData
+      .filter((diet) => diet.patients.some((p) => String(p.patient._id) === patientId))
+      .map((diet) => diet._id);
+
+    setAssigned([]);
+  }, [dietsData, patientId]);
+
   const removeAssigned = (id) => {
-    setAssigned((prev) => prev.filter((x) => x.id !== id));
+    setAssigned((prev) => prev.filter((x) => x !== id));
   };
 
   return (
@@ -52,7 +66,6 @@ export default function AssignDiet() {
         <span>
           {selected.length === 0 && 'Seleccionar dieta'}
           {selected.length === 1 && '1 seleccionada'}
-          {selected.length > 1 && `${selected.length} seleccionadas`}
         </span>
         <ChevronDown className="h-4 w-4 text-gray-600" />
       </button>
@@ -69,21 +82,37 @@ export default function AssignDiet() {
           </div>
 
           <ul className="divide-y divide-gray-100">
-            {mockDiets.map((item) => (
-              <li
-                key={item.id}
-                className="hover:bg-beehealth-body-main flex cursor-pointer items-center gap-3 px-3 py-2"
-                onClick={() => toggleItem(item.id)}
-              >
-                <input
-                  type="checkbox"
-                  checked={selected.includes(item.id)}
-                  onChange={() => toggleItem(item.id)}
-                  className="text-beehealth-blue-primary-solid h-4 w-4 rounded border-gray-300"
-                />
-                <span className="text-sm text-gray-700">{item.name}</span>
-              </li>
-            ))}
+            {dietsData?.map((item) => {
+              const isAssigned = dietsData.some(
+                (diet) =>
+                  diet._id === item._id &&
+                  diet.patients.some((p) => String(p.patient._id) === patientId)
+              );
+
+              return (
+                <li
+                  key={item._id}
+                  className={`flex items-center gap-3 px-3 py-2 ${
+                    isAssigned
+                      ? 'cursor-not-allowed opacity-50'
+                      : 'hover:bg-beehealth-body-main cursor-pointer'
+                  }`}
+                  onClick={() => {
+                    if (!isAssigned) toggleItem(item._id);
+                  }}
+                >
+                  <input
+                    type="checkbox"
+                    checked={selected.includes(item._id)}
+                    disabled={isAssigned}
+                    onChange={() => toggleItem(item._id)}
+                    className="text-beehealth-blue-primary-solid h-4 w-4 rounded border-gray-300"
+                  />
+
+                  <span className="text-sm text-gray-700">{item.name}</span>
+                </li>
+              );
+            })}
           </ul>
         </div>
       )}
@@ -105,27 +134,21 @@ export default function AssignDiet() {
         </div>
       )}
 
-      {/* Assigned */}
-      {assigned.length > 0 && (
-        <div className="mt-3 space-y-2">
-          <p className="text-xs font-semibold text-gray-600">Asignadas:</p>
-
-          <div className="flex flex-wrap gap-2">
-            {assigned.map((item) => (
-              <div
-                key={item.id}
-                className="bg-beehealth-blue-secondary-solid flex items-center gap-2 rounded-lg px-3 py-1 text-xs font-medium text-white"
-              >
-                {item.name}
-
-                <button onClick={() => removeAssigned(item.id)} className="hover:text-red-300">
-                  <X className="h-3 w-3" />
-                </button>
-              </div>
-            ))}
+      {/* Assigned badges */}
+      {assigned.map((dietId) => {
+        const diet = dietsData.find((d) => d._id === dietId);
+        return (
+          <div
+            key={dietId}
+            className="bg-beehealth-blue-secondary-solid mt-2 flex items-center gap-2 rounded-lg px-3 py-1 text-xs font-medium text-white"
+          >
+            {diet?.name}
+            <button onClick={() => removeAssigned(dietId)} className="hover:text-red-300">
+              <X className="h-3 w-3" />
+            </button>
           </div>
-        </div>
-      )}
+        );
+      })}
     </div>
   );
 }

@@ -1,8 +1,19 @@
 import LoadingState from '@/components/shared/feedback/LoadingState';
 import { useGetAllQuestions } from '@/hooks/clinicalRecords/useGetAllQuestions';
 import { CalendarIcon } from 'lucide-react';
+import AssignSection from './assign-section/AssignSection';
+import FooterActions from './FooterActions';
 
-export default function ShortVersion({ specialty, isReadOnly = true, formData, setFormData }) {
+export default function ShortVersion({
+  specialty,
+  isReadOnly = true,
+  formData,
+  setFormData,
+  activeTab,
+  onClose,
+  isSubmitting,
+  isCreate,
+}) {
   // Fetch Questions to render UI
   const { questions, loading } = useGetAllQuestions();
   const filtered = questions?.filter((q) => q.version === 'short' && q.specialty === specialty);
@@ -13,7 +24,10 @@ export default function ShortVersion({ specialty, isReadOnly = true, formData, s
   }
 
   return (
-    <div>
+    <div className="space-y-4">
+      <div className="px">
+        <AssignSection />
+      </div>
       <div className="flex flex-col gap-1">
         <h3 className="flex items-center gap-2 text-lg font-semibold text-gray-900">
           <CalendarIcon className="h-5 w-5 text-blue-600" />
@@ -66,6 +80,14 @@ export default function ShortVersion({ specialty, isReadOnly = true, formData, s
           </div>
         ))}
       </div>
+
+      {!isReadOnly && activeTab === 'basico' && (
+        <FooterActions
+          onCancel={onClose}
+          submitLabel={isCreate ? 'Guardar nuevo registro' : 'Guardar cambios'}
+          isSubmitting={isSubmitting}
+        />
+      )}
     </div>
   );
 }

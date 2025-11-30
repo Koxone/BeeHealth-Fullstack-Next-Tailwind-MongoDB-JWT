@@ -3,8 +3,12 @@
 import { useState } from 'react';
 import AssignDiet from './components/AssignDiet.jsx';
 import AssignWorkout from './components/AssignWorkout.jsx';
+import useAuthStore from '@/zustand/useAuthStore';
 
 export default function AssignSection() {
+  // Custom Hook to get current user data
+  const { user, isAuthenticated, token } = useAuthStore();
+
   const [mode, setMode] = useState(null);
 
   return (
@@ -32,7 +36,7 @@ export default function AssignSection() {
       </div>
 
       {/* Render component */}
-      {mode === 'diet' && <AssignDiet />}
+      {mode === 'diet' && <AssignDiet user={user} />}
       {mode === 'workout' && <AssignWorkout />}
 
       {!mode && (
