@@ -104,7 +104,7 @@ export default function DoctorPatientDetail({ patient, specialty }) {
           specialty={specialty}
           patientRecord={patientRecord}
           onAdd={() => {
-            const lastRecord = patientRecord?.[patientRecord.length - 1] || null;
+            const lastRecord = patientRecord?.[0] || null;
             setSelectedRecord(lastRecord);
             setIsReadOnly(false);
             setHistoryMode('create');

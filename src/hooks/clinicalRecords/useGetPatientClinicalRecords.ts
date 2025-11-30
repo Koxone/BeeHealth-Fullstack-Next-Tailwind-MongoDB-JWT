@@ -23,7 +23,11 @@ export function useGetPatientClinicalRecords(id: string): {
       if (!res.ok) throw new Error('Error fetching clinical record');
 
       const json: IClinicalRecordResponse = await res.json();
-      setData(json.data);
+      const sorted = [...json.data].sort(
+        (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      );
+
+      setData(sorted);
     } catch (err: unknown) {
       setError(err as Error);
     } finally {
