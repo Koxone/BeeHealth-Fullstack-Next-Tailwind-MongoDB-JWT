@@ -33,7 +33,7 @@ export async function GET(req, { params }) {
 
     return NextResponse.json({ data: records || [] });
   } catch (err) {
-    console.error('Error GET clinical-records/[id]:', err);
+    console.error('Error GET clinicalRecords/[id]:', err);
     return NextResponse.json({ error: 'Error fetching clinical records' }, { status: 500 });
   }
 }
