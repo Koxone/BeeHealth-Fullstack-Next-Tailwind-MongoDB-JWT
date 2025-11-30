@@ -56,8 +56,8 @@ export default function PatientHeader({ onClickNew, patientRecord }) {
       <div className="bg-beehealth-body-main/10 absolute -top-10 -right-10 h-40 w-40 rounded-full blur-3xl" />
       <div className="bg-beehealth-body-main/10 absolute -bottom-10 -left-10 h-40 w-40 rounded-full blur-3xl" />
 
-      <div className="relative flex flex-col items-start gap-6 md:flex-row md:items-center">
-        <div className="flex flex-col items-center gap-4">
+      <div className="relative flex justify-between gap-6">
+        <div className="flex flex-col items-center justify-center gap-4">
           {/* Avatar */}
           <div className="group relative">
             <div className="bg-beehealth-body-main absolute inset-0 rounded-full opacity-75 blur-xl transition-opacity group-hover:opacity-100" />
@@ -67,6 +67,7 @@ export default function PatientHeader({ onClickNew, patientRecord }) {
             </div>
           </div>
 
+          {/* Action Buttons */}
           <div className="flex flex-col items-center gap-2">
             {/* Check In */}
             <RegisterVisitButton />
