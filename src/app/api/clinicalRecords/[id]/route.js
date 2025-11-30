@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { connectDB } from '@/lib/mongodb';
-import ClinicalRecord from '@/models/ClinicalRecord';
+import { ClinicalRecord } from '@/models/records/ClinicalRecord';
 import mongoose from 'mongoose';
 import User from '@/models/User';
 import { Question } from '@/models/records/Question';
@@ -22,7 +22,6 @@ export async function GET(req, { params }) {
     const records = await ClinicalRecord.find({ patient: id })
       .sort({ createdAt: -1 })
       .populate('patient', 'fullName email phone avatar')
-      .populate('doctor', 'fullName email phone avatar')
       // Correct populate for subdocument array
       .populate({
         path: 'answers.question',

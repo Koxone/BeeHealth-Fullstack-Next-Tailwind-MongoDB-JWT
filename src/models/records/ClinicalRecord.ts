@@ -14,7 +14,7 @@ interface IClinicalRecord extends Document {
 
 const ClinicalRecordSchema: Schema<IClinicalRecord> = new Schema(
   {
-    patient: { type: Schema.Types.ObjectId, ref: 'Patient', required: true },
+    patient: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     diets: [{ type: Schema.Types.ObjectId, ref: 'Diet' }],
     workouts: [{ type: Schema.Types.ObjectId, ref: 'Workout' }],
     specialty: { type: String, enum: ['weight', 'dental', 'stetic'], required: true },
