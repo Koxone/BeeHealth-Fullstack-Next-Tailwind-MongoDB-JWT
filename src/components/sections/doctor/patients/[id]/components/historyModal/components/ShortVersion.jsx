@@ -3,7 +3,6 @@ import { useGetAllQuestions } from '@/hooks/clinicalRecords/useGetAllQuestions';
 import { CalendarIcon } from 'lucide-react';
 import AssignSection from './assign-section/AssignSection';
 import FooterActions from './FooterActions';
-import { useState } from 'react';
 
 export default function ShortVersion({
   specialty,
@@ -17,11 +16,11 @@ export default function ShortVersion({
   dietSelected,
   setDietSelected,
 }) {
-  // Fetch Questions to render UI
+  // Fetch questions
   const { questions, loading } = useGetAllQuestions();
   const filtered = questions?.filter((q) => q.version === 'short' && q.specialty === specialty);
 
-  // Loading State
+  // Loading state
   if (loading) {
     return <LoadingState />;
   }
@@ -30,8 +29,14 @@ export default function ShortVersion({
     <div className="space-y-4">
       {/* Assign Diet or Workout Section */}
       <div className="px">
-        <AssignSection onSelectDiet={setDietSelected} />
+        <AssignSection
+          onSelectDiet={(dietId) => {
+            // Diet selection
+            setDietSelected(dietId);
+          }}
+        />
       </div>
+
       <div className="flex flex-col gap-1">
         <h3 className="flex items-center gap-2 text-lg font-semibold text-gray-900">
           <CalendarIcon className="h-5 w-5 text-blue-600" />
@@ -39,7 +44,11 @@ export default function ShortVersion({
         </h3>
 
         <span
-          className={`mb-4 w-fit rounded-lg ${isReadOnly ? 'bg-beehealth-green-secondary-light text-beehealth-green-secondary-dark' : 'bg-beehealth-red-primary-light text-beehealth-red-primary-dark'} p-1 text-xs`}
+          className={`mb-4 w-fit rounded-lg ${
+            isReadOnly
+              ? 'bg-beehealth-green-secondary-light text-beehealth-green-secondary-dark'
+              : 'bg-beehealth-red-primary-light text-beehealth-red-primary-dark'
+          } p-1 text-xs`}
         >
           {isReadOnly ? 'Solo Lectura' : 'Modo Edicion'}
         </span>

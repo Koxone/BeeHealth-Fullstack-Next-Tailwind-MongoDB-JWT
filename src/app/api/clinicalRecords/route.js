@@ -77,38 +77,14 @@ export async function POST(req) {
       specialty,
       version: finalVersion,
       answers: answerDocs,
+      diets: dietId ? [dietId] : [],
     });
     await newRecord.save();
 
     // Update hasRecord to true for the patient
     await User.findByIdAndUpdate(finalPatientId, { hasRecord: true });
 
-    // Assign Diet if dietId exists
-    if (dietId && patientId) {
-      const diet = await Diet.findById(dietId);
-      if (diet) {
-        const alreadyAssigned = diet.patients.some((p) => p.patient.toString() === patientId);
-
-        if (alreadyAssigned) {
-          return NextResponse.json(
-            {
-              ok: false,
-              message: 'El paciente ya está asignado a esta dieta',
-            },
-            { status: 400 }
-          );
-        }
-
-        diet.patients.push({
-          patient: patientId,
-          isActive: true,
-          assignedAt: new Date(),
-        });
-        await diet.save();
-      }
-    }
-
-    // Assign Diet if dietId exists
+    // Assign Workout if workoutId exists
     if (workoutId && patientId) {
       const workout = await Workout.findById(workoutId);
 

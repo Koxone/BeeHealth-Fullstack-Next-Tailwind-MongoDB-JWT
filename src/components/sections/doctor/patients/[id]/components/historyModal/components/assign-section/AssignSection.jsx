@@ -6,7 +6,7 @@ import AssignWorkout from './components/AssignWorkout.jsx';
 import useAuthStore from '@/zustand/useAuthStore';
 
 export default function AssignSection({ onSelectDiet }) {
-  // Custom Hook to get current user data
+  // Auth data
   const { user, isAuthenticated, token } = useAuthStore();
 
   const [mode, setMode] = useState(null);

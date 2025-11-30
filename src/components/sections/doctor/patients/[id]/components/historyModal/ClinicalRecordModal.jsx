@@ -4,14 +4,12 @@ import { useState, useEffect } from 'react';
 import ModalContainer from './components/ModalContainer';
 import ModalHeader from './components/ModalHeader';
 import TabsNav from './components/TabsNav';
-import FooterActions from './components/FooterActions';
-import { X, FileText, Search } from 'lucide-react';
 import ShortVersion from './components/ShortVersion';
 import FullVersion from './components/FullVersion';
+import { X, FileText } from 'lucide-react';
 import { useModalClose } from '@/hooks/useModalClose';
 import { useCreateClinicalRecordDoctor } from '@/hooks/clinicalRecords/useCreateClinicalRecordDoctor';
 import { useGetAllQuestions } from '@/hooks/clinicalRecords/useGetAllQuestions';
-import AssignSection from '@/components/sections/doctor/patients/[id]/components/historyModal/components/assign-section/AssignSection';
 import { useAssignDiet } from '@/hooks/diets/useAssignDiet';
 
 export default function ClinicalRecordModal({
@@ -22,19 +20,20 @@ export default function ClinicalRecordModal({
   patientId,
   mode = 'view',
 }) {
-  // Single source of truth
+  // Readonly state
   const [isReadOnly, setIsReadOnly] = useState(!!readOnly);
   const [activeTab, setActiveTab] = useState('basico');
 
-  // AssignDiet States and Custom Hook
+  // Diet state
   const [dietSelected, setDietSelected] = useState(null);
   const { editPatients } = useAssignDiet();
 
-  // Close Modal Handler
+  // Close handler
   const { handleOverlayClick } = useModalClose(onClose);
 
   const isCreate = mode === 'create';
 
+  // Form data
   const [formData, setFormData] = useState({
     1: '',
     6: '',
@@ -65,20 +64,20 @@ export default function ClinicalRecordModal({
   const { questions } = useGetAllQuestions();
   const filtered = questions?.filter((q) => q.version === 'short' && q.specialty === specialty);
 
-  // Submit Handler
+  // Submit handler
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    /* Collect answers */
+    // Collect answers
     const answers = Object.entries(formData).map(([questionId, value]) => {
-      const question = filtered?.find((q) => q.questionId === parseInt(questionId));
+      const question = filtered?.find((q) => q.questionId === parseInt(questionId, 10));
       return {
         questionId: question?._id,
         value,
       };
     });
 
-    /* Assign diet */
+    // Assign diet to patient if selected
     if (dietSelected) {
       try {
         await editPatients(dietSelected, [patientId]);
@@ -88,15 +87,16 @@ export default function ClinicalRecordModal({
       }
     }
 
-    /* Submit clinical record */
+    // Submit clinical record including dietId
     const result = await submit({
       patientId,
       specialty,
       version: 'short',
       answers,
+      dietId: dietSelected || null,
+      workoutId: null,
     });
 
-    /* Close modal */
     if (result.ok) {
       onClose();
     }
@@ -126,9 +126,8 @@ export default function ClinicalRecordModal({
 
         <TabsNav activeTab={activeTab} setActiveTab={setActiveTab} />
 
-        {/* Main Content */}
+        {/* Main content */}
         <form onSubmit={handleSubmit} className="max-h-[calc(90vh-180px)] overflow-y-auto p-6">
-          {/* Short Version */}
           {activeTab === 'basico' && (
             <ShortVersion
               specialty={specialty}
@@ -144,7 +143,6 @@ export default function ClinicalRecordModal({
             />
           )}
 
-          {/* Full Version */}
           {activeTab === 'completo' && (
             <FullVersion
               specialty={specialty}
