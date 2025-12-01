@@ -63,7 +63,7 @@ export default function ConsultsTable({ rows, totals, onEdit, onDelete }) {
   return (
     <div className="hidden overflow-x-auto md:block">
       <table className="w-full">
-        <thead className="bg-beehealth-blue-primary-light border-b-2 border-gray-200">
+        <thead className="bg-beehealth-green-primary-light border-b-2 border-gray-200">
           <tr>
             {columns.map((col) => (
               <th key={col.key} className={`px-6 py-4 text-${col.align} `}>
