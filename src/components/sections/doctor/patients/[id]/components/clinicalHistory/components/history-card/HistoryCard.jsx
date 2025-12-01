@@ -1,8 +1,8 @@
 import { Scale, Edit2, Eye, Pencil, Trash2 } from 'lucide-react';
-import { useGetAllQuestions } from '@/hooks/clinicalRecords/useGetAllQuestions';
+import { useGetAllQuestions } from '@/hooks/clinicalRecords/get/useGetAllQuestions';
 import Link from 'next/link';
 import EditRecordDateButton from './components/EditRecordDateButton';
-import { useEditClinicalRecord } from '@/hooks/clinicalRecords/useEditClinicalRecord';
+import { useEditClinicalRecord } from '@/hooks/clinicalRecords/edit/useEditClinicalRecord';
 
 function HistoryCard({ r, onEdit, specialty, showDeleteModal, setShowDeleteModal, onDelete }) {
   function getValueByQuestionId(questionId) {

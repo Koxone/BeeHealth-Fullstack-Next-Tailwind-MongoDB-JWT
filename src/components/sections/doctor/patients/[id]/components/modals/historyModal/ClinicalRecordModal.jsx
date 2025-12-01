@@ -3,8 +3,8 @@
 import { useState, useEffect } from 'react';
 import { X, FileText } from 'lucide-react';
 import { useModalClose } from '@/hooks/useModalClose';
-import { useCreateClinicalRecordDoctor } from '@/hooks/clinicalRecords/useCreateClinicalRecordDoctor';
-import { useGetAllQuestions } from '@/hooks/clinicalRecords/useGetAllQuestions';
+import { useCreateClinicalRecordDoctor } from '@/hooks/clinicalRecords/create/useCreateClinicalRecordDoctor';
+import { useGetAllQuestions } from '@/hooks/clinicalRecords/get/useGetAllQuestions';
 import { useAssignDiet } from '@/hooks/diets/useAssignDiet';
 import ModalHeader from './components/ModalHeader';
 import TabsNav from './components/TabsNav';

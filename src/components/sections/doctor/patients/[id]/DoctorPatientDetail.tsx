@@ -19,10 +19,10 @@ import DeleteRecordModal from './components/modals/delete-record-modal/DeleteRec
 import DoctorCreateAppointmentModal from './components/modals/createAppointmentModal/DoctorCreateAppointmentModal';
 
 // Fetch current patient clinical records
-import { useGetPatientClinicalRecords } from '@/hooks/clinicalRecords/useGetPatientClinicalRecords';
+import { useGetPatientClinicalRecords } from '@/hooks/clinicalRecords/get/useGetPatientClinicalRecords';
 
 // Delete clinical record custom hook
-import { useDeleteClinicalRecord } from '@/hooks/clinicalRecords/useDeleteClinicalRecord';
+import { useDeleteClinicalRecord } from '@/hooks/clinicalRecords/delete/useDeleteClinicalRecord';
 
 export default function DoctorPatientDetail({ patient, specialty }) {
   // ID From URL Params
