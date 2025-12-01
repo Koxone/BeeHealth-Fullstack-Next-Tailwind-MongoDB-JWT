@@ -1,17 +1,11 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { ZDiet } from '@/zod/diets/diet.schema';
 import { dietsResponseSchema } from '@/zod/diets/api.diets.schema';
 
 export function useGetAllDiets() {
-  const [dietsData, setDietsData] = useState<ZDiet[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-
-  // Fetch function
-  const fetchDiets = useCallback(async () => {
-    setIsLoading(true);
-    setError(null);
-    try {
+  const { data, isLoading, error, refetch } = useQuery<ZDiet[]>({
+    queryKey: ['diets'],
+    queryFn: async () => {
       const res = await fetch('/api/diets');
       if (!res.ok) throw new Error('Failed to fetch diets');
 
@@ -23,20 +17,14 @@ export function useGetAllDiets() {
         throw new Error('Invalid diet data');
       }
 
-      const data = result.data;
+      return result.data.diets;
+    },
+  });
 
-      setDietsData(data.diets);
-    } catch (err) {
-      if (err instanceof Error) setError(err.message);
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
-
-  // Initial fetch
-  useEffect(() => {
-    fetchDiets();
-  }, [fetchDiets]);
-
-  return { dietsData, isLoading, error, refetch: fetchDiets };
+  return {
+    dietsData: data ?? [],
+    isLoading,
+    error: error?.message ?? null,
+    refetch,
+  };
 }
