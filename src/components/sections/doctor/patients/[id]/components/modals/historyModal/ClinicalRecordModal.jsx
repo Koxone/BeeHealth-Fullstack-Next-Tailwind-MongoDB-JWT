@@ -6,7 +6,7 @@ import { useModalClose } from '@/hooks/useModalClose';
 import { useCreateClinicalRecordDoctor } from '@/hooks/clinicalRecords/create/useCreateClinicalRecordDoctor';
 import { useGetAllQuestions } from '@/hooks/clinicalRecords/get/useGetAllQuestions';
 import { useEditWorkout } from '@/hooks/workouts/edit/useEditWorkout';
-import { useAssignDiet } from '@/hooks/diets/useAssignDiet';
+import { useAssignDiet } from '@/hooks/diets/assign/useAssignDiet';
 import ModalHeader from './components/ModalHeader';
 import TabsNav from './components/TabsNav';
 import ShortVersion from './components/ShortVersion';
