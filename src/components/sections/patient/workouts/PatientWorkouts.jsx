@@ -8,10 +8,10 @@ import { useGetAllWorkouts } from '@/hooks/workouts/get/useGetAllWorkouts';
 import SharedSectionHeader from '@/components/shared/headers/SharedSectionHeader';
 import SharedModalOpenWorkout from '../../../shared/workouts/SharedModalOpenWorkout';
 
-export default function PatientWorkouts({ role }) {
+export default function PatientWorkouts({ role, currentUser }) {
   // Get Workouts from API
   const { workoutData, isLoading, error, refetch: fetchWorkouts } = useGetAllWorkouts();
-
+  console.log(workoutData);
   // Local States
   const [filterCategorie, setFilterCategorie] = useState('Todos');
   const [searchTerm, setSearchTerm] = useState('');
@@ -22,7 +22,11 @@ export default function PatientWorkouts({ role }) {
 
   const categories = ['Todos', 'Fuerza', 'Cardio', 'Core', 'Flexibilidad', 'Movilidad'];
 
-  const filteredWorkouts = workoutData.filter((e) => {
+  const filtered = workoutData?.filter((workout) =>
+    workout?.patients?.some((p) => p?.patient?._id === currentUser?.id)
+  );
+
+  const filteredWorkouts = filtered?.filter((e) => {
     const matchCategorie = filterCategorie === 'Todos' || e.type === filterCategorie;
     const matchSearch = e.name.toLowerCase().includes(searchTerm.toLowerCase());
     return matchCategorie && matchSearch;
