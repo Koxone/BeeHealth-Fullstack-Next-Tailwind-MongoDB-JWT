@@ -25,7 +25,7 @@ export default function PatientDietCard({ diet }) {
 
       {/* Patient Actions */}
       <Link
-        href={`/patient/diets/${diet?.id}`}
+        href={`/patient/diets/${diet?._id}`}
         className="text-beehealth-green-primary-solid mt-4 text-sm font-medium opacity-90 transition-opacity group-hover:opacity-100 hover:text-blue-500"
       >
         Ver detalles →
