@@ -23,11 +23,19 @@ import DoctorName from './components/sections/DoctorName';
 import Category from './components/sections/Category';
 import GoBackButton from '@/components/shared/diets/[id]/components/GoBackButton';
 import DietImage from './components/sections/DietImage';
+import Name from './components/sections/Name';
+import LoadingState from '@/components/shared/feedback/LoadingState';
+
+// Modals
+import SuccessModal from '@/components/shared/feedback/SuccessModal';
 
 export default function DoctorDietDetail({ params, role, specialty }) {
   const { id } = params;
   const { dietsData, isLoading, error, refetch } = useGetAllDiets();
   const diet = dietsData.find((d) => d._id === id);
+
+  // Success modal state
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   // Editing state
   const { isLoading: isEditingDiet, error: editError, editDiet } = useEditDiet();
@@ -45,14 +53,7 @@ export default function DoctorDietDetail({ params, role, specialty }) {
   }, [mode]);
 
   if (isLoading) {
-    return (
-      <div className="flex h-full items-center justify-center">
-        <div className="space-y-4 text-center">
-          <div className="mx-auto h-12 w-12 animate-spin rounded-full border-2 border-gray-300 border-t-blue-600"></div>
-          <p className="text-gray-500">Cargando información...</p>
-        </div>
-      </div>
-    );
+    return <LoadingState />;
   }
 
   if (error || !diet) {
@@ -68,6 +69,14 @@ export default function DoctorDietDetail({ params, role, specialty }) {
 
   return (
     <div className="bg-beehealth-body-main h-full min-h-full overflow-auto">
+      {/* Success Modal */}
+      <SuccessModal
+        title={isEditing ? 'Dieta editada con éxito' : 'Dieta creada con éxito'}
+        message="La información fue guardada correctamente."
+        showSuccessModal={showSuccessModal}
+        setShowSuccessModal={setShowSuccessModal}
+      />
+
       {/* Header */}
       <div className="mb-8">
         {/* Go Back Button */}
@@ -81,7 +90,12 @@ export default function DoctorDietDetail({ params, role, specialty }) {
       <div className="mx-auto max-w-5xl px-0">
         {/* Title section */}
         <div className="mb-8 flex flex-col gap-6">
-          <h1 className="mb-4 text-3xl font-bold text-gray-900 md:text-4xl">{diet?.name}</h1>
+          <Name
+            diet={diet}
+            isEditing={isEditing}
+            editDiet={editDiet}
+            setShowSuccessModal={setShowSuccessModal}
+          />
 
           {/* Meta info grid */}
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
