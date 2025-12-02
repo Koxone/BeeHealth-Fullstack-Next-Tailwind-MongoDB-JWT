@@ -16,7 +16,7 @@ import Description from './components/sections/Description';
 import AssignedDate from './components/sections/AssignedDate';
 import DoctorName from './components/sections/DoctorName';
 import Category from './components/sections/Category';
-import GoBackButton from '@/components/shared/diets/[id]/components/GoBackButton';
+import GoBackButton from '@/components/shared/diets/GoBackButton';
 import DietImage from './components/sections/DietImage';
 
 export default function PatientDietDetail({ params, role }) {

@@ -1,4 +1,4 @@
-import DietCardActions from '@/components/shared/diets/components/DietCardActions';
+import DietCardActions from '@/components/shared/diets/DietCardActions';
 
 export default function DoctorDietCard({ diet }) {
   return (

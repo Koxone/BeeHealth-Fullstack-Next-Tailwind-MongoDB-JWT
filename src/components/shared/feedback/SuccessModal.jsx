@@ -31,14 +31,6 @@ export default function SuccessModal({ title, message, showSuccessModal, setShow
 
         {/* Subtitle */}
         <p className="mb-6 text-center text-gray-600">{message}</p>
-
-        {/* Confirm button */}
-        <button
-          onClick={() => setShowSuccessModal(false)}
-          className="mt-6 w-full rounded-2xl bg-linear-to-r from-blue-600 to-indigo-700 py-4 text-lg font-bold text-white shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl active:scale-95"
-        >
-          Ok
-        </button>
       </div>
     </div>
   );

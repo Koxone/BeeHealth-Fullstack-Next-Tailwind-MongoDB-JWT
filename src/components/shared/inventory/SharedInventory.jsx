@@ -19,7 +19,7 @@ import RecetasGrid from './components/PrescriptionsTable';
 import { useGetFullInventory } from '@/hooks/inventory/useGetFullInventory';
 import { toggleProductStatus } from './components/modals/toggleProductModal/services/toggleProductStatus';
 
-// Modals
+// Feedback Components
 import RestockProductModal from './components/modals/restockProductModal/RestockProductModal';
 import CreateProductModal from './components/modals/addProductModal/CreateProductModal';
 import EditProductModal from './components/modals/editProductModal/EditProductModal';

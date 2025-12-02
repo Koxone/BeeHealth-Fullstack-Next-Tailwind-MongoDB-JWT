@@ -11,7 +11,7 @@ import { useGetAllWorkouts } from '@/hooks/workouts/get/useGetAllWorkouts';
 import { workoutsMockData } from './components/workoutsMockData';
 import { useDeleteWorkout } from '@/hooks/workouts/delete/useDeleteWorkout';
 
-// Modals
+// Feedback Components
 import SharedModalOpenWorkout from '@/components/shared/workouts/SharedModalOpenWorkout';
 import ModalDelete from './components/modals/delete/ModalDelete';
 import ModalCreateWorkout from './components/modals/create/ModalCreateWorkout';

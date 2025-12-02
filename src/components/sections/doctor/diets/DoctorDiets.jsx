@@ -1,16 +1,15 @@
 'use client';
 
-export const runtime = 'nodejs';
-import SharedSectionHeader from '../headers/SharedSectionHeader';
 import { useGetAllDiets } from '@/hooks/diets/get/useGetAllDiets';
 import { Loader2 } from 'lucide-react';
 import DoctorDietCard from '@/components/sections/doctor/diets/components/DoctorDietCard';
-import PatientDietCard from '@/components/sections/patient/diets/components/PatientDietCard';
-import LoadingState from '../feedback/LoadingState';
+import LoadingState from '@/components/shared/feedback/LoadingState';
+import SharedSectionHeader from '@/components/shared/headers/SharedSectionHeader';
+import { useEffect } from 'react';
 
-export default function SharedDiets({ role }) {
+export default function DoctorDiets({ role }) {
   // Fetch all diets
-  const { dietsData, isLoading, error } = useGetAllDiets();
+  const { dietsData, isLoading, error, refetch } = useGetAllDiets();
 
   // Loading
   if (isLoading) {
@@ -35,25 +34,12 @@ export default function SharedDiets({ role }) {
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {dietsData && dietsData.length > 0 ? (
-          dietsData.map((diet) =>
-            role === 'doctor' ? (
-              <DoctorDietCard diet={diet} key={diet._id} />
-            ) : (
-              <PatientDietCard diet={diet} key={diet._id} />
-            )
-          )
+          dietsData.map((diet) => <DoctorDietCard diet={diet} key={diet._id} />)
         ) : (
-          // No diets message
           <div className="col-span-full flex flex-col items-center justify-center py-10 text-center">
             <p className="text-lg font-semibold text-gray-700">No hay dietas registradas</p>
 
-            {role === 'doctor' && (
-              <p className="text-gray-500">Crea un nuevo plan nutricional para comenzar</p>
-            )}
-
-            {role === 'patient' && (
-              <p className="text-gray-500">Todavía no tienes dietas asignadas</p>
-            )}
+            <p className="text-gray-500">Crea un nuevo plan nutricional para comenzar</p>
           </div>
         )}
       </div>

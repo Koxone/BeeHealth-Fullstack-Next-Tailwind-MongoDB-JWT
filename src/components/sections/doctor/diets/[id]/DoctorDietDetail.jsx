@@ -21,12 +21,12 @@ import Description from './components/sections/Description';
 import AssignedDate from './components/sections/AssignedDate';
 import DoctorName from './components/sections/DoctorName';
 import Category from './components/sections/Category';
-import GoBackButton from '@/components/shared/diets/[id]/components/GoBackButton';
+import GoBackButton from '@/components/shared/diets/GoBackButton';
 import DietImage from './components/sections/DietImage';
 import Name from './components/sections/Name';
 import LoadingState from '@/components/shared/feedback/LoadingState';
 
-// Modals
+// Feedback Components
 import SuccessModal from '@/components/shared/feedback/SuccessModal';
 
 export default function DoctorDietDetail({ params, role, specialty }) {
