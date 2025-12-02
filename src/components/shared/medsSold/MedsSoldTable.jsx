@@ -71,10 +71,10 @@ export default function MedsSoldTable({ consultsData }) {
   };
 
   return (
-    <div className="hidden overflow-x-auto md:block">
+    <div className="bg-beehealth-body-main hidden overflow-x-auto rounded-2xl border border-gray-200 shadow-sm md:block">
       <table className="w-full">
         {/* Header */}
-        <thead className="bg-beehealth-blue-primary-light border-b-2 border-gray-200">
+        <thead className="bg-beehealth-green-primary-light border-b-2 border-gray-200">
           <tr>
             <th className="px-6 py-4 text-left">
               <div className="flex items-center gap-2">

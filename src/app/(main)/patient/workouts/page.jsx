@@ -10,7 +10,7 @@ export default async function PatientWorkoutsPage() {
 
   return (
     <div className="h-screen overflow-hidden pb-40">
-      <PatientWorkouts role={role} />
+      <PatientWorkouts role={role} currentUser={currentUser} />
     </div>
   );
 }
