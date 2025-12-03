@@ -1,8 +1,13 @@
-import SuccessModal from '@/components/shared/feedback/SuccessModal';
 import { FileText } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
-export default function Name({ diet, isEditing = false, editDiet, setShowSuccessModal }) {
+export default function Name({
+  diet,
+  isEditing = false,
+  editDiet,
+  setShowSuccessModal,
+  refreshDiets,
+}) {
   const [nameValue, setNameValue] = useState(diet.name || '');
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState(null);
@@ -17,6 +22,7 @@ export default function Name({ diet, isEditing = false, editDiet, setShowSuccess
 
     try {
       await editDiet(diet._id, { name: nameValue });
+      refreshDiets();
       setShowSuccessModal(true);
     } catch (err) {
       setError(err.message || 'Error al guardar');

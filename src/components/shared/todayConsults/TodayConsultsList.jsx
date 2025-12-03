@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import SearchAddBar from './SearchAddBar';
 import ConsultsTable from './ConsultsTable';
 import ConsultationsMobile from './ConsultationsMobile';

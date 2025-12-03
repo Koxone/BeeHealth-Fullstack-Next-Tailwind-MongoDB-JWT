@@ -2,7 +2,7 @@
 
 import { useVercelBlobUpload } from '@/hooks/upload/useVercelBlobUpload';
 import { ImageIcon, X } from 'lucide-react';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 function ImagesSection({ images, setImages }) {
   const [loading, setLoading] = useState(false);

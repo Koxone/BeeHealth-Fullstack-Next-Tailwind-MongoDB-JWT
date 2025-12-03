@@ -1,7 +1,7 @@
 import { CheckCircle } from 'lucide-react';
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
-function Benefits({ diet, isEditing = false, onChange, onSave, editDiet }) {
+function Benefits({ diet, isEditing = false, editDiet, refreshDiets, setShowSuccessModal }) {
   const [benValue, setBenValue] = useState(diet.benefits || '');
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState(null);
@@ -16,6 +16,8 @@ function Benefits({ diet, isEditing = false, onChange, onSave, editDiet }) {
 
     try {
       await editDiet(diet._id, { benefits: benValue });
+      refreshDiets();
+      setShowSuccessModal(true);
     } catch (err) {
       setError(err.message || 'Error al guardar');
     } finally {

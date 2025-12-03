@@ -3,7 +3,7 @@
 import SharedSectionHeader from '@/components/shared/headers/SharedSectionHeader';
 import EmployeePatientsList from './components/EmployeePatientsList';
 import PatientsSearchBar from '@/components/shared/patients/PatientsSearchBar';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function EmployeePatients({ currentUser, role }) {
   const [searchTerm, setSearchTerm] = useState('');

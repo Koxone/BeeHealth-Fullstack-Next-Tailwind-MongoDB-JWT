@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { XCircle, Plus, Trash2 } from 'lucide-react';
 
-export default function ForbiddenFoods({ diet, isEditing = false, editDiet }) {
+export default function ForbiddenFoods({ diet, isEditing = false, editDiet, refreshDiets, setShowSuccessModal }) {
   const [items, setItems] = useState(diet.forbiddenFoods.items || []);
   const [note, setNote] = useState(diet.forbiddenFoods.note || '');
   const [newItem, setNewItem] = useState('');
@@ -27,6 +27,8 @@ export default function ForbiddenFoods({ diet, isEditing = false, editDiet }) {
     setError(null);
     try {
       await editDiet(diet._id, { forbiddenFoods: { items, note } });
+      refreshDiets();
+      setShowSuccessModal(true);
     } catch (err) {
       setError(err.message || 'Error al guardar');
     } finally {
