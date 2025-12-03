@@ -19,8 +19,8 @@ export async function GET(req) {
     await connectDB();
 
     const logs = await WeightLog.find()
-      .populate('patient', 'firstName lastName email')
-      .populate('clinicalRecord', 'createdAt');
+      .populate('patient', 'fullName phone email')
+      .populate('clinicalRecord', 'recordDate');
 
     return NextResponse.json({ weightLogs: logs }, { status: 200 });
   } catch (error) {
