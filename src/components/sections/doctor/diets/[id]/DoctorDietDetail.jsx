@@ -21,16 +21,30 @@ import Description from './components/sections/Description';
 import AssignedDate from './components/sections/AssignedDate';
 import DoctorName from './components/sections/DoctorName';
 import Category from './components/sections/Category';
-import GoBackButton from '@/components/shared/diets/[id]/components/GoBackButton';
+import GoBackButton from '@/components/shared/diets/GoBackButton';
 import DietImage from './components/sections/DietImage';
+import Name from './components/sections/Name';
+import LoadingState from '@/components/shared/feedback/LoadingState';
 
-export default function DoctorDietDetail({ params, role, specialty }) {
+// Feedback Components
+import SuccessModal from '@/components/shared/feedback/SuccessModal';
+
+export default function DoctorDietDetail({ params, specialty }) {
   const { id } = params;
+
+  // Fetch all diets Custom Hook
   const { dietsData, isLoading, error, refetch } = useGetAllDiets();
+  const refreshDiets = () => {
+    refetch();
+  };
+
+  // Edit Diet Custom Hook
+  const { isLoading: isEditingDiet, error: editError, editDiet } = useEditDiet();
+
   const diet = dietsData.find((d) => d._id === id);
 
-  // Editing state
-  const { isLoading: isEditingDiet, error: editError, editDiet } = useEditDiet();
+  // Success modal state
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const searchParams = useSearchParams();
   const mode = searchParams.get('mode');
@@ -44,18 +58,11 @@ export default function DoctorDietDetail({ params, role, specialty }) {
     setIsReading(mode !== 'edit');
   }, [mode]);
 
-  if (isLoading) {
-    return (
-      <div className="flex h-full items-center justify-center">
-        <div className="space-y-4 text-center">
-          <div className="mx-auto h-12 w-12 animate-spin rounded-full border-2 border-gray-300 border-t-blue-600"></div>
-          <p className="text-gray-500">Cargando información...</p>
-        </div>
-      </div>
-    );
+  if (isLoading || isEditingDiet) {
+    return <LoadingState />;
   }
 
-  if (error || !diet) {
+  if (error || !diet || editError) {
     return (
       <div className="flex h-full items-center justify-center">
         <div className="space-y-4 text-center">
@@ -68,10 +75,18 @@ export default function DoctorDietDetail({ params, role, specialty }) {
 
   return (
     <div className="bg-beehealth-body-main h-full min-h-full overflow-auto">
+      {/* Success Modal */}
+      <SuccessModal
+        title={isEditing ? 'Dieta editada con éxito' : 'Dieta creada con éxito'}
+        message="La información fue guardada correctamente."
+        showSuccessModal={showSuccessModal}
+        setShowSuccessModal={setShowSuccessModal}
+      />
+
       {/* Header */}
       <div className="mb-8">
         {/* Go Back Button */}
-        <GoBackButton role={role} diet={diet} />
+        <GoBackButton />
 
         {/* Hero section with image */}
         {diet?.images?.[0] && <DietImage diet={diet} />}
@@ -81,7 +96,13 @@ export default function DoctorDietDetail({ params, role, specialty }) {
       <div className="mx-auto max-w-5xl px-0">
         {/* Title section */}
         <div className="mb-8 flex flex-col gap-6">
-          <h1 className="mb-4 text-3xl font-bold text-gray-900 md:text-4xl">{diet?.name}</h1>
+          <Name
+            diet={diet}
+            isEditing={isEditing}
+            editDiet={editDiet}
+            setShowSuccessModal={setShowSuccessModal}
+            refreshDiets={refreshDiets}
+          />
 
           {/* Meta info grid */}
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
@@ -117,45 +138,112 @@ export default function DoctorDietDetail({ params, role, specialty }) {
           <div className="space-y-6">
             {/* Description section */}
             {diet?.description && (
-              <Description diet={diet} isEditing={isEditing} editDiet={editDiet} />
+              <Description
+                diet={diet}
+                isEditing={isEditing}
+                editDiet={editDiet}
+                refreshDiets={refreshDiets}
+                setShowSuccessModal={setShowSuccessModal}
+              />
             )}
 
             {/* Benefits section */}
-            {diet?.benefits && <Benefits diet={diet} isEditing={isEditing} editDiet={editDiet} />}
+            {diet?.benefits && (
+              <Benefits
+                diet={diet}
+                isEditing={isEditing}
+                editDiet={editDiet}
+                refreshDiets={refreshDiets}
+                setShowSuccessModal={setShowSuccessModal}
+              />
+            )}
 
             {/* Instructions section */}
             {diet?.instructions && (
-              <Instructions diet={diet} isEditing={isEditing} editDiet={editDiet} />
+              <Instructions
+                diet={diet}
+                isEditing={isEditing}
+                editDiet={editDiet}
+                refreshDiets={refreshDiets}
+                setShowSuccessModal={setShowSuccessModal}
+              />
             )}
+
             {/* Ingredients section */}
             {diet?.ingredients?.length > 0 && (
-              <Ingredients diet={diet} isEditing={isEditing} editDiet={editDiet} />
+              <Ingredients
+                diet={diet}
+                isEditing={isEditing}
+                editDiet={editDiet}
+                refreshDiets={refreshDiets}
+                setShowSuccessModal={setShowSuccessModal}
+              />
             )}
 
             {/* Allowed foods section */}
             {diet?.allowedFoods?.items?.length > 0 && (
-              <AllowedFoods diet={diet} isEditing={isEditing} editDiet={editDiet} />
+              <AllowedFoods
+                diet={diet}
+                isEditing={isEditing}
+                editDiet={editDiet}
+                refreshDiets={refreshDiets}
+                setShowSuccessModal={setShowSuccessModal}
+              />
             )}
 
             {/* Allowed liquids section */}
             {diet?.allowedLiquids?.items?.length > 0 && (
-              <AllowedLiquids diet={diet} isEditing={isEditing} editDiet={editDiet} />
+              <AllowedLiquids
+                diet={diet}
+                isEditing={isEditing}
+                editDiet={editDiet}
+                refreshDiets={refreshDiets}
+                setShowSuccessModal={setShowSuccessModal}
+              />
             )}
             {/* Forbidden foods section */}
             {diet?.forbiddenFoods?.items?.length > 0 && (
-              <ForbiddenFoods diet={diet} isEditing={isEditing} editDiet={editDiet} />
+              <ForbiddenFoods
+                diet={diet}
+                isEditing={isEditing}
+                editDiet={editDiet}
+                refreshDiets={refreshDiets}
+                setShowSuccessModal={setShowSuccessModal}
+              />
             )}
 
             {/* Forbidden liquids section */}
             {diet?.forbiddenLiquids?.items?.length > 0 && (
-              <ForbiddenLiquids diet={diet} isEditing={isEditing} editDiet={editDiet} />
+              <ForbiddenLiquids
+                diet={diet}
+                isEditing={isEditing}
+                editDiet={editDiet}
+                refreshDiets={refreshDiets}
+                setShowSuccessModal={setShowSuccessModal}
+              />
             )}
 
             {/* Duration section */}
-            {diet?.duration && <Duration diet={diet} isEditing={isEditing} editDiet={editDiet} />}
+            {diet?.duration && (
+              <Duration
+                diet={diet}
+                isEditing={isEditing}
+                editDiet={editDiet}
+                refreshDiets={refreshDiets}
+                setShowSuccessModal={setShowSuccessModal}
+              />
+            )}
 
             {/* Medical notes section */}
-            {diet?.notes && <Notes diet={diet} isEditing={isEditing} editDiet={editDiet} />}
+            {diet?.notes && (
+              <Notes
+                diet={diet}
+                isEditing={isEditing}
+                editDiet={editDiet}
+                refreshDiets={refreshDiets}
+                setShowSuccessModal={setShowSuccessModal}
+              />
+            )}
           </div>
         )}
 

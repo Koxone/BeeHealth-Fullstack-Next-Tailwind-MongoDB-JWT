@@ -1,7 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { CheckCircle, Plus, Trash2 } from 'lucide-react';
 
-export default function AllowedLiquids({ diet, isEditing = false, editDiet }) {
+export default function AllowedLiquids({
+  diet,
+  isEditing = false,
+  editDiet,
+  refreshDiets,
+  setShowSuccessModal,
+}) {
   const [items, setItems] = useState(diet.allowedLiquids.items || []);
   const [note, setNote] = useState(diet.allowedLiquids.note || '');
   const [newItem, setNewItem] = useState('');
@@ -28,6 +34,8 @@ export default function AllowedLiquids({ diet, isEditing = false, editDiet }) {
     setError(null);
     try {
       await editDiet(diet._id, { allowedLiquids: { items, note } });
+      refreshDiets();
+      setShowSuccessModal(true);
     } catch (err) {
       setError(err.message || 'Error al guardar');
     } finally {

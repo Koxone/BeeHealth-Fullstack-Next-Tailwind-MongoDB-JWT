@@ -1,7 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Plus, X } from 'lucide-react';
 
-export default function Ingredients({ diet, isEditing = false, editDiet }) {
+export default function Ingredients({
+  diet,
+  isEditing = false,
+  editDiet,
+  refreshDiets,
+  setShowSuccessModal,
+}) {
   const [ingredients, setIngredients] = useState(diet.ingredients || []);
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState(null);
@@ -23,6 +29,8 @@ export default function Ingredients({ diet, isEditing = false, editDiet }) {
     setError(null);
     try {
       await editDiet(diet._id, { ingredients });
+      refreshDiets();
+      setShowSuccessModal(true);
     } catch (err) {
       setError(err.message || 'Error al guardar');
     } finally {

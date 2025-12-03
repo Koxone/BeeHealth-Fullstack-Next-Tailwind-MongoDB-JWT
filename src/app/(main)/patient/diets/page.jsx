@@ -1,6 +1,5 @@
 import React from 'react';
 import { getCurrentUser } from '@/lib/auth/getCurrentUser';
-import SharedDiets from '@/components/shared/diets/SharedDiets';
 import PatientDiets from '@/components/sections/patient/PatientDiets';
 export const runtime = 'nodejs';
 

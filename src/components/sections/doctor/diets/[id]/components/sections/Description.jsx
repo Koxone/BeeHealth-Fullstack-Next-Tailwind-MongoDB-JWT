@@ -1,7 +1,13 @@
 import { FileText } from 'lucide-react';
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
-export default function Description({ diet, isEditing = false, editDiet }) {
+export default function Description({
+  diet,
+  isEditing = false,
+  editDiet,
+  refreshDiets,
+  setShowSuccessModal,
+}) {
   const [descValue, setDescValue] = useState(diet.description || '');
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState(null);
@@ -16,6 +22,8 @@ export default function Description({ diet, isEditing = false, editDiet }) {
 
     try {
       await editDiet(diet._id, { description: descValue });
+      refreshDiets();
+      setShowSuccessModal(true);
     } catch (err) {
       setError(err.message || 'Error al guardar');
     } finally {

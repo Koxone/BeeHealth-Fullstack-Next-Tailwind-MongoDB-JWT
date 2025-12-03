@@ -1,7 +1,7 @@
 import { AlertCircle } from 'lucide-react';
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
-function Notes({ diet, isEditing, editDiet }) {
+function Notes({ diet, isEditing, editDiet, refreshDiets, setShowSuccessModal }) {
   const [notes, setNotes] = useState(diet.notes || '');
   const [noteValue, setNoteValue] = useState(diet.description || '');
   const [isSaving, setIsSaving] = useState(false);
@@ -17,6 +17,8 @@ function Notes({ diet, isEditing, editDiet }) {
 
     try {
       await editDiet(diet._id, { notes: noteValue });
+      refreshDiets();
+      setShowSuccessModal(true);
     } catch (err) {
       setError(err.message || 'Error al guardar');
     } finally {

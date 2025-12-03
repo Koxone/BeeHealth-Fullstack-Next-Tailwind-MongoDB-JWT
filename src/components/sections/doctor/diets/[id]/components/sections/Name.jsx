@@ -1,21 +1,27 @@
-import { Utensils } from 'lucide-react';
+import { FileText } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
-function Instructions({ diet, isEditing = false, editDiet, refreshDiets, setShowSuccessModal }) {
-  const [instValue, setInstValue] = useState(diet.instructions || '');
+export default function Name({
+  diet,
+  isEditing = false,
+  editDiet,
+  setShowSuccessModal,
+  refreshDiets,
+}) {
+  const [nameValue, setNameValue] = useState(diet.name || '');
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    setInstValue(diet.instructions || '');
-  }, [diet.instructions]);
+    setNameValue(diet.name || '');
+  }, [diet.name]);
 
   const handleSave = async () => {
     setIsSaving(true);
     setError(null);
 
     try {
-      await editDiet(diet._id, { instructions: instValue });
+      await editDiet(diet._id, { name: nameValue });
       refreshDiets();
       setShowSuccessModal(true);
     } catch (err) {
@@ -24,31 +30,30 @@ function Instructions({ diet, isEditing = false, editDiet, refreshDiets, setShow
       setIsSaving(false);
     }
   };
+
   return (
     <section className="bg-beehealth-body-main rounded-xl border border-gray-200 p-6 shadow-sm transition-shadow hover:shadow-md md:p-4">
-      {/* Header */}
-      <div className="mb-4 flex items-center gap-3">
-        <div className="rounded-lg bg-blue-100 p-2">
-          <Utensils className="h-5 w-5 text-blue-600" />
+      {/* Label */}
+      {isEditing && (
+        <div className="mb-4 flex items-center gap-3">
+          <div className="rounded-lg bg-gray-100 p-2">
+            <FileText className="h-5 w-5 text-gray-700" />
+          </div>
+          <h2 className="text-xl font-semibold text-gray-900">Nombre</h2>
         </div>
-        <h2 className="text-xl font-semibold text-gray-900">Instrucciones</h2>
-      </div>
-
-      {/* Read mode */}
+      )}
       {!isEditing && (
-        <p className="leading-relaxed whitespace-pre-line text-gray-700">{diet.instructions}</p>
+        <h1 className="mb-4 text-3xl font-bold text-gray-900 md:text-4xl">{diet?.name}</h1>
       )}
 
-      {/* Edit mode */}
       {isEditing && (
         <div className="mt-4 space-y-4">
-          <textarea
+          <input
             className="focus:border-beehealth-blue w-full rounded-lg border border-gray-300 p-3 text-gray-700 focus:outline-none"
-            value={instValue}
-            onChange={(e) => setInstValue(e.target.value)}
-            rows={3}
+            value={nameValue}
+            onChange={(e) => setNameValue(e.target.value)}
           />
-          {/* Actions */}
+
           <div className="flex items-center gap-3">
             <button
               onClick={handleSave}
@@ -64,5 +69,3 @@ function Instructions({ diet, isEditing = false, editDiet, refreshDiets, setShow
     </section>
   );
 }
-
-export default Instructions;

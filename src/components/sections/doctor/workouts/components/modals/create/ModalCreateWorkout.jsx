@@ -1,14 +1,21 @@
 'use client';
 
-import { useCreateWorkout } from '@/hooks/workouts/create/useCreateWorkout';
 import { X, Dumbbell, AlertCircle, Loader } from 'lucide-react';
 import { useState } from 'react';
+
 import BasicInfoSection from './components/basic/BasicInfoSection';
 import MultimediaSection from './components/multimedia/MultimediaSection';
 import DetailsSection from './components/details/DetailsSection';
-import { useModalClose } from '@/hooks/useModalClose';
 
-export default function ModalCreateWorkout({ setShowCreateModal }) {
+// Custom hooks
+import { useModalClose } from '@/hooks/useModalClose';
+import { useCreateWorkout } from '@/hooks/workouts/create/useCreateWorkout';
+
+export default function ModalCreateWorkout({
+  setShowCreateModal,
+  setShowSuccessModal,
+  fetchWorkouts,
+}) {
   // Create Workout Hook
   const { createWorkout, loading, error } = useCreateWorkout();
 
@@ -201,6 +208,11 @@ export default function ModalCreateWorkout({ setShowCreateModal }) {
 
     if (res) {
       setShowCreateModal(false);
+      fetchWorkouts();
+      setShowSuccessModal(true);
+      setTimeout(() => {
+        setShowSuccessModal(false);
+      }, 1000);
       // Reset form
       setForm({
         patients: [],

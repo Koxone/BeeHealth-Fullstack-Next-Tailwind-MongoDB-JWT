@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import SearchAddBar from './SearchAddBar';
 import ConsultsTable from './ConsultsTable';
 import ConsultationsMobile from './ConsultationsMobile';
@@ -15,7 +15,7 @@ import {
   todayISO,
 } from './utils/helpers';
 
-// Modals
+// Feedback Components
 import EmployeeCreateConsultModal from '@/components/sections/employee/consultations/components/modals/employeeCreateConsultModal/EmployeeCreateConsultModal';
 import EmployeeEditConsultModal from '@/components/sections/employee/consultations/components/modals/employeeEditConsultModal/EmployeeEditConsultModal';
 import EmployeeDeleteConsultModal from '@/components/sections/employee/consultations/components/modals/employeeDeleteConsultModal/EmployeeDeleteConsultModal';

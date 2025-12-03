@@ -1,5 +1,5 @@
 import { Plus, X } from 'lucide-react';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 function DynamicListSection({
   title,

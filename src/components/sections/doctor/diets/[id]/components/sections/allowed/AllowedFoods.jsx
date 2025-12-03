@@ -1,7 +1,13 @@
 import { CheckCircle, Plus, Trash2 } from 'lucide-react';
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
-export default function AllowedFoods({ diet, isEditing = false, editDiet }) {
+export default function AllowedFoods({
+  diet,
+  isEditing = false,
+  editDiet,
+  refreshDiets,
+  setShowSuccessModal,
+}) {
   const [items, setItems] = useState(diet.allowedFoods.items || []);
   const [note, setNote] = useState(diet.allowedFoods.note || '');
   const [newItem, setNewItem] = useState('');
@@ -28,6 +34,8 @@ export default function AllowedFoods({ diet, isEditing = false, editDiet }) {
     setError(null);
     try {
       await editDiet(diet._id, { allowedFoods: { items, note } });
+      refreshDiets();
+      setShowSuccessModal(true);
     } catch (err) {
       setError(err.message || 'Error al guardar');
     } finally {

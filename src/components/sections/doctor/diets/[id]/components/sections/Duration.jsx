@@ -1,7 +1,7 @@
 import { Clock } from 'lucide-react';
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
-function Duration({ diet, isEditing, editDiet }) {
+function Duration({ diet, isEditing, editDiet, refreshDiets, setShowSuccessModal }) {
   const [duration, setDuration] = useState(diet.duration || '');
 
   const [durValue, setDurValue] = useState(diet.description || '');
@@ -18,6 +18,8 @@ function Duration({ diet, isEditing, editDiet }) {
 
     try {
       await editDiet(diet._id, { duration: durValue });
+      refreshDiets();
+      setShowSuccessModal(true);
     } catch (err) {
       setError(err.message || 'Error al guardar');
     } finally {

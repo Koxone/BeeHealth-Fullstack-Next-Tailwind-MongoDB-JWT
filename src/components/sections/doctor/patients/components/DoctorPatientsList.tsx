@@ -1,6 +1,5 @@
 import { connectDB } from '@/lib/mongodb';
 import User from '@/models/User';
-import DoctorPatientCard from './DoctorPatientCard';
 import ClientPatientsList from './ClientPatientsList';
 
 export const runtime = 'nodejs';

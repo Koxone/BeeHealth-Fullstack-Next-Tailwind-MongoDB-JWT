@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Users, ChevronRight, X, Clock, CheckCircle } from 'lucide-react';
+import { Users, ChevronRight, CheckCircle } from 'lucide-react';
 import PatientsAssignedModal from './PatientsAssignedModal';
 
 export default function PatientsAssignedCompact({ patients }) {

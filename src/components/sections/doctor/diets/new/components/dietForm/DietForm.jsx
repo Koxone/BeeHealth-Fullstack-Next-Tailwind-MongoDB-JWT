@@ -1,14 +1,28 @@
 'use client';
 
+import { Check, FileText, CheckCircle, ShoppingBasket, Search, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useQueryClient } from '@tanstack/react-query';
+
 import BasicInfoSection from './components/BasicInfoSection';
 import ImagesSection from './components/ImagesSection';
-import { Check, FileText, CheckCircle, ShoppingBasket, Search, X } from 'lucide-react';
 import DinamicTextSection from './components/DinamicTextSection';
 import DynamicListSection from './components/shared/DynamicListSection';
+
+// Feedback Components
+import SuccessModal from '@/components/shared/feedback/SuccessModal';
+
+// Custom Hook to handle diet creation
 import { createDiet } from './services/createDiet';
 
 export default function DietForm() {
+  // Local states
+  const router = useRouter();
+
+  // Query Client for React Query
+  const queryClient = useQueryClient();
+
   // States for form data
   const [formData, setFormData] = useState({
     name: '',
@@ -40,6 +54,9 @@ export default function DietForm() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
 
+  // Success Modal State
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+
   const handleSubmit = async () => {
     setLoading(true);
     setMessage('');
@@ -48,6 +65,13 @@ export default function DietForm() {
       const data = await createDiet(formData);
       setMessage('Dieta creada correctamente');
       resetForm();
+      setShowSuccessModal(true);
+      queryClient.invalidateQueries({ queryKey: ['diets'] });
+
+      setTimeout(() => {
+        setShowSuccessModal(false);
+        router.push('/doctor/diets');
+      }, 1000);
     } catch (error) {
       setMessage(error.message);
     } finally {
@@ -75,6 +99,13 @@ export default function DietForm() {
 
   return (
     <div className="bg-beehealth-body-main min-h-full">
+      {/* Success Modal */}
+      <SuccessModal
+        title="Dieta creada con éxito"
+        message="La información fue guardada correctamente."
+        showSuccessModal={showSuccessModal}
+        setShowSuccessModal={setShowSuccessModal}
+      />
       <form className="mx-auto max-w-5xl space-y-8 p-4 md:p-0">
         {/* Header */}
         <div className="mb-8">

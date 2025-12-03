@@ -13,7 +13,7 @@ import DoctorBudgets from './components/budgets/DoctorBudgets';
 import DoctorProducts from './components/products/DoctorProducts';
 import LoadingState from '@/components/shared/feedback/LoadingState';
 
-// Modals
+// Feedback Components
 import ClinicalRecordModal from './components/modals/historyModal/ClinicalRecordModal';
 import DeleteRecordModal from './components/modals/delete-record-modal/DeleteRecordModal';
 import DoctorCreateAppointmentModal from './components/modals/createAppointmentModal/DoctorCreateAppointmentModal';
