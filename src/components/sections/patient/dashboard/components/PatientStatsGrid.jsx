@@ -52,8 +52,8 @@ export default function PatientStatsGrid({ role }) {
         {
           Icon: Clock,
           mainData: `06 dias`,
-          title: 'Tiempo para tu siguiente consulta',
-          variant: 'success',
+          title: 'Tiempo desde tu ultima consulta',
+          variant: 'danger',
         },
       ].map((card, index) => (
         <PatientStatsCard

@@ -38,7 +38,7 @@ export default function PatientStatsCard({
     primary: 'text-white opacity-80',
     success: 'text-green-500',
     purple: 'text-purple-500',
-    danger: 'text-red-500',
+    danger: 'text-red-500 animate-bounce',
   };
 
   return (
