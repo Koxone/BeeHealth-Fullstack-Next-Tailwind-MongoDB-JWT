@@ -120,24 +120,51 @@ export async function POST(req) {
     /* ================= WeightLog Section ================= */
     const logs = await WeightLog.find({ patient: finalPatientId }).sort({ createdAt: 1 });
 
+    // Identify FULL or SHORT answer
+    const isFull = answers.some((a) => a.questionId === '692a02539ba6da2362d98aad');
+    const isShort = answers.some((a) => a.questionId === '692a02539ba6da2362d98aac');
+
+    // Current weight from this consultation
+    const currentWeight =
+      answers.find(
+        (a) =>
+          a.questionId === '692a02539ba6da2362d98aad' || a.questionId === '692a02539ba6da2362d98aac'
+      )?.value || null;
+
+    // First time weight log
     if (logs.length === 0) {
-      const weight =
-        answers.find(
-          (a) =>
-            a.questionId === '692a02539ba6da2362d98aad' ||
-            a.questionId === '692a02539ba6da2362d98aac'
-        )?.value || null;
+      let originalWeight = currentWeight;
+
+      // If this record is SHORT, get original weight from FIRST clinicalRecord
+      if (isShort) {
+        const firstRecord = await ClinicalRecord.findOne({ patient: finalPatientId }).sort({
+          createdAt: 1,
+        });
+
+        if (firstRecord) {
+          const firstWeightAnswer = firstRecord.answers.find(
+            (ans) =>
+              ans.question.toString() === '692a02539ba6da2362d98aad' || // FULL ID
+              ans.question.toString() === '692a02539ba6da2362d98aac' // SHORT ID
+          );
+
+          if (firstWeightAnswer) {
+            originalWeight = firstWeightAnswer.value;
+          }
+        }
+      }
 
       const newWeightLog = new WeightLog({
         patient: finalPatientId,
         clinicalRecord: newRecord._id,
-        originalWeight: weight,
-        currentWeight: weight,
+        originalWeight: originalWeight,
+        currentWeight: currentWeight,
         differenceFromPrevious: 0,
         differenceFromOriginal: 0,
       });
 
       await newWeightLog.save();
+
       return NextResponse.json({
         ok: true,
         clinicalRecord: newRecord,
