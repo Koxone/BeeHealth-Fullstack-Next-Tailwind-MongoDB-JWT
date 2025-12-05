@@ -1,41 +1,37 @@
 'use client';
 
-import DashboardLayout from '@/components/shared/layouts/DashboardLayout';
 import HeaderWelcome from '@/components/shared/dashboard/header/HeaderWelcome';
-import AppointmentsToday from '@/components/shared/dashboard/appointmentsToday/AppointmentsToday';
+import AppointmentsToday from '@/components/shared/appointments/AppointmentsToday';
 import DoctorAccountingSummary from '@/components/sections/doctor/dashboard/components/DoctorAccountingSummary';
 import SharedInventoryAlerts from '@/components/shared/dashboard/InventoryAlerts/SharedInventoryAlerts';
 import DoctorStatsGrid from './components/DoctorStatsGrid';
+
+// Feedback Components
+import LoadingState from '@/components/shared/feedback/LoadingState';
 
 // Custom Hooks
 import { useTodayAppointmentsBySpecialty } from '@/hooks/appointments/useTodayAppointmentsBySpecialty';
 import { useGetFullInventory } from '@/hooks/inventory/useGetFullInventory';
 import { getConsultTotals } from '../../employee/consultations/utils/getConsultTotals';
 import { useGetAllConsults } from '@/hooks/consults/useGetAllConsults';
-import { Loader2 } from 'lucide-react';
-import LoadingState from '@/components/shared/feedback/LoadingState';
 
 export default function DoctorDashboard({ currentUser, role, specialty }) {
   // Google Calendar Custom Hooks
-  const { appointments, loading } = useTodayAppointmentsBySpecialty();
+  const { appointments, isLoading: loadingAppointments } = useTodayAppointmentsBySpecialty();
 
   // Custom Hooks
-  const { inventory, loading: loadingInventory, error: errorInventory } = useGetFullInventory();
+  const { inventory, isLoading: loadingInventory } = useGetFullInventory();
 
   // All Consults
-  const {
-    consults,
-    loading: loadingConsults,
-    error: errorConsults,
-  } = useGetAllConsults({ speciality: specialty });
+  const { consults, isLoading: loadingConsults } = useGetAllConsults({ speciality: specialty });
 
   const { consultPrice, totalItemsSold, totalCost } = getConsultTotals(consults);
 
-  if (loading || loadingInventory || loadingConsults) {
+  if (loadingAppointments || loadingInventory || loadingConsults) {
     return <LoadingState />;
   }
   return (
-    <DashboardLayout>
+    <div className="h-full space-y-4 overflow-y-auto pb-40 md:space-y-6">
       {/* Header */}
       <HeaderWelcome fullName={currentUser?.fullName} role="doctor" />
 
@@ -54,12 +50,8 @@ export default function DoctorDashboard({ currentUser, role, specialty }) {
           totalCost={totalCost}
           consults={consults}
         />
-        <SharedInventoryAlerts
-          inventory={inventory}
-          role={currentUser?.role}
-          loading={loadingInventory}
-        />
+        <SharedInventoryAlerts inventory={inventory} role={currentUser?.role} showButton={true} />
       </div>
-    </DashboardLayout>
+    </div>
   );
 }

@@ -117,14 +117,14 @@ function normalizeEvents(
 /* --- Hook principal --- */
 export function useTodayAppointmentsBySpecialty(): {
   appointments: NormalizedAppointment[];
-  loading: boolean;
+  isLoading: boolean;
   error: string | null;
   refetch: () => Promise<void>;
 } {
   const { user } = useAuthStore();
 
   const [appointments, setAppointments] = useState<NormalizedAppointment[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [isLoading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
   const fetchTodayAppointments = useCallback(async () => {
@@ -161,8 +161,8 @@ export function useTodayAppointmentsBySpecialty(): {
     fetchTodayAppointments();
   }, [fetchTodayAppointments]);
 
-  return { appointments, loading, error, refetch: fetchTodayAppointments };
+  return { appointments, isLoading, error, refetch: fetchTodayAppointments };
 }
 
 // // Google Calendar Custom Hooks
-// const { appointments, loading, error } = useTodayAppointmentsBySpecialty();
+// const { appointments, isLoading, error } = useTodayAppointmentsBySpecialty();

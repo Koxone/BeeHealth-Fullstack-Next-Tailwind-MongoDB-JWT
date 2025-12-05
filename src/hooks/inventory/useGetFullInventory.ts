@@ -29,7 +29,7 @@ interface InventoryItem {
 
 export function useGetFullInventory() {
   const [inventory, setInventory] = useState<InventoryItem[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [isLoading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   const { user } = useAuthStore();
@@ -83,7 +83,7 @@ export function useGetFullInventory() {
 
   return {
     inventory,
-    loading,
+    isLoading,
     error,
     setInventory,
 

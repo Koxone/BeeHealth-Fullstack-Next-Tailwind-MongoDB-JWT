@@ -1,5 +1,5 @@
 import DoctorDashboard from '@/components/sections/doctor/dashboard/DoctorDashboard';
-import { getCurrentUser } from '@/lib/auth/getCurrentUser';
+import { getCurrentUser, UserData } from '@/lib/auth/getCurrentUser';
 
 export const runtime = 'nodejs';
 
