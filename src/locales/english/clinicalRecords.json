@@ -1,0 +1,38 @@
+{
+  "history": {
+    "title": "Clinical History",
+    "subtitle": "Patient medical records",
+    "empty": "No clinical records",
+    "emptySubtitle": "Start by adding the first record",
+    "add": "Register Consultation",
+    "newGoal": "Create Goal",
+    "card": {
+      "date": "Date",
+      "reason": "Reason",
+      "actions": "Actions",
+      "view": "View",
+      "edit": "Edit",
+      "delete": "Delete"
+    }
+  },
+  "modal": {
+    "titleNew": "New Clinical History",
+    "titleEdit": "Edit Clinical History",
+    "titleView": "View Clinical History",
+    "subtitle": "Patient medical record",
+    "tabs": {
+      "basic": "Basic Information",
+      "full": "Full History"
+    },
+    "save": "Save new record",
+    "saveChanges": "Save changes",
+    "saving": "Saving...",
+    "cancel": "Cancel",
+    "readOnly": "Read Only",
+    "editMode": "Edit Mode",
+    "basicInfo": "Basic Information",
+    "fullInfo": "Full Information",
+    "noFullRecord": "No full record available",
+    "select": "Select"
+  }
+}

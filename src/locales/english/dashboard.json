@@ -1,0 +1,22 @@
+{
+  "welcome": {
+    "title": "Welcome, {{name}}",
+    "titleDoctor": "Welcome, Dr. {{name}}"
+  },
+  "stats": {
+    "todayIncome": "Today's Income",
+    "scheduledAppointments": "Scheduled Appointments",
+    "medsSales": "Medication Sales",
+    "inventoryAlerts": "Inventory Alerts",
+    "currentWeight": "Current Weight",
+    "currentHeight": "Current Height",
+    "progress": "Progress",
+    "timeSinceLastVisit": "Time since last visit",
+    "consultsToday": "Consultations Today",
+    "today": "Today",
+    "noAlerts": "No alerts",
+    "check": "Check",
+    "day": "day",
+    "days": "days"
+  }
+}

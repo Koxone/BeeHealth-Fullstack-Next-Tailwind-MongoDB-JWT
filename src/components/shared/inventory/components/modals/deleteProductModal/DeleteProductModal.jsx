@@ -3,7 +3,10 @@
 import { useEffect } from 'react';
 import { Trash2, X } from 'lucide-react';
 
+import { useTranslation } from 'react-i18next';
+
 export default function DeleteProductModal({ item, onClose, onConfirm }) {
+  const { t } = useTranslation('inventory');
   if (!item) return null;
 
   // Close on ESC key
@@ -50,9 +53,9 @@ export default function DeleteProductModal({ item, onClose, onConfirm }) {
 
                 {/* Title and subtitle */}
                 <div>
-                  <h2 className="text-2xl font-bold text-gray-900">Eliminar elemento</h2>
+                  <h2 className="text-2xl font-bold text-gray-900">{t('modals.delete.title')}</h2>
                   <p className="mt-1 text-sm text-gray-600">
-                    Esta acción no se puede deshacer. El elemento será eliminado permanentemente.
+                    {t('modals.delete.subtitle')}
                   </p>
                 </div>
               </div>
@@ -71,8 +74,7 @@ export default function DeleteProductModal({ item, onClose, onConfirm }) {
         {/* Content */}
         <div className="relative space-y-6 p-6">
           <p className="text-center text-gray-800">
-            ¿Seguro que deseas eliminar{' '}
-            <span className="font-semibold text-rose-600">{item.nombre || item.tipo}</span>?
+            {t('modals.delete.confirmMessage', { name: item.nombre || item.tipo })}
           </p>
 
           <div className="flex flex-col gap-3 sm:flex-row">
@@ -80,13 +82,13 @@ export default function DeleteProductModal({ item, onClose, onConfirm }) {
               onClick={onClose}
               className="bg-beehealth-body-main hover:bg-beehealth-body-main flex-1 rounded-xl border-2 border-gray-300 px-6 py-3.5 font-semibold text-gray-700 shadow-sm transition-all duration-300 hover:shadow-md active:scale-95"
             >
-              Cancelar
+              {t('modals.delete.cancel')}
             </button>
             <button
               onClick={onConfirm}
               className="flex-1 rounded-xl bg-linear-to-r from-rose-600 to-pink-600 px-6 py-3.5 font-semibold text-white shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-rose-500/40 active:scale-95"
             >
-              Sí, eliminar
+              {t('modals.delete.confirm')}
             </button>
           </div>
         </div>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { Activity, useState } from 'react';
 import Stats from '../history/components/Stats';
 import RecordsTable from '../history/components/RecordsTable';
 import RecordsMobileList from '../history/components/RecordsMobileList';
@@ -11,8 +11,10 @@ import { useGetPatientClinicalRecords } from '@/hooks/clinicalRecords/get/useGet
 import { useGetPatientWeightLogs } from '@/hooks/clinicalRecords/get/useGetPatientWeightLogs';
 import EmptyState from '@/components/shared/feedback/EmptyState';
 import LoadingState from '@/components/shared/feedback/LoadingState';
+import { useTranslation } from 'react-i18next';
 
 export default function PatientHistory({ role, currentUser }) {
+  const { t } = useTranslation('patients');
   const { data, isLoading, error } = useGetPatientClinicalRecords(currentUser?.id);
 
   const {
@@ -36,24 +38,24 @@ export default function PatientHistory({ role, currentUser }) {
 
   if (isLoading) return <LoadingState />;
   if (error)
-    return <p className="p-6 text-center text-red-600">Error: {error?.message || 'Desconocido'}</p>;
+    return <p className="p-6 text-center text-red-600">{t('history.error', { message: error?.message || t('history.unknownError') })}</p>;
   if (!historyData.length) return <EmptyState onAdd={() => setShowModal(true)} />;
 
   return (
     <div className="h-full w-full space-y-6 overflow-y-auto pb-40">
       <SharedSectionHeader
         role={role}
-        title="Historial Clínico"
-        subtitle="Visualiza tus ultimos registros médicos"
+        title={t('history.title')}
+        subtitle={t('history.subtitle')}
         Icon="history"
       />
 
       {/* Empty state  */}
       {!patientWeightLogs || patientWeightLogs.length === 0 ? (
         <EmptyState
-          title="No hay registros de peso"
-          subtitle="Agenda tu primer cita para comenzar a registrar tus mediciones"
-          button="Agendar Cita"
+          title={t('history.noRecordsTitle')}
+          subtitle={t('history.noRecordsSubtitle')}
+          button={t('history.bookAppointment')}
           href="/patient/new-appointment"
         />
       ) : (
@@ -61,7 +63,7 @@ export default function PatientHistory({ role, currentUser }) {
           {/* Stats Grid */}
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-1">
             <div className="col-span-1 md:col-span-2 lg:col-span-2 xl:col-span-4">
-              <h3 className="text-lg font-semibold text-gray-800">Resumen de Peso</h3>
+              <h3 className="text-lg font-semibold text-gray-800">{t('history.weightSummary')}</h3>
             </div>
 
             <Stats
@@ -71,7 +73,7 @@ export default function PatientHistory({ role, currentUser }) {
             />
 
             <div className="col-span-1 mt-4 md:col-span-2 lg:col-span-2 xl:col-span-4">
-              <h3 className="text-lg font-semibold text-gray-800">Resumen de Talla</h3>
+              <h3 className="text-lg font-semibold text-gray-800">{t('history.heightSummary')}</h3>
             </div>
 
             <Stats type="size" historyData={mappedHistory} patientWeightLogs={patientWeightLogs} />

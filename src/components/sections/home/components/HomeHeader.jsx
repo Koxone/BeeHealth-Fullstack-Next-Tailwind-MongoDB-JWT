@@ -3,9 +3,12 @@
 import React from 'react';
 import { Heart, Activity, Calendar, Apple, Menu, X } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { useTranslation } from 'react-i18next';
 
 function HomeHeader({ setShowMenu, showMenu }) {
   const router = useRouter();
+  const { t } = useTranslation('common');
+
   return (
     <header className="bg-beehealth-body-main/80 sticky top-0 z-50 border-b backdrop-blur-sm">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
@@ -20,25 +23,25 @@ function HomeHeader({ setShowMenu, showMenu }) {
             onClick={() => router.push('/about')}
             className="text-gray-600 transition hover:text-gray-900"
           >
-            Acerca de
+            {t('homeHeader.about')}
           </button>
           <button
             onClick={() => router.push('/contact')}
             className="text-gray-600 transition hover:text-gray-900"
           >
-            Contacto
+            {t('homeHeader.contact')}
           </button>
           <button
             onClick={() => router.push('/auth/login')}
             className="px-4 py-2 font-medium text-blue-600 transition hover:text-blue-700"
           >
-            Ingresar
+            {t('homeHeader.login')}
           </button>
           <button
             onClick={() => router.push('/auth/signup')}
             className="rounded-lg bg-blue-500 px-4 py-2 text-white shadow-sm transition hover:bg-blue-600"
           >
-            Registrarse
+            {t('homeHeader.signup')}
           </button>
         </div>
 
@@ -62,7 +65,7 @@ function HomeHeader({ setShowMenu, showMenu }) {
               }}
               className="hover:bg-beehealth-body-main w-full rounded-lg px-4 py-2 text-left text-gray-700 transition"
             >
-              Acerca de
+              {t('homeHeader.about')}
             </button>
             <button
               onClick={() => {
@@ -71,7 +74,7 @@ function HomeHeader({ setShowMenu, showMenu }) {
               }}
               className="hover:bg-beehealth-body-main w-full rounded-lg px-4 py-2 text-left text-gray-700 transition"
             >
-              Contacto
+              {t('homeHeader.contact')}
             </button>
             <button
               onClick={() => {
@@ -80,7 +83,7 @@ function HomeHeader({ setShowMenu, showMenu }) {
               }}
               className="w-full rounded-lg px-4 py-2 font-medium text-blue-600 transition hover:bg-blue-50"
             >
-              Ingresar
+              {t('homeHeader.login')}
             </button>
             <button
               onClick={() => {
@@ -89,7 +92,7 @@ function HomeHeader({ setShowMenu, showMenu }) {
               }}
               className="w-full rounded-lg bg-blue-500 px-4 py-2 text-white transition hover:bg-blue-600"
             >
-              Registrarse
+              {t('homeHeader.signup')}
             </button>
           </div>
         </div>

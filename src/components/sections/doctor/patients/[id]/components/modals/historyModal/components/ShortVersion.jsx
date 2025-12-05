@@ -3,6 +3,7 @@ import { useGetAllQuestions } from '@/hooks/clinicalRecords/get/useGetAllQuestio
 import { CalendarIcon } from 'lucide-react';
 import AssignSection from './assign-section/AssignSection';
 import FooterActions from './FooterActions';
+import { useTranslation } from 'react-i18next';
 
 export default function ShortVersion({
   specialty,
@@ -19,6 +20,7 @@ export default function ShortVersion({
   setWorkoutSelected,
   patientId,
 }) {
+  const { t } = useTranslation('clinicalRecords');
   // Fetch questions
   const { questions, loading } = useGetAllQuestions();
   const filtered = questions?.filter((q) => q.version === 'short' && q.specialty === specialty);
@@ -46,7 +48,7 @@ export default function ShortVersion({
       <div className="flex flex-col gap-1">
         <h3 className="flex items-center gap-2 text-lg font-semibold text-gray-900">
           <CalendarIcon className="h-5 w-5 text-blue-600" />
-          Información Básica
+          {t('modal.basicInfo')}
         </h3>
 
         <span
@@ -56,7 +58,7 @@ export default function ShortVersion({
               : 'bg-beehealth-red-primary-light text-beehealth-red-primary-dark'
           } p-1 text-xs`}
         >
-          {isReadOnly ? 'Solo Lectura' : 'Modo Edicion'}
+          {isReadOnly ? t('modal.readOnly') : t('modal.editMode')}
         </span>
       </div>
 
@@ -103,7 +105,7 @@ export default function ShortVersion({
       {!isReadOnly && activeTab === 'basico' && (
         <FooterActions
           onCancel={onClose}
-          submitLabel={isCreate ? 'Guardar nuevo registro' : 'Guardar cambios'}
+          submitLabel={isCreate ? t('modal.save') : t('modal.saveChanges')}
           isSubmitting={isSubmitting}
         />
       )}

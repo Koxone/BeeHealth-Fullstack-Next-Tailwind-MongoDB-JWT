@@ -1,0 +1,30 @@
+{
+  "history": {
+    "title": "Clinical History",
+    "subtitle": "View your latest medical records",
+    "noRecordsTitle": "No weight records",
+    "noRecordsSubtitle": "Schedule your first appointment to start recording your measurements",
+    "bookAppointment": "Book Appointment",
+    "weightSummary": "Weight Summary",
+    "heightSummary": "Height Summary",
+    "recordsTitle": "Measurement Records",
+    "recordsCount": "{{count}} record",
+    "recordsCount_plural": "{{count}} records",
+    "date": "Date",
+    "weight": "Weight",
+    "height": "Height",
+    "difference": "Difference",
+    "differenceWeight": "Weight Diff",
+    "differenceHeight": "Height Diff",
+    "notes": "Notes",
+    "imc": "BMI"
+  },
+  "stats": {
+    "initialWeight": "Initial Weight",
+    "currentWeight": "Current Weight",
+    "initialHeight": "Initial Height",
+    "currentHeight": "Current Height",
+    "difference": "Difference",
+    "progress": "Progress"
+  }
+}

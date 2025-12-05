@@ -3,9 +3,11 @@
 import { Heart, Mail, Lock, User, Phone, ArrowRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export default function SignupForm() {
   const router = useRouter();
+  const { t } = useTranslation('auth');
   const [formData, setFormData] = useState({
     nombre: '',
     email: '',
@@ -26,12 +28,12 @@ export default function SignupForm() {
     e.preventDefault();
 
     if (formData.password !== formData.confirmPassword) {
-      alert('Las contraseñas no coinciden');
+      alert(t('signup.passwordMismatch'));
       return;
     }
 
     if (formData.password.length < 6) {
-      alert('La contraseña debe tener al menos 6 caracteres');
+      alert(t('signup.passwordMinLength'));
       return;
     }
 
@@ -69,9 +71,9 @@ export default function SignupForm() {
       <div className="h-fit w-full max-w-md">
         {/* Header */}
         <div className="mb-6 text-center md:mb-8">
-          <h1 className="mb-2 text-2xl font-bold text-gray-900 md:text-2xl">Crear Cuenta</h1>
+          <h1 className="mb-2 text-2xl font-bold text-gray-900 md:text-2xl">{t('signup.title')}</h1>
           <p className="text-sm text-gray-600 md:text-base">
-            Elige el tipo de consulta y llena el resto de campos
+            {t('signup.subtitle')}
           </p>
         </div>
 
@@ -82,7 +84,7 @@ export default function SignupForm() {
             <div>
               {/* Label */}
               <label className="mb-2 block text-sm font-medium text-gray-700">
-                Tipo de Consulta
+                {t('signup.specialtyLabel')}
               </label>
 
               {/* Select */}
@@ -93,17 +95,17 @@ export default function SignupForm() {
                 required
                 className="w-full rounded-lg border border-gray-300 py-3 pr-4 pl-3 focus:border-transparent focus:ring-2 focus:ring-blue-500"
               >
-                <option value="">Selecciona una opción</option>
-                <option value="weight">Control de Peso</option>
-                <option value="dental">Odontologia</option>
-                <option value="esthetic">Medicina Estetica</option>
+                <option value="">{t('signup.selectOption')}</option>
+                <option value="weight">{t('signup.specialties.weight')}</option>
+                <option value="dental">{t('signup.specialties.dental')}</option>
+                <option value="esthetic">{t('signup.specialties.esthetic')}</option>
               </select>
             </div>
 
             {/* Name */}
             <div>
               <label className="mb-2 block text-sm font-medium text-gray-700">
-                Nombre completo
+                {t('signup.nameLabel')}
               </label>
               <div className="relative">
                 <User className="absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 text-gray-400" />
@@ -114,7 +116,7 @@ export default function SignupForm() {
                   onChange={handleChange}
                   required
                   className="w-full rounded-lg border border-gray-300 py-3 pr-4 pl-10 focus:border-transparent focus:ring-2 focus:ring-blue-500"
-                  placeholder="Juan Pérez"
+                  placeholder={t('signup.namePlaceholder')}
                 />
               </div>
             </div>
@@ -122,7 +124,7 @@ export default function SignupForm() {
             {/* Email */}
             <div>
               <label className="mb-2 block text-sm font-medium text-gray-700">
-                Correo electrónico
+                {t('login.emailLabel')}
               </label>
               <div className="relative">
                 <Mail className="absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 text-gray-400" />
@@ -133,14 +135,14 @@ export default function SignupForm() {
                   onChange={handleChange}
                   required
                   className="w-full rounded-lg border border-gray-300 py-3 pr-4 pl-10 focus:border-transparent focus:ring-2 focus:ring-blue-500"
-                  placeholder="tu@email.com"
+                  placeholder={t('login.emailPlaceholder')}
                 />
               </div>
             </div>
 
             {/* Phone */}
             <div>
-              <label className="mb-2 block text-sm font-medium text-gray-700">Telefono</label>
+              <label className="mb-2 block text-sm font-medium text-gray-700">{t('signup.phoneLabel')}</label>
               <div className="relative">
                 <Phone className="absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 text-gray-400" />
                 <input
@@ -150,14 +152,14 @@ export default function SignupForm() {
                   onChange={handleChange}
                   required
                   className="w-full rounded-lg border border-gray-300 py-3 pr-4 pl-10 focus:border-transparent focus:ring-2 focus:ring-blue-500"
-                  placeholder="+52 55 1234 5678"
+                  placeholder={t('signup.phonePlaceholder')}
                 />
               </div>
             </div>
 
             {/* Password */}
             <div>
-              <label className="mb-2 block text-sm font-medium text-gray-700">Contraseña</label>
+              <label className="mb-2 block text-sm font-medium text-gray-700">{t('login.passwordLabel')}</label>
               <div className="relative">
                 <Lock className="absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 text-gray-400" />
                 <input
@@ -167,7 +169,7 @@ export default function SignupForm() {
                   onChange={handleChange}
                   required
                   className="w-full rounded-lg border border-gray-300 py-3 pr-4 pl-10 focus:border-transparent focus:ring-2 focus:ring-blue-500"
-                  placeholder="Mínimo 6 caracteres"
+                  placeholder={t('signup.passwordMinLength')}
                 />
               </div>
             </div>
@@ -175,7 +177,7 @@ export default function SignupForm() {
             {/* Confirm Password */}
             <div>
               <label className="mb-2 block text-sm font-medium text-gray-700">
-                Confirmar contraseña
+                {t('signup.confirmPasswordLabel')}
               </label>
               <div className="relative">
                 <Lock className="absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 text-gray-400" />
@@ -186,7 +188,7 @@ export default function SignupForm() {
                   onChange={handleChange}
                   required
                   className="w-full rounded-lg border border-gray-300 py-3 pr-4 pl-10 focus:border-transparent focus:ring-2 focus:ring-blue-500"
-                  placeholder="Repite tu contraseña"
+                  placeholder={t('signup.confirmPasswordPlaceholder')}
                 />
               </div>
             </div>
@@ -196,7 +198,7 @@ export default function SignupForm() {
               type="submit"
               className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-500 py-3 font-medium text-white shadow-md transition hover:bg-blue-600 active:scale-95"
             >
-              Crear cuenta
+              {t('signup.submitButton')}
               <ArrowRight className="h-5 w-5" />
             </button>
           </form>
@@ -204,12 +206,12 @@ export default function SignupForm() {
           {/* Go to Login */}
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-600">
-              ¿Ya tienes cuenta?{' '}
+              {t('signup.hasAccount')}{' '}
               <button
                 onClick={() => router.push('/auth/login')}
                 className="font-medium text-blue-500 hover:text-blue-600"
               >
-                Inicia sesión
+                {t('signup.loginLink')}
               </button>
             </p>
           </div>

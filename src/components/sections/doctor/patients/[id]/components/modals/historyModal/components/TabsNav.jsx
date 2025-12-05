@@ -1,7 +1,10 @@
 'use client';
+import { useTranslation } from 'react-i18next';
 
 /* Tabs navigation */
 export default function TabsNav({ activeTab, setActiveTab }) {
+  const { t } = useTranslation('clinicalRecords');
+
   return (
     <div className="bg-beehealth-blue-primary-solid relative overflow-hidden px-6 py-6">
       {/* Decorative halo */}
@@ -19,7 +22,7 @@ export default function TabsNav({ activeTab, setActiveTab }) {
               : 'bg-beehealth-body-main/20 hover:bg-beehealth-body-main/30 text-white'
           }`}
         >
-          Información Básica
+          {t('modal.tabs.basic')}
         </button>
 
         {/* Full history tab */}
@@ -32,7 +35,7 @@ export default function TabsNav({ activeTab, setActiveTab }) {
               : 'bg-beehealth-body-main/20 hover:bg-beehealth-body-main/30 text-white'
           }`}
         >
-          Historial Completo
+          {t('modal.tabs.full')}
         </button>
       </div>
     </div>

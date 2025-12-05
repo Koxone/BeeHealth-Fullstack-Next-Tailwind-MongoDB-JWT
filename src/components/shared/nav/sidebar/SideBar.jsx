@@ -9,11 +9,13 @@ import {
 } from './components/SideBarData';
 import { usePathname, useRouter } from 'next/navigation';
 import NextAppointmentCard from '@/components/sections/patient/feedback/NextAppointmentCard';
+import { useTranslation } from 'react-i18next';
 
 export default function Sidebar({ role, currentUser, specialty }) {
   // Custom Hooks
   const pathname = usePathname();
   const router = useRouter();
+  const { t } = useTranslation('common');
 
   // Sidebar Options
   const sidebarOptions =
@@ -70,7 +72,7 @@ export default function Sidebar({ role, currentUser, specialty }) {
                       }`}
                     />
                   </div>
-                  <span className="text-sm">{item.label}</span>
+                  <span className="text-sm">{t(item.label)}</span>
                 </div>
 
                 {/* Chevron */}
@@ -127,7 +129,7 @@ export default function Sidebar({ role, currentUser, specialty }) {
                       isActive ? 'text-white' : 'text-gray-600'
                     }`}
                   >
-                    {item.label}
+                    {t(item.label)}
                   </span>
                 </div>
 

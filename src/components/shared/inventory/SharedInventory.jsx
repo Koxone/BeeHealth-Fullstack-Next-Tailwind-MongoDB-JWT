@@ -32,7 +32,10 @@ import TransactionHistoryModal from './components/modals/transactionHistoryModal
 import SuccessModal from '../feedback/SuccessModal';
 import LoadingState from '../feedback/LoadingState';
 
+import { useTranslation } from 'react-i18next';
+
 export default function SharedInventory({ role, showButton = true }) {
+  const { t } = useTranslation('inventory');
   // Fetch Full Inventory Items
   const { inventory, loading, setInventory, error, refetch } = useGetFullInventory();
 
@@ -157,8 +160,8 @@ export default function SharedInventory({ role, showButton = true }) {
     <div className="h-full space-y-6 overflow-x-hidden overflow-y-auto pb-40">
       {/* Success Modal */}
       <SuccessModal
-        title="Inventario actualizado con éxito"
-        message="La información fue guardada correctamente."
+        title={t('modals.success.title')}
+        message={t('modals.success.message')}
         showSuccessModal={showSuccessModal}
         setShowSuccessModal={setShowSuccessModal}
       />
@@ -167,8 +170,8 @@ export default function SharedInventory({ role, showButton = true }) {
       <SharedSectionHeader
         role={role}
         Icon="inventory"
-        title="Gestión de Inventario"
-        subtitle="Control de medicamentos, recetas y suministros"
+        title={t('header.title')}
+        subtitle={t('header.subtitle')}
       />
 
       {/* Tabs & Actions */}

@@ -11,7 +11,10 @@ import { getGradient, getIcon } from './utils/helpers';
 import { useEffect } from 'react';
 import { useModalClose } from '@/hooks/useModalClose';
 
+import { useTranslation } from 'react-i18next';
+
 export default function CreateProductModal({ activeTab, onClose, successRefresh }) {
+  const { t } = useTranslation('inventory');
   const { handleOverlayClick } = useModalClose(onClose);
 
   // Create Product Backend Handler
@@ -80,14 +83,16 @@ export default function CreateProductModal({ activeTab, onClose, successRefresh 
                 </div>
                 <div>
                   <h2 className="text-2xl font-bold text-gray-900">
-                    Agregar{' '}
-                    {activeTab === 'medicamentos'
-                      ? 'Medicamento'
-                      : activeTab === 'recetas'
-                        ? 'Receta'
-                        : 'Suministro'}
+                    {t('modals.create.title', {
+                      type:
+                        activeTab === 'medicamentos'
+                          ? t('table.meds')
+                          : activeTab === 'recetas'
+                            ? t('table.prescriptions')
+                            : t('table.supplies'),
+                    })}
                   </h2>
-                  <p className="mt-1 text-sm text-gray-600">Completa todos los campos requeridos</p>
+                  <p className="mt-1 text-sm text-gray-600">{t('modals.create.subtitle')}</p>
                 </div>
               </div>
               <button
@@ -97,7 +102,7 @@ export default function CreateProductModal({ activeTab, onClose, successRefresh 
                 {X ? (
                   <X className="h-5 w-5 text-gray-600 hover:text-white" />
                 ) : (
-                  <span className="text-sm">Cerrar</span>
+                  <span className="text-sm">{t('modals.create.close')}</span>
                 )}
               </button>
             </div>

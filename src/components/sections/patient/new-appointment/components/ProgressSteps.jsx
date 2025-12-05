@@ -1,13 +1,15 @@
 'use client';
 
 import { User, Calendar as CalendarIcon, Clock, Check } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 /* steps */
 export default function ProgressSteps({ getStepStatus }) {
+  const { t } = useTranslation('appointments');
   const steps = [
-    { number: 1, label: 'Médico', icon: User },
-    { number: 2, label: 'Fecha', icon: CalendarIcon },
-    { number: 3, label: 'Hora', icon: Clock },
+    { number: 1, label: t('new.step1'), icon: User },
+    { number: 2, label: t('new.step2'), icon: CalendarIcon },
+    { number: 3, label: t('new.step3'), icon: Clock },
   ];
 
   return (

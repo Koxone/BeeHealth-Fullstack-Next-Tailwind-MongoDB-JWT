@@ -1,0 +1,101 @@
+{
+  "header": {
+    "title": "Gestión de Inventario",
+    "subtitle": "Control de medicamentos, recetas y suministros"
+  },
+  "tabs": {
+    "meds": "Medicamentos",
+    "prescriptions": "Recetas",
+    "supplies": "Suministros"
+  },
+  "actions": {
+    "search": "Buscar por nombre, categoría o ubicación...",
+    "add": "Nuevo Producto",
+    "restock": "Abastecer"
+  },
+  "stats": {
+    "medsValue": "Valor medicamentos",
+    "suppliesValue": "Valor suministros",
+    "totalItems": "Items totales",
+    "medsTitle": "Monto total estimado si se vendieran todos los medicamentos actualmente en inventario al precio de venta establecido.",
+    "suppliesTitle": "Monto total invertido en materiales disponibles en el consultorio según su costo de compra.",
+    "totalTitle": "Cantidad total de elementos registrados en el inventario, incluyendo medicamentos, recetas y suministros médicos."
+  },
+  "table": {
+    "meds": "Medicamento",
+    "supplies": "Suministro",
+    "prescriptions": "Receta",
+    "category": "Categoría",
+    "stock": "Stock",
+    "price": "Precio",
+    "actions": "Acciones",
+    "emptyMeds": "No hay medicamentos registrados",
+    "emptyMedsSub": "Comienza agregando tu primer medicamento",
+    "emptySupplies": "No hay suministros registrados",
+    "emptySuppliesSub": "Comienza agregando tu primer suministro",
+    "emptyPrescriptions": "No hay recetas registradas",
+    "emptyPrescriptionsSub": "Comienza agregando tu primera receta"
+  },
+  "modals": {
+    "create": {
+      "title": "Agregar {{type}}",
+      "subtitle": "Completa todos los campos requeridos",
+      "close": "Cerrar"
+    },
+    "edit": {
+      "title": "Editar {{type}}",
+      "subtitle": "Actualiza los datos existentes",
+      "noChanges": "No se hicieron cambios",
+      "error": "Error: {{error}}"
+    },
+    "restock": {
+      "title": "Agregar existencias",
+      "subtitle": "Selecciona un producto y la cantidad a reabastecer",
+      "product": "Producto",
+      "selectProduct": "Selecciona un producto",
+      "currentQuantity": "Cantidad actual",
+      "notAvailable": "No disponible",
+      "quantityToAdd": "Cantidad a agregar",
+      "reason": "Motivo (opcional)",
+      "cancel": "Cancelar",
+      "confirm": "Confirmar reabastecimiento",
+      "alert": "Debes seleccionar un producto y especificar una cantidad válida."
+    },
+    "delete": {
+      "title": "Eliminar elemento",
+      "subtitle": "Esta acción no se puede deshacer. El elemento será eliminado permanentemente.",
+      "confirmMessage": "¿Seguro que deseas eliminar {{name}}?",
+      "cancel": "Cancelar",
+      "confirm": "Sí, eliminar"
+    },
+    "toggle": {
+      "deactivateTitle": "Desactivar producto",
+      "reactivateTitle": "Reactivar producto",
+      "deactivateSubtitle": "Si desactivas este producto, ya no aparecerá en las listas de inventario ni podrá venderse. Podrás reactivarlo más adelante.",
+      "reactivateSubtitle": "Al reactivar este producto, volverá a estar disponible en el inventario y podrá gestionarse nuevamente.",
+      "deactivateConfirm": "¿Seguro que deseas desactivar {{name}}?",
+      "reactivateConfirm": "¿Seguro que deseas reactivar {{name}}?",
+      "cancel": "Cancelar",
+      "deactivate": "Sí, desactivar",
+      "reactivate": "Sí, reactivar"
+    },
+    "history": {
+      "title": "Historial de {{name}}",
+      "subtitle": "Movimientos recientes del producto",
+      "loading": "Cargando",
+      "emptyTitle": "Sin historial",
+      "emptySubtitle": "Este producto no tiene movimientos registrados.",
+      "close": "Cerrar"
+    },
+    "success": {
+      "title": "Inventario actualizado con éxito",
+      "message": "La información fue guardada correctamente."
+    }
+  },
+  "tooltips": {
+    "edit": "Editar producto",
+    "deactivate": "Desactivar producto",
+    "reactivate": "Reactivar producto",
+    "history": "Ver historial de transacciones"
+  }
+}

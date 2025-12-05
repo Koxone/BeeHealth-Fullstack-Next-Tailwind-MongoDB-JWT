@@ -2,8 +2,11 @@
 
 import { Calendar, Weight, Activity, FileText, BarChart3, Ruler } from 'lucide-react';
 import { getIMCCategory } from './utils';
+import { useTranslation } from 'react-i18next';
 
 export default function RecordsTable({ historyData = [], patientWeightLogs }) {
+  const { t } = useTranslation('patients');
+
   return (
     <>
       {/* Header de la tabla */}
@@ -14,9 +17,9 @@ export default function RecordsTable({ historyData = [], patientWeightLogs }) {
             <BarChart3 className="h-5 w-5 text-white" />
           </div>
           <div>
-            <h2 className="text-lg font-bold text-white">Registro de Mediciones</h2>
+            <h2 className="text-lg font-bold text-white">{t('history.recordsTitle')}</h2>
             <p className="text-sm text-purple-100">
-              {patientWeightLogs.length} {patientWeightLogs?.length > 1 ? 'registros' : 'registro'}
+              {t('history.recordsCount_plural', { count: patientWeightLogs.length })}
             </p>
           </div>
         </div>
@@ -29,31 +32,31 @@ export default function RecordsTable({ historyData = [], patientWeightLogs }) {
           <div className="px-6 py-4">
             <div className="flex items-center gap-2">
               <Calendar className="h-4 w-4 text-gray-500" />
-              <span className="text-sm font-bold text-gray-900">Fecha</span>
+              <span className="text-sm font-bold text-gray-900">{t('history.date')}</span>
             </div>
           </div>
           <div className="px-6 py-4">
             <div className="flex items-center gap-2">
               <Weight className="h-4 w-4 text-gray-500" />
-              <span className="text-sm font-bold text-gray-900">Peso (kg)</span>
+              <span className="text-sm font-bold text-gray-900">{t('history.weight')} (kg)</span>
             </div>
           </div>
           <div className="px-6 py-4">
             <div className="flex items-center gap-2">
               <Ruler className="h-4 w-4 text-gray-500" />
-              <span className="text-sm font-bold text-gray-900">Talla (cm)</span>
+              <span className="text-sm font-bold text-gray-900">{t('history.height')} (cm)</span>
             </div>
           </div>
           <div className="px-6 py-4">
             <div className="flex items-center gap-2">
               <FileText className="h-4 w-4 text-gray-500" />
-              <span className="text-sm font-bold text-gray-900">Diferencia (kg)</span>
+              <span className="text-sm font-bold text-gray-900">{t('history.differenceWeight')} (kg)</span>
             </div>
           </div>
           <div className="px-6 py-4">
             <div className="flex items-center gap-2">
               <FileText className="h-4 w-4 text-gray-500" />
-              <span className="text-sm font-bold text-gray-900">Diferencia (cm)</span>
+              <span className="text-sm font-bold text-gray-900">{t('history.differenceHeight')} (cm)</span>
             </div>
           </div>
         </div>
@@ -73,7 +76,7 @@ export default function RecordsTable({ historyData = [], patientWeightLogs }) {
                   <Calendar className="h-4 w-4 text-white transition-colors duration-200 group-hover:text-white" />
                 </div>
                 <div className="lg:flex lg:items-center lg:gap-2">
-                  <p className="text-xs font-medium text-gray-500 lg:hidden">Fecha</p>
+                  <p className="text-xs font-medium text-gray-500 lg:hidden">{t('history.date')}</p>
                   <p className="text-sm font-bold text-gray-900 lg:font-semibold">
                     {new Date(record?.createdAt).toISOString().split('T')[0]}
                   </p>
@@ -86,7 +89,7 @@ export default function RecordsTable({ historyData = [], patientWeightLogs }) {
                 <div className="flex flex-col lg:px-6 lg:py-4">
                   <div className="mb-2 flex items-center gap-2 lg:hidden">
                     <Weight className="h-4 w-4 text-gray-500" />
-                    <p className="text-xs font-medium text-gray-600">Peso</p>
+                    <p className="text-xs font-medium text-gray-600">{t('history.weight')}</p>
                   </div>
                   <div className="flex items-baseline gap-1 lg:items-center lg:gap-2">
                     <p className="text-xl font-bold text-gray-900 lg:text-2xl lg:text-gray-600">
@@ -100,7 +103,7 @@ export default function RecordsTable({ historyData = [], patientWeightLogs }) {
                 <div className="flex flex-col lg:px-6 lg:py-4">
                   <div className="mb-2 flex items-center gap-2 lg:hidden">
                     <Ruler className="h-4 w-4 text-gray-500" />
-                    <p className="text-xs font-medium text-gray-600">Talla</p>
+                    <p className="text-xs font-medium text-gray-600">{t('history.height')}</p>
                   </div>
                   <div className="flex items-baseline gap-1 lg:items-center lg:gap-3">
                     <p className="text-xl font-bold text-gray-900 lg:text-2xl lg:text-gray-600">
@@ -114,7 +117,7 @@ export default function RecordsTable({ historyData = [], patientWeightLogs }) {
                 <div className="flex flex-col lg:px-6 lg:py-4">
                   <div className="mb-2 flex items-center gap-2 lg:hidden">
                     <FileText className="h-4 w-4 text-gray-500" />
-                    <p className="text-xs font-medium text-gray-600">Dif. Peso</p>
+                    <p className="text-xs font-medium text-gray-600">{t('history.differenceWeight')}</p>
                   </div>
                   <div className="flex items-baseline gap-1 lg:items-center lg:gap-3">
                     <p className="text-xl font-bold text-gray-900 lg:text-2xl lg:text-gray-600">
@@ -128,7 +131,7 @@ export default function RecordsTable({ historyData = [], patientWeightLogs }) {
                 <div className="flex flex-col lg:px-6 lg:py-4">
                   <div className="mb-2 flex items-center gap-2 lg:hidden">
                     <FileText className="h-4 w-4 text-gray-500" />
-                    <p className="text-xs font-medium text-gray-600">Dif. Talla</p>
+                    <p className="text-xs font-medium text-gray-600">{t('history.differenceHeight')}</p>
                   </div>
                   <div className="flex items-baseline gap-1 lg:items-center lg:gap-3">
                     <p className="text-xl font-bold text-gray-900 lg:text-2xl lg:text-gray-600">

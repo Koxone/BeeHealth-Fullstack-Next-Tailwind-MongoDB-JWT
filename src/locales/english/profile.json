@@ -1,0 +1,60 @@
+{
+  "doctor": {
+    "title": "My Professional Profile",
+    "subtitle": "Professional and contact information",
+    "edit": "Edit Profile",
+    "save": "Save Changes",
+    "verified": "Verified Profile",
+    "patients": "Patients",
+    "rating": "Rating",
+    "personalInfo": "Personal Information",
+    "professionalInfo": "Professional Information",
+    "bio": "Professional Bio",
+    "experience": "Years of Experience",
+    "certifications": "Certifications",
+    "status": "Status",
+    "active": "Active",
+    "specialty": {
+      "weight": "Weight Control"
+    },
+    "defaultBio": "Clinical nutrition specialist with over 10 years of experience helping patients achieve their health goals."
+  },
+  "employee": {
+    "title": "My Profile",
+    "subtitle": "Personal and work information",
+    "position": "Position",
+    "dateJoined": "Date Joined",
+    "schedule": "Schedule",
+    "role": {
+      "receptionist": "Receptionist"
+    },
+    "defaultSchedule": "Monday to Friday, 8:00 AM - 5:00 PM"
+  },
+  "patient": {
+    "title": "My Profile",
+    "subtitle": "Personal and medical information",
+    "role": "Patient",
+    "consults": "Consultations",
+    "months": "Months",
+    "height": "Height (cm)",
+    "weight": "Current Weight (kg)"
+  },
+  "security": {
+    "title": "Security",
+    "subtitle": "Protect your account",
+    "changePassword": "Change Password",
+    "changePasswordSubtitle": "Update your password",
+    "twoFactor": "2-Step Verification",
+    "twoFactorSubtitle": "Higher security"
+  },
+  "fields": {
+    "email": "Email",
+    "phone": "Phone",
+    "license": "Professional License",
+    "university": "University"
+  },
+  "notFound": {
+    "title": "No valid profile found",
+    "subtitle": "Please contact the administrator"
+  }
+}

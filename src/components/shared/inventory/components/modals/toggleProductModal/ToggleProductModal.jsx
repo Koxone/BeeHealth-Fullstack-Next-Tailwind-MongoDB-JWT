@@ -4,7 +4,10 @@ import { useEffect } from 'react';
 import { Power, X } from 'lucide-react';
 import { useModalClose } from '@/hooks/useModalClose';
 
+import { useTranslation } from 'react-i18next';
+
 export default function ToggleProductModal({ item, onClose, onConfirm }) {
+  const { t } = useTranslation('inventory');
   if (!item) return null;
 
   const isActive = item?.product?.inStock === true;
@@ -72,12 +75,12 @@ export default function ToggleProductModal({ item, onClose, onConfirm }) {
                 {/* Title */}
                 <div>
                   <h2 className="text-2xl font-bold text-gray-900">
-                    {isActive ? 'Desactivar producto' : 'Reactivar producto'}
+                    {isActive ? t('modals.toggle.deactivateTitle') : t('modals.toggle.reactivateTitle')}
                   </h2>
                   <p className="mt-1 text-sm text-gray-600">
                     {isActive
-                      ? 'Si desactivas este producto, ya no aparecerá en las listas de inventario ni podrá venderse. Podrás reactivarlo más adelante.'
-                      : 'Al reactivar este producto, volverá a estar disponible en el inventario y podrá gestionarse nuevamente.'}
+                      ? t('modals.toggle.deactivateSubtitle')
+                      : t('modals.toggle.reactivateSubtitle')}
                   </p>
                 </div>
               </div>
@@ -97,16 +100,9 @@ export default function ToggleProductModal({ item, onClose, onConfirm }) {
         <div className="relative space-y-6 p-6">
           <div className="bg-beehealth-green-primary-light/30 rounded-lg pb-1">
             <p className="text-center text-gray-800">
-              ¿Seguro que deseas{' '}
-              <span
-                className={`animate-pulse text-lg font-semibold ${isActive ? 'text-red-600' : 'text-red-600'}`}
-              >
-                {isActive ? 'desactivar' : 'reactivar'}
-              </span>{' '}
-              <span className="font-semibold text-gray-800">
-                {item?.product?.name || 'este producto'}
-              </span>
-              ?
+              {isActive
+                ? t('modals.toggle.deactivateConfirm', { name: item?.product?.name || 'este producto' })
+                : t('modals.toggle.reactivateConfirm', { name: item?.product?.name || 'este producto' })}
             </p>
           </div>
 
@@ -115,7 +111,7 @@ export default function ToggleProductModal({ item, onClose, onConfirm }) {
               onClick={onClose}
               className="bg-beehealth-body-main flex-1 rounded-xl px-6 py-3.5 font-semibold text-gray-700 shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl active:scale-95"
             >
-              Cancelar
+              {t('modals.toggle.cancel')}
             </button>
             <button
               onClick={onConfirm}
@@ -125,7 +121,7 @@ export default function ToggleProductModal({ item, onClose, onConfirm }) {
                   : 'bg-linear-to-r from-green-600 to-emerald-600 hover:shadow-green-500/40'
               }`}
             >
-              {isActive ? 'Sí, desactivar' : 'Sí, reactivar'}
+              {isActive ? t('modals.toggle.deactivate') : t('modals.toggle.reactivate')}
             </button>
           </div>
         </div>

@@ -35,6 +35,8 @@ interface GeneralSectionHeaderProps {
   subtitle?: string;
 }
 
+import { useTranslation } from 'react-i18next';
+
 export default function SharedSectionHeader({
   role,
   newPatient,
@@ -46,6 +48,7 @@ export default function SharedSectionHeader({
   title = '',
   subtitle = '',
 }: GeneralSectionHeaderProps) {
+  const { t } = useTranslation('common');
   // Icons Map Helper
   const iconsMap: Record<
     GeneralSectionHeaderProps['Icon'],
@@ -90,7 +93,7 @@ export default function SharedSectionHeader({
             className="bg-beehealth-green-secondary-solid hover:bg-beehealth-green-secondary-solid-hover flex items-center gap-2 rounded-lg px-4 py-2 text-white transition active:scale-95"
           >
             <Plus className="h-5 w-5" />
-            Nueva Dieta
+            {t('actions.newDiet')}
           </Link>
         </div>
       )}
@@ -104,7 +107,7 @@ export default function SharedSectionHeader({
             className="bg-beehealth-green-secondary-solid hover:bg-beehealth-green-secondary-solid-hover flex items-center gap-2 rounded-lg px-4 py-2 text-white transition active:scale-95"
           >
             <Plus className="h-5 w-5" />
-            Nuevo Paciente
+            {t('actions.newPatient')}
           </button>
 
           {isModalPatientsOpen && (
@@ -126,7 +129,7 @@ export default function SharedSectionHeader({
             }}
             className="bg-beehealth-green-secondary-solid hover:bg-beehealth-green-secondary-solid-hover flex items-center gap-2 rounded-lg px-4 py-2 text-white"
           >
-            <Plus className="h-5 w-5" /> Nuevo Ejercicio
+            <Plus className="h-5 w-5" /> {t('actions.newWorkout')}
           </button>
         </div>
       )}

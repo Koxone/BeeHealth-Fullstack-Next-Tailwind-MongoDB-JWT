@@ -1,0 +1,60 @@
+{
+  "doctor": {
+    "title": "Mi Perfil Profesional",
+    "subtitle": "Información profesional y de contacto",
+    "edit": "Editar Perfil",
+    "save": "Guardar Cambios",
+    "verified": "Perfil verificado",
+    "patients": "Pacientes",
+    "rating": "Rating",
+    "personalInfo": "Información Personal",
+    "professionalInfo": "Información Profesional",
+    "bio": "Biografía Profesional",
+    "experience": "Años de experiencia",
+    "certifications": "Certificaciones",
+    "status": "Estado",
+    "active": "Activo",
+    "specialty": {
+      "weight": "Control de Peso"
+    },
+    "defaultBio": "Especialista en nutrición clínica con más de 10 años de experiencia ayudando a pacientes a alcanzar sus objetivos de salud."
+  },
+  "employee": {
+    "title": "Mi Perfil",
+    "subtitle": "Información personal y laboral",
+    "position": "Puesto",
+    "dateJoined": "Fecha de Ingreso",
+    "schedule": "Horario",
+    "role": {
+      "receptionist": "Recepcionista"
+    },
+    "defaultSchedule": "Lunes a Viernes, 8:00 AM - 5:00 PM"
+  },
+  "patient": {
+    "title": "Mi Perfil",
+    "subtitle": "Información personal y médica",
+    "role": "Paciente",
+    "consults": "Consultas",
+    "months": "Meses",
+    "height": "Altura (cm)",
+    "weight": "Peso Actual (kg)"
+  },
+  "security": {
+    "title": "Seguridad",
+    "subtitle": "Protege tu cuenta",
+    "changePassword": "Cambiar Contraseña",
+    "changePasswordSubtitle": "Actualiza tu contraseña",
+    "twoFactor": "Verificación en 2 pasos",
+    "twoFactorSubtitle": "Mayor seguridad"
+  },
+  "fields": {
+    "email": "Correo Electrónico",
+    "phone": "Telefono",
+    "license": "Cédula Profesional",
+    "university": "Universidad"
+  },
+  "notFound": {
+    "title": "No se encontró un perfil válido",
+    "subtitle": "Por favor, contacta al administrador"
+  }
+}

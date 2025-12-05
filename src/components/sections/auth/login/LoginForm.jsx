@@ -4,10 +4,12 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Heart, Mail, Lock, CheckCircle, AlertCircle, X } from 'lucide-react';
 import useAuthStore from '@/zustand/useAuthStore';
+import { useTranslation } from 'react-i18next';
 
 export default function LoginForm() {
   // Custom Hooks
   const router = useRouter();
+  const { t } = useTranslation('auth');
 
   // Zustand
   const { setUser, setToken } = useAuthStore.getState();
@@ -38,7 +40,7 @@ export default function LoginForm() {
       const data = await res.json();
 
       if (!res.ok) {
-        setErrorMessage(data.error || 'Error al iniciar sesión');
+        setErrorMessage(data.error || t('login.errorTitle'));
         setShowErrorModal(true);
         setLoading(false);
         return;
@@ -73,15 +75,15 @@ export default function LoginForm() {
       <div className="flex h-full items-center justify-center overflow-hidden p-4">
         <div className="bg-beehealth-body-main w-full max-w-md rounded-2xl border border-gray-200 p-8 shadow-xl">
           {/* Title */}
-          <h2 className="mb-2 text-center text-2xl font-bold text-gray-900">Iniciar Sesión</h2>
-          <p className="mb-8 text-center text-gray-600">Accede a tu cuenta médica</p>
+          <h2 className="mb-2 text-center text-2xl font-bold text-gray-900">{t('login.title')}</h2>
+          <p className="mb-8 text-center text-gray-600">{t('login.subtitle')}</p>
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
             {/* Email */}
             <div>
               <label className="mb-2 block text-sm font-medium text-gray-700">
-                Correo Electrónico
+                {t('login.emailLabel')}
               </label>
               <div className="relative">
                 <Mail className="absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 text-gray-400" />
@@ -91,14 +93,14 @@ export default function LoginForm() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="w-full rounded-lg border border-gray-300 py-3 pr-4 pl-10 outline-none"
-                  placeholder="tu@email.com"
+                  placeholder={t('login.emailPlaceholder')}
                 />
               </div>
             </div>
 
             {/* Password */}
             <div>
-              <label className="mb-2 block text-sm font-medium text-gray-700">Contraseña</label>
+              <label className="mb-2 block text-sm font-medium text-gray-700">{t('login.passwordLabel')}</label>
               <div className="relative">
                 <Lock className="absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 text-gray-400" />
                 <input
@@ -107,7 +109,7 @@ export default function LoginForm() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="w-full rounded-lg border border-gray-300 py-3 pr-4 pl-10 outline-none"
-                  placeholder="••••••••"
+                  placeholder={t('login.passwordPlaceholder')}
                 />
               </div>
             </div>
@@ -116,10 +118,10 @@ export default function LoginForm() {
             <div className="flex items-center justify-between text-sm">
               <label className="flex items-center">
                 <input type="checkbox" className="mr-2" />
-                <span className="text-gray-600">Recordarme</span>
+                <span className="text-gray-600">{t('login.rememberMe')}</span>
               </label>
               <button type="button" className="text-blue-600 hover:text-blue-700">
-                ¿Olvidaste tu contraseña?
+                {t('login.forgotPassword')}
               </button>
             </div>
 
@@ -133,18 +135,18 @@ export default function LoginForm() {
                   : 'bg-beehealth-blue-primary-solid hover:bg-beehealth-blue-primary-solid-hover'
               }`}
             >
-              {loading ? 'Ingresando...' : 'Iniciar Sesión'}
+              {loading ? t('login.loadingButton') : t('login.submitButton')}
             </button>
           </form>
 
           {/* Sign up link */}
           <p className="mt-6 text-center text-gray-600">
-            ¿No tienes cuenta?{' '}
+            {t('login.noAccount')}{' '}
             <button
               onClick={() => router.push('/auth/signup')}
               className="text-beehealth-blue-primary-solid hover:text-beehealth-blue-primary-solid-hover font-medium"
             >
-              Regístrate aquí
+              {t('login.registerLink')}
             </button>
           </p>
         </div>
@@ -162,19 +164,18 @@ export default function LoginForm() {
             </div>
 
             {/* Title */}
-            <h3 className="mb-2 text-center text-2xl font-bold text-gray-900">¡Bienvenido!</h3>
+            <h3 className="mb-2 text-center text-2xl font-bold text-gray-900">{t('login.successTitle')}</h3>
 
             {/* Message */}
             <p className="mb-6 text-center text-gray-600">
-              Hola <span className="font-semibold text-gray-900">{userName}</span>, tu sesión se ha
-              iniciado correctamente.
+              {t('login.successMessage', { name: userName })}
             </p>
 
             {/* Role Badge */}
             <div className="mb-6 flex justify-center">
               <span className="text-beehealth-blue-primary-solid inline-block rounded-full bg-blue-100 px-4 py-2 text-sm font-medium capitalize">
                 {userRole === 'patient'
-                  ? 'Paciente'
+                  ? 'Paciente' // TODO: Translate roles in common.json and use here if needed, or keep hardcoded if simple
                   : userRole === 'doctor'
                     ? 'Doctor'
                     : userRole === 'employee'
@@ -184,7 +185,7 @@ export default function LoginForm() {
             </div>
 
             {/* Loading Text */}
-            <p className="text-center text-sm text-gray-500">Redirigiendo...</p>
+            <p className="text-center text-sm text-gray-500">{t('login.redirecting')}</p>
 
             {/* Progress Bar */}
             <div className="mt-6 h-1 w-full overflow-hidden rounded-full bg-gray-200">
@@ -213,7 +214,7 @@ export default function LoginForm() {
 
             {/* Title */}
             <h3 className="mb-2 text-center text-2xl font-bold text-gray-900">
-              Error al iniciar sesión
+              {t('login.errorTitle')}
             </h3>
 
             {/* Error Message */}
@@ -222,7 +223,7 @@ export default function LoginForm() {
             {/* Suggestion */}
             <div className="mb-6 rounded-lg bg-yellow-50 p-4">
               <p className="text-sm text-yellow-800">
-                💡 Verifica que tu correo y contraseña sean correctos e intenta nuevamente.
+                {t('login.errorSuggestion')}
               </p>
             </div>
 
@@ -231,12 +232,12 @@ export default function LoginForm() {
               onClick={() => setShowErrorModal(false)}
               className="w-full rounded-lg bg-red-500 py-3 font-medium text-white transition hover:bg-red-600"
             >
-              Intentar de nuevo
+              {t('login.retryButton')}
             </button>
 
             {/* Sign up link */}
             <p className="mt-4 text-center text-sm text-gray-600">
-              ¿No tienes cuenta?{' '}
+              {t('login.noAccount')}{' '}
               <button
                 onClick={() => {
                   setShowErrorModal(false);
@@ -244,7 +245,7 @@ export default function LoginForm() {
                 }}
                 className="text-beehealth-blue-primary-solid hover:text-beehealth-blue-primary-solid-hover font-medium"
               >
-                Regístrate aquí
+                {t('login.registerLink')}
               </button>
             </p>
           </div>

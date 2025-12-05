@@ -2,8 +2,11 @@
 
 import clsx from 'clsx';
 import ActionButtons from './modals/shared/ActionsButtons';
+import { useTranslation } from 'react-i18next';
 
 export default function MedsTable({ rows, getStockStatus, onEdit, onDelete, onHistory }) {
+  const { t } = useTranslation('inventory');
+
   if (!Array.isArray(rows) || rows.length === 0) {
     return (
       <div className="p-4 md:p-6">
@@ -12,9 +15,9 @@ export default function MedsTable({ rows, getStockStatus, onEdit, onDelete, onHi
             <span className="text-2xl text-gray-400">💊</span>
           </div>
           <p className="mb-1 text-base font-medium text-gray-900">
-            No hay medicamentos registrados
+            {t('table.emptyMeds')}
           </p>
-          <p className="text-sm text-gray-500">Comienza agregando tu primer medicamento</p>
+          <p className="text-sm text-gray-500">{t('table.emptyMedsSub')}</p>
         </div>
       </div>
     );
@@ -28,19 +31,19 @@ export default function MedsTable({ rows, getStockStatus, onEdit, onDelete, onHi
             <thead>
               <tr className="bg-beehealth-body-main/50 border-b border-gray-200">
                 <th className="px-4 py-4 text-left text-xs font-semibold tracking-wider text-gray-600 uppercase">
-                  Medicamento
+                  {t('table.meds')}
                 </th>
                 <th className="px-4 py-4 text-left text-xs font-semibold tracking-wider text-gray-600 uppercase">
-                  Categoría
+                  {t('table.category')}
                 </th>
                 <th className="px-4 py-4 text-center text-xs font-semibold tracking-wider text-gray-600 uppercase">
-                  Stock
+                  {t('table.stock')}
                 </th>
                 <th className="hidden px-4 py-4 text-right text-xs font-semibold tracking-wider text-gray-600 uppercase lg:table-cell">
-                  Precio
+                  {t('table.price')}
                 </th>
                 <th className="px-4 py-4 text-center text-xs font-semibold tracking-wider text-gray-600 uppercase">
-                  Acciones
+                  {t('table.actions')}
                 </th>
               </tr>
             </thead>

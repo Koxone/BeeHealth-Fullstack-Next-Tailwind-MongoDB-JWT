@@ -1,9 +1,12 @@
 'use client';
 
 import { X, CheckCircle } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 /* success modal */
 export default function SuccessModal({ data, onClose }) {
+  const { t, i18n } = useTranslation('appointments');
+
   if (!data) return null;
 
   return (
@@ -22,20 +25,20 @@ export default function SuccessModal({ data, onClose }) {
           </div>
         </div>
 
-        <h2 className="mb-2 text-center text-3xl font-bold text-gray-900">¡Cita Confirmada!</h2>
-        <p className="mb-6 text-center text-gray-600">Tu cita ha sido agendada exitosamente</p>
+        <h2 className="mb-2 text-center text-3xl font-bold text-gray-900">{t('new.successTitle')}</h2>
+        <p className="mb-6 text-center text-gray-600">{t('new.successSubtitle')}</p>
 
         <div className="bg-beehealth-body-main space-y-4 rounded-2xl p-6">
           <div className="border-b border-gray-200 pb-3">
-            <p className="text-sm font-semibold text-gray-500 uppercase">Médico</p>
-            <p className="text-lg font-bold text-gray-900">{data.doctor.nombre}</p>
-            <p className="text-sm text-gray-600">{data.doctor.especialidad}</p>
+            <p className="text-sm font-semibold text-gray-500 uppercase">{t('new.doctor')}</p>
+            <p className="text-lg font-bold text-gray-900">{t(`new.doctors.${data.doctor.key}`)}</p>
+            <p className="text-sm text-gray-600">{t(`new.doctors.${data.doctor.specialtyKey}`)}</p>
           </div>
 
           <div className="border-b border-gray-200 pb-3">
-            <p className="text-sm font-semibold text-gray-500 uppercase">Fecha</p>
+            <p className="text-sm font-semibold text-gray-500 uppercase">{t('new.date')}</p>
             <p className="text-lg font-bold text-gray-900 capitalize">
-              {data.date.toLocaleDateString('es-ES', {
+              {data.date.toLocaleDateString(i18n.language === 'en' ? 'en-US' : 'es-ES', {
                 weekday: 'long',
                 day: 'numeric',
                 month: 'long',
@@ -45,12 +48,12 @@ export default function SuccessModal({ data, onClose }) {
           </div>
 
           <div className="border-b border-gray-200 pb-3">
-            <p className="text-sm font-semibold text-gray-500 uppercase">Hora</p>
+            <p className="text-sm font-semibold text-gray-500 uppercase">{t('new.time')}</p>
             <p className="text-2xl font-bold text-gray-900">{data.time}</p>
           </div>
 
           <div>
-            <p className="text-sm font-semibold text-gray-500 uppercase">Motivo</p>
+            <p className="text-sm font-semibold text-gray-500 uppercase">{t('new.reason')}</p>
             <p className="text-base text-gray-700">{data.reason}</p>
           </div>
         </div>
@@ -59,7 +62,7 @@ export default function SuccessModal({ data, onClose }) {
           onClick={onClose}
           className="mt-6 w-full rounded-2xl bg-linear-to-r from-blue-600 to-indigo-700 py-4 text-lg font-bold text-white shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl active:scale-95"
         >
-          Ok
+          {t('new.ok')}
         </button>
       </div>
     </div>

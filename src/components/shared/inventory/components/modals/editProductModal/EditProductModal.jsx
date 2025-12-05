@@ -14,7 +14,10 @@ import { editProductStock } from './services/editStock';
 import { editProductQuantity } from './services/editQuantity';
 import { editProduct } from './services/editProduct';
 
+import { useTranslation } from 'react-i18next';
+
 export default function EditProductModal({ activeTab, item, onClose, onSubmit, successRefresh }) {
+  const { t } = useTranslation('inventory');
   const { handleOverlayClick } = useModalClose(onClose);
 
   async function handleEditSubmit(formData) {
@@ -31,7 +34,7 @@ export default function EditProductModal({ activeTab, item, onClose, onSubmit, s
         formData.salePrice !== item.product.salePrice;
 
       if (!quantityChanged && !stockChanged && !infoChanged) {
-        alert('No se hicieron cambios');
+        alert(t('modals.edit.noChanges'));
         return;
       }
 
@@ -86,10 +89,10 @@ export default function EditProductModal({ activeTab, item, onClose, onSubmit, s
         successRefresh();
         onClose();
       } else {
-        alert(`Error: ${response.error}`);
+        alert(t('modals.edit.error', { error: response.error }));
       }
     } catch (error) {
-      alert(`Error: ${error.message}`);
+      alert(t('modals.edit.error', { error: error.message }));
     }
   }
 
@@ -150,14 +153,16 @@ export default function EditProductModal({ activeTab, item, onClose, onSubmit, s
                 </div>
                 <div>
                   <h2 className="text-2xl font-bold text-gray-900">
-                    Editar{' '}
-                    {activeTab === 'medicamentos'
-                      ? 'Medicamento'
-                      : activeTab === 'recetas'
-                        ? 'Receta'
-                        : 'Suministro'}
+                    {t('modals.edit.title', {
+                      type:
+                        activeTab === 'medicamentos'
+                          ? t('table.meds')
+                          : activeTab === 'recetas'
+                            ? t('table.prescriptions')
+                            : t('table.supplies'),
+                    })}
                   </h2>
-                  <p className="mt-1 text-sm text-gray-600">Actualiza los datos existentes</p>
+                  <p className="mt-1 text-sm text-gray-600">{t('modals.edit.subtitle')}</p>
                 </div>
               </div>
               <button

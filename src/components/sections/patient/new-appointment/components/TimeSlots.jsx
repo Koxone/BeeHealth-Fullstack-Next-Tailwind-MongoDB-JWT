@@ -1,9 +1,12 @@
 'use client';
 
 import { Clock, Check } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 /* slots */
 export default function TimeSlots({ dateLabel, times, selectedTime, onSelectTime }) {
+  const { t } = useTranslation('appointments');
+
   return (
     <div className="animate-slideDown bg-beehealth-body-main rounded-2xl border-2 border-gray-200 p-6 shadow-sm transition-all duration-300 hover:shadow-lg">
       <div className="mb-4 flex items-center gap-3">
@@ -11,8 +14,8 @@ export default function TimeSlots({ dateLabel, times, selectedTime, onSelectTime
           <Clock className="h-5 w-5 text-purple-600" />
         </div>
         <div>
-          <h2 className="text-xl font-bold text-gray-900">Paso 3: Selecciona un horario</h2>
-          <p className="text-sm text-gray-600">Horarios disponibles para {dateLabel}</p>
+          <h2 className="text-xl font-bold text-gray-900">{t('new.step3Title')}</h2>
+          <p className="text-sm text-gray-600">{t('new.step3Subtitle', { date: dateLabel })}</p>
         </div>
       </div>
 

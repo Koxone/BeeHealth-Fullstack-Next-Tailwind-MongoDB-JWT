@@ -1,0 +1,44 @@
+{
+  "language": "Idioma",
+  "languages": {
+    "es": "Español",
+    "en": "Inglés"
+  },
+  "roles": {
+    "guest": "Invitado",
+    "doctor": "Médico",
+    "patient": "Paciente",
+    "employee": "Empleado"
+  },
+  "header": {
+    "panel": "Panel de {{role}}",
+    "logout": "Cerrar Sesión"
+  },
+  "sidebar": {
+    "home": "Inicio",
+    "newAppointment": "Agendar Cita",
+    "myHistory": "Mi Historial",
+    "myDiets": "Mis Dietas",
+    "myWorkouts": "Mis Ejercicios",
+    "patients": "Pacientes",
+    "calendar": "Calendario",
+    "diets": "Dietas",
+    "workouts": "Ejercicios",
+    "accounting": "Contabilidad",
+    "inventory": "Inventario",
+    "profile": "Perfil",
+    "appointments": "Citas",
+    "consultations": "Consultas"
+  },
+  "homeHeader": {
+    "about": "Acerca de",
+    "contact": "Contacto",
+    "login": "Ingresar",
+    "signup": "Registrarse"
+  },
+  "actions": {
+    "newDiet": "Nueva Dieta",
+    "newPatient": "Nuevo Paciente",
+    "newWorkout": "Nuevo Ejercicio"
+  }
+}

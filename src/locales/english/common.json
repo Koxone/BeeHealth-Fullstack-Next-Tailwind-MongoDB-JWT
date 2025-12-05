@@ -1,0 +1,44 @@
+{
+  "language": "Language",
+  "languages": {
+    "es": "Spanish",
+    "en": "English"
+  },
+  "roles": {
+    "guest": "Guest",
+    "doctor": "Doctor",
+    "patient": "Patient",
+    "employee": "Employee"
+  },
+  "header": {
+    "panel": "{{role}} Panel",
+    "logout": "Logout"
+  },
+  "sidebar": {
+    "home": "Home",
+    "newAppointment": "Book Appointment",
+    "myHistory": "My History",
+    "myDiets": "My Diets",
+    "myWorkouts": "My Workouts",
+    "patients": "Patients",
+    "calendar": "Calendar",
+    "diets": "Diets",
+    "workouts": "Workouts",
+    "accounting": "Accounting",
+    "inventory": "Inventory",
+    "profile": "Profile",
+    "appointments": "Appointments",
+    "consultations": "Consultations"
+  },
+  "homeHeader": {
+    "about": "About",
+    "contact": "Contact",
+    "login": "Login",
+    "signup": "Sign Up"
+  },
+  "actions": {
+    "newDiet": "New Diet",
+    "newPatient": "New Patient",
+    "newWorkout": "New Workout"
+  }
+}

@@ -3,8 +3,11 @@ import { useGetAllQuestions } from '@/hooks/clinicalRecords/get/useGetAllQuestio
 import Link from 'next/link';
 import EditRecordDateButton from './components/EditRecordDateButton';
 import { useEditClinicalRecord } from '@/hooks/clinicalRecords/edit/useEditClinicalRecord';
+import { useTranslation } from 'react-i18next';
 
 function HistoryCard({ r, onEdit, specialty, showDeleteModal, setShowDeleteModal, onDelete }) {
+  const { t, i18n } = useTranslation('clinicalRecords');
+
   function getValueByQuestionId(questionId) {
     if (!r?.answers) return null;
 
@@ -29,7 +32,7 @@ function HistoryCard({ r, onEdit, specialty, showDeleteModal, setShowDeleteModal
       <div className="flex flex-col items-center justify-center text-center">
         <div className="bg-beehealth-blue-primary-light text-beehealth-blue-primary-dark border-beehealth-blue-primary-solid flex h-12 w-12 flex-col items-center justify-center rounded-lg border sm:h-14 sm:w-14">
           <span className="text-xs font-medium uppercase">
-            {new Date(r.recordDate).toLocaleDateString('es-MX', { month: 'short' })}
+            {new Date(r.recordDate).toLocaleDateString(i18n.language === 'en' ? 'en-US' : 'es-MX', { month: 'short' })}
           </span>
           <span className="text-base font-bold sm:text-lg">{r.recordDate.substring(8, 10)}</span>
         </div>

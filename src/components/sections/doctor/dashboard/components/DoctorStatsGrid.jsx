@@ -5,8 +5,11 @@ import { useGetFullInventory } from '@/hooks/inventory/useGetFullInventory';
 import { Users, DollarSign, AlertTriangle, Activity, Pill } from 'lucide-react';
 import DoctorStatsCard from './DoctorStatsCard';
 import { useGetAllConsults } from '@/hooks/consults/useGetAllConsults';
+import { useTranslation } from 'react-i18next';
 
 export default function DoctorStatsGrid({ role, specialty }) {
+  const { t } = useTranslation('dashboard');
+
   // Appointments Today logic
   const { appointments, loading } = useTodayAppointmentsBySpecialty();
   const todaysAppointmentsNumber = appointments?.length || 0;
@@ -32,31 +35,31 @@ export default function DoctorStatsGrid({ role, specialty }) {
         {
           Icon: DollarSign,
           mainData: '$' + totalSales,
-          extraData: 'Hoy',
-          title: 'Ingresos de Hoy',
+          extraData: t('stats.today'),
+          title: t('stats.todayIncome'),
           variant: 'primary',
         },
         {
           Icon: Users,
           mainData: todaysAppointmentsNumber,
-          extraData: 'Hoy',
-          title: 'Citas Programadas',
+          extraData: t('stats.today'),
+          title: t('stats.scheduledAppointments'),
           variant: 'success',
           href: '/doctor/calendar',
         },
         {
           Icon: Pill,
           mainData: '$' + medsSoldTotal,
-          extraData: 'Hoy',
-          title: 'Venta de Medicamentos',
+          extraData: t('stats.today'),
+          title: t('stats.medsSales'),
           variant: 'purple',
           href: '/doctor/inventory',
         },
         {
           Icon: AlertTriangle,
           mainData: totalAlerts,
-          extraData: totalAlerts === 0 ? 'Sin alertas' : 'Revisar',
-          title: 'Alertas de Inventario',
+          extraData: totalAlerts === 0 ? t('stats.noAlerts') : t('stats.check'),
+          title: t('stats.inventoryAlerts'),
           variant: totalAlerts === 0 ? 'success' : 'danger',
           href: '/doctor/inventory',
         },

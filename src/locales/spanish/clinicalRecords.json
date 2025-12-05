@@ -1,0 +1,38 @@
+{
+  "history": {
+    "title": "Historial Clínico",
+    "subtitle": "Registros médicos del paciente",
+    "empty": "Sin registros clínicos",
+    "emptySubtitle": "Comienza agregando el primer registro",
+    "add": "Registrar Consulta",
+    "newGoal": "Crear Meta",
+    "card": {
+      "date": "Fecha",
+      "reason": "Motivo",
+      "actions": "Acciones",
+      "view": "Ver",
+      "edit": "Editar",
+      "delete": "Eliminar"
+    }
+  },
+  "modal": {
+    "titleNew": "Nuevo Historial Clínico",
+    "titleEdit": "Editar Historial Clínico",
+    "titleView": "Ver Historial Clínico",
+    "subtitle": "Registro médico del paciente",
+    "tabs": {
+      "basic": "Información Básica",
+      "full": "Historial Completo"
+    },
+    "save": "Guardar nuevo registro",
+    "saveChanges": "Guardar cambios",
+    "saving": "Guardando...",
+    "cancel": "Cancelar",
+    "readOnly": "Solo Lectura",
+    "editMode": "Modo Edición",
+    "basicInfo": "Información Básica",
+    "fullInfo": "Información Completa",
+    "noFullRecord": "No hay registro completo disponible",
+    "select": "Seleccionar"
+  }
+}

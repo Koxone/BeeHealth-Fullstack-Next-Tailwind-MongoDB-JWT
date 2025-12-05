@@ -1,6 +1,7 @@
 'use client';
 
 import { Calendar as CalendarIcon, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 /* calendar */
 export default function CalendarPicker({
@@ -13,6 +14,8 @@ export default function CalendarPicker({
   isDateAvailable,
   isPastDate,
 }) {
+  const { t } = useTranslation('appointments');
+
   return (
     <div className="animate-slideDown bg-beehealth-body-main rounded-2xl border-2 border-gray-200 p-6 shadow-sm transition-all duration-300 hover:shadow-lg">
       <div className="mb-4 flex items-center gap-3">
@@ -20,8 +23,8 @@ export default function CalendarPicker({
           <CalendarIcon className="h-5 w-5 text-indigo-600" />
         </div>
         <div>
-          <h2 className="text-xl font-bold text-gray-900">Paso 2: Selecciona una fecha</h2>
-          <p className="text-sm text-gray-600">Elige el día de tu consulta</p>
+          <h2 className="text-xl font-bold text-gray-900">{t('new.step2Title')}</h2>
+          <p className="text-sm text-gray-600">{t('new.step2Subtitle')}</p>
         </div>
       </div>
 
@@ -90,15 +93,15 @@ export default function CalendarPicker({
         <div className="mt-6 flex flex-wrap items-center gap-4 border-t border-gray-200 pt-5 text-xs">
           <div className="flex items-center gap-2">
             <div className="bg-beehealth-body-main h-5 w-5 rounded-lg border-2 border-blue-300 shadow-sm" />
-            <span className="font-medium text-gray-700">Disponible</span>
+            <span className="font-medium text-gray-700">{t('new.available')}</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="h-5 w-5 rounded-lg bg-gray-100" />
-            <span className="font-medium text-gray-700">No disponible</span>
+            <span className="font-medium text-gray-700">{t('new.notAvailable')}</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="bg-beehealth-blue-primary-solid h-5 w-5 rounded-lg shadow-sm" />
-            <span className="font-medium text-gray-700">Seleccionado</span>
+            <span className="font-medium text-gray-700">{t('new.selected')}</span>
           </div>
         </div>
       </div>

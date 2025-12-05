@@ -19,10 +19,12 @@ import {
   Shield,
   CheckCircle2,
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export default function SharedUserProfile({ role, currentUser }) {
   /* Local editing state */
   const [isEditing, setIsEditing] = useState(false);
+  const { t } = useTranslation('profile');
 
   if (role === 'doctor')
     return (
@@ -43,9 +45,9 @@ export default function SharedUserProfile({ role, currentUser }) {
               </div>
               <div>
                 <h1 className="mb-1 text-3xl font-bold text-white md:text-4xl">
-                  Mi Perfil Profesional
+                  {t('doctor.title')}
                 </h1>
-                <p className="text-green-50">Información profesional y de contacto</p>
+                <p className="text-green-50">{t('doctor.subtitle')}</p>
               </div>
             </div>
 
@@ -56,12 +58,12 @@ export default function SharedUserProfile({ role, currentUser }) {
               {isEditing ? (
                 <>
                   <Save className="h-5 w-5 transition-transform group-hover:scale-110" />
-                  Guardar Cambios
+                  {t('doctor.save')}
                 </>
               ) : (
                 <>
                   <Edit2 className="h-5 w-5 transition-transform group-hover:scale-110" />
-                  Editar Perfil
+                  {t('doctor.edit')}
                 </>
               )}
             </button>
@@ -86,25 +88,25 @@ export default function SharedUserProfile({ role, currentUser }) {
                 <h2 className="text-center text-xl font-bold text-gray-900">
                   Dr(a). {currentUser.fullName}
                 </h2>
-                <CheckCircle2 className="h-5 w-5 text-green-500" title="Perfil verificado" />
+                <CheckCircle2 className="h-5 w-5 text-green-500" title={t('doctor.verified')} />
               </div>
 
               <div className="mb-4 flex items-center gap-2 rounded-full bg-green-50 px-4 py-1.5">
                 <p className="text-sm font-medium text-green-700">
                   {currentUser?.role === 'doctor' &&
                     currentUser?.specialty === 'weight' &&
-                    'Control de Peso'}
+                    t('doctor.specialty.weight')}
                 </p>
               </div>
 
               <div className="flex w-full gap-2">
                 <div className="flex-1 rounded-lg bg-green-50 p-3 text-center">
                   <p className="text-2xl font-bold text-green-600">156</p>
-                  <p className="text-xs text-gray-600">Pacientes</p>
+                  <p className="text-xs text-gray-600">{t('doctor.patients')}</p>
                 </div>
                 <div className="flex-1 rounded-lg bg-blue-50 p-3 text-center">
                   <p className="text-2xl font-bold text-blue-600">4.9</p>
-                  <p className="text-xs text-gray-600">Rating</p>
+                  <p className="text-xs text-gray-600">{t('doctor.rating')}</p>
                 </div>
               </div>
             </div>
@@ -116,29 +118,29 @@ export default function SharedUserProfile({ role, currentUser }) {
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50">
                 <User className="h-5 w-5 text-blue-600" />
               </div>
-              <h3 className="text-xl font-bold text-gray-900">Información Personal</h3>
+              <h3 className="text-xl font-bold text-gray-900">{t('doctor.personalInfo')}</h3>
             </div>
 
             <div className="grid gap-4 md:grid-cols-2">
               <Field
-                label="Correo Electrónico"
+                label={t('fields.email')}
                 value={currentUser.email}
                 isEditing={isEditing}
                 icon={Mail}
               />
               <Field
-                label="Telefono"
+                label={t('fields.phone')}
                 value={currentUser.phone}
                 isEditing={isEditing}
                 icon={Phone}
               />
               <Field
-                label="Cédula Profesional"
+                label={t('fields.license')}
                 value="1234567"
                 isEditing={isEditing}
                 icon={Award}
               />
-              <Field label="Universidad" value="UNAM" isEditing={isEditing} icon={MapPin} />
+              <Field label={t('fields.university')} value="UNAM" isEditing={isEditing} icon={MapPin} />
             </div>
           </div>
         </div>
@@ -149,18 +151,18 @@ export default function SharedUserProfile({ role, currentUser }) {
             <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-purple-50">
               <Briefcase className="h-5 w-5 text-purple-600" />
             </div>
-            <h3 className="text-xl font-bold text-gray-900">Información Profesional</h3>
+            <h3 className="text-xl font-bold text-gray-900">{t('doctor.professionalInfo')}</h3>
           </div>
 
           <div className="grid gap-6">
             <div>
               <label className="mb-3 flex items-center gap-2 text-sm font-semibold text-gray-700">
                 <Edit2 className="h-4 w-4" />
-                Biografía Profesional
+                {t('doctor.bio')}
               </label>
               <textarea
                 rows="4"
-                defaultValue="Especialista en nutrición clínica con más de 10 años de experiencia ayudando a pacientes a alcanzar sus objetivos de salud."
+                defaultValue={t('doctor.defaultBio')}
                 disabled={!isEditing}
                 className="focus:bg-beehealth-body-main bg-beehealth-body-main w-full rounded-xl border-2 border-gray-200 px-4 py-3 text-gray-700 transition-all duration-200 focus:border-blue-400 focus:ring-4 focus:ring-blue-100 disabled:cursor-not-allowed disabled:opacity-60"
               ></textarea>
@@ -170,7 +172,7 @@ export default function SharedUserProfile({ role, currentUser }) {
               <div className="flex items-center gap-3 rounded-xl bg-linear-to-br from-blue-50 to-blue-100 p-4">
                 <Calendar className="h-8 w-8 text-blue-600" />
                 <div>
-                  <p className="text-xs text-blue-600">Años de experiencia</p>
+                  <p className="text-xs text-blue-600">{t('doctor.experience')}</p>
                   <p className="text-2xl font-bold text-blue-900">10+</p>
                 </div>
               </div>
@@ -178,7 +180,7 @@ export default function SharedUserProfile({ role, currentUser }) {
               <div className="flex items-center gap-3 rounded-xl bg-linear-to-br from-purple-50 to-purple-100 p-4">
                 <Award className="h-8 w-8 text-purple-600" />
                 <div>
-                  <p className="text-xs text-purple-600">Certificaciones</p>
+                  <p className="text-xs text-purple-600">{t('doctor.certifications')}</p>
                   <p className="text-2xl font-bold text-purple-900">5</p>
                 </div>
               </div>
@@ -186,15 +188,15 @@ export default function SharedUserProfile({ role, currentUser }) {
               <div className="flex items-center gap-3 rounded-xl bg-linear-to-br from-green-50 to-green-100 p-4">
                 <CheckCircle2 className="h-8 w-8 text-green-600" />
                 <div>
-                  <p className="text-xs text-green-600">Estado</p>
-                  <p className="text-lg font-bold text-green-900">Activo</p>
+                  <p className="text-xs text-green-600">{t('doctor.status')}</p>
+                  <p className="text-lg font-bold text-green-900">{t('doctor.active')}</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        <SecuritySection />
+        <SecuritySection t={t} />
       </div>
     );
 
@@ -203,9 +205,9 @@ export default function SharedUserProfile({ role, currentUser }) {
       nombre: currentUser.fullName,
       email: currentUser.email,
       telefono: currentUser.phone,
-      puesto: 'Recepcionista',
+      puesto: t('employee.role.receptionist'),
       fechaIngreso: '2023-01-15',
-      horario: 'Lunes a Viernes, 8:00 AM - 5:00 PM',
+      horario: t('employee.defaultSchedule'),
     };
 
     return (
@@ -216,8 +218,8 @@ export default function SharedUserProfile({ role, currentUser }) {
           <div className="bg-beehealth-body-main/10 absolute -bottom-10 -left-10 h-40 w-40 rounded-full blur-3xl"></div>
 
           <div className="relative">
-            <h1 className="mb-2 text-3xl font-bold text-white md:text-4xl">Mi Perfil</h1>
-            <p className="text-purple-50">Información personal y laboral</p>
+            <h1 className="mb-2 text-3xl font-bold text-white md:text-4xl">{t('employee.title')}</h1>
+            <p className="text-purple-50">{t('employee.subtitle')}</p>
           </div>
         </div>
 
@@ -242,19 +244,19 @@ export default function SharedUserProfile({ role, currentUser }) {
           </div>
 
           <div className="space-y-3">
-            <InfoCard icon={Mail} label="Email" value={empleado.email} color="blue" />
-            <InfoCard icon={Phone} label="Telefono" value={empleado.telefono} color="green" />
+            <InfoCard icon={Mail} label={t('fields.email')} value={empleado.email} color="blue" />
+            <InfoCard icon={Phone} label={t('fields.phone')} value={empleado.telefono} color="green" />
             <InfoCard
               icon={Calendar}
-              label="Fecha de Ingreso"
+              label={t('employee.dateJoined')}
               value={empleado.fechaIngreso}
               color="purple"
             />
-            <InfoCard icon={Clock} label="Horario" value={empleado.horario} color="orange" />
+            <InfoCard icon={Clock} label={t('employee.schedule')} value={empleado.horario} color="orange" />
           </div>
         </div>
 
-        <SecuritySection />
+        <SecuritySection t={t} />
       </div>
     );
   }
@@ -273,8 +275,8 @@ export default function SharedUserProfile({ role, currentUser }) {
                 <User className="h-10 w-10 text-white" />
               </div>
               <div>
-                <h1 className="mb-1 text-3xl font-bold text-white md:text-4xl">Mi Perfil</h1>
-                <p className="text-blue-50">Información personal y médica</p>
+                <h1 className="mb-1 text-3xl font-bold text-white md:text-4xl">{t('patient.title')}</h1>
+                <p className="text-blue-50">{t('patient.subtitle')}</p>
               </div>
             </div>
 
@@ -285,12 +287,12 @@ export default function SharedUserProfile({ role, currentUser }) {
               {isEditing ? (
                 <>
                   <Save className="h-5 w-5 transition-transform group-hover:scale-110" />
-                  Guardar Cambios
+                  {t('doctor.save')}
                 </>
               ) : (
                 <>
                   <Edit2 className="h-5 w-5 transition-transform group-hover:scale-110" />
-                  Editar Perfil
+                  {t('doctor.edit')}
                 </>
               )}
             </button>
@@ -313,17 +315,17 @@ export default function SharedUserProfile({ role, currentUser }) {
 
               <div className="mb-4 flex items-center gap-2 rounded-full bg-blue-50 px-4 py-1.5">
                 <User className="h-4 w-4 text-blue-600" />
-                <p className="text-sm font-medium text-blue-700">Paciente</p>
+                <p className="text-sm font-medium text-blue-700">{t('patient.role')}</p>
               </div>
 
               <div className="flex w-full gap-2">
                 <div className="flex-1 rounded-lg bg-green-50 p-3 text-center">
                   <p className="text-2xl font-bold text-green-600">8</p>
-                  <p className="text-xs text-gray-600">Consultas</p>
+                  <p className="text-xs text-gray-600">{t('patient.consults')}</p>
                 </div>
                 <div className="flex-1 rounded-lg bg-purple-50 p-3 text-center">
                   <p className="text-2xl font-bold text-purple-600">3</p>
-                  <p className="text-xs text-gray-600">Meses</p>
+                  <p className="text-xs text-gray-600">{t('patient.months')}</p>
                 </div>
               </div>
             </div>
@@ -335,29 +337,29 @@ export default function SharedUserProfile({ role, currentUser }) {
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50">
                 <User className="h-5 w-5 text-blue-600" />
               </div>
-              <h3 className="text-xl font-bold text-gray-900">Información Personal</h3>
+              <h3 className="text-xl font-bold text-gray-900">{t('doctor.personalInfo')}</h3>
             </div>
 
             <div className="grid gap-4 md:grid-cols-2">
               <Field
-                label="Correo Electrónico"
+                label={t('fields.email')}
                 value={currentUser.email}
                 isEditing={isEditing}
                 icon={Mail}
               />
               <Field
-                label="Telefono"
+                label={t('fields.phone')}
                 value={currentUser.phone}
                 isEditing={isEditing}
                 icon={Phone}
               />
-              <Field label="Altura (cm)" value="175" isEditing={isEditing} icon={User} />
-              <Field label="Peso Actual (kg)" value="75" isEditing={isEditing} icon={User} />
+              <Field label={t('patient.height')} value="175" isEditing={isEditing} icon={User} />
+              <Field label={t('patient.weight')} value="75" isEditing={isEditing} icon={User} />
             </div>
           </div>
         </div>
 
-        <SecuritySection />
+        <SecuritySection t={t} />
       </div>
     );
 
@@ -365,8 +367,8 @@ export default function SharedUserProfile({ role, currentUser }) {
     <div className="bg-beehealth-body-main flex min-h-[400px] items-center justify-center rounded-2xl border-2 border-dashed border-gray-300 p-8">
       <div className="text-center">
         <User className="mx-auto mb-4 h-16 w-16 text-gray-400" />
-        <p className="text-lg font-medium text-gray-600">No se encontró un perfil válido</p>
-        <p className="mt-2 text-sm text-gray-500">Por favor, contacta al administrador</p>
+        <p className="text-lg font-medium text-gray-600">{t('notFound.title')}</p>
+        <p className="mt-2 text-sm text-gray-500">{t('notFound.subtitle')}</p>
       </div>
     </div>
   );
@@ -431,7 +433,7 @@ function InfoCard({ icon: Icon, label, value, color = 'gray' }) {
 }
 
 /* Security section */
-function SecuritySection() {
+function SecuritySection({ t }) {
   return (
     <div className="bg-beehealth-body-main rounded-2xl border border-gray-200 p-6 shadow-lg">
       <div className="mb-6 flex items-center gap-3">
@@ -439,8 +441,8 @@ function SecuritySection() {
           <Shield className="h-5 w-5 text-red-600" />
         </div>
         <div>
-          <h3 className="text-xl font-bold text-gray-900">Seguridad</h3>
-          <p className="text-sm text-gray-500">Protege tu cuenta</p>
+          <h3 className="text-xl font-bold text-gray-900">{t('security.title')}</h3>
+          <p className="text-sm text-gray-500">{t('security.subtitle')}</p>
         </div>
       </div>
 
@@ -449,8 +451,8 @@ function SecuritySection() {
           <div className="flex items-center gap-3">
             <Lock className="h-5 w-5 text-gray-600 transition-colors group-hover:text-blue-600" />
             <div className="text-left">
-              <p className="font-semibold text-gray-900">Cambiar Contraseña</p>
-              <p className="text-xs text-gray-500">Actualiza tu contraseña</p>
+              <p className="font-semibold text-gray-900">{t('security.changePassword')}</p>
+              <p className="text-xs text-gray-500">{t('security.changePasswordSubtitle')}</p>
             </div>
           </div>
           <div className="text-gray-400 transition-transform group-hover:translate-x-1">→</div>
@@ -460,8 +462,8 @@ function SecuritySection() {
           <div className="flex items-center gap-3">
             <Shield className="h-5 w-5 text-gray-600 transition-colors group-hover:text-green-600" />
             <div className="text-left">
-              <p className="font-semibold text-gray-900">Verificación en 2 pasos</p>
-              <p className="text-xs text-gray-500">Mayor seguridad</p>
+              <p className="font-semibold text-gray-900">{t('security.twoFactor')}</p>
+              <p className="text-xs text-gray-500">{t('security.twoFactorSubtitle')}</p>
             </div>
           </div>
           <div className="text-gray-400 transition-transform group-hover:translate-x-1">→</div>

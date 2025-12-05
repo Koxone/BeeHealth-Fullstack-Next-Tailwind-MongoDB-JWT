@@ -1,0 +1,30 @@
+{
+  "history": {
+    "title": "Historial Clínico",
+    "subtitle": "Visualiza tus ultimos registros médicos",
+    "noRecordsTitle": "No hay registros de peso",
+    "noRecordsSubtitle": "Agenda tu primer cita para comenzar a registrar tus mediciones",
+    "bookAppointment": "Agendar Cita",
+    "weightSummary": "Resumen de Peso",
+    "heightSummary": "Resumen de Talla",
+    "recordsTitle": "Registro de Mediciones",
+    "recordsCount": "{{count}} registro",
+    "recordsCount_plural": "{{count}} registros",
+    "date": "Fecha",
+    "weight": "Peso",
+    "height": "Talla",
+    "difference": "Diferencia",
+    "differenceWeight": "Dif. Peso",
+    "differenceHeight": "Dif. Talla",
+    "notes": "Notas",
+    "imc": "IMC"
+  },
+  "stats": {
+    "initialWeight": "Peso Inicial",
+    "currentWeight": "Peso Actual",
+    "initialHeight": "Talla Inicial",
+    "currentHeight": "Talla Actual",
+    "difference": "Diferencia",
+    "progress": "Progreso"
+  }
+}

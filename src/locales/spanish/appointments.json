@@ -1,0 +1,41 @@
+{
+  "new": {
+    "title": "Agendar Nueva Cita",
+    "subtitle": "Sigue los pasos para programar tu consulta médica",
+    "step1": "Médico",
+    "step2": "Fecha",
+    "step3": "Hora",
+    "step1Title": "Paso 1: Selecciona tu médico",
+    "step1Subtitle": "Elige el especialista que deseas consultar",
+    "step2Title": "Paso 2: Selecciona una fecha",
+    "step2Subtitle": "Elige el día de tu consulta",
+    "step3Title": "Paso 3: Selecciona un horario",
+    "step3Subtitle": "Horarios disponibles para {{date}}",
+    "reasonTitle": "Motivo de la consulta",
+    "reasonSubtitle": "Describe brevemente tu motivo de consulta",
+    "reasonPlaceholder": "Ej: Revisión de rutina, control de glucosa, consulta sobre alimentación...",
+    "summaryTitle": "Resumen de tu cita",
+    "doctor": "Médico",
+    "date": "Fecha",
+    "time": "Hora",
+    "reason": "Motivo",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar Cita",
+    "successTitle": "¡Cita Confirmada!",
+    "successSubtitle": "Tu cita ha sido agendada exitosamente",
+    "ok": "Ok",
+    "available": "Disponible",
+    "notAvailable": "No disponible",
+    "selected": "Seleccionado",
+    "alertIncomplete": "Por favor completa todos los campos",
+    "alertError": "Error al crear la cita",
+    "doctors": {
+      "weight": "Control de Peso",
+      "weightSpecialty": "Nutrición y Metabolismo",
+      "dental": "Odontología",
+      "dentalSpecialty": "Periodoncia",
+      "aesthetic": "Tratamientos Estéticos",
+      "aestheticSpecialty": "Medicina Estética"
+    }
+  }
+}

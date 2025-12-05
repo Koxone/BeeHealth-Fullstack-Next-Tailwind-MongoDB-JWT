@@ -13,6 +13,7 @@ import SuccessModal from './components/SuccessModal';
 import useSound from 'use-sound';
 import { isPastDate, getDaysInMonth } from './components/NewAppointmentUtils';
 import useAuthStore from '@/zustand/useAuthStore';
+import { useTranslation } from 'react-i18next';
 
 /* Slots helper */
 function getAvailableSlots(date, tipo) {
@@ -57,15 +58,16 @@ function getAvailableSlots(date, tipo) {
 
 /* Doctors list */
 const doctors = [
-  { id: 1, nombre: 'Control de Peso', especialidad: 'Nutrición y Metabolismo' },
-  { id: 2, nombre: 'Odontología', especialidad: 'Periodoncia' },
-  { id: 3, nombre: 'Tratamientos Estéticos', especialidad: 'Medicina Estética' },
+  { id: 1, nombre: 'Control de Peso', especialidad: 'Nutrición y Metabolismo', key: 'weight', specialtyKey: 'weightSpecialty' },
+  { id: 2, nombre: 'Odontología', especialidad: 'Periodoncia', key: 'dental', specialtyKey: 'dentalSpecialty' },
+  { id: 3, nombre: 'Tratamientos Estéticos', especialidad: 'Medicina Estética', key: 'aesthetic', specialtyKey: 'aestheticSpecialty' },
 ];
 
 /* Main component */
 export default function NewAppointment() {
   // Zustand
   const { user } = useAuthStore();
+  const { t, i18n } = useTranslation('appointments');
 
   // Custom Hooks
   const router = useRouter();
@@ -82,7 +84,7 @@ export default function NewAppointment() {
   const [reason, setReason] = useState('');
 
   const days = getDaysInMonth(currentMonth);
-  const monthName = currentMonth.toLocaleDateString('es-ES', { month: 'long', year: 'numeric' });
+  const monthName = currentMonth.toLocaleDateString(i18n.language === 'en' ? 'en-US' : 'es-ES', { month: 'long', year: 'numeric' });
 
   const handlePrevMonth = () => {
     setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1));
@@ -123,7 +125,7 @@ export default function NewAppointment() {
     play();
 
     if (!selectedDoctor || !selectedDate || !selectedTime || !reason) {
-      alert('Por favor completa todos los campos');
+      alert(t('new.alertIncomplete'));
       return;
     }
 
@@ -154,7 +156,7 @@ export default function NewAppointment() {
       resetForm();
     } catch (err) {
       console.error(err);
-      alert('Error al crear la cita');
+      alert(t('new.alertError'));
     }
   };
 
@@ -177,6 +179,7 @@ export default function NewAppointment() {
               setSelectedDate(null);
               setSelectedTime(null);
             }}
+            doctors={doctors}
           />
 
           {selectedDoctor && (
@@ -194,7 +197,7 @@ export default function NewAppointment() {
 
           {selectedDate && (
             <TimeSlots
-              dateLabel={selectedDate.toLocaleDateString('es-ES', {
+              dateLabel={selectedDate.toLocaleDateString(i18n.language === 'en' ? 'en-US' : 'es-ES', {
                 day: 'numeric',
                 month: 'long',
               })}
@@ -223,7 +226,7 @@ export default function NewAppointment() {
               onClick={() => router.back()}
               className="hover:bg-beehealth-body-main flex-1 rounded-xl border-2 border-gray-300 px-6 py-4 font-semibold text-gray-700 transition-all duration-200 hover:shadow-md active:scale-95"
             >
-              Cancelar
+              {t('new.cancel')}
             </button>
             <button
               type="submit"
@@ -234,7 +237,7 @@ export default function NewAppointment() {
                   : 'cursor-not-allowed bg-gray-200 text-gray-400'
               }`}
             >
-              Confirmar Cita
+              {t('new.confirm')}
             </button>
           </div>
         </form>

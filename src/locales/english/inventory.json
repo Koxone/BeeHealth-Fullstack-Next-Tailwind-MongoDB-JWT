@@ -1,0 +1,101 @@
+{
+  "header": {
+    "title": "Inventory Management",
+    "subtitle": "Control of medications, prescriptions, and supplies"
+  },
+  "tabs": {
+    "meds": "Medications",
+    "prescriptions": "Prescriptions",
+    "supplies": "Supplies"
+  },
+  "actions": {
+    "search": "Search by name, category, or location...",
+    "add": "New Product",
+    "restock": "Restock"
+  },
+  "stats": {
+    "medsValue": "Medications Value",
+    "suppliesValue": "Supplies Value",
+    "totalItems": "Total Items",
+    "medsTitle": "Estimated total amount if all medications currently in inventory were sold at the established sale price.",
+    "suppliesTitle": "Total amount invested in materials available in the office according to their purchase cost.",
+    "totalTitle": "Total number of items registered in the inventory, including medications, prescriptions, and medical supplies."
+  },
+  "table": {
+    "meds": "Medication",
+    "supplies": "Supply",
+    "prescriptions": "Prescription",
+    "category": "Category",
+    "stock": "Stock",
+    "price": "Price",
+    "actions": "Actions",
+    "emptyMeds": "No medications registered",
+    "emptyMedsSub": "Start by adding your first medication",
+    "emptySupplies": "No supplies registered",
+    "emptySuppliesSub": "Start by adding your first supply",
+    "emptyPrescriptions": "No prescriptions registered",
+    "emptyPrescriptionsSub": "Start by adding your first prescription"
+  },
+  "modals": {
+    "create": {
+      "title": "Add {{type}}",
+      "subtitle": "Complete all required fields",
+      "close": "Close"
+    },
+    "edit": {
+      "title": "Edit {{type}}",
+      "subtitle": "Update existing data",
+      "noChanges": "No changes were made",
+      "error": "Error: {{error}}"
+    },
+    "restock": {
+      "title": "Add Stock",
+      "subtitle": "Select a product and the quantity to restock",
+      "product": "Product",
+      "selectProduct": "Select a product",
+      "currentQuantity": "Current Quantity",
+      "notAvailable": "Not available",
+      "quantityToAdd": "Quantity to add",
+      "reason": "Reason (optional)",
+      "cancel": "Cancel",
+      "confirm": "Confirm Restock",
+      "alert": "You must select a product and specify a valid quantity."
+    },
+    "delete": {
+      "title": "Delete Item",
+      "subtitle": "This action cannot be undone. The item will be permanently deleted.",
+      "confirmMessage": "Are you sure you want to delete {{name}}?",
+      "cancel": "Cancel",
+      "confirm": "Yes, delete"
+    },
+    "toggle": {
+      "deactivateTitle": "Deactivate Product",
+      "reactivateTitle": "Reactivate Product",
+      "deactivateSubtitle": "If you deactivate this product, it will no longer appear in inventory lists nor can it be sold. You can reactivate it later.",
+      "reactivateSubtitle": "By reactivating this product, it will be available in the inventory again and can be managed.",
+      "deactivateConfirm": "Are you sure you want to deactivate {{name}}?",
+      "reactivateConfirm": "Are you sure you want to reactivate {{name}}?",
+      "cancel": "Cancel",
+      "deactivate": "Yes, deactivate",
+      "reactivate": "Yes, reactivate"
+    },
+    "history": {
+      "title": "History of {{name}}",
+      "subtitle": "Recent product movements",
+      "loading": "Loading",
+      "emptyTitle": "No History",
+      "emptySubtitle": "This product has no registered movements.",
+      "close": "Close"
+    },
+    "success": {
+      "title": "Inventory updated successfully",
+      "message": "Information was saved correctly."
+    }
+  },
+  "tooltips": {
+    "edit": "Edit product",
+    "deactivate": "Deactivate product",
+    "reactivate": "Reactivate product",
+    "history": "View transaction history"
+  }
+}

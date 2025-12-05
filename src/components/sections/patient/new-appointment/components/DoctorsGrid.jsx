@@ -4,19 +4,23 @@
 import { FaTooth, FaSyringe } from 'react-icons/fa'; // dental y estética
 import { GiWeightScale } from 'react-icons/gi'; // control de peso
 import { Check, Stethoscope } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
-export default function DoctorsGrid({ selectedDoctor, onSelect }) {
-  /* Mock Data */
-  const doctors = [
-    {
-      id: 1,
-      nombre: 'Control de Peso',
-      especialidad: 'Nutrición y Metabolismo',
-      icon: GiWeightScale,
-    },
-    { id: 2, nombre: 'Odontología', especialidad: 'Periodoncia', icon: FaTooth },
-    { id: 3, nombre: 'Tratamientos Estéticos', especialidad: 'Medicina Estética', icon: FaSyringe },
-  ];
+export default function DoctorsGrid({ selectedDoctor, onSelect, doctors }) {
+  const { t } = useTranslation('appointments');
+
+  const getIcon = (id) => {
+    switch (id) {
+      case 1:
+        return GiWeightScale;
+      case 2:
+        return FaTooth;
+      case 3:
+        return FaSyringe;
+      default:
+        return Stethoscope;
+    }
+  };
 
   return (
     <div className="bg-beehealth-body-main rounded-2xl border-2 border-gray-200 p-6 shadow-sm transition-all duration-300 hover:shadow-lg">
@@ -26,15 +30,15 @@ export default function DoctorsGrid({ selectedDoctor, onSelect }) {
           <Stethoscope className="h-5 w-5 text-blue-600" />
         </div>
         <div>
-          <h2 className="text-xl font-bold text-gray-900">Paso 1: Selecciona tu médico</h2>
-          <p className="text-sm text-gray-600">Elige el especialista que deseas consultar</p>
+          <h2 className="text-xl font-bold text-gray-900">{t('new.step1Title')}</h2>
+          <p className="text-sm text-gray-600">{t('new.step1Subtitle')}</p>
         </div>
       </div>
 
       {/* grid */}
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
         {doctors.map((doctor, index) => {
-          const Icon = doctor.icon;
+          const Icon = getIcon(doctor.id);
           return (
             <button
               key={doctor.id}
@@ -64,8 +68,8 @@ export default function DoctorsGrid({ selectedDoctor, onSelect }) {
                     </div>
                   )}
                 </div>
-                <p className="mb-1 font-bold text-gray-900">{doctor.nombre}</p>
-                <p className="text-sm text-gray-600">{doctor.especialidad}</p>
+                <p className="mb-1 font-bold text-gray-900">{t(`new.doctors.${doctor.key}`)}</p>
+                <p className="text-sm text-gray-600">{t(`new.doctors.${doctor.specialtyKey}`)}</p>
               </div>
 
               {selectedDoctor === doctor.id && (

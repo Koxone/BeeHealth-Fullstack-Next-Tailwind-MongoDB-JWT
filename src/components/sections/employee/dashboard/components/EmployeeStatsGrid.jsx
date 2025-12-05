@@ -5,8 +5,11 @@ import { useGetFullInventory } from '@/hooks/inventory/useGetFullInventory';
 import { Calendar, DollarSign, FileText, TriangleAlert } from 'lucide-react';
 import { useAllTodayAppointments } from '@/hooks/appointments/useAllTodayAppointments';
 import { useGetAllConsults } from '@/hooks/consults/useGetAllConsults';
+import { useTranslation } from 'react-i18next';
 
 export default function EmployeeStatsGrid({ role }) {
+  const { t } = useTranslation('dashboard');
+
   // Appointments Today logic
   const { appointments } = useAllTodayAppointments();
   const todaysAppointmentsNumber = appointments?.length || 0;
@@ -31,29 +34,29 @@ export default function EmployeeStatsGrid({ role }) {
         {
           Icon: Calendar,
           mainData: todaysAppointmentsNumber,
-          extraData: 'Hoy',
-          title: 'Citas Programadas',
+          extraData: t('stats.today'),
+          title: t('stats.scheduledAppointments'),
           variant: 'primary',
         },
         {
           Icon: FileText,
           mainData: '$' + todayConsultsTotal,
-          title: 'Consultas Hoy',
-          extraData: 'Hoy',
+          title: t('stats.consultsToday'),
+          extraData: t('stats.today'),
           variant: 'purple',
         },
         {
           Icon: DollarSign,
           mainData: '$' + medsSoldTotal,
-          title: 'Venta de Medicamentos',
-          extraData: 'Hoy',
+          title: t('stats.medsSales'),
+          extraData: t('stats.today'),
           variant: 'success',
         },
         {
           Icon: TriangleAlert,
           mainData: totalAlerts,
-          extraData: 'Revisar',
-          title: 'Alertas de Inventario',
+          extraData: t('stats.check'),
+          title: t('stats.inventoryAlerts'),
           variant: 'danger',
         },
       ].map((card, index) => (

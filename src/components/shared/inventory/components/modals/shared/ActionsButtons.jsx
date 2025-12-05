@@ -3,8 +3,10 @@
 import useAuthStore from '@/zustand/useAuthStore';
 import clsx from 'clsx';
 import { Edit2, Power, History } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export default function ActionButtons({ item, onEdit, onDelete, onHistory }) {
+  const { t } = useTranslation('inventory');
   const { user } = useAuthStore();
   return (
     <div className="flex items-center justify-center gap-2">
@@ -19,7 +21,7 @@ export default function ActionButtons({ item, onEdit, onDelete, onHistory }) {
               ]
             : ['pointer-events-none bg-gray-300 text-gray-600 opacity-60']
         )}
-        title="Editar producto"
+        title={t('tooltips.edit')}
       >
         <Edit2
           className={clsx(
@@ -37,7 +39,7 @@ export default function ActionButtons({ item, onEdit, onDelete, onHistory }) {
             ? 'bg-green-300 hover:bg-green-500'
             : 'bg-red-500 text-red-900 hover:bg-red-500'
         }`}
-        title={item?.product?.inStock ? 'Desactivar producto' : 'Reactivar producto'}
+        title={item?.product?.inStock ? t('tooltips.deactivate') : t('tooltips.reactivate')}
       >
         <Power
           className={`hover/btn:scale-110 h-4 w-4 transition-transform duration-200 ${
@@ -53,7 +55,7 @@ export default function ActionButtons({ item, onEdit, onDelete, onHistory }) {
         <button
           onClick={() => onHistory(item)}
           className="group/btn relative cursor-pointer rounded-lg bg-amber-50 p-2 transition-all duration-200 hover:bg-amber-100 hover:shadow-md active:scale-95"
-          title="Ver historial de transacciones"
+          title={t('tooltips.history')}
         >
           <History
             className={clsx(

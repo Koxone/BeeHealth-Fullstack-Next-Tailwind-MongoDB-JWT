@@ -2,8 +2,11 @@
 
 import { Calendar } from 'lucide-react';
 import { getIMCCategory } from './utils';
+import { useTranslation } from 'react-i18next';
 
 export default function RecordsMobileList({ historyData = [] }) {
+  const { t } = useTranslation('patients');
+
   return (
     <div className="space-y-3 p-4 md:hidden">
       {historyData.map((record, index) => {
@@ -26,17 +29,17 @@ export default function RecordsMobileList({ historyData = [] }) {
 
             <div className="mb-3 grid grid-cols-2 gap-3">
               <div className="bg-beehealth-body-main rounded-lg p-3">
-                <p className="mb-1 text-xs text-gray-600">Peso</p>
+                <p className="mb-1 text-xs text-gray-600">{t('history.weight')}</p>
                 <p className="text-xl font-bold text-purple-600">{record.peso} kg</p>
               </div>
               <div className="bg-beehealth-body-main rounded-lg p-3">
-                <p className="mb-1 text-xs text-gray-600">IMC</p>
+                <p className="mb-1 text-xs text-gray-600">{t('history.imc')}</p>
                 <p className="text-xl font-bold text-gray-900">{record.imc}</p>
               </div>
             </div>
 
             <div className="bg-beehealth-body-main rounded-lg p-3">
-              <p className="mb-1 text-xs text-gray-600">Notas</p>
+              <p className="mb-1 text-xs text-gray-600">{t('history.notes')}</p>
               <p className="text-sm font-medium text-gray-900">{record.notas}</p>
             </div>
           </div>

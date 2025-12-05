@@ -2,11 +2,15 @@
 
 import { Pill, FileText, Syringe } from 'lucide-react';
 
+import { useTranslation } from 'react-i18next';
+
 export default function TabsBar({ activeTab, setActiveTab }) {
+  const { t } = useTranslation('inventory');
+
   const items = [
-    { id: 'medicamentos', label: 'Medicamentos', Icon: Pill },
-    { id: 'recetas', label: 'Recetas', Icon: FileText },
-    { id: 'suministros', label: 'Suministros', Icon: Syringe },
+    { id: 'medicamentos', label: t('tabs.meds'), Icon: Pill },
+    { id: 'recetas', label: t('tabs.prescriptions'), Icon: FileText },
+    { id: 'suministros', label: t('tabs.supplies'), Icon: Syringe },
   ];
   return (
     <div className="flex items-center gap-2 border-b border-gray-200 p-2">

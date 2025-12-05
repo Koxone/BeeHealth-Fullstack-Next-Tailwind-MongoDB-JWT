@@ -14,6 +14,7 @@ import { useCreateClinicalRecordDoctor } from '@/hooks/clinicalRecords/create/us
 import { useGetAllQuestions } from '@/hooks/clinicalRecords/get/useGetAllQuestions';
 import { useEditWorkout } from '@/hooks/workouts/edit/useEditWorkout';
 import { useAssignDiet } from '@/hooks/diets/assign/useAssignDiet';
+import { useTranslation } from 'react-i18next';
 
 export default function ClinicalRecordModal({
   onClose,
@@ -25,6 +26,7 @@ export default function ClinicalRecordModal({
   fetchRecord,
   setShowSuccessModal,
 }) {
+  const { t } = useTranslation('clinicalRecords');
   // Readonly state
   const [isReadOnly, setIsReadOnly] = useState(!!readOnly);
   const [activeTab, setActiveTab] = useState('basico');
@@ -138,13 +140,13 @@ export default function ClinicalRecordModal({
           title={
             record
               ? isReadOnly
-                ? 'Ver Historial Clínico'
+                ? t('modal.titleView')
                 : isCreate
-                  ? 'Nuevo Historial Clínico'
-                  : 'Editar Historial Clínico'
-              : 'Nuevo Historial Clínico'
+                  ? t('modal.titleNew')
+                  : t('modal.titleEdit')
+              : t('modal.titleNew')
           }
-          subtitle="Registro médico del paciente"
+          subtitle={t('modal.subtitle')}
           onClose={onClose}
           icons={{ X, FileText }}
         />

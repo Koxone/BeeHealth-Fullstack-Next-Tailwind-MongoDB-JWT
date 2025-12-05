@@ -7,8 +7,10 @@ import StatusOnBlock from './components/StatusOnBlock';
 import StatusOffBlock from './components/StatusOffBlock';
 import InitialStockBlock from './components/InitialStockBlock';
 import TransactionBlock from './components/TransactionBlock';
+import { useTranslation } from 'react-i18next';
 
 export default function TransactionHistoryModal({ onClose, history, item, isLoading }) {
+  const { t } = useTranslation('inventory');
   const { handleOverlayClick } = useModalClose(onClose);
 
   const itemName = item?.product?.name;
@@ -49,7 +51,7 @@ export default function TransactionHistoryModal({ onClose, history, item, isLoad
             <div className="h-10 w-10 animate-spin rounded-full border-4 border-gray-300 border-t-blue-500"></div>
 
             {/* Loading text */}
-            <h2 className="text-xl font-bold text-gray-900">Cargando</h2>
+            <h2 className="text-xl font-bold text-gray-900">{t('modals.history.loading')}</h2>
           </div>
         </div>
       </div>
@@ -68,16 +70,16 @@ export default function TransactionHistoryModal({ onClose, history, item, isLoad
           className="bg-beehealth-body-main relative w-full max-w-md overflow-hidden rounded-3xl p-8 text-center shadow-2xl"
           onClick={(e) => e.stopPropagation()}
         >
-          <h2 className="text-xl font-bold text-gray-900">Sin historial</h2>
+          <h2 className="text-xl font-bold text-gray-900">{t('modals.history.emptyTitle')}</h2>
           <p className="mt-2 text-sm text-gray-600">
-            Este producto no tiene movimientos registrados.
+            {t('modals.history.emptySubtitle')}
           </p>
 
           <button
             onClick={onClose}
             className="mt-6 w-full rounded-xl bg-gray-200 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-300"
           >
-            Cerrar
+            {t('modals.history.close')}
           </button>
         </div>
       </div>
@@ -112,9 +114,9 @@ export default function TransactionHistoryModal({ onClose, history, item, isLoad
                 </div>
                 <div>
                   <h2 className="text-2xl font-bold">
-                    Historial de <span className="text-blue-500">{itemName}</span>
+                    {t('modals.history.title', { name: itemName })}
                   </h2>
-                  <p className="mt-1 text-sm text-gray-600">Movimientos recientes del producto</p>
+                  <p className="mt-1 text-sm text-gray-600">{t('modals.history.subtitle')}</p>
                 </div>
               </div>
               <button

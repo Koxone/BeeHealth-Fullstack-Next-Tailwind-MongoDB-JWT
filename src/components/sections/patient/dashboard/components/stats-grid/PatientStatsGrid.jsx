@@ -6,8 +6,11 @@ import PatientStatsCard from '../PatientStatsCard';
 // Custom Hooks
 import { useGetAllWeightLogs } from '@/hooks/clinicalRecords/get/useGetAllWeightLogs';
 import { useGetPatientWeightLogs } from '@/hooks/clinicalRecords/get/useGetPatientWeightLogs';
+import { useTranslation } from 'react-i18next';
 
 export default function PatientStatsGrid({ role, currentUser }) {
+  const { t } = useTranslation('dashboard');
+
   // Weight Logs Hook for Global counter
   const {
     weightLogs,
@@ -40,7 +43,7 @@ export default function PatientStatsGrid({ role, currentUser }) {
               weightLogs[0]?.originalWeight) *
             100
           ).toFixed(1)}%`,
-          title: 'Peso Actual',
+          title: t('stats.currentWeight'),
           variant: 'primary',
         },
         {
@@ -51,7 +54,7 @@ export default function PatientStatsGrid({ role, currentUser }) {
               weightLogs[0]?.originalSize) *
             100
           ).toFixed(1)}%`,
-          title: 'Talla Actual',
+          title: t('stats.currentHeight'),
           variant: 'success',
         },
         {
@@ -62,13 +65,13 @@ export default function PatientStatsGrid({ role, currentUser }) {
               weightLogs[0]?.originalWeight) *
             100
           ).toFixed(1)}%`,
-          title: 'Progreso',
+          title: t('stats.progress'),
           variant: 'purple',
         },
         {
           Icon: Clock,
-          mainData: `${lastVisitCount || 0} ${lastVisitCount === 1 ? 'día' : 'días'}`,
-          title: 'Tiempo desde tu ultima consulta',
+          mainData: `${lastVisitCount || 0} ${lastVisitCount === 1 ? t('stats.day') : t('stats.days')}`,
+          title: t('stats.timeSinceLastVisit'),
           variant: 'danger',
           count: true,
           href: '/patient/new-appointment',

@@ -2,8 +2,10 @@ import LoadingState from '@/components/shared/feedback/LoadingState';
 import { useGetAllQuestions } from '@/hooks/clinicalRecords/get/useGetAllQuestions';
 import { useGetPatientClinicalRecords } from '@/hooks/clinicalRecords/get/useGetPatientClinicalRecords';
 import { CalendarIcon } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export default function FullVersion({ specialty, isReadOnly = true, patientId }) {
+  const { t } = useTranslation('clinicalRecords');
   // Fetch patient records
   const { data: records, loading: recordsLoading } = useGetPatientClinicalRecords(patientId);
 
@@ -20,7 +22,7 @@ export default function FullVersion({ specialty, isReadOnly = true, patientId })
   }
 
   if (!fullRecord) {
-    return <div className="text-center text-gray-500">No hay registro completo disponible</div>;
+    return <div className="text-center text-gray-500">{t('modal.noFullRecord')}</div>;
   }
 
   return (
@@ -28,11 +30,11 @@ export default function FullVersion({ specialty, isReadOnly = true, patientId })
       <div className="flex flex-col gap-1">
         <h3 className="flex items-center gap-2 text-lg font-semibold text-gray-900">
           <CalendarIcon className="h-5 w-5 text-blue-600" />
-          Información Completa
+          {t('modal.fullInfo')}
         </h3>
 
         <span className="bg-beehealth-green-secondary-light text-beehealth-green-secondary-dark mb-4 w-fit rounded-lg p-1 text-xs">
-          Solo Lectura
+          {t('modal.readOnly')}
         </span>
       </div>
 
@@ -60,7 +62,7 @@ export default function FullVersion({ specialty, isReadOnly = true, patientId })
                   disabled
                   className="focus:bg-beehealth-body-main bg-beehealth-body-main w-full rounded-xl border-2 border-gray-300 px-4 py-3 text-gray-500 outline-none"
                 >
-                  <option value="">Seleccionar</option>
+                  <option value="">{t('modal.select')}</option>
                   {q?.options?.map((opt) => (
                     <option key={opt._id} value={opt.value}>
                       {opt.label}

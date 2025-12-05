@@ -1,0 +1,41 @@
+{
+  "new": {
+    "title": "Book New Appointment",
+    "subtitle": "Follow the steps to schedule your medical consultation",
+    "step1": "Doctor",
+    "step2": "Date",
+    "step3": "Time",
+    "step1Title": "Step 1: Select your doctor",
+    "step1Subtitle": "Choose the specialist you wish to consult",
+    "step2Title": "Step 2: Select a date",
+    "step2Subtitle": "Choose the day of your consultation",
+    "step3Title": "Step 3: Select a time",
+    "step3Subtitle": "Available times for {{date}}",
+    "reasonTitle": "Reason for consultation",
+    "reasonSubtitle": "Briefly describe your reason for consultation",
+    "reasonPlaceholder": "Ex: Routine checkup, glucose control, nutrition consultation...",
+    "summaryTitle": "Appointment Summary",
+    "doctor": "Doctor",
+    "date": "Date",
+    "time": "Time",
+    "reason": "Reason",
+    "cancel": "Cancel",
+    "confirm": "Confirm Appointment",
+    "successTitle": "Appointment Confirmed!",
+    "successSubtitle": "Your appointment has been successfully scheduled",
+    "ok": "Ok",
+    "available": "Available",
+    "notAvailable": "Not available",
+    "selected": "Selected",
+    "alertIncomplete": "Please complete all fields",
+    "alertError": "Error creating appointment",
+    "doctors": {
+      "weight": "Weight Control",
+      "weightSpecialty": "Nutrition and Metabolism",
+      "dental": "Dentistry",
+      "dentalSpecialty": "Periodontics",
+      "aesthetic": "Aesthetic Treatments",
+      "aestheticSpecialty": "Aesthetic Medicine"
+    }
+  }
+}

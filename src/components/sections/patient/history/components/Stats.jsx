@@ -1,11 +1,13 @@
 'use client';
 import { Activity, Weight, TrendingDown, TrendingUp, Award, Ruler } from 'lucide-react';
 import StatCard from '../../dashboard/components/stats-grid/components/StatCard';
+import { useTranslation } from 'react-i18next';
 
 // Custom Hooks
 import { calculateStats } from './utils';
 
 export default function Stats({ historyData = [], type = 'weight', patientWeightLogs = [] }) {
+  const { t } = useTranslation('patients');
   // Stats
   const stats = calculateStats(historyData);
 
@@ -13,15 +15,15 @@ export default function Stats({ historyData = [], type = 'weight', patientWeight
   const labels =
     type === 'size'
       ? {
-          initial: 'Talla Inicial',
-          current: 'Talla Actual',
-          difference: 'Diferencia',
+          initial: t('stats.initialHeight'),
+          current: t('stats.currentHeight'),
+          difference: t('stats.difference'),
           unit: 'cm',
         }
       : {
-          initial: 'Peso Inicial',
-          current: 'Peso Actual',
-          difference: 'Diferencia',
+          initial: t('stats.initialWeight'),
+          current: t('stats.currentWeight'),
+          difference: t('stats.difference'),
           unit: 'kg',
         };
 
@@ -75,7 +77,7 @@ export default function Stats({ historyData = [], type = 'weight', patientWeight
         {/* Progress */}
         <StatCard
           Icon={Award}
-          label="Progreso"
+          label={t('stats.progress')}
           value={`${
             type === 'size'
               ? (

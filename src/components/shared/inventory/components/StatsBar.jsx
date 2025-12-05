@@ -1,7 +1,10 @@
 'use client';
 import { useMemo } from 'react';
 
+import { useTranslation } from 'react-i18next';
+
 export default function StatsBar({ inventory }) {
+  const { t } = useTranslation('inventory');
   // Filtered groups
   const medicamentos = useMemo(
     () => inventory.filter((i) => i.product?.type === 'medicamento'),
@@ -34,25 +37,22 @@ export default function StatsBar({ inventory }) {
 
   const items = [
     {
-      label: 'Valor medicamentos',
+      label: t('stats.medsValue'),
       value: `$${valorTotalMedicamentos.toLocaleString()}`,
       tone: 'from-emerald-500 to-teal-600',
-      title:
-        'Monto total estimado si se vendieran todos los medicamentos actualmente en inventario al precio de venta establecido.',
+      title: t('stats.medsTitle'),
     },
     {
-      label: 'Valor suministros',
+      label: t('stats.suppliesValue'),
       value: `$${valorTotalSuministros.toLocaleString()}`,
       tone: 'from-indigo-500 to-purple-600',
-      title:
-        'Monto total invertido en materiales disponibles en el consultorio según su costo de compra.',
+      title: t('stats.suppliesTitle'),
     },
     {
-      label: 'Items totales',
+      label: t('stats.totalItems'),
       value: counts.meds + counts.recs + counts.sums,
       tone: 'from-blue-500 to-cyan-600',
-      title:
-        'Cantidad total de elementos registrados en el inventario, incluyendo medicamentos, recetas y suministros médicos.',
+      title: t('stats.totalTitle'),
     },
   ];
 

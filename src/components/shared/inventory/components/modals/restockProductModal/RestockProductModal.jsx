@@ -6,6 +6,8 @@ import { getGradient } from './utils/helpers';
 import { restockProduct } from './services/restockProduct';
 import { useModalClose } from '@/hooks/useModalClose';
 
+import { useTranslation } from 'react-i18next';
+
 export default function RestockProductModal({
   activeTab,
   onClose,
@@ -13,6 +15,7 @@ export default function RestockProductModal({
   onRestock,
   successRefresh,
 }) {
+  const { t } = useTranslation('inventory');
   // Local states
   const [selectedProduct, setSelectedProduct] = useState('');
   const [quantity, setQuantity] = useState('');
@@ -26,7 +29,7 @@ export default function RestockProductModal({
 
     // Validate inputs
     if (!selectedProduct || !quantity) {
-      alert('Debes seleccionar un producto y especificar una cantidad válida.');
+      alert(t('modals.restock.alert'));
       return;
     }
 
@@ -48,10 +51,10 @@ export default function RestockProductModal({
         successRefresh();
         onClose();
       } else {
-        alert(`Error: ${response.error}`);
+        alert(t('modals.edit.error', { error: response.error }));
       }
     } catch (error) {
-      alert(`Error: ${error.message}`);
+      alert(t('modals.edit.error', { error: error.message }));
     }
   }
 
@@ -94,9 +97,9 @@ export default function RestockProductModal({
                   </div>
                 </div>
                 <div>
-                  <h2 className="text-2xl font-bold text-gray-900">Agregar existencias</h2>
+                  <h2 className="text-2xl font-bold text-gray-900">{t('modals.restock.title')}</h2>
                   <p className="mt-1 text-sm text-gray-600">
-                    Selecciona un producto y la cantidad a reabastecer
+                    {t('modals.restock.subtitle')}
                   </p>
                 </div>
               </div>
@@ -117,13 +120,13 @@ export default function RestockProductModal({
         >
           {/* Select product */}
           <div>
-            <label className="mb-1 block text-sm font-medium text-gray-700">Producto</label>
+            <label className="mb-1 block text-sm font-medium text-gray-700">{t('modals.restock.product')}</label>
             <select
               value={selectedProduct}
               onChange={(e) => setSelectedProduct(e.target.value)}
               className="w-full rounded-lg border border-gray-300 p-2 text-gray-800 focus:border-blue-400 focus:ring-blue-400"
             >
-              <option value="">Selecciona un producto</option>
+              <option value="">{t('modals.restock.selectProduct')}</option>
               {filteredItems.map((item) => (
                 <option key={item._id} value={item._id}>
                   {item.product?.name}
@@ -135,16 +138,16 @@ export default function RestockProductModal({
           {/* Current quantity display */}
           {selectedProduct && (
             <div className="bg-beehealth-body-main rounded-lg border border-gray-200 p-3 text-sm text-gray-700">
-              <span className="font-medium">Cantidad actual:</span>{' '}
+              <span className="font-medium">{t('modals.restock.currentQuantity')}:</span>{' '}
               {filteredItems.find((item) => item._id === selectedProduct)?.quantity ??
-                'No disponible'}
+                t('modals.restock.notAvailable')}
             </div>
           )}
 
           {/* Quantity */}
           <div>
             <label className="mb-1 block text-sm font-medium text-gray-700">
-              Cantidad a agregar
+              {t('modals.restock.quantityToAdd')}
             </label>
             <input
               type="number"
@@ -159,7 +162,7 @@ export default function RestockProductModal({
           {/* Optional reason */}
           <div>
             <label className="mb-1 block text-sm font-medium text-gray-700">
-              Motivo (opcional)
+              {t('modals.restock.reason')}
             </label>
             <input
               type="text"
@@ -177,13 +180,13 @@ export default function RestockProductModal({
               onClick={onClose}
               className="rounded-lg bg-gray-100 px-4 py-2 text-gray-700 transition-all hover:bg-gray-200"
             >
-              Cancelar
+              {t('modals.restock.cancel')}
             </button>
             <button
               type="submit"
               className="rounded-lg bg-green-600 px-4 py-2 text-white transition-all hover:bg-green-700"
             >
-              Confirmar reabastecimiento
+              {t('modals.restock.confirm')}
             </button>
           </div>
         </form>

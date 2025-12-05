@@ -2,6 +2,7 @@ import { Plus, ClipboardList } from 'lucide-react';
 import AddHistoryButton from './components/AddHistoryButton';
 import HistoryCard from './components/history-card/HistoryCard';
 import GoalButton from './components/GoalButton';
+import { useTranslation } from 'react-i18next';
 
 /* Clinical history */
 export default function ClinicalHistory({
@@ -14,6 +15,8 @@ export default function ClinicalHistory({
   setShowDeleteModal,
   setShowCreateGoalModal,
 }) {
+  const { t } = useTranslation('clinicalRecords');
+
   return (
     <div className="bg-beehealth-body-main rounded-2xl border border-(--med-gray-border) p-4 shadow-sm sm:p-6">
       {/* Header */}
@@ -24,10 +27,10 @@ export default function ClinicalHistory({
           </div>
           <div>
             <h2 className="text-lg font-semibold text-(--med-text-dark) sm:text-xl">
-              Historial Clínico
+              {t('history.title')}
             </h2>
             <p className="text-xs text-(--med-text-muted) sm:text-sm">
-              Registros médicos del paciente
+              {t('history.subtitle')}
             </p>
           </div>
         </div>
@@ -76,17 +79,17 @@ export default function ClinicalHistory({
         <div className="bg-beehealth-body-main flex flex-col items-center justify-center rounded-xl border border-(--med-gray-border) py-12 text-center sm:py-16">
           <ClipboardList className="mb-3 h-10 w-10 text-gray-400 sm:h-12 sm:w-12" />
           <p className="mb-1 text-sm font-medium text-(--med-text-dark) sm:text-base">
-            Sin registros clínicos
+            {t('history.empty')}
           </p>
           <p className="mb-4 text-xs text-(--med-text-muted) sm:text-sm">
-            Comienza agregando el primer registro
+            {t('history.emptySubtitle')}
           </p>
           <button
             onClick={onAdd}
             className="bg-beehealth-green-primary-dark flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-700 active:scale-95"
           >
             <Plus className="h-4 w-4" />
-            Agregar Registro
+            {t('history.add')}
           </button>
         </div>
       )}
